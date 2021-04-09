@@ -1,8 +1,21 @@
 ﻿namespace TriangulArt {
-	class Triangle {
+	[System.Serializable]
+	public class Triangle {
 		public int x1, y1, x2, y2, x3, y3;
+		public int color;
 
-		public void Normalise() {
+		public void Normalise2() {
+			if (y1 > y2) {
+				int tmp = y1;
+				y1 = y2;
+				y2 = tmp;
+				tmp = x1;
+				x1 = x2;
+				x2 = tmp;
+			}
+		}
+
+		public void Normalise3() {
 			if (y1 > y3) {
 				int tmp = y1;
 				y1 = y3;

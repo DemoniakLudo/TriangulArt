@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 
 namespace TriangulArt {
 	public partial class Form1 : Form {
@@ -15,7 +17,9 @@ namespace TriangulArt {
 		private List<Triangle> lstTriangle = new List<Triangle>();
 		private bool modeAddTriangle = false;
 		private int numPt;
-		Triangle tri = new Triangle();
+		Triangle tri;
+		private int oldx1, oldy1;
+		private int selColor = 1;
 
 		public Form1() {
 			InitializeComponent();
@@ -28,8 +32,6 @@ namespace TriangulArt {
 			for (int y = 0; y < bmpLock.Height; y += 2)
 				bmpLock.SetHorLineDouble(0, y, BitmapCpc.TailleX, GetPalCPC(BitmapCpc.Palette[0]));
 
-			//for (int i = 0; i < 16; i++)
-			//	colors[i].Visible = lockColors[i].Visible = i < maxPen;
 
 			Render();
 		}
@@ -39,10 +41,11 @@ namespace TriangulArt {
 		}
 
 		private void UpdatePalette() {
-			//for (int i = 0; i < 16; i++) {
-			//	colors[i].BackColor = Color.FromArgb(bitmapCpc.GetColorPal(i).GetColorArgb);
-			//	colors[i].Refresh();
-			//}
+			Color0.BackColor = Color.FromArgb(bitmapCpc.GetColorPal(0).GetColorArgb);
+			Color1.BackColor = Color.FromArgb(bitmapCpc.GetColorPal(1).GetColorArgb);
+			Color2.BackColor = Color.FromArgb(bitmapCpc.GetColorPal(2).GetColorArgb);
+			Color3.BackColor = Color.FromArgb(bitmapCpc.GetColorPal(3).GetColorArgb);
+			ColorSel.BackColor = Color.FromArgb(bitmapCpc.GetColorPal(selColor).GetColorArgb);
 		}
 
 		public void Render(bool forceDrawZoom = false) {
@@ -56,36 +59,65 @@ namespace TriangulArt {
 			int yReel = (e.Y & -incY) >> 1;
 			int xReel = e.X >> 1;
 			lblInfoPos.Text = "x:" + xReel.ToString("000") + " y:" + yReel.ToString("000");
+			Graphics g = Graphics.FromImage(pictureBox.Image);
+			if (numPt == 2) {
+				XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, tri.x1 << 1, tri.y1 << 1, oldx1 << 1, oldy1 << 1);
+				oldx1 = xReel;
+				oldy1 = yReel;
+				XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, tri.x1 << 1, tri.y1 << 1, oldx1 << 1, oldy1 << 1);
+			}
+			if (numPt == 3) {
+				XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, tri.x1 << 1, tri.y1 << 1, oldx1 << 1, oldy1 << 1);
+				XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, tri.x2 << 1, tri.y2 << 1, oldx1 << 1, oldy1 << 1);
+				oldx1 = xReel;
+				oldy1 = yReel;
+				XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, tri.x1 << 1, tri.y1 << 1, oldx1 << 1, oldy1 << 1);
+				XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, tri.x2 << 1, tri.y2 << 1, oldx1 << 1, oldy1 << 1);
+			}
+
 			if (e.Button == MouseButtons.Left && modeAddTriangle) {
 				switch (numPt) {
 					case 1:
-						tri.x1 = (byte)xReel;
-						tri.y1 = (byte)yReel;
+						tri = new Triangle();
+						tri.x1 = xReel;
+						tri.y1 = yReel;
+						tri.color = selColor;
 						numPt = 2;
-						SetInfos("Attente positionnement second point triangle");
+						SetInfo("Attente positionnement second point triangle");
+						oldx1 = xReel;
+						oldy1 = yReel;
 						break;
 
 					case 2:
-						tri.x2 = (byte)xReel;
-						tri.y2 = (byte)yReel;
+						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, tri.x1 << 1, tri.y1 << 1, oldx1 << 1, oldy1 << 1);
+						tri.x2 = xReel;
+						tri.y2 = yReel;
+						tri.Normalise2();
 						numPt = 3;
-						SetInfos("Attente positionnement troisième point triangle");
+						SetInfo("Attente positionnement troisième point triangle");
+						oldx1 = xReel;
+						oldy1 = yReel;
+						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, tri.x1 << 1, tri.y1 << 1, tri.x2 << 1, tri.y2 << 1);
 						break;
 
 					case 3:
-						tri.x3 = (byte)xReel;
-						tri.y3 = (byte)yReel;
+						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, tri.x1 << 1, tri.y1 << 1, tri.x2 << 1, tri.y2 << 1);
+						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, tri.x1 << 1, tri.y1 << 1, oldx1 << 1, oldy1 << 1);
+						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, tri.x2 << 1, tri.y2 << 1, oldx1 << 1, oldy1 << 1);
+						tri.x3 = xReel;
+						tri.y3 = yReel;
 						numPt = 1;
 						modeAddTriangle = false;
 						bpAddTriangle.Enabled = true;
-						SetInfos("Triangle enregistré.");
-						tri.Normalise();
-						SetInfos("(" + tri.x1 + "," + tri.y1 + "),(" + tri.x2 + "," + tri.y2 + "),(" + tri.x3 + "," + tri.y3 + ")");
+						SetInfo("Triangle enregistré.");
+						tri.Normalise3();
+						SetInfo("(" + tri.x1 + "," + tri.y1 + "),(" + tri.x2 + "," + tri.y2 + "),(" + tri.x3 + "," + tri.y3 + ")");
 						lstTriangle.Add(tri);
 						FillTriangle(tri);
 						break;
 				}
 			}
+			pictureBox.Refresh();
 		}
 
 		private void pictureBox_MouseLeave(object sender, EventArgs e) {
@@ -96,10 +128,10 @@ namespace TriangulArt {
 			numPt = 1;
 			modeAddTriangle = true;
 			bpAddTriangle.Enabled = false;
-			SetInfos("Attente positionnement premier point triangle");
+			SetInfo("Attente positionnement premier point triangle");
 		}
 
-		public void SetInfos(string txt) {
+		public void SetInfo(string txt) {
 			listInfo.Items.Add(DateTime.Now.ToString() + " - " + txt);
 			listInfo.SelectedIndex = listInfo.Items.Count - 1;
 		}
@@ -121,7 +153,11 @@ namespace TriangulArt {
 				xr = t.x2;
 
 			for (int y = t.y1; y < t.y3; y++) {
-				bmpLock.SetHorLineDouble(xl << 1, y << 1, Math.Abs(xr - xl) << 1, GetPalCPC(BitmapCpc.Palette[1]));
+				if (xr >= xl)
+					bmpLock.SetHorLineDouble(xl << 1, y << 1, (xr - xl) << 1, GetPalCPC(BitmapCpc.Palette[t.color]));
+				else
+					bmpLock.SetHorLineDouble((xl + xr - xl) << 1, y << 1, (xl - xr) << 1, GetPalCPC(BitmapCpc.Palette[t.color]));
+
 				err1 += dx1;
 				while (err1 > dy1) {
 					xl += sgn1;
@@ -141,6 +177,62 @@ namespace TriangulArt {
 				}
 			}
 			Render();
+		}
+
+		private void bpLoad_Click(object sender, EventArgs e) {
+			OpenFileDialog dlg = new OpenFileDialog();
+			DialogResult result = dlg.ShowDialog();
+			if (result == DialogResult.OK) {
+				FileStream fileParam = File.Open(dlg.FileName, FileMode.Open);
+				try {
+					lstTriangle = (List<Triangle>)new XmlSerializer(typeof(List<Triangle>)).Deserialize(fileParam);
+					SetInfo("Lecture triangles ok");
+					foreach (Triangle t in lstTriangle) {
+						FillTriangle(t);
+					}
+				}
+				catch {
+					MessageBox.Show("Erreur lecture fichier...");
+				}
+				fileParam.Close();
+			}
+		}
+
+		private void bpSave_Click(object sender, EventArgs e) {
+			SaveFileDialog dlg = new SaveFileDialog();
+			DialogResult result = dlg.ShowDialog();
+			if (result == DialogResult.OK) {
+				FileStream file = File.Open(dlg.FileName, FileMode.Create);
+				try {
+					new XmlSerializer(typeof(List<Triangle>)).Serialize(file, lstTriangle);
+					SetInfo("Sauvegarde triangles ok");
+				}
+				catch {
+					MessageBox.Show("Erreur sauvegarde triangles...");
+				}
+				file.Close();
+			}
+		}
+
+		private void Color0_Click(object sender, EventArgs e) {
+			selColor = 0;
+			UpdatePalette();
+		}
+
+		private void Color1_Click(object sender, EventArgs e) {
+			selColor = 1;
+			UpdatePalette();
+		}
+
+		private void Color2_Click(object sender, EventArgs e) {
+			selColor = 2;
+			UpdatePalette();
+
+		}
+
+		private void Color3_Click(object sender, EventArgs e) {
+			selColor = 3;
+			UpdatePalette();
 		}
 	}
 }

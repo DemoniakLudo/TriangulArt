@@ -27,6 +27,13 @@
 			this.lblInfoPos = new System.Windows.Forms.Label();
 			this.bpAddTriangle = new System.Windows.Forms.Button();
 			this.listInfo = new System.Windows.Forms.ListBox();
+			this.bpLoad = new System.Windows.Forms.Button();
+			this.bpSave = new System.Windows.Forms.Button();
+			this.Color0 = new System.Windows.Forms.Label();
+			this.Color1 = new System.Windows.Forms.Label();
+			this.Color2 = new System.Windows.Forms.Label();
+			this.Color3 = new System.Windows.Forms.Label();
+			this.ColorSel = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -68,11 +75,88 @@
 			this.listInfo.Size = new System.Drawing.Size(555, 147);
 			this.listInfo.TabIndex = 3;
 			// 
+			// bpLoad
+			// 
+			this.bpLoad.Location = new System.Drawing.Point(547, 331);
+			this.bpLoad.Name = "bpLoad";
+			this.bpLoad.Size = new System.Drawing.Size(99, 22);
+			this.bpLoad.TabIndex = 4;
+			this.bpLoad.Text = "Lire";
+			this.bpLoad.UseVisualStyleBackColor = true;
+			this.bpLoad.Click += new System.EventHandler(this.bpLoad_Click);
+			// 
+			// bpSave
+			// 
+			this.bpSave.Location = new System.Drawing.Point(547, 359);
+			this.bpSave.Name = "bpSave";
+			this.bpSave.Size = new System.Drawing.Size(99, 22);
+			this.bpSave.TabIndex = 4;
+			this.bpSave.Text = "Sauver";
+			this.bpSave.UseVisualStyleBackColor = true;
+			this.bpSave.Click += new System.EventHandler(this.bpSave_Click);
+			// 
+			// Color0
+			// 
+			this.Color0.BackColor = System.Drawing.Color.Transparent;
+			this.Color0.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.Color0.Location = new System.Drawing.Point(12, 527);
+			this.Color0.Name = "Color0";
+			this.Color0.Size = new System.Drawing.Size(82, 56);
+			this.Color0.TabIndex = 5;
+			this.Color0.Click += new System.EventHandler(this.Color0_Click);
+			// 
+			// Color1
+			// 
+			this.Color1.BackColor = System.Drawing.Color.Transparent;
+			this.Color1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.Color1.Location = new System.Drawing.Point(155, 527);
+			this.Color1.Name = "Color1";
+			this.Color1.Size = new System.Drawing.Size(82, 56);
+			this.Color1.TabIndex = 5;
+			this.Color1.Click += new System.EventHandler(this.Color1_Click);
+			// 
+			// Color2
+			// 
+			this.Color2.BackColor = System.Drawing.Color.Transparent;
+			this.Color2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.Color2.Location = new System.Drawing.Point(298, 527);
+			this.Color2.Name = "Color2";
+			this.Color2.Size = new System.Drawing.Size(82, 56);
+			this.Color2.TabIndex = 5;
+			this.Color2.Click += new System.EventHandler(this.Color2_Click);
+			// 
+			// Color3
+			// 
+			this.Color3.BackColor = System.Drawing.Color.Transparent;
+			this.Color3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.Color3.Location = new System.Drawing.Point(441, 527);
+			this.Color3.Name = "Color3";
+			this.Color3.Size = new System.Drawing.Size(82, 56);
+			this.Color3.TabIndex = 5;
+			this.Color3.Click += new System.EventHandler(this.Color3_Click);
+			// 
+			// ColorSel
+			// 
+			this.ColorSel.BackColor = System.Drawing.Color.Transparent;
+			this.ColorSel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.ColorSel.Location = new System.Drawing.Point(658, 59);
+			this.ColorSel.Name = "ColorSel";
+			this.ColorSel.Size = new System.Drawing.Size(82, 56);
+			this.ColorSel.TabIndex = 5;
+			this.ColorSel.Click += new System.EventHandler(this.Color0_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1114, 701);
+			this.Controls.Add(this.Color3);
+			this.Controls.Add(this.Color2);
+			this.Controls.Add(this.Color1);
+			this.Controls.Add(this.ColorSel);
+			this.Controls.Add(this.Color0);
+			this.Controls.Add(this.bpSave);
+			this.Controls.Add(this.bpLoad);
 			this.Controls.Add(this.listInfo);
 			this.Controls.Add(this.bpAddTriangle);
 			this.Controls.Add(this.lblInfoPos);
@@ -94,6 +178,13 @@
 		private System.Windows.Forms.Label lblInfoPos;
 		private System.Windows.Forms.Button bpAddTriangle;
 		private System.Windows.Forms.ListBox listInfo;
+		private System.Windows.Forms.Button bpLoad;
+		private System.Windows.Forms.Button bpSave;
+		private System.Windows.Forms.Label Color0;
+		private System.Windows.Forms.Label Color1;
+		private System.Windows.Forms.Label Color2;
+		private System.Windows.Forms.Label Color3;
+		private System.Windows.Forms.Label ColorSel;
 	}
 }
 
