@@ -37,7 +37,7 @@
 				x3 = tmp;
 			}
 			if (y1 > y2) {
-				int  tmp = y1;
+				int tmp = y1;
 				y1 = y2;
 				y2 = tmp;
 				tmp = x1;
@@ -52,6 +52,24 @@
 				x2 = x3;
 				x3 = tmp;
 			}
+		}
+
+		public void DoubleCoord() {
+			x1 <<= 1;
+			y1 <<= 1;
+			x2 <<= 1;
+			y2 <<= 1;
+			x3 <<= 1;
+			y3 <<= 1;
+		}
+
+		public void Move(int inc) {
+			x1 += inc;
+			y1 += inc;
+			x2 += inc;
+			y2 += inc;
+			x3 += inc;
+			y3 += inc;
 		}
 	}
 }

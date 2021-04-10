@@ -52,6 +52,9 @@
 			this.bpEdit = new System.Windows.Forms.Button();
 			this.bpRedraw = new System.Windows.Forms.Button();
 			this.bpDelete = new System.Windows.Forms.Button();
+			this.label7 = new System.Windows.Forms.Label();
+			this.chkPlus = new System.Windows.Forms.CheckBox();
+			this.chkCodeAsm = new System.Windows.Forms.CheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -69,7 +72,7 @@
 			// lblInfoPos
 			// 
 			this.lblInfoPos.AutoSize = true;
-			this.lblInfoPos.Location = new System.Drawing.Point(550, 17);
+			this.lblInfoPos.Location = new System.Drawing.Point(524, 183);
 			this.lblInfoPos.Name = "lblInfoPos";
 			this.lblInfoPos.Size = new System.Drawing.Size(43, 13);
 			this.lblInfoPos.TabIndex = 1;
@@ -77,9 +80,9 @@
 			// 
 			// bpAddTriangle
 			// 
-			this.bpAddTriangle.Location = new System.Drawing.Point(524, 87);
+			this.bpAddTriangle.Location = new System.Drawing.Point(524, 211);
 			this.bpAddTriangle.Name = "bpAddTriangle";
-			this.bpAddTriangle.Size = new System.Drawing.Size(94, 23);
+			this.bpAddTriangle.Size = new System.Drawing.Size(113, 23);
 			this.bpAddTriangle.TabIndex = 2;
 			this.bpAddTriangle.Text = "Ajouter triangle";
 			this.bpAddTriangle.UseVisualStyleBackColor = true;
@@ -95,7 +98,7 @@
 			// 
 			// bpLoad
 			// 
-			this.bpLoad.Location = new System.Drawing.Point(524, 497);
+			this.bpLoad.Location = new System.Drawing.Point(521, 7);
 			this.bpLoad.Name = "bpLoad";
 			this.bpLoad.Size = new System.Drawing.Size(116, 22);
 			this.bpLoad.TabIndex = 4;
@@ -105,7 +108,7 @@
 			// 
 			// bpSave
 			// 
-			this.bpSave.Location = new System.Drawing.Point(524, 525);
+			this.bpSave.Location = new System.Drawing.Point(521, 35);
 			this.bpSave.Name = "bpSave";
 			this.bpSave.Size = new System.Drawing.Size(116, 22);
 			this.bpSave.TabIndex = 4;
@@ -157,14 +160,14 @@
 			// 
 			this.ColorSel.BackColor = System.Drawing.Color.Transparent;
 			this.ColorSel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.ColorSel.Location = new System.Drawing.Point(624, 54);
+			this.ColorSel.Location = new System.Drawing.Point(813, 115);
 			this.ColorSel.Name = "ColorSel";
 			this.ColorSel.Size = new System.Drawing.Size(82, 56);
 			this.ColorSel.TabIndex = 5;
 			// 
 			// bpGenereAsm
 			// 
-			this.bpGenereAsm.Location = new System.Drawing.Point(524, 553);
+			this.bpGenereAsm.Location = new System.Drawing.Point(521, 63);
 			this.bpGenereAsm.Name = "bpGenereAsm";
 			this.bpGenereAsm.Size = new System.Drawing.Size(116, 23);
 			this.bpGenereAsm.TabIndex = 6;
@@ -174,7 +177,7 @@
 			// 
 			// bpAddCoord
 			// 
-			this.bpAddCoord.Location = new System.Drawing.Point(939, 459);
+			this.bpAddCoord.Location = new System.Drawing.Point(939, 549);
 			this.bpAddCoord.Name = "bpAddCoord";
 			this.bpAddCoord.Size = new System.Drawing.Size(94, 22);
 			this.bpAddCoord.TabIndex = 7;
@@ -184,7 +187,7 @@
 			// 
 			// txbX1
 			// 
-			this.txbX1.Location = new System.Drawing.Point(553, 434);
+			this.txbX1.Location = new System.Drawing.Point(553, 524);
 			this.txbX1.MaxLength = 3;
 			this.txbX1.Name = "txbX1";
 			this.txbX1.Size = new System.Drawing.Size(25, 20);
@@ -192,7 +195,7 @@
 			// 
 			// txbY1
 			// 
-			this.txbY1.Location = new System.Drawing.Point(622, 434);
+			this.txbY1.Location = new System.Drawing.Point(622, 524);
 			this.txbY1.MaxLength = 3;
 			this.txbY1.Name = "txbY1";
 			this.txbY1.Size = new System.Drawing.Size(25, 20);
@@ -200,7 +203,7 @@
 			// 
 			// txbX2
 			// 
-			this.txbX2.Location = new System.Drawing.Point(691, 434);
+			this.txbX2.Location = new System.Drawing.Point(691, 524);
 			this.txbX2.MaxLength = 3;
 			this.txbX2.Name = "txbX2";
 			this.txbX2.Size = new System.Drawing.Size(25, 20);
@@ -208,7 +211,7 @@
 			// 
 			// txbY2
 			// 
-			this.txbY2.Location = new System.Drawing.Point(760, 434);
+			this.txbY2.Location = new System.Drawing.Point(760, 524);
 			this.txbY2.MaxLength = 3;
 			this.txbY2.Name = "txbY2";
 			this.txbY2.Size = new System.Drawing.Size(25, 20);
@@ -216,7 +219,7 @@
 			// 
 			// txbX3
 			// 
-			this.txbX3.Location = new System.Drawing.Point(829, 434);
+			this.txbX3.Location = new System.Drawing.Point(829, 524);
 			this.txbX3.MaxLength = 3;
 			this.txbX3.Name = "txbX3";
 			this.txbX3.Size = new System.Drawing.Size(25, 20);
@@ -224,7 +227,7 @@
 			// 
 			// txbY3
 			// 
-			this.txbY3.Location = new System.Drawing.Point(898, 434);
+			this.txbY3.Location = new System.Drawing.Point(898, 524);
 			this.txbY3.MaxLength = 3;
 			this.txbY3.Name = "txbY3";
 			this.txbY3.Size = new System.Drawing.Size(25, 20);
@@ -233,7 +236,7 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(534, 437);
+			this.label1.Location = new System.Drawing.Point(534, 527);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(21, 13);
 			this.label1.TabIndex = 14;
@@ -242,7 +245,7 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(603, 437);
+			this.label2.Location = new System.Drawing.Point(603, 527);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(21, 13);
 			this.label2.TabIndex = 15;
@@ -251,7 +254,7 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(672, 437);
+			this.label3.Location = new System.Drawing.Point(672, 527);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(21, 13);
 			this.label3.TabIndex = 16;
@@ -260,7 +263,7 @@
 			// label4
 			// 
 			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(741, 437);
+			this.label4.Location = new System.Drawing.Point(741, 527);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(21, 13);
 			this.label4.TabIndex = 17;
@@ -269,7 +272,7 @@
 			// label5
 			// 
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(810, 437);
+			this.label5.Location = new System.Drawing.Point(810, 527);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(21, 13);
 			this.label5.TabIndex = 18;
@@ -278,7 +281,7 @@
 			// label6
 			// 
 			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(879, 437);
+			this.label6.Location = new System.Drawing.Point(879, 527);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(21, 13);
 			this.label6.TabIndex = 19;
@@ -287,7 +290,7 @@
 			// listTriangles
 			// 
 			this.listTriangles.FormattingEnabled = true;
-			this.listTriangles.Location = new System.Drawing.Point(524, 218);
+			this.listTriangles.Location = new System.Drawing.Point(524, 308);
 			this.listTriangles.Name = "listTriangles";
 			this.listTriangles.Size = new System.Drawing.Size(509, 186);
 			this.listTriangles.TabIndex = 20;
@@ -296,7 +299,7 @@
 			// bpEdit
 			// 
 			this.bpEdit.Enabled = false;
-			this.bpEdit.Location = new System.Drawing.Point(939, 434);
+			this.bpEdit.Location = new System.Drawing.Point(939, 524);
 			this.bpEdit.Name = "bpEdit";
 			this.bpEdit.Size = new System.Drawing.Size(94, 22);
 			this.bpEdit.TabIndex = 7;
@@ -306,7 +309,7 @@
 			// 
 			// bpRedraw
 			// 
-			this.bpRedraw.Location = new System.Drawing.Point(524, 177);
+			this.bpRedraw.Location = new System.Drawing.Point(524, 265);
 			this.bpRedraw.Name = "bpRedraw";
 			this.bpRedraw.Size = new System.Drawing.Size(113, 25);
 			this.bpRedraw.TabIndex = 21;
@@ -317,7 +320,7 @@
 			// bpDelete
 			// 
 			this.bpDelete.Enabled = false;
-			this.bpDelete.Location = new System.Drawing.Point(939, 410);
+			this.bpDelete.Location = new System.Drawing.Point(939, 500);
 			this.bpDelete.Name = "bpDelete";
 			this.bpDelete.Size = new System.Drawing.Size(94, 22);
 			this.bpDelete.TabIndex = 22;
@@ -325,11 +328,44 @@
 			this.bpDelete.UseVisualStyleBackColor = true;
 			this.bpDelete.Click += new System.EventHandler(this.bpDelete_Click);
 			// 
+			// label7
+			// 
+			this.label7.AutoSize = true;
+			this.label7.Location = new System.Drawing.Point(713, 139);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(94, 13);
+			this.label7.TabIndex = 23;
+			this.label7.Text = "Couleur courante :";
+			// 
+			// chkPlus
+			// 
+			this.chkPlus.AutoSize = true;
+			this.chkPlus.Location = new System.Drawing.Point(921, 138);
+			this.chkPlus.Name = "chkPlus";
+			this.chkPlus.Size = new System.Drawing.Size(89, 17);
+			this.chkPlus.TabIndex = 24;
+			this.chkPlus.Text = "Palette CPC+";
+			this.chkPlus.UseVisualStyleBackColor = true;
+			this.chkPlus.CheckedChanged += new System.EventHandler(this.chkPlus_CheckedChanged);
+			// 
+			// chkCodeAsm
+			// 
+			this.chkCodeAsm.AutoSize = true;
+			this.chkCodeAsm.Location = new System.Drawing.Point(643, 67);
+			this.chkCodeAsm.Name = "chkCodeAsm";
+			this.chkCodeAsm.Size = new System.Drawing.Size(181, 17);
+			this.chkCodeAsm.TabIndex = 25;
+			this.chkCodeAsm.Text = "Ajouter code d\'affichage complet";
+			this.chkCodeAsm.UseVisualStyleBackColor = true;
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1038, 695);
+			this.Controls.Add(this.chkCodeAsm);
+			this.Controls.Add(this.chkPlus);
+			this.Controls.Add(this.label7);
 			this.Controls.Add(this.bpDelete);
 			this.Controls.Add(this.txbY3);
 			this.Controls.Add(this.txbX3);
@@ -401,6 +437,9 @@
 		private System.Windows.Forms.Button bpEdit;
 		private System.Windows.Forms.Button bpRedraw;
 		private System.Windows.Forms.Button bpDelete;
+		private System.Windows.Forms.Label label7;
+		private System.Windows.Forms.CheckBox chkPlus;
+		private System.Windows.Forms.CheckBox chkCodeAsm;
 	}
 }
 

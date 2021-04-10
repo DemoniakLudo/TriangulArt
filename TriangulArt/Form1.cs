@@ -193,7 +193,7 @@ namespace TriangulArt {
 					bmpLock.SetHorLineDouble((xl + xr - xl) << 1, y << 1, (xl - xr) << 1, color);
 
 				err1 += dx1;
-				while (err1 > dy1) {
+				while (err1 >= dy1) {
 					xl += sgn1;
 					err1 -= dy1;
 				}
@@ -205,7 +205,7 @@ namespace TriangulArt {
 					err2 = 0;
 				}
 				err2 += dx2;
-				while (err2 > dy2) {
+				while (err2 >= dy2) {
 					xr += sgn2;
 					err2 -= dy2;
 				}
@@ -221,27 +221,20 @@ namespace TriangulArt {
 			Render();
 		}
 
-		private void GenereDatas(string fileName) {
-			StreamWriter sw = File.CreateText(fileName);
-			int nbOctets = 0;
-			for (int i = 0; i < lstTriangle.Count; i++) {
-				Triangle t = lstTriangle[i];
-				int color = i < lstTriangle.Count - 1 ? t.color : t.color + 0x80;
-				sw.WriteLine("\tDB\t#" + t.x1.ToString("X2") + ",#" + t.y1.ToString("X2") + ",#" + t.x2.ToString("X2") + ",#" + t.y2.ToString("X2") + ",#" + t.x3.ToString("X2") + ",#" + t.y3.ToString("X2") + ",#" + color.ToString("X2"));
-				nbOctets += 7;
-			}
-			sw.WriteLine("; Taille " + nbOctets.ToString() + " octets");
-			sw.Close();
-		}
-
 		private void bpLoad_Click(object sender, EventArgs e) {
 			OpenFileDialog dlg = new OpenFileDialog();
+			dlg.Filter = "Fichiers xml (*.xml)|*.xml";
 			DialogResult result = dlg.ShowDialog();
 			if (result == DialogResult.OK) {
 				FileStream fileParam = File.Open(dlg.FileName, FileMode.Open);
 				try {
 					lstTriangle = (List<Triangle>)new XmlSerializer(typeof(List<Triangle>)).Deserialize(fileParam);
 					SetInfo("Lecture triangles ok");
+
+					foreach (Triangle t in lstTriangle)
+						t.Move(8);
+
+
 					FillTriangles();
 					DisplayList();
 				}
@@ -254,6 +247,7 @@ namespace TriangulArt {
 
 		private void bpSave_Click(object sender, EventArgs e) {
 			SaveFileDialog dlg = new SaveFileDialog();
+			dlg.Filter = "Fichiers xml (*.xml)|*.xml";
 			DialogResult result = dlg.ShowDialog();
 			if (result == DialogResult.OK) {
 				FileStream file = File.Open(dlg.FileName, FileMode.Create);
@@ -268,8 +262,26 @@ namespace TriangulArt {
 			}
 		}
 
+		private void bpGenereAsm_Click(object sender, EventArgs e) {
+			SaveFileDialog dlg = new SaveFileDialog();
+			dlg.Filter = "Fichiers assembleur (*.asm)|*.asm";
+			DialogResult result = dlg.ShowDialog();
+			if (result == DialogResult.OK) {
+				StreamWriter sw = GenereAsm.OpenAsm(dlg.FileName);
+				if (chkCodeAsm.Checked)
+					GenereAsm.GenereDrawTriangleCode(sw);
+
+				GenereAsm.GenereDatas(sw, lstTriangle);
+				if (chkCodeAsm.Checked)
+					GenereAsm.GenereDrawTriangleData(sw);
+
+				GenereAsm.CloseAsm(sw);
+				SetInfo("Génération assembleur ok.");
+			}
+		}
+
 		private void SetNewColor(int pen) {
-			EditColor ed = new EditColor( pen, BitmapCpc.Palette[pen], bitmapCpc.GetColorPal(pen).GetColorArgb, BitmapCpc.cpcPlus);
+			EditColor ed = new EditColor(pen, BitmapCpc.Palette[pen], bitmapCpc.GetColorPal(pen).GetColorArgb, BitmapCpc.cpcPlus);
 			ed.ShowDialog(this);
 			if (ed.isValide) {
 				BitmapCpc.Palette[pen] = ed.ValColor;
@@ -314,14 +326,6 @@ namespace TriangulArt {
 				SetNewColor(3);
 		}
 
-		private void bpGenereAsm_Click(object sender, EventArgs e) {
-			SaveFileDialog dlg = new SaveFileDialog();
-			DialogResult result = dlg.ShowDialog();
-			if (result == DialogResult.OK) {
-				GenereDatas(dlg.FileName);
-			}
-		}
-
 		private void SetSelect() {
 			if (selLigne != -1) {
 				txbX1.Text = lstTriangle[selLigne].x1.ToString();
@@ -343,8 +347,8 @@ namespace TriangulArt {
 		}
 
 		private void bpRedraw_Click(object sender, EventArgs e) {
-			FillTriangles();
 			DisplayList();
+			FillTriangles();
 		}
 
 		private void bpDelete_Click(object sender, EventArgs e) {
@@ -374,6 +378,11 @@ namespace TriangulArt {
 				SetInfo("Triangle enregistré : (" + t.x1 + "," + t.y1 + "),(" + t.x2 + "," + t.y2 + "),(" + t.x3 + "," + t.y3 + ")");
 				AddTriangle(t);
 			}
+		}
+
+		private void chkPlus_CheckedChanged(object sender, EventArgs e) {
+			BitmapCpc.cpcPlus = chkPlus.Checked;
+			FillTriangles();
 		}
 	}
 }
