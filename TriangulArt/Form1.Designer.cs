@@ -58,6 +58,8 @@
 			this.bpImport = new System.Windows.Forms.Button();
 			this.bpImportImage = new System.Windows.Forms.Button();
 			this.bpClear = new System.Windows.Forms.Button();
+			this.bpMiroirHorizontal = new System.Windows.Forms.Button();
+			this.bpMiroirVertical = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -391,11 +393,33 @@
 			this.bpClear.UseVisualStyleBackColor = true;
 			this.bpClear.Click += new System.EventHandler(this.bpClear_Click);
 			// 
+			// bpMiroirHorizontal
+			// 
+			this.bpMiroirHorizontal.Location = new System.Drawing.Point(909, 183);
+			this.bpMiroirHorizontal.Name = "bpMiroirHorizontal";
+			this.bpMiroirHorizontal.Size = new System.Drawing.Size(116, 23);
+			this.bpMiroirHorizontal.TabIndex = 29;
+			this.bpMiroirHorizontal.Text = "Miroir Horizontal";
+			this.bpMiroirHorizontal.UseVisualStyleBackColor = true;
+			this.bpMiroirHorizontal.Click += new System.EventHandler(this.bpMiroirHorizontal_Click);
+			// 
+			// bpMiroirVertical
+			// 
+			this.bpMiroirVertical.Location = new System.Drawing.Point(909, 214);
+			this.bpMiroirVertical.Name = "bpMiroirVertical";
+			this.bpMiroirVertical.Size = new System.Drawing.Size(116, 23);
+			this.bpMiroirVertical.TabIndex = 30;
+			this.bpMiroirVertical.Text = "Miroir Verticall";
+			this.bpMiroirVertical.UseVisualStyleBackColor = true;
+			this.bpMiroirVertical.Click += new System.EventHandler(this.bpMiroirVertical_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1038, 695);
+			this.Controls.Add(this.bpMiroirVertical);
+			this.Controls.Add(this.bpMiroirHorizontal);
 			this.Controls.Add(this.bpClear);
 			this.Controls.Add(this.bpImportImage);
 			this.Controls.Add(this.bpImport);
@@ -479,6 +503,8 @@
 		private System.Windows.Forms.Button bpImport;
 		private System.Windows.Forms.Button bpImportImage;
 		private System.Windows.Forms.Button bpClear;
+		private System.Windows.Forms.Button bpMiroirHorizontal;
+		private System.Windows.Forms.Button bpMiroirVertical;
 	}
 }
 

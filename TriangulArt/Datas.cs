@@ -112,6 +112,24 @@ namespace TriangulArt {
 			lstTriangle.Clear();
 		}
 
+		public void MiroirHorizontal() {
+			int nb = lstTriangle.Count;
+			for (int i = 0; i < nb; i++) {
+				Triangle t = lstTriangle[i];
+				Triangle tn = new Triangle(256 - t.x1, t.y1, 256 - t.x2, t.y2, 256 - t.x3, t.y3, t.color);
+				lstTriangle.Add(tn);
+			}
+		}
+
+		public void MiroirVertical() {
+			int nb = lstTriangle.Count;
+			for (int i = 0; i < nb; i++) {
+				Triangle t = lstTriangle[i];
+				Triangle tn = new Triangle(t.x1, 256 - t.y1, t.x2, 256 - t.y2, t.x3, 256 - t.y3, t.color);
+				lstTriangle.Add(tn);
+			}
+		}
+
 		public bool Import(string fileName) {
 			bool ret = false;
 			lstTriangle.Clear();
@@ -130,7 +148,7 @@ namespace TriangulArt {
 		private void AnalyseLigne(string line) {
 			string ltrait = line.Trim();
 			if (ltrait.Length > 6) {
-				if (ltrait.Substring(0, 3) == "DB ") {
+				if (ltrait.Substring(0, 2) == "DB") {
 					ltrait = ltrait.Substring(3).Trim();
 					char[] delimiters = new char[] { ',', '#' };
 					string[] param = ltrait.Split(delimiters);
@@ -143,7 +161,7 @@ namespace TriangulArt {
 						int y3 = int.Parse(param[11], System.Globalization.NumberStyles.HexNumber);
 						int c = int.Parse(param[13], System.Globalization.NumberStyles.HexNumber);
 						if (x1 >= 0 && y1 >= 0 && x2 >= 0 && y2 >= 0 && x3 >= 0 && y3 >= 0) {
-							Triangle t = new Triangle(x1, y1, x2, y2, x3, y3, c);
+							Triangle t = new Triangle(x1, y1, x2, y2, x3, y3, c & 0x0F);
 							lstTriangle.Add(t);
 						}
 					}
@@ -156,7 +174,7 @@ namespace TriangulArt {
 			if (withCode)
 				GenereAsm.GenereDrawTriangleCode(sw);
 
-			GenereAsm.GenereDatas(sw, lstTriangle);
+			GenereAsm.GenereDatas(sw, lstTriangle, palette);
 			if (withCode)
 				GenereAsm.GenereDrawTriangleData(sw);
 

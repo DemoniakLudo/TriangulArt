@@ -14,6 +14,8 @@
 			this.y2 = y2;
 			this.x3 = x3;
 			this.y3 = y3;
+			Normalise2();
+			Normalise3();
 			this.color = color;
 		}
 

@@ -10,7 +10,7 @@ namespace TriangulArt {
 			return sw;
 		}
 
-		static public void GenereDatas(StreamWriter sw, List<Triangle> lstTriangle) {
+		static public void GenereDatas(StreamWriter sw, List<Triangle> lstTriangle, int[] palette) {
 			int nbOctets = 0;
 			sw.WriteLine(";");
 			sw.WriteLine("; Donnees des triangles a afficher.");
@@ -29,6 +29,13 @@ namespace TriangulArt {
 				nbOctets += 7;
 			}
 			sw.WriteLine("; Taille " + nbOctets.ToString() + " octets");
+			sw.WriteLine(";");
+			sw.WriteLine("Palette:");
+			string s = "";
+			for (int i = 0; i < 4; i++)
+				s += BitmapCpc.CpcVGA[palette[i]];
+
+			sw.WriteLine("\tDB	\"" + s + "\"");
 		}
 
 		static public void GenereDrawTriangleCode(StreamWriter sw) {
@@ -374,7 +381,7 @@ namespace TriangulArt {
 			sw.WriteLine("	INC	L");
 			sw.WriteLine("	INC	DE");
 			sw.WriteLine("	RET");
-			}
+		}
 
 		static public void GenereDrawTriangleData(StreamWriter sw) {
 			sw.WriteLine("pen1:");

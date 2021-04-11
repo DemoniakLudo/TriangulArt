@@ -61,12 +61,8 @@ namespace TriangulArt {
 				&& int.TryParse(txbY2.Text, out y2)
 				&& int.TryParse(txbX3.Text, out x3)
 				&& int.TryParse(txbY3.Text, out y3)) {
-				if (x1 >= 0 && x1 < 256 && y1 >= 0 && y1 < 256 && x2 >= 0 && x2 < 256 && y2 >= 0 && y2 < 256 && x3 >= 0 && x3 < 256 && y3 >= 0 && y3 < 256) {
-					Triangle t = new Triangle(x1, y1, x2, y2, x3, y3, selColor);
-					t.Normalise2();
-					t.Normalise3();
-					return t;
-				}
+				if (x1 >= 0 && x1 < 256 && y1 >= 0 && y1 < 256 && x2 >= 0 && x2 < 256 && y2 >= 0 && y2 < 256 && x3 >= 0 && x3 < 256 && y3 >= 0 && y3 < 256)
+					return new Triangle(x1, y1, x2, y2, x3, y3, selColor);
 				else
 					MessageBox.Show("Les coordonnées doivent être comprises entre 0 et 255");
 			}
@@ -300,7 +296,9 @@ namespace TriangulArt {
 				txbY2.Text = t.y2.ToString();
 				txbX3.Text = t.x3.ToString();
 				txbY3.Text = t.y3.ToString();
-				datas.FillTriangles(bmpLock);
+				selColor = t.color;
+				FillTriangles();
+				UpdatePalette();
 				bpEdit.Enabled = bpDelete.Enabled = true;
 			}
 			else
@@ -315,7 +313,7 @@ namespace TriangulArt {
 		private void bpDelete_Click(object sender, EventArgs e) {
 			datas.DeleteSelTriangle();
 			DisplayList();
-			datas.FillTriangles(bmpLock);
+			FillTriangles();
 		}
 
 		private void bpEdit_Click(object sender, EventArgs e) {
@@ -367,6 +365,18 @@ namespace TriangulArt {
 			datas.Clear();
 			DisplayList();
 			Reset();
+		}
+
+		private void bpMiroirHorizontal_Click(object sender, EventArgs e) {
+			datas.MiroirHorizontal();
+			DisplayList();
+			FillTriangles();
+		}
+
+		private void bpMiroirVertical_Click(object sender, EventArgs e) {
+			datas.MiroirVertical();
+			DisplayList();
+			FillTriangles();
 		}
 	}
 }
