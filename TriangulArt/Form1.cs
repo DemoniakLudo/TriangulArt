@@ -9,30 +9,34 @@ namespace TriangulArt {
 	public partial class Form1 : Form {
 		private BitmapCpc bitmapCpc = new BitmapCpc();
 		private DirectBitmap bmpLock;
-		private List<Triangle> lstTriangle = new List<Triangle>();
 		private bool modeAddTriangle = false;
 		private int numPt;
 		Triangle tri;
 		private int oldx1, oldy1;
 		private int selColor = 1;
-		private int selLigne = -1;
+		private Bitmap bmpFond = null;
+		private Datas datas = new Datas();
 
 		public Form1() {
 			InitializeComponent();
 			bmpLock = new DirectBitmap(pictureBox.Width, pictureBox.Height);
 			Reset();
+			for (int i = 0; i < 4; i++)
+				datas.palette[i] = BitmapCpc.Palette[i];
 		}
-
 
 		public void Reset(bool force = false) {
-			for (int y = 0; y < bmpLock.Height; y += 2)
-				bmpLock.SetHorLineDouble(0, y, BitmapCpc.TailleX, GetPalCPC(BitmapCpc.Palette[0]));
+			if (bmpFond != null) {
+				for (int y = 0; y < 256; y++)
+					for (int x = 0; x < 256; x++)
+						bmpLock.SetHorLineDouble(x << 1, y << 1, 2, bmpFond.GetPixel(x, y).ToArgb());
+
+			}
+			else
+				for (int y = 0; y < bmpLock.Height; y += 2)
+					bmpLock.SetHorLineDouble(0, y, BitmapCpc.TailleX, datas.GetPalCPC(BitmapCpc.Palette[0]));
 
 			Render();
-		}
-
-		private int GetPalCPC(int c) {
-			return BitmapCpc.cpcPlus ? (((c & 0xF0) >> 4) * 17) + ((((c & 0xF00) >> 8) * 17) << 8) + (((c & 0x0F) * 17) << 16) : BitmapCpc.RgbCPC[c < 27 ? c : 0].GetColor;
 		}
 
 		private void UpdatePalette() {
@@ -58,8 +62,7 @@ namespace TriangulArt {
 				&& int.TryParse(txbX3.Text, out x3)
 				&& int.TryParse(txbY3.Text, out y3)) {
 				if (x1 >= 0 && x1 < 256 && y1 >= 0 && y1 < 256 && x2 >= 0 && x2 < 256 && y2 >= 0 && y2 < 256 && x3 >= 0 && x3 < 256 && y3 >= 0 && y3 < 256) {
-					Triangle t = new Triangle(x1, y1, x2, y2, x3, y3);
-					t.color = selColor;
+					Triangle t = new Triangle(x1, y1, x2, y2, x3, y3, selColor);
 					t.Normalise2();
 					t.Normalise3();
 					return t;
@@ -72,20 +75,27 @@ namespace TriangulArt {
 			return null;
 		}
 
+		private void FillTriangles() {
+			Reset();
+			datas.FillTriangles(bmpLock);
+			Render();
+		}
+
+
 		private void DisplayList() {
 			listTriangles.Items.Clear();
-			for (int i = 0; i < lstTriangle.Count; i++) {
-				Triangle t = lstTriangle[i];
+			for (int i = 0; i < datas.lstTriangle.Count; i++) {
+				Triangle t = datas.lstTriangle[i];
 				listTriangles.Items.Add("Triangle " + i.ToString("000") + " : (" + t.x1 + "," + t.y1 + "),(" + t.x2 + "," + t.y2 + "),(" + t.x3 + "," + t.y3 + ")");
 			}
 			txbX1.Text = txbX2.Text = txbX3.Text = txbY1.Text = txbY2.Text = txbY3.Text = "";
-			selLigne = -1;
+			datas.SelectTriangle(-1);
 			bpEdit.Enabled = bpDelete.Enabled = false;
 		}
 
 		private void AddTriangle(Triangle t) {
-			lstTriangle.Add(t);
-			FillTriangle(t);
+			datas.lstTriangle.Add(t);
+			datas.FillTriangle(bmpLock, t);
 			DisplayList();
 		}
 
@@ -150,6 +160,10 @@ namespace TriangulArt {
 						break;
 				}
 			}
+			else
+				if (e.Button == MouseButtons.Right) {
+					listTriangles.SelectedIndex = datas.SelTriangle(xReel, yReel);
+				}
 			pictureBox.Refresh();
 		}
 
@@ -169,58 +183,6 @@ namespace TriangulArt {
 			listInfo.SelectedIndex = listInfo.Items.Count - 1;
 		}
 
-		private void FillTriangle(Triangle t, bool selected = false) {
-			int dx1 = t.x3 - t.x1;
-			int dy1 = t.y3 - t.y1;
-			int sgn1 = dx1 > 0 ? 1 : -1;
-			dx1 = Math.Abs(dx1);
-			int err1 = 0;
-			int dx2 = t.x2 - t.x1;
-			int dy2 = t.y2 - t.y1;
-			int sgn2 = dx2 > 0 ? 1 : -1;
-			dx2 = Math.Abs(dx2);
-			int err2 = 0;
-			int xl = t.x1;
-			int xr = t.x1;
-			if (t.y1 == t.y2)
-				xr = t.x2;
-
-			for (int y = t.y1; y < t.y3; y++) {
-				int color = selected ? (y << 13) + (y << 3) + (y << 22) : GetPalCPC(BitmapCpc.Palette[t.color]);
-				if (xr > xl)
-					bmpLock.SetHorLineDouble(xl << 1, y << 1, (xr - xl) << 1, color);
-				else
-					bmpLock.SetHorLineDouble((xl + xr - xl) << 1, y << 1, (xl - xr) << 1, color);
-
-				err1 += dx1;
-				while (err1 >= dy1) {
-					xl += sgn1;
-					err1 -= dy1;
-				}
-				if (y == t.y2) { // On passe au tracé du second "demi-triangle"
-					dx2 = t.x3 - t.x2;
-					dy2 = t.y3 - t.y2;
-					sgn2 = dx2 > 0 ? 1 : -1;
-					dx2 = Math.Abs(dx2);
-					err2 = 0;
-				}
-				err2 += dx2;
-				while (err2 >= dy2) {
-					xr += sgn2;
-					err2 -= dy2;
-				}
-			}
-		}
-
-		private void FillTriangles() {
-			Reset();
-			for (int i = 0; i < lstTriangle.Count; i++) {
-				Triangle t = lstTriangle[i];
-				FillTriangle(t, i == selLigne);
-			}
-			Render();
-		}
-
 		private void bpLoad_Click(object sender, EventArgs e) {
 			OpenFileDialog dlg = new OpenFileDialog();
 			dlg.Filter = "Fichiers xml (*.xml)|*.xml";
@@ -228,13 +190,12 @@ namespace TriangulArt {
 			if (result == DialogResult.OK) {
 				FileStream fileParam = File.Open(dlg.FileName, FileMode.Open);
 				try {
-					lstTriangle = (List<Triangle>)new XmlSerializer(typeof(List<Triangle>)).Deserialize(fileParam);
+					datas = (Datas)new XmlSerializer(typeof(Datas)).Deserialize(fileParam);
 					SetInfo("Lecture triangles ok");
+					for (int i = 0; i < 4; i++)
+						BitmapCpc.Palette[i] = datas.palette[i];
 
-					foreach (Triangle t in lstTriangle)
-						t.Move(8);
-
-
+					UpdatePalette();
 					FillTriangles();
 					DisplayList();
 				}
@@ -252,7 +213,7 @@ namespace TriangulArt {
 			if (result == DialogResult.OK) {
 				FileStream file = File.Open(dlg.FileName, FileMode.Create);
 				try {
-					new XmlSerializer(typeof(List<Triangle>)).Serialize(file, lstTriangle);
+					new XmlSerializer(typeof(Datas)).Serialize(file, datas);
 					SetInfo("Sauvegarde triangles ok");
 				}
 				catch {
@@ -262,20 +223,24 @@ namespace TriangulArt {
 			}
 		}
 
+		private void bpImport_Click(object sender, EventArgs e) {
+			OpenFileDialog dlg = new OpenFileDialog();
+			dlg.Filter = "Fichiers assembleur (*.asm)|*.asm";
+			DialogResult result = dlg.ShowDialog();
+			if (result == DialogResult.OK) {
+				datas.Import(dlg.FileName);
+				SetInfo("Import triangles ok");
+				FillTriangles();
+				DisplayList();
+			}
+		}
+
 		private void bpGenereAsm_Click(object sender, EventArgs e) {
 			SaveFileDialog dlg = new SaveFileDialog();
 			dlg.Filter = "Fichiers assembleur (*.asm)|*.asm";
 			DialogResult result = dlg.ShowDialog();
 			if (result == DialogResult.OK) {
-				StreamWriter sw = GenereAsm.OpenAsm(dlg.FileName);
-				if (chkCodeAsm.Checked)
-					GenereAsm.GenereDrawTriangleCode(sw);
-
-				GenereAsm.GenereDatas(sw, lstTriangle);
-				if (chkCodeAsm.Checked)
-					GenereAsm.GenereDrawTriangleData(sw);
-
-				GenereAsm.CloseAsm(sw);
+				datas.GenereSourceAsm(dlg.FileName, chkCodeAsm.Checked);
 				SetInfo("Génération assembleur ok.");
 			}
 		}
@@ -284,7 +249,7 @@ namespace TriangulArt {
 			EditColor ed = new EditColor(pen, BitmapCpc.Palette[pen], bitmapCpc.GetColorPal(pen).GetColorArgb, BitmapCpc.cpcPlus);
 			ed.ShowDialog(this);
 			if (ed.isValide) {
-				BitmapCpc.Palette[pen] = ed.ValColor;
+				BitmapCpc.Palette[pen] = datas.palette[pen] = ed.ValColor;
 				UpdatePalette();
 				FillTriangles();
 			}
@@ -326,24 +291,20 @@ namespace TriangulArt {
 				SetNewColor(3);
 		}
 
-		private void SetSelect() {
-			if (selLigne != -1) {
-				txbX1.Text = lstTriangle[selLigne].x1.ToString();
-				txbY1.Text = lstTriangle[selLigne].y1.ToString();
-				txbX2.Text = lstTriangle[selLigne].x2.ToString();
-				txbY2.Text = lstTriangle[selLigne].y2.ToString();
-				txbX3.Text = lstTriangle[selLigne].x3.ToString();
-				txbY3.Text = lstTriangle[selLigne].y3.ToString();
-				FillTriangles();
+		private void listTriangles_SelectedIndexChanged(object sender, EventArgs e) {
+			Triangle t = datas.SelectTriangle(listTriangles.SelectedIndex);
+			if (t != null) {
+				txbX1.Text = t.x1.ToString();
+				txbY1.Text = t.y1.ToString();
+				txbX2.Text = t.x2.ToString();
+				txbY2.Text = t.y2.ToString();
+				txbX3.Text = t.x3.ToString();
+				txbY3.Text = t.y3.ToString();
+				datas.FillTriangles(bmpLock);
 				bpEdit.Enabled = bpDelete.Enabled = true;
 			}
 			else
 				DisplayList();
-		}
-
-		private void listTriangles_SelectedIndexChanged(object sender, EventArgs e) {
-			selLigne = listTriangles.SelectedIndex;
-			SetSelect();
 		}
 
 		private void bpRedraw_Click(object sender, EventArgs e) {
@@ -352,21 +313,16 @@ namespace TriangulArt {
 		}
 
 		private void bpDelete_Click(object sender, EventArgs e) {
-			lstTriangle.RemoveAt(selLigne);
+			datas.DeleteSelTriangle();
 			DisplayList();
-			FillTriangles();
+			datas.FillTriangles(bmpLock);
 		}
 
 		private void bpEdit_Click(object sender, EventArgs e) {
 			Triangle t = CheckDatas();
 			if (t != null) {
-				lstTriangle[selLigne].x1 = t.x1;
-				lstTriangle[selLigne].y1 = t.y1;
-				lstTriangle[selLigne].x2 = t.x2;
-				lstTriangle[selLigne].y2 = t.y2;
-				lstTriangle[selLigne].x3 = t.x3;
-				lstTriangle[selLigne].y3 = t.y3;
-				int memoSel = selLigne;
+				datas.EditSelTriangle(t, selColor);
+				int memoSel = datas.GetSelTriangle();
 				DisplayList();
 				listTriangles.SelectedIndex = memoSel;
 			}
@@ -377,12 +333,40 @@ namespace TriangulArt {
 			if (t != null) {
 				SetInfo("Triangle enregistré : (" + t.x1 + "," + t.y1 + "),(" + t.x2 + "," + t.y2 + "),(" + t.x3 + "," + t.y3 + ")");
 				AddTriangle(t);
+				FillTriangles();
 			}
 		}
 
 		private void chkPlus_CheckedChanged(object sender, EventArgs e) {
 			BitmapCpc.cpcPlus = chkPlus.Checked;
 			FillTriangles();
+		}
+
+		private void bpImportImage_Click(object sender, EventArgs e) {
+			OpenFileDialog dlg = new OpenFileDialog();
+			dlg.Filter = "Fichier image (*.bmp, *.gif, *.png, *.jpg,*.jpeg)|*.bmp;*.gif;*.png;*.jpg;*.jpeg;";
+			DialogResult result = dlg.ShowDialog();
+			if (result == DialogResult.OK) {
+				using (Bitmap b = new Bitmap(dlg.FileName)) {
+					if (b.Width == 256 && b.Height == 256) {
+						bmpFond = new Bitmap(b);
+						Reset();
+						SetInfo("Lecture image de fond ok.");
+					}
+					else
+						MessageBox.Show("L'image n'a pas le bon format (256x256 pixels)");
+				}
+			}
+		}
+
+		private void bpClear_Click(object sender, EventArgs e) {
+			if (bmpFond != null) {
+				bmpFond.Dispose();
+				bmpFond = null;
+			}
+			datas.Clear();
+			DisplayList();
+			Reset();
 		}
 	}
 }

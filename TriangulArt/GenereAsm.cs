@@ -90,7 +90,7 @@ namespace TriangulArt {
 			sw.WriteLine("	DJNZ	CalcAdr");
 			sw.WriteLine("; calculer points a afficher en fonction de la couleur");
 			sw.WriteLine("	LD	DE,pen1");
-			sw.WriteLine("	LD	HL,PtMode1C1");
+			sw.WriteLine("	LD	HL,PtMode1C1+256		; On démarre au pen 1 (pen0=que des 0)");
 			sw.WriteLine("	LD	B,32					; Tableau structure {Point} (32 valeurs)");
 			sw.WriteLine("InitPen:");
 			sw.WriteLine("	CALL	Set3Pen					; Ecriture Masque + premier octet a ecrire");
@@ -107,14 +107,14 @@ namespace TriangulArt {
 			sw.WriteLine("	CALL	Set3Pen					; Ecriture Masque + dernier octet a ecrire");
 			sw.WriteLine("	INC	L");
 			sw.WriteLine("	INC	L");
-			sw.WriteLine("	INC	L					; 3 NOP pour aligner sur 8 octets");
+			sw.WriteLine("	INC	L					; 3 valeurs a zeros pour aligner sur 8 octets");
 			sw.WriteLine("	DJNZ	InitPen");
 			sw.WriteLine("");
 			sw.WriteLine("	LD	IX,Frame_0				; Premiere frame");
 			sw.WriteLine("BclDrawFrame:");
 			sw.WriteLine("	LD	A,(IX+6)				; Couleur");
 			sw.WriteLine("	AND	3");
-			sw.WriteLine("	ADD	A,PtMode1C1/256-1");
+			sw.WriteLine("	ADD	A,PtMode1C1/256");
 			sw.WriteLine("	LD	(DrawLigneCoul+1),A");
 			sw.WriteLine("	LD	(DrawLigneCoul3+1),A");
 			sw.WriteLine("	LD	H,A");
