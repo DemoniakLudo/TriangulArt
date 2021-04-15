@@ -62,7 +62,12 @@
 			this.bpMiroirVertical = new System.Windows.Forms.Button();
 			this.bpUp = new System.Windows.Forms.Button();
 			this.bpDown = new System.Windows.Forms.Button();
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.rbStandard = new System.Windows.Forms.RadioButton();
+			this.rbHorizontal = new System.Windows.Forms.RadioButton();
+			this.rbVertical = new System.Windows.Forms.RadioButton();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
+			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// pictureBox
@@ -437,11 +442,62 @@
 			this.bpDown.Visible = false;
 			this.bpDown.Click += new System.EventHandler(this.bpDown_Click);
 			// 
+			// groupBox1
+			// 
+			this.groupBox1.Controls.Add(this.rbVertical);
+			this.groupBox1.Controls.Add(this.rbHorizontal);
+			this.groupBox1.Controls.Add(this.rbStandard);
+			this.groupBox1.Location = new System.Drawing.Point(527, 102);
+			this.groupBox1.Name = "groupBox1";
+			this.groupBox1.Size = new System.Drawing.Size(498, 42);
+			this.groupBox1.TabIndex = 33;
+			this.groupBox1.TabStop = false;
+			this.groupBox1.Text = "Mod de rendu";
+			// 
+			// rbStandard
+			// 
+			this.rbStandard.AutoSize = true;
+			this.rbStandard.Checked = true;
+			this.rbStandard.Location = new System.Drawing.Point(9, 19);
+			this.rbStandard.Name = "rbStandard";
+			this.rbStandard.Size = new System.Drawing.Size(68, 17);
+			this.rbStandard.TabIndex = 0;
+			this.rbStandard.TabStop = true;
+			this.rbStandard.Text = "Standard";
+			this.rbStandard.UseVisualStyleBackColor = true;
+			this.rbStandard.CheckedChanged += new System.EventHandler(this.rbStandard_CheckedChanged);
+			// 
+			// rbHorizontal
+			// 
+			this.rbHorizontal.AutoSize = true;
+			this.rbHorizontal.Location = new System.Drawing.Point(116, 19);
+			this.rbHorizontal.Name = "rbHorizontal";
+			this.rbHorizontal.Size = new System.Drawing.Size(98, 17);
+			this.rbHorizontal.TabIndex = 1;
+			this.rbHorizontal.TabStop = true;
+			this.rbHorizontal.Text = "Miroir horizontal";
+			this.rbHorizontal.UseVisualStyleBackColor = true;
+			this.rbHorizontal.CheckedChanged += new System.EventHandler(this.rbHorizontal_CheckedChanged);
+			// 
+			// rbVertical
+			// 
+			this.rbVertical.AutoSize = true;
+			this.rbVertical.Enabled = false;
+			this.rbVertical.Location = new System.Drawing.Point(253, 19);
+			this.rbVertical.Name = "rbVertical";
+			this.rbVertical.Size = new System.Drawing.Size(87, 17);
+			this.rbVertical.TabIndex = 2;
+			this.rbVertical.TabStop = true;
+			this.rbVertical.Text = "Miroir vertical";
+			this.rbVertical.UseVisualStyleBackColor = true;
+			this.rbVertical.CheckedChanged += new System.EventHandler(this.rbVertical_CheckedChanged);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1038, 695);
+			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.bpDown);
 			this.Controls.Add(this.bpUp);
 			this.Controls.Add(this.bpMiroirVertical);
@@ -487,6 +543,8 @@
 			this.Name = "Form1";
 			this.Text = "TriangulArt";
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
+			this.groupBox1.ResumeLayout(false);
+			this.groupBox1.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -533,6 +591,10 @@
 		private System.Windows.Forms.Button bpMiroirVertical;
 		private System.Windows.Forms.Button bpUp;
 		private System.Windows.Forms.Button bpDown;
+		private System.Windows.Forms.GroupBox groupBox1;
+		private System.Windows.Forms.RadioButton rbVertical;
+		private System.Windows.Forms.RadioButton rbHorizontal;
+		private System.Windows.Forms.RadioButton rbStandard;
 	}
 }
 

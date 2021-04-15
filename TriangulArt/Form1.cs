@@ -199,6 +199,19 @@ namespace TriangulArt {
 						if (c > 3)
 							c = 1;
 					}
+					switch (datas.modeRendu) {
+						case 0:
+							rbStandard.Checked = true;
+							break;
+
+						case 1:
+							rbHorizontal.Checked = true;
+							break;
+
+						case 2:
+							rbVertical.Checked = true;
+							break;
+					}
 
 					for (int i = 0; i < 4; i++)
 						BitmapCpc.Palette[i] = datas.palette[i];
@@ -404,6 +417,24 @@ namespace TriangulArt {
 			int memoSel = listTriangles.SelectedIndex;
 			datas.DownTriangle();
 			listTriangles.SelectedIndex = memoSel + 1;
+		}
+
+		private void rbStandard_CheckedChanged(object sender, EventArgs e) {
+			datas.modeRendu = 0;
+			DisplayList();
+			FillTriangles();
+		}
+
+		private void rbHorizontal_CheckedChanged(object sender, EventArgs e) {
+			datas.modeRendu = 1;
+			DisplayList();
+			FillTriangles();
+		}
+
+		private void rbVertical_CheckedChanged(object sender, EventArgs e) {
+			datas.modeRendu = 2;
+			DisplayList();
+			FillTriangles();
 		}
 	}
 }

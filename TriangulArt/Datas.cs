@@ -6,6 +6,7 @@ using System.Xml.Serialization;
 namespace TriangulArt {
 	[System.Serializable]
 	public class Datas {
+		public int modeRendu = 0;
 		public List<Triangle> lstTriangle = new List<Triangle>();
 		public int[] palette = new int[4];
 		private int selLigne = -1;
@@ -14,24 +15,24 @@ namespace TriangulArt {
 			return BitmapCpc.cpcPlus ? (((c & 0xF0) >> 4) * 17) + ((((c & 0xF00) >> 8) * 17) << 8) + (((c & 0x0F) * 17) << 16) : BitmapCpc.RgbCPC[c < 27 ? c : 0].GetColor;
 		}
 
-		public void FillTriangle(DirectBitmap bmpLock, Triangle t, bool selected = false) {
-			int dx1 = t.x3 - t.x1;
-			int dy1 = t.y3 - t.y1;
+		private void FillTriangle(DirectBitmap bmpLock, int x1, int y1, int x2, int y2, int x3, int y3, int c, bool selected) {
+			int dx1 = x3 - x1;
+			int dy1 = y3 - y1;
 			int sgn1 = dx1 > 0 ? 1 : -1;
 			dx1 = Math.Abs(dx1);
 			int err1 = 0;
-			int dx2 = t.x2 - t.x1;
-			int dy2 = t.y2 - t.y1;
+			int dx2 = x2 - x1;
+			int dy2 = y2 - y1;
 			int sgn2 = dx2 > 0 ? 1 : -1;
 			dx2 = Math.Abs(dx2);
 			int err2 = 0;
-			int xl = t.x1;
-			int xr = t.x1;
-			if (t.y1 == t.y2)
-				xr = t.x2;
+			int xl = x1;
+			int xr = x1;
+			if (y1 == y2)
+				xr = x2;
 
-			for (int y = t.y1; y < t.y3; y++) {
-				int color = selected ? (y << 13) + (y << 3) + (y << 22) : GetPalCPC(BitmapCpc.Palette[t.color]);
+			for (int y = y1; y < y3; y++) {
+				int color = selected ? (y << 13) + (y << 3) + (y << 22) : GetPalCPC(BitmapCpc.Palette[c]);
 				if (xr > xl)
 					bmpLock.SetHorLineDouble(xl << 1, y << 1, (xr - xl) << 1, color);
 				else
@@ -42,9 +43,9 @@ namespace TriangulArt {
 					xl += sgn1;
 					err1 -= dy1;
 				}
-				if (y == t.y2) { // On passe au tracé du second "demi-triangle"
-					dx2 = t.x3 - t.x2;
-					dy2 = t.y3 - t.y2;
+				if (y == y2) { // On passe au tracé du second "demi-triangle"
+					dx2 = x3 - x2;
+					dy2 = y3 - y2;
 					sgn2 = dx2 > 0 ? 1 : -1;
 					dx2 = Math.Abs(dx2);
 					err2 = 0;
@@ -55,6 +56,21 @@ namespace TriangulArt {
 					err2 -= dy2;
 				}
 			}
+		}
+
+		public void FillTriangle(DirectBitmap bmpLock, Triangle t, bool selected = false) {
+			int x1 = t.x1;
+			int y1 = t.y1;
+			int x2 = t.x2;
+			int y2 = t.y2;
+			int x3 = t.x3;
+			int y3 = t.y3;
+			FillTriangle(bmpLock, x1, y1, x2, y2, x3, y3, t.color, selected);
+			if (modeRendu == 1)
+				FillTriangle(bmpLock, 255 - x1, y1, 255 - x2, y2, 255 - x3, y3, t.color, false);
+			else
+				if (modeRendu == 2)
+					FillTriangle(bmpLock, x1, 255 - y1, x2, 255 - y2, x3, 255 - y3, t.color, false);
 		}
 
 		public void FillTriangles(DirectBitmap bmpLock) {
