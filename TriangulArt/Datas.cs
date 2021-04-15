@@ -108,6 +108,18 @@ namespace TriangulArt {
 			lstTriangle.RemoveAt(selLigne);
 		}
 
+		public void UpTriangle() {
+			Triangle t = lstTriangle[selLigne];
+			lstTriangle[selLigne] = lstTriangle[selLigne - 1];
+			lstTriangle[selLigne - 1] = t;
+		}
+
+		public void DownTriangle() {
+			Triangle t = lstTriangle[selLigne];
+			lstTriangle[selLigne] = lstTriangle[selLigne + 1];
+			lstTriangle[selLigne + 1] = t;
+		}
+
 		public void Clear() {
 			lstTriangle.Clear();
 		}

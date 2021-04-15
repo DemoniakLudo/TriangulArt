@@ -60,6 +60,8 @@
 			this.bpClear = new System.Windows.Forms.Button();
 			this.bpMiroirHorizontal = new System.Windows.Forms.Button();
 			this.bpMiroirVertical = new System.Windows.Forms.Button();
+			this.bpUp = new System.Windows.Forms.Button();
+			this.bpDown = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -297,7 +299,7 @@
 			this.listTriangles.FormattingEnabled = true;
 			this.listTriangles.Location = new System.Drawing.Point(521, 243);
 			this.listTriangles.Name = "listTriangles";
-			this.listTriangles.Size = new System.Drawing.Size(509, 186);
+			this.listTriangles.Size = new System.Drawing.Size(443, 186);
 			this.listTriangles.TabIndex = 20;
 			this.listTriangles.SelectedIndexChanged += new System.EventHandler(this.listTriangles_SelectedIndexChanged);
 			// 
@@ -413,11 +415,35 @@
 			this.bpMiroirVertical.UseVisualStyleBackColor = true;
 			this.bpMiroirVertical.Click += new System.EventHandler(this.bpMiroirVertical_Click);
 			// 
+			// bpUp
+			// 
+			this.bpUp.Location = new System.Drawing.Point(967, 243);
+			this.bpUp.Name = "bpUp";
+			this.bpUp.Size = new System.Drawing.Size(58, 27);
+			this.bpUp.TabIndex = 31;
+			this.bpUp.Text = "Up";
+			this.bpUp.UseVisualStyleBackColor = true;
+			this.bpUp.Visible = false;
+			this.bpUp.Click += new System.EventHandler(this.bpUp_Click);
+			// 
+			// bpDown
+			// 
+			this.bpDown.Location = new System.Drawing.Point(972, 402);
+			this.bpDown.Name = "bpDown";
+			this.bpDown.Size = new System.Drawing.Size(58, 27);
+			this.bpDown.TabIndex = 32;
+			this.bpDown.Text = "Down";
+			this.bpDown.UseVisualStyleBackColor = true;
+			this.bpDown.Visible = false;
+			this.bpDown.Click += new System.EventHandler(this.bpDown_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1038, 695);
+			this.Controls.Add(this.bpDown);
+			this.Controls.Add(this.bpUp);
 			this.Controls.Add(this.bpMiroirVertical);
 			this.Controls.Add(this.bpMiroirHorizontal);
 			this.Controls.Add(this.bpClear);
@@ -505,6 +531,8 @@
 		private System.Windows.Forms.Button bpClear;
 		private System.Windows.Forms.Button bpMiroirHorizontal;
 		private System.Windows.Forms.Button bpMiroirVertical;
+		private System.Windows.Forms.Button bpUp;
+		private System.Windows.Forms.Button bpDown;
 	}
 }
 

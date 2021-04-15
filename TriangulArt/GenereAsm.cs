@@ -97,7 +97,7 @@ namespace TriangulArt {
 			sw.WriteLine("	DJNZ	CalcAdr");
 			sw.WriteLine("; calculer points a afficher en fonction de la couleur");
 			sw.WriteLine("	LD	DE,pen1");
-			sw.WriteLine("	LD	HL,PtMode1C1+256		; On démarre au pen 1 (pen0=que des 0)");
+			sw.WriteLine("	LD	HL,PtMode1C1");
 			sw.WriteLine("	LD	B,32					; Tableau structure {Point} (32 valeurs)");
 			sw.WriteLine("InitPen:");
 			sw.WriteLine("	CALL	Set3Pen					; Ecriture Masque + premier octet a ecrire");
@@ -107,6 +107,9 @@ namespace TriangulArt {
 			sw.WriteLine("	LD	(HL),A");
 			sw.WriteLine("	INC	H");
 			sw.WriteLine("	LD	(HL),A");
+			sw.WriteLine("	INC	H");
+			sw.WriteLine("	LD	(HL),A");
+			sw.WriteLine("	DEC	H");
 			sw.WriteLine("	DEC	H");
 			sw.WriteLine("	DEC	H");
 			sw.WriteLine("	INC	L");
@@ -361,10 +364,15 @@ namespace TriangulArt {
 			sw.WriteLine("	INC	H");
 			sw.WriteLine("	LD	(HL),A");
 			sw.WriteLine("	INC	H");
+			sw.WriteLine("	LD	(HL),A");
+			sw.WriteLine("	INC	H");
 			sw.WriteLine("	LD	(HL),A					; Stockage du masque pour les 3 pens");
 			sw.WriteLine("	DEC	H");
 			sw.WriteLine("	DEC	H");
+			sw.WriteLine("	DEC	H");
 			sw.WriteLine("	INC	L");
+			sw.WriteLine("	LD	(HL),0					; Pen 0");
+			sw.WriteLine("	INC	H");
 			sw.WriteLine("	LD	(HL),C					; Pen 1");
 			sw.WriteLine("	INC	H");
 			sw.WriteLine("	LD	A,C");
@@ -376,6 +384,7 @@ namespace TriangulArt {
 			sw.WriteLine("	INC	H");
 			sw.WriteLine("	OR	C");
 			sw.WriteLine("	LD	(HL),A					; Pen 3");
+			sw.WriteLine("	DEC	H");
 			sw.WriteLine("	DEC	H");
 			sw.WriteLine("	DEC	H");
 			sw.WriteLine("	INC	L");

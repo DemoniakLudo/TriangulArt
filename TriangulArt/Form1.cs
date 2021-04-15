@@ -85,6 +85,7 @@ namespace TriangulArt {
 				listTriangles.Items.Add("Triangle " + i.ToString("000") + " : (" + t.x1 + "," + t.y1 + "),(" + t.x2 + "," + t.y2 + "),(" + t.x3 + "," + t.y3 + ")");
 			}
 			txbX1.Text = txbX2.Text = txbX3.Text = txbY1.Text = txbY2.Text = txbY3.Text = "";
+			bpUp.Visible = bpDown.Visible = false;
 			datas.SelectTriangle(-1);
 			bpEdit.Enabled = bpDelete.Enabled = false;
 		}
@@ -133,7 +134,7 @@ namespace TriangulArt {
 						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, tri.x1 << 1, tri.y1 << 1, oldx1 << 1, oldy1 << 1);
 						tri.x2 = xReel;
 						tri.y2 = yReel;
-						tri.Normalise2();
+						tri.TriSommets();
 						numPt = 3;
 						SetInfo("Attente positionnement troisième point triangle");
 						oldx1 = xReel;
@@ -150,7 +151,7 @@ namespace TriangulArt {
 						numPt = 1;
 						modeAddTriangle = false;
 						bpAddTriangle.Enabled = true;
-						tri.Normalise3();
+						tri.TriSommets3();
 						SetInfo("Triangle enregistré : (" + tri.x1 + "," + tri.y1 + "),(" + tri.x2 + "," + tri.y2 + "),(" + tri.x3 + "," + tri.y3 + ")");
 						AddTriangle(tri);
 						break;
@@ -188,6 +189,17 @@ namespace TriangulArt {
 				try {
 					datas = (Datas)new XmlSerializer(typeof(Datas)).Deserialize(fileParam);
 					SetInfo("Lecture triangles ok");
+					int c = 1;
+					for (int i = 0; i < datas.lstTriangle.Count; i++) {
+						datas.lstTriangle[i].Normalise();
+						//datas.lstTriangle[i].x1 += -2;
+						//datas.lstTriangle[i].x2 += -2;
+						//datas.lstTriangle[i].x3 += -2;
+						////	datas.lstTriangle[i].color = 1;
+						if (c > 3)
+							c = 1;
+					}
+
 					for (int i = 0; i < 4; i++)
 						BitmapCpc.Palette[i] = datas.palette[i];
 
@@ -300,6 +312,8 @@ namespace TriangulArt {
 				FillTriangles();
 				UpdatePalette();
 				bpEdit.Enabled = bpDelete.Enabled = true;
+				bpUp.Visible = listTriangles.SelectedIndex > 0;
+				bpDown.Visible = listTriangles.SelectedIndex < datas.lstTriangle.Count - 1;
 			}
 			else
 				DisplayList();
@@ -377,6 +391,19 @@ namespace TriangulArt {
 			datas.MiroirVertical();
 			DisplayList();
 			FillTriangles();
+		}
+
+		private void bpUp_Click(object sender, EventArgs e) {
+			int memoSel = listTriangles.SelectedIndex;
+			datas.UpTriangle();
+			listTriangles.SelectedIndex = memoSel - 1;
+
+		}
+
+		private void bpDown_Click(object sender, EventArgs e) {
+			int memoSel = listTriangles.SelectedIndex;
+			datas.DownTriangle();
+			listTriangles.SelectedIndex = memoSel + 1;
 		}
 	}
 }

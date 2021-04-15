@@ -14,12 +14,29 @@
 			this.y2 = y2;
 			this.x3 = x3;
 			this.y3 = y3;
-			Normalise2();
-			Normalise3();
+			TriSommets();
+			TriSommets3();
 			this.color = color;
 		}
 
-		public void Normalise2() {
+		private void NormaliseCoord(ref int coord) {
+			if (coord < 0)
+				coord = 0;
+			else
+				if (coord > 255)
+					coord = 255;
+		}
+
+		public void Normalise() {
+			NormaliseCoord(ref x1);
+			NormaliseCoord(ref x2);
+			NormaliseCoord(ref x3);
+			NormaliseCoord(ref y1);
+			NormaliseCoord(ref y2);
+			NormaliseCoord(ref y3);
+		}
+
+		public void TriSommets() {
 			if (y1 > y2) {
 				int tmp = y1;
 				y1 = y2;
@@ -30,7 +47,7 @@
 			}
 		}
 
-		public void Normalise3() {
+		public void TriSommets3() {
 			if (y1 > y3) {
 				int tmp = y1;
 				y1 = y3;
