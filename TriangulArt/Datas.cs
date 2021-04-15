@@ -140,24 +140,6 @@ namespace TriangulArt {
 			lstTriangle.Clear();
 		}
 
-		public void MiroirHorizontal() {
-			int nb = lstTriangle.Count;
-			for (int i = 0; i < nb; i++) {
-				Triangle t = lstTriangle[i];
-				Triangle tn = new Triangle(256 - t.x1, t.y1, 256 - t.x2, t.y2, 256 - t.x3, t.y3, t.color);
-				lstTriangle.Add(tn);
-			}
-		}
-
-		public void MiroirVertical() {
-			int nb = lstTriangle.Count;
-			for (int i = 0; i < nb; i++) {
-				Triangle t = lstTriangle[i];
-				Triangle tn = new Triangle(t.x1, 256 - t.y1, t.x2, 256 - t.y2, t.x3, 256 - t.y3, t.color);
-				lstTriangle.Add(tn);
-			}
-		}
-
 		public bool Import(string fileName) {
 			bool ret = false;
 			lstTriangle.Clear();

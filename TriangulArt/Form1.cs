@@ -394,18 +394,6 @@ namespace TriangulArt {
 			Reset();
 		}
 
-		private void bpMiroirHorizontal_Click(object sender, EventArgs e) {
-			datas.MiroirHorizontal();
-			DisplayList();
-			FillTriangles();
-		}
-
-		private void bpMiroirVertical_Click(object sender, EventArgs e) {
-			datas.MiroirVertical();
-			DisplayList();
-			FillTriangles();
-		}
-
 		private void bpUp_Click(object sender, EventArgs e) {
 			int memoSel = listTriangles.SelectedIndex;
 			datas.UpTriangle();

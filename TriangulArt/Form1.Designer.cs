@@ -58,14 +58,12 @@
 			this.bpImport = new System.Windows.Forms.Button();
 			this.bpImportImage = new System.Windows.Forms.Button();
 			this.bpClear = new System.Windows.Forms.Button();
-			this.bpMiroirHorizontal = new System.Windows.Forms.Button();
-			this.bpMiroirVertical = new System.Windows.Forms.Button();
 			this.bpUp = new System.Windows.Forms.Button();
 			this.bpDown = new System.Windows.Forms.Button();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.rbStandard = new System.Windows.Forms.RadioButton();
-			this.rbHorizontal = new System.Windows.Forms.RadioButton();
 			this.rbVertical = new System.Windows.Forms.RadioButton();
+			this.rbHorizontal = new System.Windows.Forms.RadioButton();
+			this.rbStandard = new System.Windows.Forms.RadioButton();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
@@ -400,26 +398,6 @@
 			this.bpClear.UseVisualStyleBackColor = true;
 			this.bpClear.Click += new System.EventHandler(this.bpClear_Click);
 			// 
-			// bpMiroirHorizontal
-			// 
-			this.bpMiroirHorizontal.Location = new System.Drawing.Point(909, 183);
-			this.bpMiroirHorizontal.Name = "bpMiroirHorizontal";
-			this.bpMiroirHorizontal.Size = new System.Drawing.Size(116, 23);
-			this.bpMiroirHorizontal.TabIndex = 29;
-			this.bpMiroirHorizontal.Text = "Miroir Horizontal";
-			this.bpMiroirHorizontal.UseVisualStyleBackColor = true;
-			this.bpMiroirHorizontal.Click += new System.EventHandler(this.bpMiroirHorizontal_Click);
-			// 
-			// bpMiroirVertical
-			// 
-			this.bpMiroirVertical.Location = new System.Drawing.Point(909, 214);
-			this.bpMiroirVertical.Name = "bpMiroirVertical";
-			this.bpMiroirVertical.Size = new System.Drawing.Size(116, 23);
-			this.bpMiroirVertical.TabIndex = 30;
-			this.bpMiroirVertical.Text = "Miroir Verticall";
-			this.bpMiroirVertical.UseVisualStyleBackColor = true;
-			this.bpMiroirVertical.Click += new System.EventHandler(this.bpMiroirVertical_Click);
-			// 
 			// bpUp
 			// 
 			this.bpUp.Location = new System.Drawing.Point(967, 243);
@@ -454,31 +432,6 @@
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Mod de rendu";
 			// 
-			// rbStandard
-			// 
-			this.rbStandard.AutoSize = true;
-			this.rbStandard.Checked = true;
-			this.rbStandard.Location = new System.Drawing.Point(9, 19);
-			this.rbStandard.Name = "rbStandard";
-			this.rbStandard.Size = new System.Drawing.Size(68, 17);
-			this.rbStandard.TabIndex = 0;
-			this.rbStandard.TabStop = true;
-			this.rbStandard.Text = "Standard";
-			this.rbStandard.UseVisualStyleBackColor = true;
-			this.rbStandard.CheckedChanged += new System.EventHandler(this.rbStandard_CheckedChanged);
-			// 
-			// rbHorizontal
-			// 
-			this.rbHorizontal.AutoSize = true;
-			this.rbHorizontal.Location = new System.Drawing.Point(116, 19);
-			this.rbHorizontal.Name = "rbHorizontal";
-			this.rbHorizontal.Size = new System.Drawing.Size(98, 17);
-			this.rbHorizontal.TabIndex = 1;
-			this.rbHorizontal.TabStop = true;
-			this.rbHorizontal.Text = "Miroir horizontal";
-			this.rbHorizontal.UseVisualStyleBackColor = true;
-			this.rbHorizontal.CheckedChanged += new System.EventHandler(this.rbHorizontal_CheckedChanged);
-			// 
 			// rbVertical
 			// 
 			this.rbVertical.AutoSize = true;
@@ -492,6 +445,31 @@
 			this.rbVertical.UseVisualStyleBackColor = true;
 			this.rbVertical.CheckedChanged += new System.EventHandler(this.rbVertical_CheckedChanged);
 			// 
+			// rbHorizontal
+			// 
+			this.rbHorizontal.AutoSize = true;
+			this.rbHorizontal.Location = new System.Drawing.Point(116, 19);
+			this.rbHorizontal.Name = "rbHorizontal";
+			this.rbHorizontal.Size = new System.Drawing.Size(98, 17);
+			this.rbHorizontal.TabIndex = 1;
+			this.rbHorizontal.TabStop = true;
+			this.rbHorizontal.Text = "Miroir horizontal";
+			this.rbHorizontal.UseVisualStyleBackColor = true;
+			this.rbHorizontal.CheckedChanged += new System.EventHandler(this.rbHorizontal_CheckedChanged);
+			// 
+			// rbStandard
+			// 
+			this.rbStandard.AutoSize = true;
+			this.rbStandard.Checked = true;
+			this.rbStandard.Location = new System.Drawing.Point(9, 19);
+			this.rbStandard.Name = "rbStandard";
+			this.rbStandard.Size = new System.Drawing.Size(68, 17);
+			this.rbStandard.TabIndex = 0;
+			this.rbStandard.TabStop = true;
+			this.rbStandard.Text = "Standard";
+			this.rbStandard.UseVisualStyleBackColor = true;
+			this.rbStandard.CheckedChanged += new System.EventHandler(this.rbStandard_CheckedChanged);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -500,8 +478,6 @@
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.bpDown);
 			this.Controls.Add(this.bpUp);
-			this.Controls.Add(this.bpMiroirVertical);
-			this.Controls.Add(this.bpMiroirHorizontal);
 			this.Controls.Add(this.bpClear);
 			this.Controls.Add(this.bpImportImage);
 			this.Controls.Add(this.bpImport);
@@ -587,8 +563,6 @@
 		private System.Windows.Forms.Button bpImport;
 		private System.Windows.Forms.Button bpImportImage;
 		private System.Windows.Forms.Button bpClear;
-		private System.Windows.Forms.Button bpMiroirHorizontal;
-		private System.Windows.Forms.Button bpMiroirVertical;
 		private System.Windows.Forms.Button bpUp;
 		private System.Windows.Forms.Button bpDown;
 		private System.Windows.Forms.GroupBox groupBox1;
