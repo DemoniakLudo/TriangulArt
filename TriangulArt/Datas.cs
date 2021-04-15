@@ -184,7 +184,7 @@ namespace TriangulArt {
 			if (withCode)
 				GenereAsm.GenereDrawTriangleCode(sw);
 
-			GenereAsm.GenereDatas(sw, lstTriangle, palette);
+			GenereAsm.GenereDatas(sw,this);
 			if (withCode)
 				GenereAsm.GenereDrawTriangleData(sw);
 

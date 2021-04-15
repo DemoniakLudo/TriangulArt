@@ -10,8 +10,17 @@ namespace TriangulArt {
 			return sw;
 		}
 
-		static public void GenereDatas(StreamWriter sw, List<Triangle> lstTriangle, int[] palette) {
+		static public void GenereDatas(StreamWriter sw, Datas data) {
 			int nbOctets = 0;
+			string s = "";
+			for (int i = 0; i < 4; i++)
+				s += BitmapCpc.CpcVGA[data.palette[i]];
+
+			sw.WriteLine("DataFrame");
+			sw.WriteLine("; 4 octets de palette");
+			sw.WriteLine("\tDB	\"" + s + "\"");
+			sw.WriteLine(";	DW	#2000			; Tps d'affichage ?");
+			sw.WriteLine("	DB	#" + data.modeRendu.ToString("X2"));
 			sw.WriteLine(";");
 			sw.WriteLine("; Donnees des triangles a afficher.");
 			sw.WriteLine("; Chaque frame contient un ou plusieurs trianges defini de la sorte :");
@@ -21,21 +30,13 @@ namespace TriangulArt {
 			sw.WriteLine("; le 7eme octet de la structure (la couleur) defini le pen mode 1");
 			sw.WriteLine("; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame");
 			sw.WriteLine(";");
-			sw.WriteLine("Frame_0");
-			for (int i = 0; i < lstTriangle.Count; i++) {
-				Triangle t = lstTriangle[i];
-				int color = i < lstTriangle.Count - 1 ? t.color : t.color + 0x80;
+			for (int i = 0; i < data.lstTriangle.Count; i++) {
+				Triangle t = data.lstTriangle[i];
+				int color = i < data.lstTriangle.Count - 1 ? t.color : t.color + 0x80;
 				sw.WriteLine("\tDB\t#" + t.x1.ToString("X2") + ",#" + t.y1.ToString("X2") + ",#" + t.x2.ToString("X2") + ",#" + t.y2.ToString("X2") + ",#" + t.x3.ToString("X2") + ",#" + t.y3.ToString("X2") + ",#" + color.ToString("X2"));
 				nbOctets += 7;
 			}
 			sw.WriteLine("; Taille " + nbOctets.ToString() + " octets");
-			sw.WriteLine(";");
-			sw.WriteLine("Palette:");
-			string s = "";
-			for (int i = 0; i < 4; i++)
-				s += BitmapCpc.CpcVGA[palette[i]];
-
-			sw.WriteLine("\tDB	\"" + s + "\"");
 		}
 
 		static public void GenereDrawTriangleCode(StreamWriter sw) {
@@ -120,7 +121,26 @@ namespace TriangulArt {
 			sw.WriteLine("	INC	L					; 3 valeurs a zeros pour aligner sur 8 octets");
 			sw.WriteLine("	DJNZ	InitPen");
 			sw.WriteLine("");
-			sw.WriteLine("	LD	IX,Frame_0				; Premiere frame");
+			sw.WriteLine("	LD	IX,DataFrame			; Donnees triangle");
+			sw.WriteLine("	PUSH	IX");
+			sw.WriteLine("	POP	HL");
+			sw.WriteLine("	LD	BC,#7F10");
+			sw.WriteLine("	LD	A,(HL)");
+			sw.WriteLine("	OUT	(C),C");
+			sw.WriteLine("	OUT	(C),A");
+			sw.WriteLine("	XOR	A");
+			sw.WriteLine("BclPalette:");
+			sw.WriteLine("	OUT	(C),A");
+			sw.WriteLine("	INC	B");
+			sw.WriteLine("	OUTI");
+			sw.WriteLine("	INC	A");
+			sw.WriteLine("	CP	4");
+			sw.WriteLine("	JR	NZ,BclPalette");
+			sw.WriteLine("	PUSH	HL");
+			sw.WriteLine("	POP	IX");
+			sw.WriteLine("	LD	A,(IX+0)				; Mode de trace");
+			sw.WriteLine("	LD	(ModeDraw+1),A");
+			sw.WriteLine("	INC	IX");
 			sw.WriteLine("BclDrawFrame:");
 			sw.WriteLine("	LD	A,(IX+6)				; Couleur");
 			sw.WriteLine("	AND	3");
@@ -137,6 +157,36 @@ namespace TriangulArt {
 			sw.WriteLine("	LD	E,(IX+3)				; Y2");
 			sw.WriteLine("	LD	H,(IX+4)				; X3");
 			sw.WriteLine("	LD	L,(IX+5)				; Y3");
+
+			sw.WriteLine("	CALL	DrawTriangle");
+			sw.WriteLine("ModeDraw:");
+			sw.WriteLine("	LD	A,0");
+			sw.WriteLine("	AND	A");
+			sw.WriteLine("	JR	Z,WaitTriangle");
+			sw.WriteLine("	LD	L,255");
+			sw.WriteLine("	LD	A,L");
+			sw.WriteLine("	SUB	(IX+0)");
+			sw.WriteLine("	LD	B,A");
+			sw.WriteLine("	LD	C,(IX+1)");
+			sw.WriteLine("	LD	A,L");
+			sw.WriteLine("	SUB	(IX+2)");
+			sw.WriteLine("	LD	D,A");
+			sw.WriteLine("	LD	E,(IX+3)");
+			sw.WriteLine("	LD	A,L");
+			sw.WriteLine("	SUB	(IX+4)");
+			sw.WriteLine("	LD	H,A");
+			sw.WriteLine("	LD	L,(IX+5)");
+			sw.WriteLine("	CALL	DrawTriangle");
+			sw.WriteLine("WaitTriangle:");
+			sw.WriteLine("	LD	A,(IX+6)");
+			sw.WriteLine("	LD	BC,7");
+			sw.WriteLine("	ADD	IX,BC");
+			sw.WriteLine("	RLA");
+			sw.WriteLine("	JR	NC,BclDrawFrame");
+			sw.WriteLine("Termine:");
+			sw.WriteLine("	JR	Termine");
+
+			sw.WriteLine("DrawTriangle:");
 			sw.WriteLine("	LD	A,H");
 			sw.WriteLine("	SUB	B");
 			sw.WriteLine("	JR	C,SetDx1Neg");
@@ -343,13 +393,7 @@ namespace TriangulArt {
 			sw.WriteLine("	LD	D,A");
 			sw.WriteLine("	JR	DX2");
 			sw.WriteLine("FinTriangle:		");
-			sw.WriteLine("	LD	A,(IX+6)");
-			sw.WriteLine("	LD	BC,7");
-			sw.WriteLine("	ADD	IX,BC");
-			sw.WriteLine("	RLA");
-			sw.WriteLine("	JP	NC,BclDrawFrame");
-			sw.WriteLine("Fini:");
-			sw.WriteLine("	JR	Fini");
+			sw.WriteLine("	RET");
 			sw.WriteLine("");
 			sw.WriteLine("Set3Pen:");
 			sw.WriteLine("	LD	A,(DE)					; Point en Pen 1");
