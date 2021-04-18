@@ -64,8 +64,18 @@
 			this.rbVertical = new System.Windows.Forms.RadioButton();
 			this.rbHorizontal = new System.Windows.Forms.RadioButton();
 			this.rbStandard = new System.Windows.Forms.RadioButton();
+			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.bpDeplace = new System.Windows.Forms.Button();
+			this.txbTrY = new System.Windows.Forms.TextBox();
+			this.label9 = new System.Windows.Forms.Label();
+			this.txbTrX = new System.Windows.Forms.TextBox();
+			this.label8 = new System.Windows.Forms.Label();
+			this.rbDepImage = new System.Windows.Forms.RadioButton();
+			this.rbDepTriangle = new System.Windows.Forms.RadioButton();
+			this.button1 = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.groupBox1.SuspendLayout();
+			this.groupBox2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// pictureBox
@@ -470,11 +480,104 @@
 			this.rbStandard.UseVisualStyleBackColor = true;
 			this.rbStandard.CheckedChanged += new System.EventHandler(this.rbStandard_CheckedChanged);
 			// 
+			// groupBox2
+			// 
+			this.groupBox2.Controls.Add(this.bpDeplace);
+			this.groupBox2.Controls.Add(this.txbTrY);
+			this.groupBox2.Controls.Add(this.label9);
+			this.groupBox2.Controls.Add(this.txbTrX);
+			this.groupBox2.Controls.Add(this.label8);
+			this.groupBox2.Controls.Add(this.rbDepImage);
+			this.groupBox2.Controls.Add(this.rbDepTriangle);
+			this.groupBox2.Location = new System.Drawing.Point(703, 158);
+			this.groupBox2.Name = "groupBox2";
+			this.groupBox2.Size = new System.Drawing.Size(322, 79);
+			this.groupBox2.TabIndex = 34;
+			this.groupBox2.TabStop = false;
+			this.groupBox2.Text = "Déplacement relatif";
+			// 
+			// bpDeplace
+			// 
+			this.bpDeplace.Location = new System.Drawing.Point(210, 19);
+			this.bpDeplace.Name = "bpDeplace";
+			this.bpDeplace.Size = new System.Drawing.Size(106, 46);
+			this.bpDeplace.TabIndex = 18;
+			this.bpDeplace.Text = "Déplacer";
+			this.bpDeplace.UseVisualStyleBackColor = true;
+			this.bpDeplace.Click += new System.EventHandler(this.bpDeplace_Click);
+			// 
+			// txbTrY
+			// 
+			this.txbTrY.Location = new System.Drawing.Point(172, 45);
+			this.txbTrY.Name = "txbTrY";
+			this.txbTrY.Size = new System.Drawing.Size(32, 20);
+			this.txbTrY.TabIndex = 16;
+			// 
+			// label9
+			// 
+			this.label9.AutoSize = true;
+			this.label9.Location = new System.Drawing.Point(157, 49);
+			this.label9.Name = "label9";
+			this.label9.Size = new System.Drawing.Size(15, 13);
+			this.label9.TabIndex = 17;
+			this.label9.Text = "y:";
+			// 
+			// txbTrX
+			// 
+			this.txbTrX.Location = new System.Drawing.Point(172, 19);
+			this.txbTrX.Name = "txbTrX";
+			this.txbTrX.Size = new System.Drawing.Size(32, 20);
+			this.txbTrX.TabIndex = 2;
+			// 
+			// label8
+			// 
+			this.label8.AutoSize = true;
+			this.label8.Location = new System.Drawing.Point(157, 23);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(15, 13);
+			this.label8.TabIndex = 15;
+			this.label8.Text = "x:";
+			// 
+			// rbDepImage
+			// 
+			this.rbDepImage.AutoSize = true;
+			this.rbDepImage.Location = new System.Drawing.Point(12, 48);
+			this.rbDepImage.Name = "rbDepImage";
+			this.rbDepImage.Size = new System.Drawing.Size(120, 17);
+			this.rbDepImage.TabIndex = 1;
+			this.rbDepImage.Text = "De l\'image complète";
+			this.rbDepImage.UseVisualStyleBackColor = true;
+			// 
+			// rbDepTriangle
+			// 
+			this.rbDepTriangle.AutoSize = true;
+			this.rbDepTriangle.Checked = true;
+			this.rbDepTriangle.Location = new System.Drawing.Point(12, 25);
+			this.rbDepTriangle.Name = "rbDepTriangle";
+			this.rbDepTriangle.Size = new System.Drawing.Size(115, 17);
+			this.rbDepTriangle.TabIndex = 0;
+			this.rbDepTriangle.TabStop = true;
+			this.rbDepTriangle.Text = "Du triangle courant";
+			this.rbDepTriangle.UseVisualStyleBackColor = true;
+			// 
+			// button1
+			// 
+			this.button1.Enabled = false;
+			this.button1.Location = new System.Drawing.Point(972, 325);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(53, 23);
+			this.button1.TabIndex = 35;
+			this.button1.Text = "ZZZ";
+			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.button1_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1038, 695);
+			this.ClientSize = new System.Drawing.Size(1039, 695);
+			this.Controls.Add(this.button1);
+			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.bpDown);
 			this.Controls.Add(this.bpUp);
@@ -521,6 +624,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
+			this.groupBox2.ResumeLayout(false);
+			this.groupBox2.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -569,6 +674,15 @@
 		private System.Windows.Forms.RadioButton rbVertical;
 		private System.Windows.Forms.RadioButton rbHorizontal;
 		private System.Windows.Forms.RadioButton rbStandard;
+		private System.Windows.Forms.GroupBox groupBox2;
+		private System.Windows.Forms.Button bpDeplace;
+		private System.Windows.Forms.TextBox txbTrY;
+		private System.Windows.Forms.Label label9;
+		private System.Windows.Forms.TextBox txbTrX;
+		private System.Windows.Forms.Label label8;
+		private System.Windows.Forms.RadioButton rbDepImage;
+		private System.Windows.Forms.RadioButton rbDepTriangle;
+		private System.Windows.Forms.Button button1;
 	}
 }
 

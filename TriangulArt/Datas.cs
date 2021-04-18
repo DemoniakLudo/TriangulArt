@@ -70,7 +70,7 @@ namespace TriangulArt {
 				FillTriangle(bmpLock, 255 - x1, y1, 255 - x2, y2, 255 - x3, y3, t.color, false);
 			else
 				if (modeRendu == 2)
-					FillTriangle(bmpLock, x1, 255 - y1, x2, 255 - y2, x3, 255 - y3, t.color, false);
+					FillTriangle(bmpLock, x3, 255 - y3, x2, 255 - y2, x1, 255 - y1, t.color, false);
 		}
 
 		public void FillTriangles(DirectBitmap bmpLock) {
@@ -134,6 +134,45 @@ namespace TriangulArt {
 			Triangle t = lstTriangle[selLigne];
 			lstTriangle[selLigne] = lstTriangle[selLigne + 1];
 			lstTriangle[selLigne + 1] = t;
+		}
+
+		private void MoveTriangle(Triangle t, int deplX, int deplY) {
+			t.x1 += deplX;
+			t.y1 += deplY;
+			t.x2 += deplX;
+			t.y2 += deplY;
+			t.x3 += deplX;
+			t.y3 += deplY;
+		}
+		
+		public void DeplaceTriangle(int deplX, int deplY) {
+			MoveTriangle(lstTriangle[selLigne], deplX, deplY);
+		}
+
+		public void DeplaceImage(int deplX, int deplY) {
+			foreach (Triangle t in lstTriangle)
+				MoveTriangle(t, deplX, deplY);
+		}
+
+
+		private void CoefZoom(Triangle t, double coefX, double coefY) {
+			double x1 = 127+(t.x1 - 127) * coefX;
+			double y1 = 127+(t.y1 - 127) * coefY;
+			double x2 = 127+(t.x2 - 127) * coefX;
+			double y2 = 127+(t.y2 - 127) * coefY;
+			double x3 = 127+(t.x3 - 127) * coefX;
+			double y3 = 127+(t.y3 - 127) * coefY;
+			t.x1 = (int)x1;
+			t.y1 = (int)y1;
+			t.x2 = (int)x2;
+			t.y2 = (int)y2;
+			t.x3 = (int)x3;
+			t.y3 = (int)y3;
+		}
+
+		public void CoefZoom(double coefX, double coefY) {
+			foreach (Triangle t in lstTriangle)
+				CoefZoom(t, coefX, coefY);
 		}
 
 		public void Clear() {

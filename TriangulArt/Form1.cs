@@ -86,7 +86,7 @@ namespace TriangulArt {
 			}
 			txbX1.Text = txbX2.Text = txbX3.Text = txbY1.Text = txbY2.Text = txbY3.Text = "";
 			bpUp.Visible = bpDown.Visible = false;
-			datas.SelectTriangle(-1);
+			tri = datas.SelectTriangle(-1);
 			bpEdit.Enabled = bpDelete.Enabled = false;
 		}
 
@@ -313,15 +313,15 @@ namespace TriangulArt {
 		}
 
 		private void listTriangles_SelectedIndexChanged(object sender, EventArgs e) {
-			Triangle t = datas.SelectTriangle(listTriangles.SelectedIndex);
-			if (t != null) {
-				txbX1.Text = t.x1.ToString();
-				txbY1.Text = t.y1.ToString();
-				txbX2.Text = t.x2.ToString();
-				txbY2.Text = t.y2.ToString();
-				txbX3.Text = t.x3.ToString();
-				txbY3.Text = t.y3.ToString();
-				selColor = t.color;
+			tri = datas.SelectTriangle(listTriangles.SelectedIndex);
+			if (tri != null) {
+				txbX1.Text = tri.x1.ToString();
+				txbY1.Text = tri.y1.ToString();
+				txbX2.Text = tri.x2.ToString();
+				txbY2.Text = tri.y2.ToString();
+				txbX3.Text = tri.x3.ToString();
+				txbY3.Text = tri.y3.ToString();
+				selColor = tri.color;
 				FillTriangles();
 				UpdatePalette();
 				bpEdit.Enabled = bpDelete.Enabled = true;
@@ -421,6 +421,34 @@ namespace TriangulArt {
 
 		private void rbVertical_CheckedChanged(object sender, EventArgs e) {
 			datas.modeRendu = 2;
+			DisplayList();
+			FillTriangles();
+		}
+
+		private void bpDeplace_Click(object sender, EventArgs e) {
+			int deplX = 0, deplY = 0;
+			if (int.TryParse(txbTrX.Text, out deplX) && int.TryParse(txbTrY.Text, out deplY)) {
+				if (rbDepImage.Checked) {
+					datas.DeplaceImage(deplX, deplY);
+					DisplayList();
+					FillTriangles();
+				}
+				else
+					if (tri != null) {
+						int memoSel = datas.GetSelTriangle();
+						datas.DeplaceTriangle(deplX, deplY);
+						DisplayList();
+						listTriangles.SelectedIndex = memoSel;
+					}
+					else
+						MessageBox.Show("Pas de triangle sélectionné");
+			}
+			else
+				MessageBox.Show("Veuillez sélectionner des données de déplacement valide");
+		}
+
+		private void button1_Click(object sender, EventArgs e) {
+			datas.CoefZoom(1.05, 1.05);
 			DisplayList();
 			FillTriangles();
 		}
