@@ -289,10 +289,15 @@ namespace TriangulArt {
 			dlg.Filter = "Fichiers assembleur (*.asm)|*.asm";
 			DialogResult result = dlg.ShowDialog();
 			if (result == DialogResult.OK) {
-				datas.Import(dlg.FileName);
-				SetInfo("Import triangles ok");
-				FillTriangles();
-				DisplayList();
+				try {
+					datas.Import(dlg.FileName, chkClearData.Checked);
+					SetInfo("Import triangles ok");
+					FillTriangles();
+					DisplayList();
+				}
+				catch {
+					MessageBox.Show("Erreur lors de l'importation des données...");
+				}
 			}
 		}
 

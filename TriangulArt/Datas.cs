@@ -89,7 +89,7 @@ namespace TriangulArt {
 		}
 
 		public int SelTriangle(int xReel, int yReel) {
-			for (int i = lstTriangle.Count; i-- > 0; ) {
+			for (int i = lstTriangle.Count; i-- > 0;) {
 				Triangle t = lstTriangle[i];
 				if (IsInTriancle(t, xReel, yReel)) {
 					return i;
@@ -144,7 +144,7 @@ namespace TriangulArt {
 			t.x3 += deplX;
 			t.y3 += deplY;
 		}
-		
+
 		public void DeplaceTriangle(int deplX, int deplY) {
 			MoveTriangle(lstTriangle[selLigne], deplX, deplY);
 		}
@@ -156,12 +156,12 @@ namespace TriangulArt {
 
 
 		private void CoefZoom(Triangle t, double coefX, double coefY) {
-			double x1 = 127+(t.x1 - 127) * coefX;
-			double y1 = 127+(t.y1 - 127) * coefY;
-			double x2 = 127+(t.x2 - 127) * coefX;
-			double y2 = 127+(t.y2 - 127) * coefY;
-			double x3 = 127+(t.x3 - 127) * coefX;
-			double y3 = 127+(t.y3 - 127) * coefY;
+			double x1 = 127 + (t.x1 - 127) * coefX;
+			double y1 = 127 + (t.y1 - 127) * coefY;
+			double x2 = 127 + (t.x2 - 127) * coefX;
+			double y2 = 127 + (t.y2 - 127) * coefY;
+			double x3 = 127 + (t.x3 - 127) * coefX;
+			double y3 = 127 + (t.y3 - 127) * coefY;
 			t.x1 = (int)x1;
 			t.y1 = (int)y1;
 			t.x2 = (int)x2;
@@ -179,9 +179,10 @@ namespace TriangulArt {
 			lstTriangle.Clear();
 		}
 
-		public bool Import(string fileName) {
-			bool ret = false;
-			lstTriangle.Clear();
+		public void Import(string fileName, bool clearAll) {
+			if (clearAll)
+				lstTriangle.Clear();
+
 			StreamReader rw = new StreamReader(fileName);
 			string l;
 			do {
@@ -191,7 +192,6 @@ namespace TriangulArt {
 			}
 			while (l != null);
 			rw.Close();
-			return ret;
 		}
 
 		private void AnalyseLigne(string line) {
@@ -209,10 +209,8 @@ namespace TriangulArt {
 						int x3 = int.Parse(param[9], System.Globalization.NumberStyles.HexNumber);
 						int y3 = int.Parse(param[11], System.Globalization.NumberStyles.HexNumber);
 						int c = int.Parse(param[13], System.Globalization.NumberStyles.HexNumber);
-						if (x1 >= 0 && y1 >= 0 && x2 >= 0 && y2 >= 0 && x3 >= 0 && y3 >= 0) {
-							Triangle t = new Triangle(x1, y1, x2, y2, x3, y3, c & 0x0F);
-							lstTriangle.Add(t);
-						}
+						if (x1 >= 0 && y1 >= 0 && x2 >= 0 && y2 >= 0 && x3 >= 0 && y3 >= 0)
+							lstTriangle.Add(new Triangle(x1, y1, x2, y2, x3, y3, c & 0x0F));
 					}
 				}
 			}
@@ -223,7 +221,7 @@ namespace TriangulArt {
 			if (withCode)
 				GenereAsm.GenereDrawTriangleCode(sw);
 
-			GenereAsm.GenereDatas(sw,this);
+			GenereAsm.GenereDatas(sw, this);
 			if (withCode)
 				GenereAsm.GenereDrawTriangleData(sw);
 
