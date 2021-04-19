@@ -73,6 +73,7 @@
 			this.rbDepImage = new System.Windows.Forms.RadioButton();
 			this.rbDepTriangle = new System.Windows.Forms.RadioButton();
 			this.button1 = new System.Windows.Forms.Button();
+			this.lblInfoVersion = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -85,9 +86,10 @@
 			this.pictureBox.Size = new System.Drawing.Size(512, 512);
 			this.pictureBox.TabIndex = 0;
 			this.pictureBox.TabStop = false;
+			this.pictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseDown);
 			this.pictureBox.MouseLeave += new System.EventHandler(this.pictureBox_MouseLeave);
 			this.pictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TrtMouseMove);
-			this.pictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TrtMouseMove);
+			this.pictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseUp);
 			// 
 			// lblInfoPos
 			// 
@@ -113,7 +115,7 @@
 			this.listInfo.FormattingEnabled = true;
 			this.listInfo.Location = new System.Drawing.Point(6, 582);
 			this.listInfo.Name = "listInfo";
-			this.listInfo.Size = new System.Drawing.Size(1027, 108);
+			this.listInfo.Size = new System.Drawing.Size(1027, 95);
 			this.listInfo.TabIndex = 3;
 			// 
 			// bpLoad
@@ -571,11 +573,21 @@
 			this.button1.UseVisualStyleBackColor = true;
 			this.button1.Click += new System.EventHandler(this.button1_Click);
 			// 
+			// lblInfoVersion
+			// 
+			this.lblInfoVersion.AutoSize = true;
+			this.lblInfoVersion.Location = new System.Drawing.Point(3, 683);
+			this.lblInfoVersion.Name = "lblInfoVersion";
+			this.lblInfoVersion.Size = new System.Drawing.Size(42, 13);
+			this.lblInfoVersion.TabIndex = 36;
+			this.lblInfoVersion.Text = "Version";
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1039, 695);
+			this.ClientSize = new System.Drawing.Size(1039, 697);
+			this.Controls.Add(this.lblInfoVersion);
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.groupBox1);
@@ -683,6 +695,7 @@
 		private System.Windows.Forms.RadioButton rbDepImage;
 		private System.Windows.Forms.RadioButton rbDepTriangle;
 		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Label lblInfoVersion;
 	}
 }
 

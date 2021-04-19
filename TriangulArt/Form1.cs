@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 
@@ -9,13 +9,14 @@ namespace TriangulArt {
 	public partial class Form1 : Form {
 		private BitmapCpc bitmapCpc = new BitmapCpc();
 		private DirectBitmap bmpLock;
-		private bool modeAddTriangle = false;
+		private bool modeAddTriangle = false, modeMoveTriangle = false;
 		private int numPt;
-		Triangle tri;
+		private Triangle triSel;
 		private int oldx1, oldy1;
 		private int selColor = 1;
 		private Bitmap bmpFond = null;
 		private Datas datas = new Datas();
+		private Version version = Assembly.GetExecutingAssembly().GetName().Version;
 
 		public Form1() {
 			InitializeComponent();
@@ -23,6 +24,8 @@ namespace TriangulArt {
 			Reset();
 			for (int i = 0; i < 4; i++)
 				datas.palette[i] = BitmapCpc.Palette[i];
+
+			lblInfoVersion.Text = "V " + version.ToString() + " - " + new DateTime(2000, 1, 1).AddDays(version.Build).ToShortDateString();
 		}
 
 		public void Reset(bool force = false) {
@@ -86,7 +89,7 @@ namespace TriangulArt {
 			}
 			txbX1.Text = txbX2.Text = txbX3.Text = txbY1.Text = txbY2.Text = txbY3.Text = "";
 			bpUp.Visible = bpDown.Visible = false;
-			tri = datas.SelectTriangle(-1);
+			triSel = datas.SelectTriangle(-1);
 			bpEdit.Enabled = bpDelete.Enabled = false;
 		}
 
@@ -97,71 +100,115 @@ namespace TriangulArt {
 		}
 
 		private void TrtMouseMove(object sender, MouseEventArgs e) {
-			int incY = 2;
-			int yReel = (e.Y & -incY) >> 1;
+			int yReel = (e.Y & 0xFFE) >> 1;
 			int xReel = e.X >> 1;
 			lblInfoPos.Text = "x:" + xReel.ToString("000") + " y:" + yReel.ToString("000");
 			Graphics g = Graphics.FromImage(pictureBox.Image);
-			if (numPt == 2) {
-				XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, tri.x1 << 1, tri.y1 << 1, oldx1 << 1, oldy1 << 1);
-				oldx1 = xReel;
-				oldy1 = yReel;
-				XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, tri.x1 << 1, tri.y1 << 1, oldx1 << 1, oldy1 << 1);
-			}
-			if (numPt == 3) {
-				XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, tri.x1 << 1, tri.y1 << 1, oldx1 << 1, oldy1 << 1);
-				XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, tri.x2 << 1, tri.y2 << 1, oldx1 << 1, oldy1 << 1);
-				oldx1 = xReel;
-				oldy1 = yReel;
-				XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, tri.x1 << 1, tri.y1 << 1, oldx1 << 1, oldy1 << 1);
-				XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, tri.x2 << 1, tri.y2 << 1, oldx1 << 1, oldy1 << 1);
-			}
-
-			if (e.Button == MouseButtons.Left && modeAddTriangle) {
-				switch (numPt) {
-					case 1:
-						tri = new Triangle();
-						tri.x1 = xReel;
-						tri.y1 = yReel;
-						tri.color = selColor;
-						numPt = 2;
-						SetInfo("Attente positionnement second point triangle");
-						oldx1 = xReel;
-						oldy1 = yReel;
-						break;
-
-					case 2:
-						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, tri.x1 << 1, tri.y1 << 1, oldx1 << 1, oldy1 << 1);
-						tri.x2 = xReel;
-						tri.y2 = yReel;
-						tri.TriSommets();
-						numPt = 3;
-						SetInfo("Attente positionnement troisième point triangle");
-						oldx1 = xReel;
-						oldy1 = yReel;
-						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, tri.x1 << 1, tri.y1 << 1, tri.x2 << 1, tri.y2 << 1);
-						break;
-
-					case 3:
-						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, tri.x1 << 1, tri.y1 << 1, tri.x2 << 1, tri.y2 << 1);
-						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, tri.x1 << 1, tri.y1 << 1, oldx1 << 1, oldy1 << 1);
-						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, tri.x2 << 1, tri.y2 << 1, oldx1 << 1, oldy1 << 1);
-						tri.x3 = xReel;
-						tri.y3 = yReel;
-						numPt = 1;
-						modeAddTriangle = false;
-						bpAddTriangle.Enabled = true;
-						tri.TriSommets3();
-						SetInfo("Triangle enregistré : (" + tri.x1 + "," + tri.y1 + "),(" + tri.x2 + "," + tri.y2 + "),(" + tri.x3 + "," + tri.y3 + ")");
-						AddTriangle(tri);
-						break;
+			if (modeAddTriangle) {
+				if (numPt == 2) {
+					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1);
+					oldx1 = xReel;
+					oldy1 = yReel;
+					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1);
+				}
+				if (numPt == 3) {
+					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1);
+					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x2 << 1, triSel.y2 << 1, oldx1 << 1, oldy1 << 1);
+					oldx1 = xReel;
+					oldy1 = yReel;
+					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1);
+					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x2 << 1, triSel.y2 << 1, oldx1 << 1, oldy1 << 1);
 				}
 			}
-			else
-				if (e.Button == MouseButtons.Right) {
-					listTriangles.SelectedIndex = datas.SelTriangle(xReel, yReel);
-				}
+			if (e.Button == MouseButtons.Left && modeMoveTriangle) {
+				XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, triSel.x2 << 1, triSel.y2 << 1);
+				XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, triSel.x3 << 1, triSel.y3 << 1);
+				XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x2 << 1, triSel.y2 << 1, triSel.x1 << 1, triSel.y1 << 1);
+				int dx = xReel - oldx1;
+				int dy = yReel - oldy1;
+				datas.DeplaceTriangle(dx, dy);
+				oldx1 = xReel;
+				oldy1 = yReel;
+				XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, triSel.x2 << 1, triSel.y2 << 1);
+				XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, triSel.x3 << 1, triSel.y3 << 1);
+				XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x2 << 1, triSel.y2 << 1, triSel.x1 << 1, triSel.y1 << 1);
+			}
 			pictureBox.Refresh();
+		}
+
+		private void pictureBox_MouseDown(object sender, MouseEventArgs e) {
+			int yReel = (e.Y & 0xFFE) >> 1;
+			int xReel = e.X >> 1;
+			if (e.Button == MouseButtons.Right)
+				listTriangles.SelectedIndex = datas.SelTriangle(xReel, yReel);
+
+			if (e.Button == MouseButtons.Left && triSel != null && !modeMoveTriangle && !modeAddTriangle) {
+				Graphics g = Graphics.FromImage(pictureBox.Image);
+				XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, triSel.x2 << 1, triSel.y2 << 1);
+				XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, triSel.x3 << 1, triSel.y3 << 1);
+				XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x2 << 1, triSel.y2 << 1, triSel.x1 << 1, triSel.y1 << 1);
+				oldx1 = xReel;
+				oldy1 = yReel;
+				SetInfo("Déplacement triangle. pos départ = " + oldx1 + "," + oldy1);
+				modeMoveTriangle = true;
+			}
+		}
+
+		private void pictureBox_MouseUp(object sender, MouseEventArgs e) {
+			int yReel = (e.Y & 0xFFE) >> 1;
+			int xReel = e.X >> 1;
+
+			if (e.Button == MouseButtons.Left) {
+				Graphics g = Graphics.FromImage(pictureBox.Image);
+				if (modeAddTriangle) {
+					switch (numPt) {
+						case 1:
+							triSel = new Triangle();
+							triSel.x1 = xReel;
+							triSel.y1 = yReel;
+							triSel.color = selColor;
+							numPt = 2;
+							SetInfo("Attente positionnement second point triangle");
+							oldx1 = xReel;
+							oldy1 = yReel;
+							break;
+
+						case 2:
+							triSel.x2 = xReel;
+							triSel.y2 = yReel;
+							triSel.TriSommets();
+							numPt = 3;
+							SetInfo("Attente positionnement troisième point triangle");
+							oldx1 = xReel;
+							oldy1 = yReel;
+							XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, triSel.x2 << 1, triSel.y2 << 1);
+							break;
+
+						case 3:
+							XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, triSel.x2 << 1, triSel.y2 << 1);
+							XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1);
+							XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x2 << 1, triSel.y2 << 1, oldx1 << 1, oldy1 << 1);
+							triSel.x3 = xReel;
+							triSel.y3 = yReel;
+							numPt = 1;
+							modeAddTriangle = false;
+							bpAddTriangle.Enabled = true;
+							triSel.TriSommets3();
+							SetInfo("Triangle enregistré : (" + triSel.x1 + "," + triSel.y1 + "),(" + triSel.x2 + "," + triSel.y2 + "),(" + triSel.x3 + "," + triSel.y3 + ")");
+							AddTriangle(triSel);
+							break;
+					}
+				}
+				else
+					if (modeMoveTriangle) {
+						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, triSel.x2 << 1, triSel.y2 << 1);
+						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, triSel.x3 << 1, triSel.y3 << 1);
+						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x2 << 1, triSel.y2 << 1, triSel.x1 << 1, triSel.y1 << 1);
+						modeMoveTriangle = false;
+						DisplayList();
+						FillTriangles();
+					}
+			}
 		}
 
 		private void pictureBox_MouseLeave(object sender, EventArgs e) {
@@ -189,16 +236,9 @@ namespace TriangulArt {
 				try {
 					datas = (Datas)new XmlSerializer(typeof(Datas)).Deserialize(fileParam);
 					SetInfo("Lecture triangles ok");
-					int c = 1;
-					for (int i = 0; i < datas.lstTriangle.Count; i++) {
+					for (int i = 0; i < datas.lstTriangle.Count; i++)
 						datas.lstTriangle[i].Normalise();
-						//datas.lstTriangle[i].x1 += -2;
-						//datas.lstTriangle[i].x2 += -2;
-						//datas.lstTriangle[i].x3 += -2;
-						////	datas.lstTriangle[i].color = 1;
-						if (c > 3)
-							c = 1;
-					}
+
 					switch (datas.modeRendu) {
 						case 0:
 							rbStandard.Checked = true;
@@ -313,15 +353,15 @@ namespace TriangulArt {
 		}
 
 		private void listTriangles_SelectedIndexChanged(object sender, EventArgs e) {
-			tri = datas.SelectTriangle(listTriangles.SelectedIndex);
-			if (tri != null) {
-				txbX1.Text = tri.x1.ToString();
-				txbY1.Text = tri.y1.ToString();
-				txbX2.Text = tri.x2.ToString();
-				txbY2.Text = tri.y2.ToString();
-				txbX3.Text = tri.x3.ToString();
-				txbY3.Text = tri.y3.ToString();
-				selColor = tri.color;
+			triSel = datas.SelectTriangle(listTriangles.SelectedIndex);
+			if (triSel != null) {
+				txbX1.Text = triSel.x1.ToString();
+				txbY1.Text = triSel.y1.ToString();
+				txbX2.Text = triSel.x2.ToString();
+				txbY2.Text = triSel.y2.ToString();
+				txbX3.Text = triSel.x3.ToString();
+				txbY3.Text = triSel.y3.ToString();
+				selColor = triSel.color;
 				FillTriangles();
 				UpdatePalette();
 				bpEdit.Enabled = bpDelete.Enabled = true;
@@ -434,7 +474,7 @@ namespace TriangulArt {
 					FillTriangles();
 				}
 				else
-					if (tri != null) {
+					if (triSel != null) {
 						int memoSel = datas.GetSelTriangle();
 						datas.DeplaceTriangle(deplX, deplY);
 						DisplayList();
@@ -452,5 +492,6 @@ namespace TriangulArt {
 			DisplayList();
 			FillTriangles();
 		}
+
 	}
 }
