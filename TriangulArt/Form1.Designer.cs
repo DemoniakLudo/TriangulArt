@@ -75,6 +75,7 @@
 			this.button1 = new System.Windows.Forms.Button();
 			this.lblInfoVersion = new System.Windows.Forms.Label();
 			this.chkClearData = new System.Windows.Forms.CheckBox();
+			this.bpClearList = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -403,7 +404,7 @@
 			// 
 			// bpClear
 			// 
-			this.bpClear.Location = new System.Drawing.Point(917, 35);
+			this.bpClear.Location = new System.Drawing.Point(521, 143);
 			this.bpClear.Name = "bpClear";
 			this.bpClear.Size = new System.Drawing.Size(116, 22);
 			this.bpClear.TabIndex = 28;
@@ -593,11 +594,22 @@
 			this.chkClearData.Text = "Effacer données avant import";
 			this.chkClearData.UseVisualStyleBackColor = true;
 			// 
+			// bpClearList
+			// 
+			this.bpClearList.Location = new System.Drawing.Point(913, 680);
+			this.bpClearList.Name = "bpClearList";
+			this.bpClearList.Size = new System.Drawing.Size(120, 23);
+			this.bpClearList.TabIndex = 38;
+			this.bpClearList.Text = "Effacer la liste";
+			this.bpClearList.UseVisualStyleBackColor = true;
+			this.bpClearList.Click += new System.EventHandler(this.bpClearList_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1039, 697);
+			this.ClientSize = new System.Drawing.Size(1039, 705);
+			this.Controls.Add(this.bpClearList);
 			this.Controls.Add(this.chkClearData);
 			this.Controls.Add(this.lblInfoVersion);
 			this.Controls.Add(this.button1);
@@ -709,6 +721,7 @@
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.Label lblInfoVersion;
 		private System.Windows.Forms.CheckBox chkClearData;
+		private System.Windows.Forms.Button bpClearList;
 	}
 }
 
