@@ -85,7 +85,7 @@ namespace TriangulArt {
 			listTriangles.Items.Clear();
 			for (int i = 0; i < datas.lstTriangle.Count; i++) {
 				Triangle t = datas.lstTriangle[i];
-				listTriangles.Items.Add("Triangle " + i.ToString("000") + " : (" + t.x1 + "," + t.y1 + "),(" + t.x2 + "," + t.y2 + "),(" + t.x3 + "," + t.y3 + ")");
+				listTriangles.Items.Add("Triangle " + i.ToString("000") + " : (" + t.x1 + "," + t.y1 + "),(" + t.x2 + "," + t.y2 + "),(" + t.x3 + "," + t.y3 + ")\tcouleur:"+t.color);
 			}
 			txbX1.Text = txbX2.Text = txbX3.Text = txbY1.Text = txbY2.Text = txbY3.Text = "";
 			bpUp.Visible = bpDown.Visible = false;
