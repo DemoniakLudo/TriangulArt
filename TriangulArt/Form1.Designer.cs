@@ -203,7 +203,7 @@
 			// 
 			this.bpAddCoord.Location = new System.Drawing.Point(936, 501);
 			this.bpAddCoord.Name = "bpAddCoord";
-			this.bpAddCoord.Size = new System.Drawing.Size(94, 22);
+			this.bpAddCoord.Size = new System.Drawing.Size(108, 22);
 			this.bpAddCoord.TabIndex = 7;
 			this.bpAddCoord.Text = "Ajout direct";
 			this.bpAddCoord.UseVisualStyleBackColor = true;
@@ -316,7 +316,7 @@
 			this.listTriangles.FormattingEnabled = true;
 			this.listTriangles.Location = new System.Drawing.Point(521, 260);
 			this.listTriangles.Name = "listTriangles";
-			this.listTriangles.Size = new System.Drawing.Size(443, 186);
+			this.listTriangles.Size = new System.Drawing.Size(467, 186);
 			this.listTriangles.TabIndex = 20;
 			this.listTriangles.SelectedIndexChanged += new System.EventHandler(this.listTriangles_SelectedIndexChanged);
 			// 
@@ -325,7 +325,7 @@
 			this.bpEdit.Enabled = false;
 			this.bpEdit.Location = new System.Drawing.Point(936, 476);
 			this.bpEdit.Name = "bpEdit";
-			this.bpEdit.Size = new System.Drawing.Size(94, 22);
+			this.bpEdit.Size = new System.Drawing.Size(108, 22);
 			this.bpEdit.TabIndex = 7;
 			this.bpEdit.Text = "Modifier";
 			this.bpEdit.UseVisualStyleBackColor = true;
@@ -346,7 +346,7 @@
 			this.bpDelete.Enabled = false;
 			this.bpDelete.Location = new System.Drawing.Point(936, 452);
 			this.bpDelete.Name = "bpDelete";
-			this.bpDelete.Size = new System.Drawing.Size(94, 22);
+			this.bpDelete.Size = new System.Drawing.Size(108, 22);
 			this.bpDelete.TabIndex = 22;
 			this.bpDelete.Text = "Supprimer";
 			this.bpDelete.UseVisualStyleBackColor = true;
@@ -414,9 +414,9 @@
 			// 
 			// bpUp
 			// 
-			this.bpUp.Location = new System.Drawing.Point(967, 260);
+			this.bpUp.Location = new System.Drawing.Point(994, 260);
 			this.bpUp.Name = "bpUp";
-			this.bpUp.Size = new System.Drawing.Size(58, 27);
+			this.bpUp.Size = new System.Drawing.Size(50, 27);
 			this.bpUp.TabIndex = 31;
 			this.bpUp.Text = "Up";
 			this.bpUp.UseVisualStyleBackColor = true;
@@ -425,9 +425,9 @@
 			// 
 			// bpDown
 			// 
-			this.bpDown.Location = new System.Drawing.Point(972, 419);
+			this.bpDown.Location = new System.Drawing.Point(994, 419);
 			this.bpDown.Name = "bpDown";
-			this.bpDown.Size = new System.Drawing.Size(58, 27);
+			this.bpDown.Size = new System.Drawing.Size(50, 27);
 			this.bpDown.TabIndex = 32;
 			this.bpDown.Text = "Down";
 			this.bpDown.UseVisualStyleBackColor = true;
@@ -441,7 +441,7 @@
 			this.groupBox1.Controls.Add(this.rbStandard);
 			this.groupBox1.Location = new System.Drawing.Point(527, 95);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(498, 42);
+			this.groupBox1.Size = new System.Drawing.Size(517, 42);
 			this.groupBox1.TabIndex = 33;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Mode de rendu";
@@ -495,7 +495,7 @@
 			this.groupBox2.Controls.Add(this.rbDepTriangle);
 			this.groupBox2.Location = new System.Drawing.Point(703, 176);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(322, 79);
+			this.groupBox2.Size = new System.Drawing.Size(341, 79);
 			this.groupBox2.TabIndex = 34;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Déplacement relatif";
@@ -567,9 +567,9 @@
 			// button1
 			// 
 			this.button1.Enabled = false;
-			this.button1.Location = new System.Drawing.Point(972, 342);
+			this.button1.Location = new System.Drawing.Point(994, 342);
 			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(53, 23);
+			this.button1.Size = new System.Drawing.Size(50, 23);
 			this.button1.TabIndex = 35;
 			this.button1.Text = "ZZZ";
 			this.button1.UseVisualStyleBackColor = true;
@@ -608,7 +608,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1039, 705);
+			this.ClientSize = new System.Drawing.Size(1046, 705);
 			this.Controls.Add(this.bpClearList);
 			this.Controls.Add(this.chkClearData);
 			this.Controls.Add(this.lblInfoVersion);

@@ -89,7 +89,7 @@ namespace TriangulArt {
 		}
 
 		public int SelTriangle(int xReel, int yReel) {
-			for (int i = lstTriangle.Count; i-- > 0;) {
+			for (int i = lstTriangle.Count; i-- > 0; ) {
 				Triangle t = lstTriangle[i];
 				if (IsInTriancle(t, xReel, yReel)) {
 					return i;
@@ -217,6 +217,26 @@ namespace TriangulArt {
 		}
 
 		public void GenereSourceAsm(string fileName, bool withCode) {
+			bool polyMode = false;
+			//
+			// Rapprocher les triangles ayant des coordonnées comparables
+			//
+			if (polyMode) {
+				for (int i = 0; i < lstTriangle.Count - 1; i++) {
+					Triangle t1 = lstTriangle[i];
+					for (int j = i + 1; j < lstTriangle.Count; j++) {
+						Triangle t2 = lstTriangle[j];
+						if (t1.EquPoly(t2)) {
+							if (j != i + 1) {
+								lstTriangle[j] = lstTriangle[i + 1];
+								lstTriangle[i + 1] = t2;
+							}
+							i++;
+							break;
+						}
+					}
+				}
+			}
 			StreamWriter sw = GenereAsm.OpenAsm(fileName);
 			if (withCode)
 				GenereAsm.GenereDrawTriangleCode(sw);
