@@ -85,7 +85,7 @@ namespace TriangulArt {
 			listTriangles.Items.Clear();
 			for (int i = 0; i < datas.lstTriangle.Count; i++) {
 				Triangle t = datas.lstTriangle[i];
-				listTriangles.Items.Add("Tr." + i.ToString("000") + "\t\t(" + t.x1 + "," + t.y1 + ")\t\t(" + t.x2 + "," + t.y2 + ")\t\t(" + t.x3 + "," + t.y3 + ")\t\tcouleur:"+t.color);
+				listTriangles.Items.Add("Tr." + i.ToString("000") + "\t\t(" + t.x1 + "," + t.y1 + ")\t\t(" + t.x2 + "," + t.y2 + ")\t\t(" + t.x3 + "," + t.y3 + ")\t\tcouleur:" + t.color);
 			}
 			txbX1.Text = txbX2.Text = txbX3.Text = txbY1.Text = txbY2.Text = txbY3.Text = "";
 			bpUp.Visible = bpDown.Visible = false;
@@ -106,43 +106,54 @@ namespace TriangulArt {
 		}
 
 		private void TrtMouseMove(object sender, MouseEventArgs e) {
-			int yReel = (e.Y & 0xFFE) >> 1;
-			int xReel = e.X >> 1;
-			lblInfoPos.Text = "x:" + xReel.ToString("000") + " y:" + yReel.ToString("000");
-			Graphics g = Graphics.FromImage(pictureBox.Image);
-			if (modeAddTriangle) {
-				if (numPt == 2) {
-					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1);
+			try {
+				int yReel = (e.Y & 0xFFE) >> 1;
+				int xReel = e.X >> 1;
+				lblInfoPos.Text = "x:" + xReel.ToString("000") + " y:" + yReel.ToString("000");
+				Graphics g = Graphics.FromImage(pictureBox.Image);
+				if (modeAddTriangle) {
+					if (numPt == 2) {
+						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1);
+						oldx1 = xReel;
+						oldy1 = yReel;
+						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1);
+					}
+					if (numPt == 3) {
+						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1);
+						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x2 << 1, triSel.y2 << 1, oldx1 << 1, oldy1 << 1);
+						oldx1 = xReel;
+						oldy1 = yReel;
+						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1);
+						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x2 << 1, triSel.y2 << 1, oldx1 << 1, oldy1 << 1);
+					}
+				}
+				if (e.Button == MouseButtons.Left && modeMoveTriangle) {
+					DrawMoveTriangle(g);
+					int dx = xReel - oldx1;
+					int dy = yReel - oldy1;
+					datas.DeplaceTriangle(dx, dy);
 					oldx1 = xReel;
 					oldy1 = yReel;
-					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1);
+					DrawMoveTriangle(g);
 				}
-				if (numPt == 3) {
-					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1);
-					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x2 << 1, triSel.y2 << 1, oldx1 << 1, oldy1 << 1);
-					oldx1 = xReel;
-					oldy1 = yReel;
-					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1);
-					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x2 << 1, triSel.y2 << 1, oldx1 << 1, oldy1 << 1);
-				}
+				pictureBox.Refresh();
 			}
-			if (e.Button == MouseButtons.Left && modeMoveTriangle) {
-				DrawMoveTriangle(g);
-				int dx = xReel - oldx1;
-				int dy = yReel - oldy1;
-				datas.DeplaceTriangle(dx, dy);
-				oldx1 = xReel;
-				oldy1 = yReel;
-				DrawMoveTriangle(g);
+			catch (Exception ex) {
+				MessageBox.Show(ex.StackTrace, ex.Message);
 			}
-			pictureBox.Refresh();
 		}
 
 		private void pictureBox_MouseDown(object sender, MouseEventArgs e) {
 			int yReel = (e.Y & 0xFFE) >> 1;
 			int xReel = e.X >> 1;
 			if (e.Button == MouseButtons.Right)
-				listTriangles.SelectedIndex = datas.SelTriangle(xReel, yReel);
+				if (!modeAddTriangle)
+					listTriangles.SelectedIndex = datas.SelTriangle(xReel, yReel);
+				else {
+					modeAddTriangle = false;
+					bpAddTriangle.Enabled = true;
+					FillTriangles();
+				}
 
 			if (e.Button == MouseButtons.Left && triSel != null && !modeMoveTriangle && !modeAddTriangle) {
 				Graphics g = Graphics.FromImage(pictureBox.Image);
@@ -190,11 +201,9 @@ namespace TriangulArt {
 							triSel.x3 = xReel;
 							triSel.y3 = yReel;
 							numPt = 1;
-							modeAddTriangle = false;
 							triSel.TriSommets3();
 							SetInfo("Triangle enregistré : (" + triSel.x1 + "," + triSel.y1 + "),(" + triSel.x2 + "," + triSel.y2 + "),(" + triSel.x3 + "," + triSel.y3 + ")");
 							AddTriangle(triSel);
-							bpAddTriangle.Enabled = true;
 							break;
 					}
 				}
@@ -427,13 +436,15 @@ namespace TriangulArt {
 		}
 
 		private void bpClear_Click(object sender, EventArgs e) {
-			if (bmpFond != null) {
-				bmpFond.Dispose();
-				bmpFond = null;
+			if (MessageBox.Show("Etes vous certain de vouloir tout effacer ?", "Confirmation d'effacement", MessageBoxButtons.YesNo) == DialogResult.Yes) {
+				if (bmpFond != null) {
+					bmpFond.Dispose();
+					bmpFond = null;
+				}
+				datas.Clear();
+				DisplayList();
+				Reset();
 			}
-			datas.Clear();
-			DisplayList();
-			Reset();
 		}
 
 		private void bpUp_Click(object sender, EventArgs e) {
@@ -481,13 +492,13 @@ namespace TriangulArt {
 				}
 				else
 					if (triSel != null) {
-					int memoSel = datas.GetSelTriangle();
-					datas.DeplaceTriangle(deplX, deplY);
-					DisplayList();
-					listTriangles.SelectedIndex = memoSel;
-				}
-				else
-					MessageBox.Show("Pas de triangle sélectionné");
+						int memoSel = datas.GetSelTriangle();
+						datas.DeplaceTriangle(deplX, deplY);
+						DisplayList();
+						listTriangles.SelectedIndex = memoSel;
+					}
+					else
+						MessageBox.Show("Pas de triangle sélectionné");
 			}
 			else
 				MessageBox.Show("Veuillez sélectionner des données de déplacement valide");
@@ -497,6 +508,29 @@ namespace TriangulArt {
 			datas.CoefZoom(1.05, 1.05);
 			DisplayList();
 			FillTriangles();
+		}
+
+		private void bpZoom_Click(object sender, EventArgs e) {
+			double zoomX = 0, zoomY = 0;
+			if (double.TryParse(txbTrX.Text.Replace('.', ','), out zoomX) && double.TryParse(txbTrY.Text.Replace('.', ','), out zoomY)) {
+				if (rbDepImage.Checked) {
+					datas.CoefZoom(zoomX, zoomY);
+					DisplayList();
+					FillTriangles();
+				}
+				else
+					if (triSel != null) {
+						int memoSel = datas.GetSelTriangle();
+						datas.CoefZoom(triSel, zoomX, zoomY);
+						DisplayList();
+						listTriangles.SelectedIndex = memoSel;
+					}
+					else
+						MessageBox.Show("Pas de triangle sélectionné");
+			}
+			else
+				MessageBox.Show("Veuillez sélectionner des données de zoom valide");
+
 		}
 	}
 }

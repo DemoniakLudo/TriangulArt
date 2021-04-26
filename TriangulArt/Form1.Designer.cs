@@ -72,7 +72,7 @@
 			this.label8 = new System.Windows.Forms.Label();
 			this.rbDepImage = new System.Windows.Forms.RadioButton();
 			this.rbDepTriangle = new System.Windows.Forms.RadioButton();
-			this.button1 = new System.Windows.Forms.Button();
+			this.bpZoom = new System.Windows.Forms.Button();
 			this.lblInfoVersion = new System.Windows.Forms.Label();
 			this.chkClearData = new System.Windows.Forms.CheckBox();
 			this.bpClearList = new System.Windows.Forms.Button();
@@ -96,7 +96,7 @@
 			// lblInfoPos
 			// 
 			this.lblInfoPos.AutoSize = true;
-			this.lblInfoPos.Location = new System.Drawing.Point(524, 179);
+			this.lblInfoPos.Location = new System.Drawing.Point(524, 143);
 			this.lblInfoPos.Name = "lblInfoPos";
 			this.lblInfoPos.Size = new System.Drawing.Size(43, 13);
 			this.lblInfoPos.TabIndex = 1;
@@ -104,7 +104,7 @@
 			// 
 			// bpAddTriangle
 			// 
-			this.bpAddTriangle.Location = new System.Drawing.Point(524, 200);
+			this.bpAddTriangle.Location = new System.Drawing.Point(521, 165);
 			this.bpAddTriangle.Name = "bpAddTriangle";
 			this.bpAddTriangle.Size = new System.Drawing.Size(113, 23);
 			this.bpAddTriangle.TabIndex = 2;
@@ -314,9 +314,9 @@
 			// listTriangles
 			// 
 			this.listTriangles.FormattingEnabled = true;
-			this.listTriangles.Location = new System.Drawing.Point(521, 260);
+			this.listTriangles.Location = new System.Drawing.Point(521, 221);
 			this.listTriangles.Name = "listTriangles";
-			this.listTriangles.Size = new System.Drawing.Size(467, 186);
+			this.listTriangles.Size = new System.Drawing.Size(467, 225);
 			this.listTriangles.TabIndex = 20;
 			this.listTriangles.SelectedIndexChanged += new System.EventHandler(this.listTriangles_SelectedIndexChanged);
 			// 
@@ -333,7 +333,7 @@
 			// 
 			// bpRedraw
 			// 
-			this.bpRedraw.Location = new System.Drawing.Point(524, 229);
+			this.bpRedraw.Location = new System.Drawing.Point(521, 191);
 			this.bpRedraw.Name = "bpRedraw";
 			this.bpRedraw.Size = new System.Drawing.Size(113, 25);
 			this.bpRedraw.TabIndex = 21;
@@ -404,7 +404,7 @@
 			// 
 			// bpClear
 			// 
-			this.bpClear.Location = new System.Drawing.Point(521, 143);
+			this.bpClear.Location = new System.Drawing.Point(928, 67);
 			this.bpClear.Name = "bpClear";
 			this.bpClear.Size = new System.Drawing.Size(116, 22);
 			this.bpClear.TabIndex = 28;
@@ -414,7 +414,7 @@
 			// 
 			// bpUp
 			// 
-			this.bpUp.Location = new System.Drawing.Point(994, 260);
+			this.bpUp.Location = new System.Drawing.Point(994, 222);
 			this.bpUp.Name = "bpUp";
 			this.bpUp.Size = new System.Drawing.Size(50, 27);
 			this.bpUp.TabIndex = 31;
@@ -489,24 +489,25 @@
 			this.groupBox2.Controls.Add(this.bpDeplace);
 			this.groupBox2.Controls.Add(this.txbTrY);
 			this.groupBox2.Controls.Add(this.label9);
+			this.groupBox2.Controls.Add(this.bpZoom);
 			this.groupBox2.Controls.Add(this.txbTrX);
 			this.groupBox2.Controls.Add(this.label8);
 			this.groupBox2.Controls.Add(this.rbDepImage);
 			this.groupBox2.Controls.Add(this.rbDepTriangle);
-			this.groupBox2.Location = new System.Drawing.Point(703, 176);
+			this.groupBox2.Location = new System.Drawing.Point(657, 143);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(341, 79);
+			this.groupBox2.Size = new System.Drawing.Size(387, 73);
 			this.groupBox2.TabIndex = 34;
 			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "Déplacement relatif";
+			this.groupBox2.Text = "Opération spéciale";
 			// 
 			// bpDeplace
 			// 
-			this.bpDeplace.Location = new System.Drawing.Point(210, 19);
+			this.bpDeplace.Location = new System.Drawing.Point(238, 16);
 			this.bpDeplace.Name = "bpDeplace";
-			this.bpDeplace.Size = new System.Drawing.Size(106, 46);
+			this.bpDeplace.Size = new System.Drawing.Size(106, 24);
 			this.bpDeplace.TabIndex = 18;
-			this.bpDeplace.Text = "Déplacer";
+			this.bpDeplace.Text = "Déplacement relatif";
 			this.bpDeplace.UseVisualStyleBackColor = true;
 			this.bpDeplace.Click += new System.EventHandler(this.bpDeplace_Click);
 			// 
@@ -564,16 +565,15 @@
 			this.rbDepTriangle.Text = "Du triangle courant";
 			this.rbDepTriangle.UseVisualStyleBackColor = true;
 			// 
-			// button1
+			// bpZoom
 			// 
-			this.button1.Enabled = false;
-			this.button1.Location = new System.Drawing.Point(994, 342);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(50, 23);
-			this.button1.TabIndex = 35;
-			this.button1.Text = "ZZZ";
-			this.button1.UseVisualStyleBackColor = true;
-			this.button1.Click += new System.EventHandler(this.button1_Click);
+			this.bpZoom.Location = new System.Drawing.Point(238, 46);
+			this.bpZoom.Name = "bpZoom";
+			this.bpZoom.Size = new System.Drawing.Size(106, 24);
+			this.bpZoom.TabIndex = 35;
+			this.bpZoom.Text = "Zoom";
+			this.bpZoom.UseVisualStyleBackColor = true;
+			this.bpZoom.Click += new System.EventHandler(this.bpZoom_Click);
 			// 
 			// lblInfoVersion
 			// 
@@ -612,7 +612,6 @@
 			this.Controls.Add(this.bpClearList);
 			this.Controls.Add(this.chkClearData);
 			this.Controls.Add(this.lblInfoVersion);
-			this.Controls.Add(this.button1);
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.bpDown);
@@ -718,7 +717,7 @@
 		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.RadioButton rbDepImage;
 		private System.Windows.Forms.RadioButton rbDepTriangle;
-		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Button bpZoom;
 		private System.Windows.Forms.Label lblInfoVersion;
 		private System.Windows.Forms.CheckBox chkClearData;
 		private System.Windows.Forms.Button bpClearList;

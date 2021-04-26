@@ -16,10 +16,9 @@ namespace TriangulArt {
 			for (int i = 0; i < 4; i++)
 				s += BitmapCpc.CpcVGA[data.palette[i]];
 
-			sw.WriteLine("DataFrame");
 			sw.WriteLine("; 4 octets de palette");
 			sw.WriteLine("\tDB	\"" + s + "\"");
-			sw.WriteLine(";	DW	#2000			; Tps d'affichage ?");
+			sw.WriteLine("\tDW	#2000			; Tps d'affichage ?");
 			sw.WriteLine("	DB	#" + data.modeRendu.ToString("X2"));
 			sw.WriteLine(";");
 			sw.WriteLine("; Donnees des triangles a afficher.");
@@ -434,6 +433,7 @@ namespace TriangulArt {
 			sw.WriteLine("	INC	L");
 			sw.WriteLine("	INC	DE");
 			sw.WriteLine("	RET");
+			sw.WriteLine("\nDataFrame");
 		}
 
 		static public void GenereDrawTriangleData(StreamWriter sw) {

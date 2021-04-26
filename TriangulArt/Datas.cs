@@ -155,7 +155,7 @@ namespace TriangulArt {
 		}
 
 
-		private void CoefZoom(Triangle t, double coefX, double coefY) {
+		public void CoefZoom(Triangle t, double coefX, double coefY) {
 			double x1 = 127 + (t.x1 - 127) * coefX;
 			double y1 = 127 + (t.y1 - 127) * coefY;
 			double x2 = 127 + (t.x2 - 127) * coefX;
