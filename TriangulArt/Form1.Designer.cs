@@ -68,14 +68,15 @@
 			this.bpDeplace = new System.Windows.Forms.Button();
 			this.txbTrY = new System.Windows.Forms.TextBox();
 			this.label9 = new System.Windows.Forms.Label();
+			this.bpZoom = new System.Windows.Forms.Button();
 			this.txbTrX = new System.Windows.Forms.TextBox();
 			this.label8 = new System.Windows.Forms.Label();
 			this.rbDepImage = new System.Windows.Forms.RadioButton();
 			this.rbDepTriangle = new System.Windows.Forms.RadioButton();
-			this.bpZoom = new System.Windows.Forms.Button();
 			this.lblInfoVersion = new System.Windows.Forms.Label();
 			this.chkClearData = new System.Windows.Forms.CheckBox();
 			this.bpClearList = new System.Windows.Forms.Button();
+			this.bpClean = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -527,6 +528,16 @@
 			this.label9.TabIndex = 17;
 			this.label9.Text = "y:";
 			// 
+			// bpZoom
+			// 
+			this.bpZoom.Location = new System.Drawing.Point(238, 46);
+			this.bpZoom.Name = "bpZoom";
+			this.bpZoom.Size = new System.Drawing.Size(106, 24);
+			this.bpZoom.TabIndex = 35;
+			this.bpZoom.Text = "Zoom";
+			this.bpZoom.UseVisualStyleBackColor = true;
+			this.bpZoom.Click += new System.EventHandler(this.bpZoom_Click);
+			// 
 			// txbTrX
 			// 
 			this.txbTrX.Location = new System.Drawing.Point(172, 19);
@@ -565,16 +576,6 @@
 			this.rbDepTriangle.Text = "Du triangle courant";
 			this.rbDepTriangle.UseVisualStyleBackColor = true;
 			// 
-			// bpZoom
-			// 
-			this.bpZoom.Location = new System.Drawing.Point(238, 46);
-			this.bpZoom.Name = "bpZoom";
-			this.bpZoom.Size = new System.Drawing.Size(106, 24);
-			this.bpZoom.TabIndex = 35;
-			this.bpZoom.Text = "Zoom";
-			this.bpZoom.UseVisualStyleBackColor = true;
-			this.bpZoom.Click += new System.EventHandler(this.bpZoom_Click);
-			// 
 			// lblInfoVersion
 			// 
 			this.lblInfoVersion.AutoSize = true;
@@ -604,11 +605,22 @@
 			this.bpClearList.UseVisualStyleBackColor = true;
 			this.bpClearList.Click += new System.EventHandler(this.bpClearList_Click);
 			// 
+			// bpClean
+			// 
+			this.bpClean.Location = new System.Drawing.Point(994, 321);
+			this.bpClean.Name = "bpClean";
+			this.bpClean.Size = new System.Drawing.Size(49, 25);
+			this.bpClean.TabIndex = 39;
+			this.bpClean.Text = "Clean";
+			this.bpClean.UseVisualStyleBackColor = true;
+			this.bpClean.Click += new System.EventHandler(this.bpClean_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1046, 705);
+			this.Controls.Add(this.bpClean);
 			this.Controls.Add(this.bpClearList);
 			this.Controls.Add(this.chkClearData);
 			this.Controls.Add(this.lblInfoVersion);
@@ -721,6 +733,7 @@
 		private System.Windows.Forms.Label lblInfoVersion;
 		private System.Windows.Forms.CheckBox chkClearData;
 		private System.Windows.Forms.Button bpClearList;
+		private System.Windows.Forms.Button bpClean;
 	}
 }
 

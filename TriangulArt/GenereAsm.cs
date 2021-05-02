@@ -10,14 +10,26 @@ namespace TriangulArt {
 			return sw;
 		}
 
-		static public void GenereDatas(StreamWriter sw, Datas data) {
+		static public void GenereDatas(StreamWriter sw, Datas data, bool cpcPlus) {
 			int nbOctets = 0;
 			string s = "";
-			for (int i = 0; i < 4; i++)
-				s += BitmapCpc.CpcVGA[data.palette[i]];
 
-			sw.WriteLine("; 4 octets de palette");
-			sw.WriteLine("\tDB	\"" + s + "\"");
+			if (cpcPlus) {
+				string line = "";
+				for (int i = 0; i < 4; i++) {
+					int c = BitmapCpc.Palette[i];
+					line += (line != "" ? "," : "") + "#" + ((byte)(((c >> 4) & 0x0F) | (c << 4))).ToString("X2") + ",#" + ((byte)(c >> 8)).ToString("X2");
+				}
+				sw.WriteLine("; 4 mots de palette");
+				sw.WriteLine("\tDB	\t" + line);
+			}
+			else {
+				for (int i = 0; i < 4; i++)
+					s += BitmapCpc.CpcVGA[data.palette[i]];
+
+				sw.WriteLine("; 4 octets de palette");
+				sw.WriteLine("\tDB	\"" + s + "\"");
+			}
 			sw.WriteLine("\tDW	#2000			; Tps d'affichage ?");
 			sw.WriteLine("	DB	#" + data.modeRendu.ToString("X2"));
 			sw.WriteLine(";");
@@ -38,7 +50,13 @@ namespace TriangulArt {
 			sw.WriteLine("; Taille " + nbOctets.ToString() + " octets");
 		}
 
-		static public void GenereDrawTriangleCode(StreamWriter sw) {
+		static public void GenereDrawTriangleCode(StreamWriter sw, bool cpcPlus) {
+			GenereInitCode(sw, cpcPlus);
+			GenereInitPalette(sw, cpcPlus);
+			GenereDrawTriangle(sw);
+		}
+
+		static private void GenereInitCode(StreamWriter sw, bool cpcPlus) {
 			sw.WriteLine("	ORG	#8000");
 			sw.WriteLine("	RUN	$");
 			sw.WriteLine("	DI");
@@ -119,22 +137,62 @@ namespace TriangulArt {
 			sw.WriteLine("	INC	L");
 			sw.WriteLine("	INC	L					; 3 valeurs a zeros pour aligner sur 8 octets");
 			sw.WriteLine("	DJNZ	InitPen");
+			if (cpcPlus) {
+				sw.WriteLine("	LD	BC,#BC11");
+				sw.WriteLine("	LD	HL,UnlockAsic");
+				sw.WriteLine("Unlock:");
+				sw.WriteLine("	LD	A,(HL)");
+				sw.WriteLine("	OUT	(C),A");
+				sw.WriteLine("	INC	HL");
+				sw.WriteLine("	DEC	C");
+				sw.WriteLine("	JR	NZ,Unlock");
+			}
+			sw.WriteLine("	LD	BC,#7F8D			; Mode 1");
+			sw.WriteLine("	OUT	(C),C");
+			if (cpcPlus) {
+				sw.WriteLine("	LD	A,#A0");
+				sw.WriteLine("	OUT	(C),A");
+			}
 			sw.WriteLine("");
+		}
+
+		static private void GenereInitPalette(StreamWriter sw, bool cpcPlus) {
 			sw.WriteLine("	LD	IX,DataFrame			; Donnees triangle");
 			sw.WriteLine("	PUSH	IX");
 			sw.WriteLine("	POP	HL");
-			sw.WriteLine("	LD	BC,#7F10");
-			sw.WriteLine("	LD	A,(HL)");
-			sw.WriteLine("	OUT	(C),C");
-			sw.WriteLine("	OUT	(C),A");
-			sw.WriteLine("	XOR	A");
-			sw.WriteLine("BclPalette:");
-			sw.WriteLine("	OUT	(C),A");
-			sw.WriteLine("	INC	B");
-			sw.WriteLine("	OUTI");
-			sw.WriteLine("	INC	A");
-			sw.WriteLine("	CP	4");
-			sw.WriteLine("	JR	NZ,BclPalette");
+			if (cpcPlus) {
+				sw.WriteLine("	LD	BC,#7FB8");
+				sw.WriteLine("	OUT	(C),C");
+				sw.WriteLine("	LD	DE,#6420");
+				sw.WriteLine("	LDI");
+				sw.WriteLine("	LDI");
+				sw.WriteLine("	DEC	HL");
+				sw.WriteLine("	DEC	HL");
+				sw.WriteLine("	LD	E,0");
+				sw.WriteLine("	LD	BC,8");
+				sw.WriteLine("	LDIR");
+				sw.WriteLine("	LD	BC,#7FA0");
+				sw.WriteLine("	OUT	(C),C");
+			}
+			else {
+				sw.WriteLine("	LD	BC,#7F10");
+				sw.WriteLine("	LD	A,(HL)");
+				sw.WriteLine("	OUT	(C),C");
+				sw.WriteLine("	OUT	(C),A");
+				sw.WriteLine("	XOR	A");
+				sw.WriteLine("BclPalette:");
+				sw.WriteLine("	OUT	(C),A");
+				sw.WriteLine("	INC	B");
+				sw.WriteLine("	OUTI");
+				sw.WriteLine("	INC	A");
+				sw.WriteLine("	CP	4");
+				sw.WriteLine("	JR	NZ,BclPalette");
+			}
+		}
+
+		static private void GenereDrawTriangle(StreamWriter sw) {
+			sw.WriteLine("	INC	HL						; passer le mot de temporisation");
+			sw.WriteLine("	INC	HL");
 			sw.WriteLine("	PUSH	HL");
 			sw.WriteLine("	POP	IX");
 			sw.WriteLine("	LD	A,(IX+0)				; Mode de trace");
@@ -436,7 +494,12 @@ namespace TriangulArt {
 			sw.WriteLine("\nDataFrame");
 		}
 
-		static public void GenereDrawTriangleData(StreamWriter sw) {
+		static public void GenereDrawTriangleData(StreamWriter sw, bool cpcPlus) {
+			if (cpcPlus) {
+				sw.WriteLine("UnlockAsic:");
+				sw.WriteLine("	DB	#FF,#00,#FF,#77,#B3,#51,#A8,#D4,#62,#39,#9C,#46,#2B,#15,#8A,#CD,#EE");
+				sw.WriteLine(";");
+			}
 			sw.WriteLine("pen1:");
 			sw.WriteLine(";");
 			sw.WriteLine("; Structure");

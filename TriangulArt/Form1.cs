@@ -312,7 +312,7 @@ namespace TriangulArt {
 			dlg.Filter = "Fichiers assembleur (*.asm)|*.asm";
 			DialogResult result = dlg.ShowDialog();
 			if (result == DialogResult.OK) {
-				datas.GenereSourceAsm(dlg.FileName, chkCodeAsm.Checked);
+				datas.GenereSourceAsm(dlg.FileName, chkCodeAsm.Checked, chkPlus.Checked);
 				SetInfo("Génération assembleur ok.");
 			}
 		}
@@ -504,12 +504,6 @@ namespace TriangulArt {
 				MessageBox.Show("Veuillez sélectionner des données de déplacement valide");
 		}
 
-		private void button1_Click(object sender, EventArgs e) {
-			datas.CoefZoom(1.05, 1.05);
-			DisplayList();
-			FillTriangles();
-		}
-
 		private void bpZoom_Click(object sender, EventArgs e) {
 			double zoomX = 0, zoomY = 0;
 			if (double.TryParse(txbTrX.Text.Replace('.', ','), out zoomX) && double.TryParse(txbTrY.Text.Replace('.', ','), out zoomY)) {
@@ -531,6 +525,12 @@ namespace TriangulArt {
 			else
 				MessageBox.Show("Veuillez sélectionner des données de zoom valide");
 
+		}
+
+		private void bpClean_Click(object sender, EventArgs e) {
+			datas.CleanUp();
+			DisplayList();
+			FillTriangles();
 		}
 	}
 }

@@ -154,6 +154,19 @@ namespace TriangulArt {
 				MoveTriangle(t, deplX, deplY);
 		}
 
+		public void CleanUp() {
+			int nbTri = lstTriangle.Count;
+			for (int i = 0; i < nbTri; i++) {
+				Triangle t = lstTriangle[i];
+				if ((t.x1 == t.x2 && t.y1 == t.y2)
+					|| (t.x1 == t.x3 && t.y1 == t.y3)
+					|| (t.x2 == t.x3 && t.y2 == t.y3)) {
+					lstTriangle.RemoveAt(i);
+					i--;
+					nbTri--;
+				}
+			}
+		}
 
 		public void CoefZoom(Triangle t, double coefX, double coefY) {
 			double x1 = 127 + (t.x1 - 127) * coefX;
@@ -216,7 +229,7 @@ namespace TriangulArt {
 			}
 		}
 
-		public void GenereSourceAsm(string fileName, bool withCode) {
+		public void GenereSourceAsm(string fileName, bool withCode, bool cpcPlus) {
 			bool polyMode = false;
 			//
 			// Rapprocher les triangles ayant des coordonnées comparables
@@ -239,11 +252,11 @@ namespace TriangulArt {
 			}
 			StreamWriter sw = GenereAsm.OpenAsm(fileName);
 			if (withCode)
-				GenereAsm.GenereDrawTriangleCode(sw);
+				GenereAsm.GenereDrawTriangleCode(sw, cpcPlus);
 
-			GenereAsm.GenereDatas(sw, this);
+			GenereAsm.GenereDatas(sw, this, cpcPlus);
 			if (withCode)
-				GenereAsm.GenereDrawTriangleData(sw);
+				GenereAsm.GenereDrawTriangleData(sw, cpcPlus);
 
 			GenereAsm.CloseAsm(sw);
 		}
