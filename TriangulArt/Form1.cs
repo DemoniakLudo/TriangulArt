@@ -20,7 +20,7 @@ namespace TriangulArt {
 
 		public Form1() {
 			InitializeComponent();
-			bmpLock = new DirectBitmap(pictureBox.Width, pictureBox.Height);
+			bmpLock = new DirectBitmap(512, 512);
 			Reset();
 			for (int i = 0; i < 4; i++)
 				datas.palette[i] = BitmapCpc.Palette[i];
@@ -107,8 +107,8 @@ namespace TriangulArt {
 
 		private void TrtMouseMove(object sender, MouseEventArgs e) {
 			try {
-				int yReel = (e.Y & 0xFFE) >> 1;
-				int xReel = e.X >> 1;
+				int yReel = (e.Y & 0xFFE) >> 2;
+				int xReel = e.X >> 2;
 				lblInfoPos.Text = "x:" + xReel.ToString("000") + " y:" + yReel.ToString("000");
 				Graphics g = Graphics.FromImage(pictureBox.Image);
 				if (modeAddTriangle) {
@@ -144,8 +144,8 @@ namespace TriangulArt {
 		}
 
 		private void pictureBox_MouseDown(object sender, MouseEventArgs e) {
-			int yReel = (e.Y & 0xFFE) >> 1;
-			int xReel = e.X >> 1;
+			int yReel = (e.Y & 0xFFE) >> 2;
+			int xReel = e.X >> 2;
 			if (e.Button == MouseButtons.Right)
 				if (!modeAddTriangle)
 					listTriangles.SelectedIndex = datas.SelTriangle(xReel, yReel);
@@ -166,8 +166,8 @@ namespace TriangulArt {
 		}
 
 		private void pictureBox_MouseUp(object sender, MouseEventArgs e) {
-			int yReel = (e.Y & 0xFFE) >> 1;
-			int xReel = e.X >> 1;
+			int yReel = (e.Y & 0xFFE) >> 2;
+			int xReel = e.X >> 2;
 			if (e.Button == MouseButtons.Left) {
 				Graphics g = Graphics.FromImage(pictureBox.Image);
 				if (modeAddTriangle) {
