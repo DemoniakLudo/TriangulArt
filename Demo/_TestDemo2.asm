@@ -453,6 +453,7 @@ Frame_0
 	Read	"Pyramide.asm"
 	Read	"Pyramides.asm"
 	Read	"Tricubes.asm"
+	Read	"Tricube.asm"
 ; Divers
 	Read	"Batman.asm"
 	Read	"Piece.asm"
@@ -461,16 +462,18 @@ Frame_0
 	Read	"Floral.asm"
 	Read	"Glaive.asm"
 	Read	"Apple.asm"
+	Read	"Linux.asm"
 ; Objets 3D
-	Read	"Bouboule.asm"
 	Read	"Bidul.asm"
 	Read	"Etoile.asm"
+	Read	"Bouboule.asm"
 	Read	"Donut.asm"
 	Read	"Cylindre.asm"
 	Read	"Hex.asm"
 ; Animaux
 	Read	"Hippo.asm"
 	Read	"Elephant.asm"
+	Read	"Elephant2.asm"
 	Read	"Girafe.asm"
 	Read	"Rhino.asm"
 	Read	"Dolphin.asm"
