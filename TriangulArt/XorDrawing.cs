@@ -138,7 +138,6 @@ public static class XorDrawing {
 		return hdc;
 	}
 
-
 	private static void FinishDraw(Bitmap bmp, Graphics graphics, IntPtr hdc, IntPtr oldpen, int oldRop, IntPtr img, bool dash) {
 		SetROP2(hdc, oldRop);
 		System.Drawing.Drawing2D.Matrix transform = graphics.Transform;
@@ -162,14 +161,15 @@ public static class XorDrawing {
 		FinishDraw(bmp, graphics, hdc, oldpen, oldRop, img, dash);
 	}
 
-	public static void DrawXorRectangle(Graphics graphics, Bitmap bmp, int x1, int y1, int x2, int y2, bool dash = true) {
+	public static void DrawXorTriangle(Graphics g, Bitmap bmp, int x1, int y1, int x2, int y2, int x3, int y3, bool dash=true) {
 		int oldRop;
-		IntPtr oldpen, img, hdc = BeginDraw(bmp, graphics, x1, y1, x2, y2, dash, out oldRop, out img, out oldpen);
-		MoveToEx(hdc, x1, y1, IntPtr.Zero); //clockwise
-		LineTo(hdc, x2, y1);
+		IntPtr oldpen, img, hdc = BeginDraw(bmp, g, x1, y1, x2, y2, dash, out oldRop, out img, out oldpen);
+		MoveToEx(hdc, x1, y1, IntPtr.Zero);
 		LineTo(hdc, x2, y2);
-		LineTo(hdc, x1, y2);
-		LineTo(hdc, x1, y1);
-		FinishDraw(bmp, graphics, hdc, oldpen, oldRop, img, dash);
+		MoveToEx(hdc, x1, y1, IntPtr.Zero);
+		LineTo(hdc, x3, y3);
+		MoveToEx(hdc, x2, y2, IntPtr.Zero);
+		LineTo(hdc, x3, y3);
+		FinishDraw(bmp, g, hdc, oldpen, oldRop, img, dash);
 	}
 }

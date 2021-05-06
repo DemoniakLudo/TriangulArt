@@ -70,7 +70,7 @@ namespace TriangulArt {
 				FillTriangle(bmpLock, 255 - x1, y1, 255 - x2, y2, 255 - x3, y3, t.color, false);
 			else
 				if (modeRendu == 2)
-					FillTriangle(bmpLock, x3, 255 - y3, x2, 255 - y2, x1, 255 - y1, t.color, false);
+				FillTriangle(bmpLock, x3, 255 - y3, x2, 255 - y2, x1, 255 - y1, t.color, false);
 		}
 
 		public void FillTriangles(DirectBitmap bmpLock) {
@@ -89,7 +89,7 @@ namespace TriangulArt {
 		}
 
 		public int SelTriangle(int xReel, int yReel) {
-			for (int i = lstTriangle.Count; i-- > 0; ) {
+			for (int i = lstTriangle.Count; i-- > 0;) {
 				Triangle t = lstTriangle[i];
 				if (IsInTriancle(t, xReel, yReel)) {
 					return i;
@@ -166,6 +166,82 @@ namespace TriangulArt {
 					nbTri--;
 				}
 			}
+		}
+
+
+		public void Rapproche() {
+			for (int i = 0; i < lstTriangle.Count - 1; i++)
+				for (int j = i + 1; j < lstTriangle.Count; j++) {
+					Triangle t1 = lstTriangle[i];
+					Triangle t2 = lstTriangle[j];
+					double d = Math.Sqrt((t1.x1 - t2.x1) * (t1.x1 - t2.x1) + (t1.y1 - t2.y1) * (t1.y1 - t2.y1));
+					if (d > 0 && d <= 2) {
+						t1.x1 += (t2.x1 - t1.x1) / 2;
+						t2.x1 += (t1.x1 - t2.x1) / 2;
+						t1.y1 += (t2.y1 - t1.y1) / 2;
+						t2.y1 += (t1.y1 - t2.y1) / 2;
+					}
+					d = Math.Sqrt((t1.x1 - t2.x2) * (t1.x1 - t2.x2) + (t1.y1 - t2.y2) * (t1.y1 - t2.y2));
+					if (d > 0 && d <= 2) {
+						t1.x1 += (int)((1 + t2.x2 - t1.x1) / 2);
+						t2.x2 += (int)((1 + t1.x1 - t2.x2) / 2);
+						t1.y1 += (int)((1 + t2.y2 - t1.y1) / 2);
+						t2.y2 += (int)((1 + t1.x1 - t2.y2) / 2);
+					}
+					d = Math.Sqrt((t1.x1 - t2.x3) * (t1.x1 - t2.x3) + (t1.y1 - t2.y3) * (t1.y1 - t2.y3));
+					if (d > 0 && d <= 2) {
+						t1.x1 += (int)((1 + t2.x2 - t1.x1) / 2);
+						t2.x3 += (int)((1 + t1.x1 - t2.x3) / 2);
+						t1.y1 += (int)((1 + t2.y2 - t1.y1) / 2);
+						t2.y3 += (int)((1 + t1.x1 - t2.y3) / 2);
+					}
+					d = Math.Sqrt((t1.x2 - t2.x1) * (t1.x2 - t2.x1) + (t1.y2 - t2.y1) * (t1.y2 - t2.y1));
+					if (d > 0 && d <= 2) {
+						t1.x2 += (int)((1 + t2.x1 - t1.x2) / 2);
+						t2.x1 += (int)((1 + t1.x2 - t2.x1) / 2);
+						t1.y2 += (int)((1 + t2.y1 - t1.y2) / 2);
+						t2.y1 += (int)((1 + t1.y2 - t2.y1) / 2);
+					}
+					d = Math.Sqrt((t1.x2 - t2.x2) * (t1.x2 - t2.x2) + (t1.y2 - t2.y2) * (t1.y2 - t2.y2));
+					if (d > 0 && d <= 2) {
+						t1.x2 += (int)((1 + t2.x2 - t1.x2) / 2);
+						t2.x2 += (int)((1 + t1.x2 - t2.x2) / 2);
+						t1.y2 += (int)((1 + t2.y2 - t1.y2) / 2);
+						t2.y2 += (int)((1 + t1.y2 - t2.y2) / 2);
+					}
+					d = Math.Sqrt((t1.x2 - t2.x3) * (t1.x2 - t2.x3) + (t1.y2 - t2.y3) * (t1.y2 - t2.y3));
+					if (d > 0 && d <= 2) {
+						t1.x2 += (int)((1 + t2.x3 - t1.x2) / 2);
+						t2.x3 += (int)((1 + t1.x2 - t2.x3) / 2);
+						t1.y2 += (int)((1 + t2.y3 - t1.y2) / 2);
+						t2.y3 += (int)((1 + t1.y2 - t2.y3) / 2);
+					}
+					d = Math.Sqrt((t1.x3 - t2.x1) * (t1.x3 - t2.x1) + (t1.y3 - t2.y1) * (t1.y3 - t2.y1));
+					if (d > 0 && d <= 2) {
+						t1.x3 += (int)((1 + t2.x1 - t1.x3) / 2);
+						t2.x1 += (int)((1 + t1.x3 - t2.x1) / 2);
+						t1.y3 += (int)((1 + t2.y1 - t1.y3) / 2);
+						t2.y1 += (int)((1 + t1.y3 - t2.y1) / 2);
+					}
+					d = Math.Sqrt((t1.x3 - t2.x2) * (t1.x3 - t2.x2) + (t1.y3 - t2.y2) * (t1.y3 - t2.y2));
+					if (d > 0 && d <= 2) {
+						t1.x3 += (int)((1 + t2.x2 - t1.x3) / 2);
+						t2.x2 += (int)((1 + t1.x3 - t2.x2) / 2);
+						t1.y3 += (int)((1 + t2.y2 - t1.y3) / 2);
+						t2.y2 += (int)((1 + t1.y3 - t2.y2) / 2);
+					}
+					d = Math.Sqrt((t1.x3 - t2.x3) * (t1.x3 - t2.x3) + (t1.y3 - t2.y3) * (t1.y3 - t2.y3));
+					if (d > 0 && d <= 2) {
+						t1.x3 += (int)((1 + t2.x3 - t1.x3) / 2);
+						t2.x3 += (int)((1 + t1.x3 - t2.x3) / 2);
+						t1.y3 += (int)((1 + t2.y3 - t1.y3) / 2);
+						t2.y3 += (int)((1 + t1.y3 - t2.y3) / 2);
+					}
+					t1.TriSommets();
+					t1.TriSommets3();
+					t2.TriSommets();
+					t2.TriSommets3();
+				}
 		}
 
 		public void CoefZoom(Triangle t, double coefX, double coefY) {

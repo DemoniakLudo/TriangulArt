@@ -77,6 +77,7 @@
 			this.chkClearData = new System.Windows.Forms.CheckBox();
 			this.bpClearList = new System.Windows.Forms.Button();
 			this.bpClean = new System.Windows.Forms.Button();
+			this.bpRapproche = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -616,11 +617,22 @@
 			this.bpClean.UseVisualStyleBackColor = true;
 			this.bpClean.Click += new System.EventHandler(this.bpClean_Click);
 			// 
+			// bpRapproche
+			// 
+			this.bpRapproche.Location = new System.Drawing.Point(1723, 369);
+			this.bpRapproche.Name = "bpRapproche";
+			this.bpRapproche.Size = new System.Drawing.Size(62, 23);
+			this.bpRapproche.TabIndex = 40;
+			this.bpRapproche.Text = "Rapproche";
+			this.bpRapproche.UseVisualStyleBackColor = true;
+			this.bpRapproche.Click += new System.EventHandler(this.bpRapproche_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1794, 1024);
+			this.Controls.Add(this.bpRapproche);
 			this.Controls.Add(this.bpClean);
 			this.Controls.Add(this.bpClearList);
 			this.Controls.Add(this.chkClearData);
@@ -735,6 +747,7 @@
 		private System.Windows.Forms.CheckBox chkClearData;
 		private System.Windows.Forms.Button bpClearList;
 		private System.Windows.Forms.Button bpClean;
+		private System.Windows.Forms.Button bpRapproche;
 	}
 }
 
