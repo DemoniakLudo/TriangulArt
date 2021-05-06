@@ -9,6 +9,8 @@ namespace TriangulArt {
 		public int modeRendu = 0;
 		public List<Triangle> lstTriangle = new List<Triangle>();
 		public int[] palette = new int[4];
+		public bool cpcPlus = false;
+
 		private int selLigne = -1;
 
 		public int GetPalCPC(int c) {

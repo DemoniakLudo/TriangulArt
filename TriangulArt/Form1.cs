@@ -108,7 +108,7 @@ namespace TriangulArt {
 				int yReel = (e.Y + 2) >> 2;
 				int xReel = (e.X + 2) >> 2;
 				lblInfoPos.Text = "x:" + xReel.ToString("000") + " y:" + yReel.ToString("000");
-				if (modeAddTriangle) {
+				if (modeAddTriangle && triSel != null) {
 					if (numPt == 2) {
 						Graphics g = Graphics.FromImage(pictureBox.Image);
 						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1);
@@ -261,6 +261,7 @@ namespace TriangulArt {
 					for (int i = 0; i < 4; i++)
 						BitmapCpc.Palette[i] = datas.palette[i];
 
+					BitmapCpc.cpcPlus = chkPlus.Checked = datas.cpcPlus;
 					UpdatePalette();
 					FillTriangles();
 					DisplayList();
@@ -413,7 +414,7 @@ namespace TriangulArt {
 		}
 
 		private void chkPlus_CheckedChanged(object sender, EventArgs e) {
-			BitmapCpc.cpcPlus = chkPlus.Checked;
+			datas.cpcPlus = BitmapCpc.cpcPlus = chkPlus.Checked;
 			FillTriangles();
 		}
 
