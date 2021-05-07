@@ -17,7 +17,7 @@ namespace TriangulArt {
 			return BitmapCpc.cpcPlus ? (((c & 0xF0) >> 4) * 17) + ((((c & 0xF00) >> 8) * 17) << 8) + (((c & 0x0F) * 17) << 16) : BitmapCpc.RgbCPC[c < 27 ? c : 0].GetColor;
 		}
 
-		private void FillTriangle(DirectBitmap bmpLock, int x1, int y1, int x2, int y2, int x3, int y3, int c, bool selected) {
+		private void FillTriangle(DirectBitmap bmpLock, int x1, int y1, int x2, int y2, int x3, int y3, int c, bool selected = false) {
 			int dx1 = x3 - x1;
 			int dy1 = y3 - y1;
 			int sgn1 = dx1 > 0 ? 1 : -1;
@@ -34,11 +34,11 @@ namespace TriangulArt {
 				xr = x2;
 
 			for (int y = y1; y < y3; y++) {
-				int color = selected ? (y << 13) + (y << 3) + (y << 22) : GetPalCPC(BitmapCpc.Palette[c]);
+				int color = selected ? (y << 13) + (y << 4) + (y << 22) : c;
 				if (xr > xl)
-					bmpLock.SetHorLineDouble(xl << 1, y << 1, (xr - xl) << 1, color);
+					bmpLock.SetHorLineDouble(xl << 1, y << 1, (xr - xl) << 1, color, selected);
 				else
-					bmpLock.SetHorLineDouble((xl + xr - xl) << 1, y << 1, (xl - xr) << 1, color);
+					bmpLock.SetHorLineDouble((xl + xr - xl) << 1, y << 1, (xl - xr) << 1, color, selected);
 
 				err1 += dx1;
 				while (err1 >= dy1) {
@@ -67,12 +67,13 @@ namespace TriangulArt {
 			int y2 = t.y2;
 			int x3 = t.x3;
 			int y3 = t.y3;
-			FillTriangle(bmpLock, x1, y1, x2, y2, x3, y3, t.color, selected);
+			int c = t.color;
+			FillTriangle(bmpLock, x1, y1, x2, y2, x3, y3, GetPalCPC(BitmapCpc.Palette[c]), selected);
 			if (modeRendu == 1)
-				FillTriangle(bmpLock, 255 - x1, y1, 255 - x2, y2, 255 - x3, y3, t.color, false);
+				FillTriangle(bmpLock, 255 - x1, y1, 255 - x2, y2, 255 - x3, y3, GetPalCPC(BitmapCpc.Palette[c]), false);
 			else
 				if (modeRendu == 2)
-				FillTriangle(bmpLock, x3, 255 - y3, x2, 255 - y2, x1, 255 - y1, t.color, false);
+				FillTriangle(bmpLock, x3, 255 - y3, x2, 255 - y2, x1, 255 - y1, GetPalCPC(BitmapCpc.Palette[c]), false);
 		}
 
 		public void FillTriangles(DirectBitmap bmpLock) {
@@ -156,8 +157,24 @@ namespace TriangulArt {
 				MoveTriangle(t, deplX, deplY);
 		}
 
-		public void CleanUp() {
+		public void CleanUp(DirectBitmap bmpLock) {
+			// vérifier triangle non complètement recouvert
+			FillTriangles(bmpLock);
 			int nbTri = lstTriangle.Count;
+			for (int i = 0; i < nbTri; i++) {
+				bool found = false;
+				for (int x = 0; x < 512; x++)
+					for (int y = 0; y < 512; y++)
+						if (bmpLock.GetPixel(x, y) == GetPalCPC(BitmapCpc.Palette[lstTriangle[i].color])) {
+							found = true;
+							x = 512;
+							y = 512;
+						}
+				if (!found)
+					lstTriangle[i].x1 = lstTriangle[i].y1 = lstTriangle[i].x2 = lstTriangle[i].y2 = 0;
+			}
+
+			// Seconde passe : supprimer les triangles ayant des coordonnées identiques
 			for (int i = 0; i < nbTri; i++) {
 				Triangle t = lstTriangle[i];
 				if ((t.x1 == t.x2 && t.y1 == t.y2)
@@ -170,79 +187,97 @@ namespace TriangulArt {
 			}
 		}
 
-
-		public void Rapproche() {
+		public void Rapproche(int distMin) {
+			int deltax = 0, deltay = 0;
 			for (int i = 0; i < lstTriangle.Count - 1; i++)
 				for (int j = i + 1; j < lstTriangle.Count; j++) {
-					Triangle t1 = lstTriangle[i];
-					Triangle t2 = lstTriangle[j];
-					double d = Math.Sqrt((t1.x1 - t2.x1) * (t1.x1 - t2.x1) + (t1.y1 - t2.y1) * (t1.y1 - t2.y1));
-					if (d > 0 && d <= 2) {
-						t1.x1 += (t2.x1 - t1.x1) / 2;
-						t2.x1 += (t1.x1 - t2.x1) / 2;
-						t1.y1 += (t2.y1 - t1.y1) / 2;
-						t2.y1 += (t1.y1 - t2.y1) / 2;
+					Triangle tFirst = lstTriangle[i];
+					Triangle tSecond = lstTriangle[j];
+					deltax = tFirst.x1 - tSecond.x1;
+					deltay = tFirst.y1 - tSecond.y1;
+					double d = Math.Sqrt(deltax * deltax + deltay * deltay);
+					if (d > 0 && d <= distMin) {
+						tFirst.x1 -= (deltax + 1) / 2;
+						tSecond.x1 += (deltax + 1) / 2;
+						tFirst.y1 -= (deltay + 1) / 2;
+						tSecond.y1 += (deltay + 1) / 2;
 					}
-					d = Math.Sqrt((t1.x1 - t2.x2) * (t1.x1 - t2.x2) + (t1.y1 - t2.y2) * (t1.y1 - t2.y2));
-					if (d > 0 && d <= 2) {
-						t1.x1 += (int)((1 + t2.x2 - t1.x1) / 2);
-						t2.x2 += (int)((1 + t1.x1 - t2.x2) / 2);
-						t1.y1 += (int)((1 + t2.y2 - t1.y1) / 2);
-						t2.y2 += (int)((1 + t1.x1 - t2.y2) / 2);
+					deltax = tFirst.x1 - tSecond.x2;
+					deltay = tFirst.y1 - tSecond.y2;
+					d = Math.Sqrt(deltax * deltax + deltay * deltay);
+					if (d > 0 && d <= distMin) {
+						tFirst.x1 -= (deltax + 1) / 2;
+						tSecond.x2 += (deltax + 1) / 2;
+						tFirst.y1 -= (deltay + 1) / 2;
+						tSecond.y2 += (deltay + 1) / 2;
 					}
-					d = Math.Sqrt((t1.x1 - t2.x3) * (t1.x1 - t2.x3) + (t1.y1 - t2.y3) * (t1.y1 - t2.y3));
-					if (d > 0 && d <= 2) {
-						t1.x1 += (int)((1 + t2.x2 - t1.x1) / 2);
-						t2.x3 += (int)((1 + t1.x1 - t2.x3) / 2);
-						t1.y1 += (int)((1 + t2.y2 - t1.y1) / 2);
-						t2.y3 += (int)((1 + t1.x1 - t2.y3) / 2);
+					deltax = tFirst.x1 - tSecond.x3;
+					deltay = tFirst.y1 - tSecond.y3;
+					d = Math.Sqrt(deltax * deltax + deltay * deltay);
+					if (d > 0 && d <= distMin) {
+						tFirst.x1 -= (deltax + 1) / 2;
+						tSecond.x3 += (deltax + 1) / 2;
+						tFirst.y1 -= (deltay + 1) / 2;
+						tSecond.y3 += (deltay + 1) / 2;
 					}
-					d = Math.Sqrt((t1.x2 - t2.x1) * (t1.x2 - t2.x1) + (t1.y2 - t2.y1) * (t1.y2 - t2.y1));
-					if (d > 0 && d <= 2) {
-						t1.x2 += (int)((1 + t2.x1 - t1.x2) / 2);
-						t2.x1 += (int)((1 + t1.x2 - t2.x1) / 2);
-						t1.y2 += (int)((1 + t2.y1 - t1.y2) / 2);
-						t2.y1 += (int)((1 + t1.y2 - t2.y1) / 2);
+					deltax = tFirst.x2 - tSecond.x1;
+					deltay = tFirst.y2 - tSecond.y1;
+					d = Math.Sqrt(deltax * deltax + deltay * deltay);
+					if (d > 0 && d <= distMin) {
+						tFirst.x2 -= (deltax + 1) / 2;
+						tSecond.x1 += (deltax + 1) / 2;
+						tFirst.y2 -= (deltay + 1) / 2;
+						tSecond.y1 += (deltay + 1) / 2;
 					}
-					d = Math.Sqrt((t1.x2 - t2.x2) * (t1.x2 - t2.x2) + (t1.y2 - t2.y2) * (t1.y2 - t2.y2));
-					if (d > 0 && d <= 2) {
-						t1.x2 += (int)((1 + t2.x2 - t1.x2) / 2);
-						t2.x2 += (int)((1 + t1.x2 - t2.x2) / 2);
-						t1.y2 += (int)((1 + t2.y2 - t1.y2) / 2);
-						t2.y2 += (int)((1 + t1.y2 - t2.y2) / 2);
+					deltax = tFirst.x2 - tSecond.x2;
+					deltay = tFirst.y2 - tSecond.y2;
+					d = Math.Sqrt(deltax * deltax + deltay * deltay);
+					if (d > 0 && d <= distMin) {
+						tFirst.x2 -= (deltax + 1) / 2;
+						tSecond.x2 += (deltax + 1) / 2;
+						tFirst.y2 -= (deltay + 1) / 2;
+						tSecond.y2 += (deltay + 1) / 2;
 					}
-					d = Math.Sqrt((t1.x2 - t2.x3) * (t1.x2 - t2.x3) + (t1.y2 - t2.y3) * (t1.y2 - t2.y3));
-					if (d > 0 && d <= 2) {
-						t1.x2 += (int)((1 + t2.x3 - t1.x2) / 2);
-						t2.x3 += (int)((1 + t1.x2 - t2.x3) / 2);
-						t1.y2 += (int)((1 + t2.y3 - t1.y2) / 2);
-						t2.y3 += (int)((1 + t1.y2 - t2.y3) / 2);
+					deltax = tFirst.x2 - tSecond.x3;
+					deltay = tFirst.y2 - tSecond.y3;
+					d = Math.Sqrt(deltax * deltax + deltay * deltay);
+					if (d > 0 && d <= distMin) {
+						tFirst.x2 -= (deltax + 1) / 2;
+						tSecond.x3 += (deltax + 1) / 2;
+						tFirst.y2 -= (deltay + 1) / 2;
+						tSecond.y3 += (deltay + 1) / 2;
 					}
-					d = Math.Sqrt((t1.x3 - t2.x1) * (t1.x3 - t2.x1) + (t1.y3 - t2.y1) * (t1.y3 - t2.y1));
-					if (d > 0 && d <= 2) {
-						t1.x3 += (int)((1 + t2.x1 - t1.x3) / 2);
-						t2.x1 += (int)((1 + t1.x3 - t2.x1) / 2);
-						t1.y3 += (int)((1 + t2.y1 - t1.y3) / 2);
-						t2.y1 += (int)((1 + t1.y3 - t2.y1) / 2);
+					deltax = tFirst.x3 - tSecond.x1;
+					deltay = tFirst.y3 - tSecond.y1;
+					d = Math.Sqrt(deltax * deltax + deltay * deltay);
+					if (d > 0 && d <= distMin) {
+						tFirst.x3 -= (deltax + 1) / 2;
+						tSecond.x1 += (deltax + 1) / 2;
+						tFirst.y3 -= (deltay + 1) / 2;
+						tSecond.y1 += (deltay + 1) / 2;
 					}
-					d = Math.Sqrt((t1.x3 - t2.x2) * (t1.x3 - t2.x2) + (t1.y3 - t2.y2) * (t1.y3 - t2.y2));
-					if (d > 0 && d <= 2) {
-						t1.x3 += (int)((1 + t2.x2 - t1.x3) / 2);
-						t2.x2 += (int)((1 + t1.x3 - t2.x2) / 2);
-						t1.y3 += (int)((1 + t2.y2 - t1.y3) / 2);
-						t2.y2 += (int)((1 + t1.y3 - t2.y2) / 2);
+					deltax = tFirst.x3 - tSecond.x2;
+					deltay = tFirst.y3 - tSecond.y2;
+					d = Math.Sqrt(deltax * deltax + deltay * deltay);
+					if (d > 0 && d <= distMin) {
+						tFirst.x3 -= (deltax + 1) / 2;
+						tSecond.x2 += (deltax + 1) / 2;
+						tFirst.y3 -= (deltay + 1) / 2;
+						tSecond.y2 += (deltay + 1) / 2;
 					}
-					d = Math.Sqrt((t1.x3 - t2.x3) * (t1.x3 - t2.x3) + (t1.y3 - t2.y3) * (t1.y3 - t2.y3));
-					if (d > 0 && d <= 2) {
-						t1.x3 += (int)((1 + t2.x3 - t1.x3) / 2);
-						t2.x3 += (int)((1 + t1.x3 - t2.x3) / 2);
-						t1.y3 += (int)((1 + t2.y3 - t1.y3) / 2);
-						t2.y3 += (int)((1 + t1.y3 - t2.y3) / 2);
+					deltax = tFirst.x3 - tSecond.x3;
+					deltay = tFirst.y3 - tSecond.y3;
+					d = Math.Sqrt(deltax * deltax + deltay * deltay);
+					if (d > 0 && d <= distMin) {
+						tFirst.x3 -= (deltax + 1) / 2;
+						tSecond.x3 += (deltax + 1) / 2;
+						tFirst.y3 -= (deltay + 1) / 2;
+						tSecond.y3 += (deltay + 1) / 2;
 					}
-					t1.TriSommets();
-					t1.TriSommets3();
-					t2.TriSommets();
-					t2.TriSommets3();
+					tFirst.TriSommets();
+					tFirst.TriSommets3();
+					tSecond.TriSommets();
+					tSecond.TriSommets3();
 				}
 		}
 

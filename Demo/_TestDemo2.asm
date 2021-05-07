@@ -2,7 +2,7 @@
 	ORG	#8000
 	RUN	$
 
-	write direct "demo.bin"
+;	write direct "demo.bin"
 	DI
 ;
 ; Formater ecran en 256x256 pixels
@@ -123,7 +123,7 @@ BclPalette:
 	LD	HL,0
 Wait1:
 	DEC	HL
-	LD	B,12
+	LD	B,16
 Wait2:
 	DJNZ	Wait2
 	LD	A,H
@@ -458,6 +458,7 @@ Frame_0
 	Read	"Tricube.asm"
 ; Divers
 	Read	"Batman.asm"
+	Read	"Batman2.asm"
 	Read	"Piece.asm"
 	Read	"ChessBoard.asm"
 	Read	"Montagne.asm"

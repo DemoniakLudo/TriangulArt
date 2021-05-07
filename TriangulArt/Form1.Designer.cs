@@ -192,7 +192,7 @@
 			// 
 			this.ColorSel.BackColor = System.Drawing.Color.Transparent;
 			this.ColorSel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.ColorSel.Location = new System.Drawing.Point(1017, 559);
+			this.ColorSel.Location = new System.Drawing.Point(950, 558);
 			this.ColorSel.Name = "ColorSel";
 			this.ColorSel.Size = new System.Drawing.Size(82, 56);
 			this.ColorSel.TabIndex = 5;
@@ -363,7 +363,7 @@
 			// label7
 			// 
 			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(920, 581);
+			this.label7.Location = new System.Drawing.Point(855, 580);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(94, 13);
 			this.label7.TabIndex = 23;
@@ -586,7 +586,7 @@
 			// lblInfoVersion
 			// 
 			this.lblInfoVersion.AutoSize = true;
-			this.lblInfoVersion.Location = new System.Drawing.Point(790, 746);
+			this.lblInfoVersion.Location = new System.Drawing.Point(852, 745);
 			this.lblInfoVersion.Name = "lblInfoVersion";
 			this.lblInfoVersion.Size = new System.Drawing.Size(42, 13);
 			this.lblInfoVersion.TabIndex = 36;
@@ -616,7 +616,7 @@
 			// 
 			this.bpClean.Location = new System.Drawing.Point(1456, 362);
 			this.bpClean.Name = "bpClean";
-			this.bpClean.Size = new System.Drawing.Size(49, 25);
+			this.bpClean.Size = new System.Drawing.Size(61, 25);
 			this.bpClean.TabIndex = 39;
 			this.bpClean.Text = "Clean";
 			this.bpClean.UseVisualStyleBackColor = true;

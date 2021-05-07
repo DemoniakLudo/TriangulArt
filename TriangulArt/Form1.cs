@@ -583,8 +583,8 @@ namespace TriangulArt {
 		}
 
 		private void bpRapproche_Click(object sender, EventArgs e) {
-			datas.Rapproche();
-			datas.CleanUp();
+			datas.Rapproche(4);
+			datas.CleanUp(bmpLock);
 			DisplayList();
 			FillTriangles();
 		}
@@ -620,7 +620,14 @@ namespace TriangulArt {
 		}
 
 		private void bpClean_Click(object sender, EventArgs e) {
-			datas.CleanUp();
+			int nbAvant = datas.lstTriangle.Count;
+			datas.CleanUp(bmpLock);
+			int nbApres= datas.lstTriangle.Count;
+			if (nbApres != nbAvant)
+				SetInfo("Nbre de triangles optimisés : " + (nbAvant - nbApres).ToString());
+			else
+				SetInfo("Pas d'optimisation possible.");
+
 			DisplayList();
 			FillTriangles();
 		}

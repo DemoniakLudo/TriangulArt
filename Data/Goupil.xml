@@ -167,15 +167,6 @@
     <Triangle>
       <x1>53</x1>
       <y1>107</y1>
-      <x2>53</x2>
-      <y2>107</y2>
-      <x3>60</x3>
-      <y3>119</y3>
-      <color>3</color>
-    </Triangle>
-    <Triangle>
-      <x1>53</x1>
-      <y1>107</y1>
       <x2>58</x2>
       <y2>112</y2>
       <x3>60</x3>
@@ -279,4 +270,5 @@
     <int>15</int>
     <int>0</int>
   </palette>
+  <cpcPlus>false</cpcPlus>
 </Datas>
