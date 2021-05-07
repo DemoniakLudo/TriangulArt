@@ -2,7 +2,7 @@
 Rhino
 ; 4 octets de palette
 	DB	"N@KT"
-	DW	#0800			; Tps d'affichage ?
+	DB	#0C			; Tps d'affichage ?
 	DB	#00
 ;
 ; Donnees des triangles a afficher.

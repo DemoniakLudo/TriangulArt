@@ -280,5 +280,5 @@
     <int>26</int>
   </palette>
   <cpcPlus>false</cpcPlus>
-  <tpsAttente>8192</tpsAttente>
+  <tpsAttente>50</tpsAttente>
 </Datas>

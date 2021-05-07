@@ -2,7 +2,7 @@
 Pyramides
 ; 4 octets de palette
 	DB	"KJLN"
-	DW	#0800			; Tps d'affichage ?
+	DB	#10			; Tps d'affichage ?
 	DB	#00
 ;
 ; Donnees des triangles a afficher.

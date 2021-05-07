@@ -2,7 +2,7 @@
 Panda
 ; 4 octets de palette
 	DB	"RKTL"
-	DW	#0400			; Tps d'affichage ?
+	DB	#08			; Tps d'affichage ?
 	DB	#00
 ;
 ; Donnees des triangles a afficher.

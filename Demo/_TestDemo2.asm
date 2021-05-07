@@ -1,9 +1,19 @@
 ; Généré par TriangulArt le 11/04/2021 (11 33 34)
-	ORG	#8000
+	ORG	#200
 	RUN	$
 
 ;	write direct "demo.bin"
 	DI
+	LD	HL,#8000
+	LD	SP,HL
+	LD	D,H
+	LD	E,L
+	LD	B,H
+	LD	C,L
+	LD	(HL),L
+	INC	DE
+	DEC	BC
+	LDIR
 ;
 ; Formater ecran en 256x256 pixels
 ;
@@ -74,9 +84,19 @@ InitPen:
 	INC	L
 	INC	L					; 3 valeurs a zeros pour aligner sur 8 octets
 	DJNZ	InitPen
+	LD	HL,NewIrq
+	LD	(#39),HL
+	LD	BC,#7F8D
+	OUT	(C),C
+	LD	BC,#BC0C
+	OUT	(C),C
+	EI
 
-Init
-	LD	IX,Frame_0
+;
+; Debut, premiere image = logo impact
+;
+Debut
+	LD	IX,Logos
 Boucle:
 	PUSH	IX
 	POP	HL	
@@ -98,15 +118,11 @@ BclPalette:
 	INC	A
 	CP	4
 	JR	NZ,BclPalette
-	LD	E,(HL)
+	LD	A,(HL)
 	INC	HL
-	LD	D,(HL)
-	INC	HL
-	LD	(WaitTriangle+1),DE
+	LD	(TpsWaitTriangle+1),A
 	PUSH	HL
-	LD	BC,#BC0C
-	OUT	(C),C
-	LD	BC,#BD10
+	LD	BC,#BD20
 	OUT	(C),C
 	LD	HL,#C000
 	LD	DE,#C001
@@ -117,28 +133,102 @@ BclPalette:
 	OUT	(C),C
 	POP	IX
 	CALL	DrawFrame
-;
 ; Temps de pause pour affichage image
-;
 	LD	HL,0
 Wait1:
 	DEC	HL
 	LD	B,16
 Wait2:
-	DJNZ	Wait2
+;	DJNZ	Wait2
 	LD	A,H
 	OR	L
 	JR	NZ,Wait1
 	LD	A,(IX+0)
 	INC	A
 	JR	NZ,Boucle
-	JR	Init
+;
+; Deuxieme methode d'affichage
+;
+Methode2:
+	XOR	A
+	LD	(DoWait+1),A
+	LD	IX,Logos
+Boucle2:
+	LD	HL,#C000
+	LD	DE,#8000
+	LD	BC,#3FFF
+	LDIR
+	LD	BC,#BD20
+	OUT (C),C
+	LD	B,#F5
+WaitVBL2:
+	IN	A,(C)
+	RRA
+	JR	NC,WaitVBL2
+	LD	HL,#C000
+	LD	DE,#C001
+	LD	BC,#3FFF
+	LD	(HL),L
+	LDIR
+	PUSH	IX
+	LD	BC,5
+	ADD	IX,BC
+	XOR	A
+	LD	(CntIrq+1),A
+	CALL	DrawFrame
+	POP	HL	
+	LD	B,#F5
+WaitVBL3:
+	IN	A,(C)
+	RRA
+	JR	NC,WaitVBL3
+	LD	BC,#BD30
+	OUT (C),C
+	LD	BC,#7F10
+	LD	A,(HL)
+	OUT	(C),C
+	OUT	(C),A
+	XOR	A
+BclPalette2:
+	OUT	(C),A
+	INC	B	
+	OUTI
+	INC	A
+	CP	4
+	JR	NZ,BclPalette2
+Wait12:
+	LD	A,(CntIrq+1)
+	AND	A
+	JR	NZ,Wait12
+	LD	A,(IX+0)
+	INC	A
+	JR	NZ,Boucle2
+FinDemo
+	JR	FinDemo
 
+;
+; IRQ
+;
+NewIrq
+	PUSH	AF
+CntIrq:
+	LD	A,0
+	INC	A
+	LD	(CntIrq+1),A
+	POP	AF
+	EI
+	RET
+
+;
+; Dessine les triangles d'une image
+;
 DrawFrame:
 	LD	A,(IX+0)				; Mode de trace
 	LD	(ModeDraw+1),A
 	INC	IX
 BclDrawFrame:
+	XOR	A
+	LD	(CntIrq+1),A
 	LD	A,(IX+6)				; Couleur
 	AND	3
 	ADD	A,PtMode1C1/256
@@ -147,7 +237,7 @@ BclDrawFrame:
 	LD	H,A
 	LD	L,#61
 	LD	A,(HL)
-	LD	(DrawLigneCoul2+1),A
+	LD	(DrawLigneCoul2+1),A	; Initialisation couleur du triangle
 	LD	B,(IX+0)				; X1
 	LD	C,(IX+1)				; Y1
 	LD	D,(IX+2)				; X2
@@ -173,13 +263,18 @@ ModeDraw:
 	LD	H,A
 	LD	L,(IX+5)
 	CALL	DrawTriangle
+DoWait:
+	LD	A,1
+	AND	A
+	JR	Z,EndWait	
+
 WaitTriangle:
-	LD	HL,0
-WaitTriangle1:
-	DEC	HL
-	LD	A,H
-	OR	L
-	JR	NZ,WaitTriangle1
+	LD	A,(CntIrq+1)
+TpsWaitTriangle:
+	CP	0
+	JR	C,WaitTriangle
+
+EndWait:
 	LD	A,(IX+6)
 	LD	BC,7
 	ADD	IX,BC
@@ -187,6 +282,9 @@ WaitTriangle1:
 	JR	NC,BclDrawFrame
 	RET
 
+;
+; Dessine un triangle - (B=X1 C=Y1), (D=X2 E=Y2), (H=X3 L=Y3)
+;
 DrawTriangle
 	LD	A,H
 	SUB	B
@@ -446,9 +544,10 @@ Set3Pen:
 ; le 7eme octet de la structure (la couleur) defini le pen mode 1
 ; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
 ;
-Frame_0
+Logos
 	Read	"Impact.asm"
 	Read	"TriangulArt.asm"
+StartFrames
 ; Theme triangle
 	Read	"Triangle.asm"
 	Read	"TriTriangle.asm"

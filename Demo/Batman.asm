@@ -2,7 +2,7 @@
 Batman
 ; 4 octets de palette
 	DB	"KTSL"
-	DW	#0A00			; Tps d'affichage ?
+	DB	#10			; Tps d'affichage ?
 	DB	#01
 ;
 ; Donnees des triangles a afficher.

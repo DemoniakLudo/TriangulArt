@@ -1,9 +1,9 @@
-; Généré par TriangulArt le 07/05/2021 (10 27 32)
+; Généré par TriangulArt le 07/05/2021 (15 13 58)
 Girafe
 ; 4 octets de palette
 	DB	"WJNT"
-	DW	#0800			; Tps d'affichage ?
-	DB	#01
+	DB	#07			; Tps d'affichage
+	DB	#01			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
 ;
 ; Donnees des triangles a afficher.
 ; Chaque frame contient un ou plusieurs trianges defini de la sorte :

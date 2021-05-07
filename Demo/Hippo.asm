@@ -2,7 +2,7 @@
 Hippo
 ; 4 octets de palette
 	DB	"D@TL"
-	DW	#0200			; Tps d'affichage ?
+	DB	#08			; Tps d'affichage ?
 	DB	#01
 ;
 ; Donnees des triangles a afficher.

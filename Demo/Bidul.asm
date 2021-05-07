@@ -2,7 +2,7 @@
 Bidul
 ; 4 octets de palette
 	DB	"CNL\"
-	DW	#0400			; Tps d'affichage ?
+	DB	#0C			; Tps d'affichage ?
 	DB	#00
 ;
 ; Donnees des triangles a afficher.

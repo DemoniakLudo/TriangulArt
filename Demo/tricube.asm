@@ -2,7 +2,7 @@
 Tricube
 ; 4 octets de palette
 	DB	"KVNT"
-	DW	#0001			; Tps d'affichage ?
+	DB	#02			; Tps d'affichage ?
 	DB	#00
 ;
 ; Donnees des triangles a afficher.

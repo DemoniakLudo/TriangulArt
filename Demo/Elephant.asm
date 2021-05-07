@@ -2,7 +2,7 @@
 Elephant
 ; 4 octets de palette
 	DB	"TFLN"
-	DW	#1000			; Tps d'affichage ?
+	DB	#10			; Tps d'affichage ?
 	DB	#00
 ;
 ; Donnees des triangles a afficher.

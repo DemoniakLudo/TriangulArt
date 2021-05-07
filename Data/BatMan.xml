@@ -118,5 +118,5 @@
     <int>6</int>
   </palette>
   <cpcPlus>false</cpcPlus>
-  <tpsAttente>2560</tpsAttente>
+  <tpsAttente>50</tpsAttente>
 </Datas>

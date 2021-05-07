@@ -1,9 +1,9 @@
-; Généré par TriangulArt le 07/05/2021 (10 27 24)
+; Généré par TriangulArt le 07/05/2021 (15 14 05)
 Floral
 ; 4 octets de palette
 	DB	"CYSO"
-	DW	#0200			; Tps d'affichage ?
-	DB	#01
+	DB	#03			; Tps d'affichage
+	DB	#01			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
 ;
 ; Donnees des triangles a afficher.
 ; Chaque frame contient un ou plusieurs trianges defini de la sorte :

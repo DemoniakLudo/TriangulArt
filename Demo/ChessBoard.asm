@@ -2,7 +2,7 @@
 ChessBoard
 ; 4 octets de palette
 	DB	"@KT["
-	DW	#0200			; Tps d'affichage ?
+	DB	#03			; Tps d'affichage ?
 	DB	#00
 ;
 ; Donnees des triangles a afficher.

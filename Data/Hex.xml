@@ -577,5 +577,5 @@
     <int>20</int>
   </palette>
   <cpcPlus>false</cpcPlus>
-  <tpsAttente>512</tpsAttente>
+  <tpsAttente>7</tpsAttente>
 </Datas>

@@ -2,7 +2,7 @@
 Impact
 ; 4 octets de palette
 	DB	"XCNL"
-	DW	#0400			; Tps d'affichage ?
+	DB	#03			; Tps d'affichage ?
 	DB	#00
 ;
 ; Donnees des triangles a afficher.

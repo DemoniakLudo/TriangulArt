@@ -408,42 +408,6 @@
       <color>1</color>
     </Triangle>
     <Triangle>
-      <x1>139</x1>
-      <y1>88</y1>
-      <x2>152</x2>
-      <y2>89</y2>
-      <x3>154</x3>
-      <y3>105</y3>
-      <color>2</color>
-    </Triangle>
-    <Triangle>
-      <x1>139</x1>
-      <y1>89</y1>
-      <x2>133</x2>
-      <y2>97</y2>
-      <x3>146</x3>
-      <y3>116</y3>
-      <color>2</color>
-    </Triangle>
-    <Triangle>
-      <x1>139</x1>
-      <y1>90</y1>
-      <x2>154</x2>
-      <y2>105</y2>
-      <x3>146</x3>
-      <y3>116</y3>
-      <color>2</color>
-    </Triangle>
-    <Triangle>
-      <x1>155</x1>
-      <y1>106</y1>
-      <x2>147</x2>
-      <y2>116</y2>
-      <x3>155</x3>
-      <y3>118</y3>
-      <color>2</color>
-    </Triangle>
-    <Triangle>
       <x1>214</x1>
       <y1>119</y1>
       <x2>208</x2>
@@ -507,105 +471,6 @@
       <color>1</color>
     </Triangle>
     <Triangle>
-      <x1>245</x1>
-      <y1>163</y1>
-      <x2>238</x2>
-      <y2>173</y2>
-      <x3>249</x3>
-      <y3>178</y3>
-      <color>2</color>
-    </Triangle>
-    <Triangle>
-      <x1>249</x1>
-      <y1>178</y1>
-      <x2>254</x2>
-      <y2>191</y2>
-      <x3>235</x3>
-      <y3>200</y3>
-      <color>2</color>
-    </Triangle>
-    <Triangle>
-      <x1>239</x1>
-      <y1>174</y1>
-      <x2>249</x2>
-      <y2>179</y2>
-      <x3>235</x3>
-      <y3>201</y3>
-      <color>2</color>
-    </Triangle>
-    <Triangle>
-      <x1>224</x1>
-      <y1>172</y1>
-      <x2>240</x2>
-      <y2>174</y2>
-      <x3>235</x3>
-      <y3>201</y3>
-      <color>2</color>
-    </Triangle>
-    <Triangle>
-      <x1>225</x1>
-      <y1>173</y1>
-      <x2>213</x2>
-      <y2>185</y2>
-      <x3>235</x3>
-      <y3>202</y3>
-      <color>2</color>
-    </Triangle>
-    <Triangle>
-      <x1>214</x1>
-      <y1>186</y1>
-      <x2>235</x2>
-      <y2>202</y2>
-      <x3>220</x3>
-      <y3>207</y3>
-      <color>2</color>
-    </Triangle>
-    <Triangle>
-      <x1>255</x1>
-      <y1>190</y1>
-      <x2>236</x2>
-      <y2>200</y2>
-      <x3>240</x3>
-      <y3>207</y3>
-      <color>2</color>
-    </Triangle>
-    <Triangle>
-      <x1>255</x1>
-      <y1>190</y1>
-      <x2>241</x2>
-      <y2>207</y2>
-      <x3>250</x3>
-      <y3>222</y3>
-      <color>2</color>
-    </Triangle>
-    <Triangle>
-      <x1>112</x1>
-      <y1>75</y1>
-      <x2>88</x2>
-      <y2>83</y2>
-      <x3>83</x3>
-      <y3>104</y3>
-      <color>2</color>
-    </Triangle>
-    <Triangle>
-      <x1>112</x1>
-      <y1>75</y1>
-      <x2>83</x2>
-      <y2>104</y2>
-      <x3>97</x3>
-      <y3>126</y3>
-      <color>2</color>
-    </Triangle>
-    <Triangle>
-      <x1>112</x1>
-      <y1>75</y1>
-      <x2>121</x2>
-      <y2>110</y2>
-      <x3>98</x3>
-      <y3>126</y3>
-      <color>2</color>
-    </Triangle>
-    <Triangle>
       <x1>83</x1>
       <y1>106</y1>
       <x2>98</x2>
@@ -651,51 +516,6 @@
       <color>1</color>
     </Triangle>
     <Triangle>
-      <x1>111</x1>
-      <y1>163</y1>
-      <x2>128</x2>
-      <y2>171</y2>
-      <x3>117</x3>
-      <y3>179</y3>
-      <color>2</color>
-    </Triangle>
-    <Triangle>
-      <x1>111</x1>
-      <y1>164</y1>
-      <x2>107</x2>
-      <y2>181</y2>
-      <x3>118</x3>
-      <y3>181</y3>
-      <color>2</color>
-    </Triangle>
-    <Triangle>
-      <x1>112</x1>
-      <y1>75</y1>
-      <x2>124</x2>
-      <y2>85</y2>
-      <x3>122</x3>
-      <y3>111</y3>
-      <color>2</color>
-    </Triangle>
-    <Triangle>
-      <x1>124</x1>
-      <y1>85</y1>
-      <x2>134</x2>
-      <y2>98</y2>
-      <x3>122</x3>
-      <y3>111</y3>
-      <color>2</color>
-    </Triangle>
-    <Triangle>
-      <x1>134</x1>
-      <y1>99</y1>
-      <x2>123</x2>
-      <y2>111</y2>
-      <x3>136</x3>
-      <y3>120</y3>
-      <color>2</color>
-    </Triangle>
-    <Triangle>
       <x1>123</x1>
       <y1>111</y1>
       <x2>136</x2>
@@ -703,15 +523,6 @@
       <x3>132</x3>
       <y3>151</y3>
       <color>1</color>
-    </Triangle>
-    <Triangle>
-      <x1>136</x1>
-      <y1>121</y1>
-      <x2>146</x2>
-      <y2>126</y2>
-      <x3>132</x3>
-      <y3>151</y3>
-      <color>2</color>
     </Triangle>
     <Triangle>
       <x1>139</x1>
@@ -730,24 +541,6 @@
       <x3>136</x3>
       <y3>173</y3>
       <color>1</color>
-    </Triangle>
-    <Triangle>
-      <x1>76</x1>
-      <y1>21</y1>
-      <x2>88</x2>
-      <y2>29</y2>
-      <x3>70</x3>
-      <y3>31</y3>
-      <color>3</color>
-    </Triangle>
-    <Triangle>
-      <x1>89</x1>
-      <y1>30</y1>
-      <x2>75</x2>
-      <y2>31</y2>
-      <x3>74</x3>
-      <y3>39</y3>
-      <color>3</color>
     </Triangle>
     <Triangle>
       <x1>62</x1>
@@ -912,15 +705,6 @@
       <color>1</color>
     </Triangle>
     <Triangle>
-      <x1>21</x1>
-      <y1>155</y1>
-      <x2>23</x2>
-      <y2>187</y2>
-      <x3>38</x3>
-      <y3>196</y3>
-      <color>2</color>
-    </Triangle>
-    <Triangle>
       <x1>22</x1>
       <y1>155</y1>
       <x2>51</x2>
@@ -948,7 +732,205 @@
       <color>1</color>
     </Triangle>
     <Triangle>
-      <x1>109</x1>
+      <x1>139</x1>
+      <y1>88</y1>
+      <x2>152</x2>
+      <y2>89</y2>
+      <x3>154</x3>
+      <y3>105</y3>
+      <color>2</color>
+    </Triangle>
+    <Triangle>
+      <x1>139</x1>
+      <y1>89</y1>
+      <x2>133</x2>
+      <y2>97</y2>
+      <x3>146</x3>
+      <y3>116</y3>
+      <color>2</color>
+    </Triangle>
+    <Triangle>
+      <x1>139</x1>
+      <y1>90</y1>
+      <x2>154</x2>
+      <y2>105</y2>
+      <x3>146</x3>
+      <y3>116</y3>
+      <color>2</color>
+    </Triangle>
+    <Triangle>
+      <x1>155</x1>
+      <y1>106</y1>
+      <x2>147</x2>
+      <y2>116</y2>
+      <x3>155</x3>
+      <y3>118</y3>
+      <color>2</color>
+    </Triangle>
+    <Triangle>
+      <x1>245</x1>
+      <y1>163</y1>
+      <x2>238</x2>
+      <y2>173</y2>
+      <x3>249</x3>
+      <y3>178</y3>
+      <color>2</color>
+    </Triangle>
+    <Triangle>
+      <x1>249</x1>
+      <y1>178</y1>
+      <x2>254</x2>
+      <y2>191</y2>
+      <x3>235</x3>
+      <y3>200</y3>
+      <color>2</color>
+    </Triangle>
+    <Triangle>
+      <x1>239</x1>
+      <y1>174</y1>
+      <x2>249</x2>
+      <y2>179</y2>
+      <x3>235</x3>
+      <y3>201</y3>
+      <color>2</color>
+    </Triangle>
+    <Triangle>
+      <x1>224</x1>
+      <y1>172</y1>
+      <x2>240</x2>
+      <y2>174</y2>
+      <x3>235</x3>
+      <y3>201</y3>
+      <color>2</color>
+    </Triangle>
+    <Triangle>
+      <x1>225</x1>
+      <y1>173</y1>
+      <x2>213</x2>
+      <y2>185</y2>
+      <x3>235</x3>
+      <y3>202</y3>
+      <color>2</color>
+    </Triangle>
+    <Triangle>
+      <x1>214</x1>
+      <y1>186</y1>
+      <x2>235</x2>
+      <y2>202</y2>
+      <x3>220</x3>
+      <y3>207</y3>
+      <color>2</color>
+    </Triangle>
+    <Triangle>
+      <x1>255</x1>
+      <y1>190</y1>
+      <x2>236</x2>
+      <y2>200</y2>
+      <x3>240</x3>
+      <y3>207</y3>
+      <color>2</color>
+    </Triangle>
+    <Triangle>
+      <x1>255</x1>
+      <y1>190</y1>
+      <x2>241</x2>
+      <y2>207</y2>
+      <x3>250</x3>
+      <y3>222</y3>
+      <color>2</color>
+    </Triangle>
+    <Triangle>
+      <x1>112</x1>
+      <y1>75</y1>
+      <x2>88</x2>
+      <y2>83</y2>
+      <x3>83</x3>
+      <y3>104</y3>
+      <color>2</color>
+    </Triangle>
+    <Triangle>
+      <x1>112</x1>
+      <y1>75</y1>
+      <x2>83</x2>
+      <y2>104</y2>
+      <x3>97</x3>
+      <y3>126</y3>
+      <color>2</color>
+    </Triangle>
+    <Triangle>
+      <x1>112</x1>
+      <y1>75</y1>
+      <x2>121</x2>
+      <y2>110</y2>
+      <x3>98</x3>
+      <y3>126</y3>
+      <color>2</color>
+    </Triangle>
+    <Triangle>
+      <x1>111</x1>
+      <y1>163</y1>
+      <x2>128</x2>
+      <y2>171</y2>
+      <x3>117</x3>
+      <y3>179</y3>
+      <color>2</color>
+    </Triangle>
+    <Triangle>
+      <x1>111</x1>
+      <y1>164</y1>
+      <x2>107</x2>
+      <y2>181</y2>
+      <x3>118</x3>
+      <y3>181</y3>
+      <color>2</color>
+    </Triangle>
+    <Triangle>
+      <x1>112</x1>
+      <y1>75</y1>
+      <x2>124</x2>
+      <y2>85</y2>
+      <x3>122</x3>
+      <y3>111</y3>
+      <color>2</color>
+    </Triangle>
+    <Triangle>
+      <x1>124</x1>
+      <y1>85</y1>
+      <x2>134</x2>
+      <y2>98</y2>
+      <x3>122</x3>
+      <y3>111</y3>
+      <color>2</color>
+    </Triangle>
+    <Triangle>
+      <x1>134</x1>
+      <y1>99</y1>
+      <x2>123</x2>
+      <y2>111</y2>
+      <x3>136</x3>
+      <y3>120</y3>
+      <color>2</color>
+    </Triangle>
+    <Triangle>
+      <x1>136</x1>
+      <y1>121</y1>
+      <x2>146</x2>
+      <y2>126</y2>
+      <x3>132</x3>
+      <y3>151</y3>
+      <color>2</color>
+    </Triangle>
+    <Triangle>
+      <x1>21</x1>
+      <y1>155</y1>
+      <x2>23</x2>
+      <y2>187</y2>
+      <x3>38</x3>
+      <y3>196</y3>
+      <color>2</color>
+    </Triangle>
+    <Triangle>
+      <x1>95</x1>
       <y1>14</y1>
       <x2>67</x2>
       <y2>15</y2>
@@ -957,21 +939,30 @@
       <color>3</color>
     </Triangle>
     <Triangle>
+      <x1>76</x1>
+      <y1>21</y1>
+      <x2>88</x2>
+      <y2>29</y2>
+      <x3>70</x3>
+      <y3>31</y3>
+      <color>3</color>
+    </Triangle>
+    <Triangle>
       <x1>177</x1>
-      <y1>245</y1>
+      <y1>231</y1>
       <x2>138</x2>
-      <y2>255</y2>
+      <y2>241</y2>
       <x3>195</x3>
-      <y3>255</y3>
+      <y3>241</y3>
       <color>3</color>
     </Triangle>
     <Triangle>
       <x1>40</x1>
-      <y1>244</y1>
+      <y1>230</y1>
       <x2>28</x2>
-      <y2>255</y2>
+      <y2>241</y2>
       <x3>34</x3>
-      <y3>255</y3>
+      <y3>241</y3>
       <color>3</color>
     </Triangle>
   </lstTriangle>
@@ -982,5 +973,5 @@
     <int>26</int>
   </palette>
   <cpcPlus>false</cpcPlus>
-  <tpsAttente>8192</tpsAttente>
+  <tpsAttente>2048</tpsAttente>
 </Datas>

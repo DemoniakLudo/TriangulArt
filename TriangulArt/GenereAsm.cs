@@ -22,16 +22,17 @@ namespace TriangulArt {
 					line += (line != "" ? "," : "") + "#" + ((byte)(((c >> 4) & 0x0F) | (c << 4))).ToString("X2") + ",#" + ((byte)(c >> 8)).ToString("X2");
 				}
 				sw.WriteLine("; 8 octets (4 mots) de palette");
-				sw.WriteLine("\tDB	\t" + line);
+				sw.WriteLine("	DB	" + line);
 			}
 			else {
 				for (int i = 0; i < 4; i++)
 					s += BitmapCpc.CpcVGA[data.palette[i]];
 
 				sw.WriteLine("; 4 octets de palette");
-				sw.WriteLine("\tDB	\"" + s + "\"");
+				sw.WriteLine("	DB	\"" + s + "\"");
 			}
-			sw.WriteLine("\tDW	#" + data.tpsAttente.ToString("X4") + "			; Tps d'affichage");
+			int tps = (int)Math.Max(Math.Min(255, data.tpsAttente / 3.333333), 1);
+			sw.WriteLine("	DB	#" + tps.ToString("X2") + "			; Tps d'affichage");
 			sw.WriteLine("	DB	#" + data.modeRendu.ToString("X2") + "			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)");
 			sw.WriteLine(";");
 			sw.WriteLine("; Donnees des triangles a afficher.");
@@ -45,7 +46,7 @@ namespace TriangulArt {
 			for (int i = 0; i < data.lstTriangle.Count; i++) {
 				Triangle t = data.lstTriangle[i];
 				int color = i < data.lstTriangle.Count - 1 ? t.color : t.color + 0x80;
-				sw.WriteLine("\tDB\t#" + t.x1.ToString("X2") + ",#" + t.y1.ToString("X2") + ",#" + t.x2.ToString("X2") + ",#" + t.y2.ToString("X2") + ",#" + t.x3.ToString("X2") + ",#" + t.y3.ToString("X2") + ",#" + color.ToString("X2"));
+				sw.WriteLine("	DB	#" + t.x1.ToString("X2") + ",#" + t.y1.ToString("X2") + ",#" + t.x2.ToString("X2") + ",#" + t.y2.ToString("X2") + ",#" + t.x3.ToString("X2") + ",#" + t.y3.ToString("X2") + ",#" + color.ToString("X2"));
 				nbOctets += 7;
 			}
 			sw.WriteLine("; Taille " + nbOctets.ToString() + " octets");
@@ -154,7 +155,9 @@ namespace TriangulArt {
 				sw.WriteLine("	LD	A,#A0");
 				sw.WriteLine("	OUT	(C),A");
 			}
-			sw.WriteLine("");
+			sw.WriteLine("	LD	HL,NewIrq");
+			sw.WriteLine("	LD	(#39),HL");
+			sw.WriteLine("	EI");
 		}
 
 		static private void GenereInitPalette(StreamWriter sw, string fileName, bool cpcPlus) {
@@ -192,17 +195,17 @@ namespace TriangulArt {
 		}
 
 		static private void GenereDrawTriangle(StreamWriter sw) {
-			sw.WriteLine("	LD	E,(HL)");
+			sw.WriteLine("	LD	A,(HL)");
 			sw.WriteLine("	INC	HL");
-			sw.WriteLine("	LD	D,(HL)");
-			sw.WriteLine("	INC	HL");
-			sw.WriteLine("	LD	(WaitTriangle+1),DE");
+			sw.WriteLine("	LD	(TpsWaitTriangle+1),A");
 			sw.WriteLine("	PUSH	HL");
 			sw.WriteLine("	POP	IX");
 			sw.WriteLine("	LD	A,(IX+0)				; Mode de trace");
 			sw.WriteLine("	LD	(ModeDraw+1),A");
 			sw.WriteLine("	INC	IX");
 			sw.WriteLine("BclDrawFrame:");
+			sw.WriteLine("	XOR	A");
+			sw.WriteLine("	LD	(CntIrq+1),A");
 			sw.WriteLine("	LD	A,(IX+6)				; Couleur");
 			sw.WriteLine("	AND	3");
 			sw.WriteLine("	ADD	A,PtMode1C1/256");
@@ -239,12 +242,10 @@ namespace TriangulArt {
 			sw.WriteLine("	LD	L,(IX+5)");
 			sw.WriteLine("	CALL	DrawTriangle");
 			sw.WriteLine("WaitTriangle:");
-			sw.WriteLine("	LD	HL,0");
-			sw.WriteLine("WaitTriangle1:");
-			sw.WriteLine("	DEC HL");
-			sw.WriteLine("	LD A, H");
-			sw.WriteLine("	OR L");
-			sw.WriteLine("JR NZ, WaitTriangle1");
+			sw.WriteLine("	LD	A,(CntIrq+1)");
+			sw.WriteLine("TpsWaitTriangle:");
+			sw.WriteLine("	CP	0");
+			sw.WriteLine("JR C,WaitTriangle");
 			sw.WriteLine("	LD	HL,0");
 			sw.WriteLine("	LD	A,(IX+6)");
 			sw.WriteLine("	LD	BC,7");
@@ -501,6 +502,16 @@ namespace TriangulArt {
 			sw.WriteLine("	DEC	H");
 			sw.WriteLine("	INC	L");
 			sw.WriteLine("	INC	DE");
+			sw.WriteLine("	RET");
+			sw.WriteLine("");
+			sw.WriteLine("NewIrq:");
+			sw.WriteLine("	PUSH	AF");
+			sw.WriteLine("	CntIrq:");
+			sw.WriteLine("	LD	A,0");
+			sw.WriteLine("	INC	A");
+			sw.WriteLine("	LD	(CntIrq+1),A");
+			sw.WriteLine("	POP	AF");
+			sw.WriteLine("	EI");
 			sw.WriteLine("	RET");
 		}
 

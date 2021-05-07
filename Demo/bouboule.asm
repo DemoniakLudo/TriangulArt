@@ -2,7 +2,7 @@
 BouBoule
 ; 4 octets de palette
 	DB	"K_WU"
-	DW	#0800			; Tps d'affichage ?
+	DB	#0A			; Tps d'affichage ?
 	DB	#00
 ;
 ; Donnees des triangles a afficher.

@@ -2,7 +2,7 @@
 Cerf
 ; 4 octets de palette
 	DB	"V\NT"
-	DW	#0800			; Tps d'affichage ?
+	DB	#0A			; Tps d'affichage ?
 	DB	#01
 ;
 ; Donnees des triangles a afficher.

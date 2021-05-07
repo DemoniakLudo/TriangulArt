@@ -2,7 +2,7 @@
 Apple
 ; 4 octets de palette
 	DB	"@TWK"
-	DW	#2000			; Tps d'affichage ?
+	DB	#12			; Tps d'affichage ?
 	DB	#00
 ;
 ; Donnees des triangles a afficher.

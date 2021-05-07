@@ -2,7 +2,7 @@
 Loup
 ; 4 octets de palette
 	DB	"DT\L"
-	DW	#0200			; Tps d'affichage ?
+	DB	#08		; Tps d'affichage ?
 	DB	#00
 ;
 ; Donnees des triangles a afficher.

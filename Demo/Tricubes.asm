@@ -2,7 +2,7 @@
 Tricubes
 ; 4 octets de palette
 	DB	"@SUD"
-	DW	#0040			; Tps d'affichage ?
+	DB	#04			; Tps d'affichage ?
 	DB	#00
 ;
 ; Donnees des triangles a afficher.

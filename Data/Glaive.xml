@@ -235,5 +235,5 @@
     <int>15</int>
   </palette>
   <cpcPlus>false</cpcPlus>
-  <tpsAttente>2048</tpsAttente>
+  <tpsAttente>30</tpsAttente>
 </Datas>

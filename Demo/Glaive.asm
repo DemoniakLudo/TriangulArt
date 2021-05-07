@@ -2,7 +2,7 @@
 Glaive
 ; 4 octets de palette
 	DB	"K@FN"
-	DW	#0800			; Tps d'affichage ?
+	DB	#08			; Tps d'affichage ?
 	DB	#01
 ;
 ; Donnees des triangles a afficher.

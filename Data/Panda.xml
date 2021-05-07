@@ -442,5 +442,5 @@
     <int>6</int>
   </palette>
   <cpcPlus>false</cpcPlus>
-  <tpsAttente>1024</tpsAttente>
+  <tpsAttente>27</tpsAttente>
 </Datas>

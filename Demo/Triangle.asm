@@ -2,7 +2,7 @@
 Triangle
 ; 4 octets de palette
 	DB	"T\LN"
-	DW	#1000			; Tps d'affichage ?
+	DB	#12			; Tps d'affichage ?
 	DB	#00
 ;
 ; Donnees des triangles a afficher.

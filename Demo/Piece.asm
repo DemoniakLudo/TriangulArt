@@ -2,7 +2,7 @@
 Piece
 ; 4 octets de palette
 	DB	"@TDL"
-	DW	#0800			; Tps d'affichage ?
+	DB	#10			; Tps d'affichage ?
 	DB	#01
 ;
 ; Donnees des triangles a afficher.

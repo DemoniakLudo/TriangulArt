@@ -2,7 +2,7 @@
 Lion
 ; 4 octets de palette
 	DB	"TJLK"
-	DW	#0100			; Tps d'affichage ?
+	DB	#01			; Tps d'affichage ?
 	DB	#01
 ;
 ; Donnees des triangles a afficher.

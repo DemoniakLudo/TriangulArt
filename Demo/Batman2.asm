@@ -2,7 +2,7 @@
 Batman2
 ; 4 octets de palette
 	DB	"KUTJ"
-	DW	#0200			; Tps d'affichage ?
+	DB	#04			; Tps d'affichage ?
 	DB	#01
 ;
 ; Donnees des triangles a afficher.

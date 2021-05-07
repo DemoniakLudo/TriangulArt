@@ -287,6 +287,11 @@ namespace TriangulArt {
 			listInfo.SelectedIndex = listInfo.Items.Count - 1;
 		}
 
+		private void DisplayMemory() {
+			int nb = datas.lstTriangle.Count;
+			SetInfo("Nbre de triangles:" + nb.ToString() + " - Mémoire utilisée:" + (nb * 7).ToString() + " octets");
+		}
+
 		private void bpLoad_Click(object sender, EventArgs e) {
 			OpenFileDialog dlg = new OpenFileDialog();
 			dlg.Filter = "Fichiers xml (*.xml)|*.xml";
@@ -322,6 +327,7 @@ namespace TriangulArt {
 					FillTriangles();
 					DisplayList();
 					Text = "TriangulArt - " + dlg.FileName;
+					DisplayMemory();
 				}
 				catch {
 					MessageBox.Show("Erreur lecture fichier...");
@@ -336,6 +342,7 @@ namespace TriangulArt {
 			DialogResult result = dlg.ShowDialog();
 			if (result == DialogResult.OK) {
 				int.TryParse(txbTpsAttente.Text, out datas.tpsAttente);
+				datas.tpsAttente = Math.Min(850, Math.Max(1, datas.tpsAttente));
 				FileStream file = File.Open(dlg.FileName, FileMode.Create);
 				try {
 					new XmlSerializer(typeof(Datas)).Serialize(file, datas);
@@ -371,6 +378,7 @@ namespace TriangulArt {
 			DialogResult result = dlg.ShowDialog();
 			if (result == DialogResult.OK) {
 				int.TryParse(txbTpsAttente.Text, out datas.tpsAttente);
+				datas.tpsAttente = Math.Min(850, Math.Max(1, datas.tpsAttente));
 				datas.GenereSourceAsm(dlg.FileName, chkCodeAsm.Checked, chkPlus.Checked);
 				SetInfo("Génération assembleur ok.");
 			}
@@ -629,6 +637,7 @@ namespace TriangulArt {
 
 			DisplayList();
 			FillTriangles();
+			DisplayMemory();
 		}
 	}
 }

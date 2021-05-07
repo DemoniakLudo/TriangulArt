@@ -244,5 +244,5 @@
     <int>4</int>
   </palette>
   <cpcPlus>false</cpcPlus>
-  <tpsAttente>2048</tpsAttente>
+  <tpsAttente>50</tpsAttente>
 </Datas>

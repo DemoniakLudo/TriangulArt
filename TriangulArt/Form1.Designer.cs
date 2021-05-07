@@ -683,17 +683,17 @@
 			this.label12.AutoSize = true;
 			this.label12.Location = new System.Drawing.Point(1057, 244);
 			this.label12.Name = "label12";
-			this.label12.Size = new System.Drawing.Size(197, 13);
+			this.label12.Size = new System.Drawing.Size(249, 13);
 			this.label12.TabIndex = 46;
-			this.label12.Text = "Temps d\'attente entre chaque triangles :";
+			this.label12.Text = "Temps d\'attente entre chaque triangles (1-850 ms) :";
 			// 
 			// txbTpsAttente
 			// 
-			this.txbTpsAttente.Location = new System.Drawing.Point(1260, 241);
+			this.txbTpsAttente.Location = new System.Drawing.Point(1312, 241);
 			this.txbTpsAttente.Name = "txbTpsAttente";
 			this.txbTpsAttente.Size = new System.Drawing.Size(39, 20);
 			this.txbTpsAttente.TabIndex = 47;
-			this.txbTpsAttente.Text = "8192";
+			this.txbTpsAttente.Text = "16";
 			// 
 			// Form1
 			// 

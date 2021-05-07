@@ -2,7 +2,7 @@
 Montagne
 ; 4 octets de palette
 	DB	"S@KL"
-	DW	#0100			; Tps d'affichage ?
+	DB	#06		; Tps d'affichage ?
 	DB	#00
 ;
 ; Donnees des triangles a afficher.

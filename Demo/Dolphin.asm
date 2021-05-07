@@ -1,9 +1,9 @@
-; Généré par TriangulArt le 07/05/2021 (10 26 44)
+; Généré par TriangulArt le 07/05/2021 (15 12 21)
 Dolphin
 ; 4 octets de palette
 	DB	"D_ST"
-	DW	#0400			; Tps d'affichage ?
-	DB	#00
+	DB	#09			; Tps d'affichage
+	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
 ;
 ; Donnees des triangles a afficher.
 ; Chaque frame contient un ou plusieurs trianges defini de la sorte :
