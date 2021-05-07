@@ -1,6 +1,18 @@
+; Généré par TriangulArt le 07/05/2021 (10 26 44)
+Dolphin
+; 4 octets de palette
 	DB	"D_ST"
-	DW	#800
+	DW	#0400			; Tps d'affichage ?
 	DB	#00
+;
+; Donnees des triangles a afficher.
+; Chaque frame contient un ou plusieurs trianges defini de la sorte :
+; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
+; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
+; Seulement 1 octet par coordonnees (donc de 0 a 255...)
+; le 7eme octet de la structure (la couleur) defini le pen mode 1
+; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
+;
 	DB	#82,#A3,#74,#AC,#82,#BC,#01
 	DB	#BF,#29,#DF,#4C,#CC,#5C,#01
 	DB	#DE,#4C,#CC,#5C,#E0,#74,#01
@@ -49,3 +61,4 @@
 	DB	#B4,#7A,#B9,#82,#B2,#8C,#02
 	DB	#55,#28,#59,#2F,#50,#30,#03
 	DB	#55,#28,#5D,#28,#59,#2F,#83
+; Taille 336 octets

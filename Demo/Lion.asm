@@ -1,6 +1,18 @@
+; Généré par TriangulArt le 07/05/2021 (10 28 20)
+Lion
+; 4 octets de palette
 	DB	"TJLK"
-	DW	#100
-	DB	1	; mode (0=normal, 1=miroir vertical)
+	DW	#0100			; Tps d'affichage ?
+	DB	#01
+;
+; Donnees des triangles a afficher.
+; Chaque frame contient un ou plusieurs trianges defini de la sorte :
+; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
+; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
+; Seulement 1 octet par coordonnees (donc de 0 a 255...)
+; le 7eme octet de la structure (la couleur) defini le pen mode 1
+; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
+;
 	DB	#48,#16,#3A,#21,#4A,#24,#01
 	DB	#3A,#21,#4A,#24,#2C,#27,#01
 	DB	#6C,#47,#5E,#4A,#65,#5D,#01
@@ -106,3 +118,4 @@
 	DB	#75,#C3,#7E,#C6,#69,#CF,#03
 	DB	#7E,#C6,#69,#CF,#73,#D4,#03
 	DB	#7E,#C6,#80,#D3,#73,#D4,#83
+; Taille 735 octets

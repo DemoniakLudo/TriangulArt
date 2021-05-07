@@ -1,6 +1,18 @@
+; Généré par TriangulArt le 07/05/2021 (10 26 12)
+Bidul
+; 4 octets de palette
 	DB	"CNL\"
-	DW	#400			; Tps d'affichage ?
+	DW	#0400			; Tps d'affichage ?
 	DB	#00
+;
+; Donnees des triangles a afficher.
+; Chaque frame contient un ou plusieurs trianges defini de la sorte :
+; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
+; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
+; Seulement 1 octet par coordonnees (donc de 0 a 255...)
+; le 7eme octet de la structure (la couleur) defini le pen mode 1
+; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
+;
 	DB	#28,#68,#1D,#7B,#43,#A7,#02
 	DB	#43,#A7,#6C,#D7,#5B,#E0,#01
 	DB	#92,#2D,#E3,#44,#C0,#56,#03
@@ -19,4 +31,4 @@
 	DB	#36,#51,#96,#6B,#53,#97,#01
 	DB	#96,#6B,#53,#97,#82,#CB,#02
 	DB	#34,#37,#13,#C0,#6C,#D7,#83
-
+; Taille 126 octets

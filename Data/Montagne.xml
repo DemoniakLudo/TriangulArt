@@ -432,4 +432,6 @@
     <int>26</int>
     <int>6</int>
   </palette>
+  <cpcPlus>false</cpcPlus>
+  <tpsAttente>256</tpsAttente>
 </Datas>

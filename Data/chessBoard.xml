@@ -603,4 +603,6 @@
     <int>0</int>
     <int>23</int>
   </palette>
+  <cpcPlus>false</cpcPlus>
+  <tpsAttente>512</tpsAttente>
 </Datas>

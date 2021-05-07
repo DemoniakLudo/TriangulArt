@@ -189,4 +189,6 @@
     <int>1</int>
     <int>6</int>
   </palette>
+  <cpcPlus>false</cpcPlus>
+  <tpsAttente>2048</tpsAttente>
 </Datas>

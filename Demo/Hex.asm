@@ -1,4 +1,5 @@
-; Généré par TriangulArt le 22/04/2021 (15 18 04)
+; Généré par TriangulArt le 07/05/2021 (10 27 51)
+Hex
 ; 4 octets de palette
 	DB	"DUWS"
 	DW	#0200			; Tps d'affichage ?

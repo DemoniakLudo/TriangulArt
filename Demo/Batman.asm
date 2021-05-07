@@ -1,3 +1,5 @@
+; Généré par TriangulArt le 07/05/2021 (10 26 02)
+Batman
 ; 4 octets de palette
 	DB	"KTSL"
 	DW	#0A00			; Tps d'affichage ?
@@ -23,3 +25,4 @@
 	DB	#80,#6A,#6D,#94,#76,#9B,#01
 	DB	#80,#6A,#76,#9B,#80,#AF,#01
 	DB	#7C,#56,#77,#6A,#80,#6A,#81
+; Taille 84 octets

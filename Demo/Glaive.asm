@@ -1,6 +1,18 @@
+; Généré par TriangulArt le 07/05/2021 (10 27 40)
+Glaive
+; 4 octets de palette
 	DB	"K@FN"
-	DW	#1000
-	DB	1	; mode (0=normal, 1=miroir vertical)
+	DW	#0800			; Tps d'affichage ?
+	DB	#01
+;
+; Donnees des triangles a afficher.
+; Chaque frame contient un ou plusieurs trianges defini de la sorte :
+; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
+; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
+; Seulement 1 octet par coordonnees (donc de 0 a 255...)
+; le 7eme octet de la structure (la couleur) defini le pen mode 1
+; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
+;
 	DB	#80,#00,#7D,#01,#80,#0A,#01
 	DB	#7D,#01,#79,#08,#80,#0A,#01
 	DB	#79,#08,#80,#0A,#76,#11,#01
@@ -26,3 +38,4 @@
 	DB	#80,#F0,#79,#F5,#80,#F9,#03
 	DB	#79,#F5,#80,#F9,#78,#FE,#03
 	DB	#80,#F9,#78,#FE,#80,#FF,#83
+; Taille 175 octets

@@ -1,7 +1,8 @@
-
+; Généré par TriangulArt le 07/05/2021 (10 27 24)
+Floral
 ; 4 octets de palette
 	DB	"CYSO"
-	DW	#200			; Tps d'affichage ?
+	DW	#0200			; Tps d'affichage ?
 	DB	#01
 ;
 ; Donnees des triangles a afficher.

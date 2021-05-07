@@ -10,6 +10,7 @@ namespace TriangulArt {
 		public List<Triangle> lstTriangle = new List<Triangle>();
 		public int[] palette = new int[4];
 		public bool cpcPlus = false;
+		public int tpsAttente = 8192;
 
 		private int selLigne = -1;
 
@@ -364,10 +365,15 @@ namespace TriangulArt {
 				}
 			}
 			StreamWriter sw = GenereAsm.OpenAsm(fileName);
-			if (withCode)
-				GenereAsm.GenereDrawTriangleCode(sw, cpcPlus);
+			string file = Path.GetFileName(fileName);
+			int p = file.IndexOf('.');
+			if (p > 0)
+				file = file.Substring(0, p);
 
-			GenereAsm.GenereDatas(sw, this, cpcPlus);
+			if (withCode)
+				GenereAsm.GenereDrawTriangleCode(sw, file, cpcPlus);
+
+			GenereAsm.GenereDatas(sw, this, file, cpcPlus);
 			if (withCode)
 				GenereAsm.GenereDrawTriangleData(sw, cpcPlus);
 

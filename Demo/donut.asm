@@ -1,38 +1,50 @@
+; Généré par TriangulArt le 07/05/2021 (10 26 51)
+Donut
+; 4 octets de palette
 	DB	"XCSL"
-	DW	#800
+	DW	#0400			; Tps d'affichage ?
 	DB	#00
-	DB	#55,#A4,#81,#A4,#8C,#C8,#03
-	DB	#8C,#C8,#3E,#EC,#97,#EC,#03
-	DB	#C4,#A4,#EA,#B6,#97,#EC,#03
-	DB	#B8,#81,#C4,#A4,#81,#A4,#03
-	DB	#C4,#A4,#8C,#C8,#97,#EC,#01
-	DB	#81,#A4,#C4,#A4,#8C,#C8,#01
-	DB	#55,#A4,#60,#C8,#8C,#C8,#01
-	DB	#60,#C8,#8C,#C8,#3E,#EC,#01
-	DB	#34,#81,#55,#A4,#60,#C8,#03
-	DB	#34,#81,#02,#92,#55,#A4,#01
-	DB	#B8,#81,#CE,#82,#C4,#A4,#01
-	DB	#CE,#82,#C4,#A4,#EA,#B6,#01
-	DB	#C4,#5E,#B8,#81,#CE,#82,#03
-	DB	#FF,#70,#CE,#82,#EA,#B6,#03
-	DB	#0D,#B6,#60,#C8,#3E,#EC,#03
-	DB	#02,#92,#0D,#B6,#3E,#EC,#01
-	DB	#34,#81,#3E,#A4,#60,#C8,#01
-	DB	#3E,#A4,#0D,#B6,#60,#C8,#01
-	DB	#CF,#39,#F5,#4C,#FF,#70,#01
-	DB	#AE,#5D,#FF,#70,#CE,#82,#01
-	DB	#18,#4B,#02,#92,#0D,#B6,#03
-	DB	#C4,#17,#CF,#39,#F5,#4C,#03
-	DB	#23,#6F,#3E,#A4,#0D,#B6,#03
-	DB	#CF,#39,#AE,#5D,#FF,#70,#03
-	DB	#23,#6F,#4A,#82,#3E,#A4,#01
-	DB	#18,#4B,#23,#6F,#0D,#B6,#01
-	DB	#CF,#39,#AE,#5D,#82,#5D,#01
-	DB	#6C,#16,#18,#4B,#23,#6F,#03
-	DB	#C4,#17,#CF,#39,#77,#39,#01
-	DB	#6C,#16,#C4,#17,#77,#39,#03
-	DB	#77,#39,#82,#5D,#4A,#82,#01
-	DB	#CF,#39,#77,#39,#82,#5D,#03
-	DB	#77,#39,#23,#6F,#4A,#82,#03
-	DB	#6C,#16,#77,#39,#23,#6F,#81
-
+;
+; Donnees des triangles a afficher.
+; Chaque frame contient un ou plusieurs trianges defini de la sorte :
+; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
+; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
+; Seulement 1 octet par coordonnees (donc de 0 a 255...)
+; le 7eme octet de la structure (la couleur) defini le pen mode 1
+; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
+;
+	DB	#55,#A2,#81,#A2,#8C,#C6,#03
+	DB	#8C,#C6,#3E,#EA,#97,#EA,#03
+	DB	#C4,#A2,#EA,#B4,#97,#EA,#03
+	DB	#B8,#7F,#C4,#A2,#81,#A2,#03
+	DB	#C4,#A2,#8C,#C6,#97,#EA,#01
+	DB	#81,#A2,#C4,#A2,#8C,#C6,#01
+	DB	#55,#A2,#60,#C6,#8C,#C6,#01
+	DB	#60,#C6,#8C,#C6,#3E,#EA,#01
+	DB	#34,#7F,#55,#A2,#60,#C6,#03
+	DB	#34,#7F,#02,#90,#55,#A2,#01
+	DB	#B8,#7F,#CE,#80,#C4,#A2,#01
+	DB	#CE,#80,#C4,#A2,#EA,#B4,#01
+	DB	#C4,#5C,#B8,#7F,#CE,#80,#03
+	DB	#FF,#6E,#CE,#80,#EA,#B4,#03
+	DB	#0D,#B4,#60,#C6,#3E,#EA,#03
+	DB	#02,#90,#0D,#B4,#3E,#EA,#01
+	DB	#34,#7F,#3E,#A2,#60,#C6,#01
+	DB	#3E,#A2,#0D,#B4,#60,#C6,#01
+	DB	#CF,#37,#F5,#4A,#FF,#6E,#01
+	DB	#AE,#5B,#FF,#6E,#CE,#80,#01
+	DB	#18,#49,#02,#90,#0D,#B4,#03
+	DB	#C4,#15,#CF,#37,#F5,#4A,#03
+	DB	#23,#6D,#3E,#A2,#0D,#B4,#03
+	DB	#CF,#37,#AE,#5B,#FF,#6E,#03
+	DB	#23,#6D,#4A,#80,#3E,#A2,#01
+	DB	#18,#49,#23,#6D,#0D,#B4,#01
+	DB	#CF,#37,#AE,#5B,#82,#5B,#01
+	DB	#6C,#14,#18,#49,#23,#6D,#03
+	DB	#C4,#15,#CF,#37,#77,#37,#01
+	DB	#6C,#14,#C4,#15,#77,#37,#03
+	DB	#77,#37,#82,#5B,#4A,#80,#01
+	DB	#CF,#37,#77,#37,#82,#5B,#03
+	DB	#77,#37,#23,#6D,#4A,#80,#03
+	DB	#6C,#14,#77,#37,#23,#6D,#81
+; Taille 238 octets

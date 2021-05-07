@@ -234,4 +234,6 @@
     <int>12</int>
     <int>15</int>
   </palette>
+  <cpcPlus>false</cpcPlus>
+  <tpsAttente>1024</tpsAttente>
 </Datas>

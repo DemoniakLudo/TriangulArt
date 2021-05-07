@@ -1,4 +1,5 @@
-; Généré par TriangulArt le 22/04/2021 (15 18 11)
+; Généré par TriangulArt le 07/05/2021 (10 28 53)
+Pyramide
 ; 4 octets de palette
 	DB	"]C^N"
 	DW	#0400			; Tps d'affichage ?

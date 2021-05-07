@@ -1,8 +1,18 @@
+; Généré par TriangulArt le 07/05/2021 (10 27 46)
 Goupil
-	DB	"VKNT"
+; 4 octets de palette
+	DB	"JKNT"
 	DW	#0800			; Tps d'affichage ?
 	DB	#00
-
+;
+; Donnees des triangles a afficher.
+; Chaque frame contient un ou plusieurs trianges defini de la sorte :
+; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
+; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
+; Seulement 1 octet par coordonnees (donc de 0 a 255...)
+; le 7eme octet de la structure (la couleur) defini le pen mode 1
+; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
+;
 	DB	#16,#00,#40,#21,#37,#28,#02
 	DB	#16,#00,#37,#28,#1F,#39,#01
 	DB	#72,#00,#48,#21,#51,#28,#02

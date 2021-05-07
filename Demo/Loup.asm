@@ -1,7 +1,8 @@
-
+; Généré par TriangulArt le 07/05/2021 (10 28 28)
+Loup
 ; 4 octets de palette
 	DB	"DT\L"
-	DW	#200			; Tps d'affichage ?
+	DW	#0200			; Tps d'affichage ?
 	DB	#00
 ;
 ; Donnees des triangles a afficher.

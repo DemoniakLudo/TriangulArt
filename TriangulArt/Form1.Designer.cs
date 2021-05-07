@@ -83,6 +83,8 @@
 			this.txbX4 = new System.Windows.Forms.TextBox();
 			this.label10 = new System.Windows.Forms.Label();
 			this.label11 = new System.Windows.Forms.Label();
+			this.label12 = new System.Windows.Forms.Label();
+			this.txbTpsAttente = new System.Windows.Forms.TextBox();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -676,11 +678,30 @@
 			this.label11.TabIndex = 44;
 			this.label11.Text = "(x4):";
 			// 
+			// label12
+			// 
+			this.label12.AutoSize = true;
+			this.label12.Location = new System.Drawing.Point(1057, 244);
+			this.label12.Name = "label12";
+			this.label12.Size = new System.Drawing.Size(197, 13);
+			this.label12.TabIndex = 46;
+			this.label12.Text = "Temps d\'attente entre chaque triangles :";
+			// 
+			// txbTpsAttente
+			// 
+			this.txbTpsAttente.Location = new System.Drawing.Point(1260, 241);
+			this.txbTpsAttente.Name = "txbTpsAttente";
+			this.txbTpsAttente.Size = new System.Drawing.Size(39, 20);
+			this.txbTpsAttente.TabIndex = 47;
+			this.txbTpsAttente.Text = "8192";
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1529, 774);
+			this.Controls.Add(this.txbTpsAttente);
+			this.Controls.Add(this.label12);
 			this.Controls.Add(this.txbY4);
 			this.Controls.Add(this.txbX4);
 			this.Controls.Add(this.label10);
@@ -807,6 +828,8 @@
 		private System.Windows.Forms.TextBox txbX4;
 		private System.Windows.Forms.Label label10;
 		private System.Windows.Forms.Label label11;
+		private System.Windows.Forms.Label label12;
+		private System.Windows.Forms.TextBox txbTpsAttente;
 	}
 }
 

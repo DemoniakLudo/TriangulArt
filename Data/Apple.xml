@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <Datas xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <modeRendu>0</modeRendu>
   <lstTriangle>
     <Triangle>
       <x1>0</x1>
@@ -278,4 +279,6 @@
     <int>11</int>
     <int>26</int>
   </palette>
+  <cpcPlus>false</cpcPlus>
+  <tpsAttente>8192</tpsAttente>
 </Datas>

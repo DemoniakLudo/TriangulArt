@@ -144,4 +144,6 @@
     <int>0</int>
     <int>6</int>
   </palette>
+  <cpcPlus>false</cpcPlus>
+  <tpsAttente>512</tpsAttente>
 </Datas>

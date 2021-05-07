@@ -322,9 +322,11 @@ namespace TriangulArt {
 						BitmapCpc.Palette[i] = datas.palette[i];
 
 					BitmapCpc.cpcPlus = chkPlus.Checked = datas.cpcPlus;
+					txbTpsAttente.Text = datas.tpsAttente.ToString();
 					UpdatePalette();
 					FillTriangles();
 					DisplayList();
+					Text = "TriangulArt - " + dlg.FileName;
 				}
 				catch {
 					MessageBox.Show("Erreur lecture fichier...");
@@ -338,6 +340,7 @@ namespace TriangulArt {
 			dlg.Filter = "Fichiers xml (*.xml)|*.xml";
 			DialogResult result = dlg.ShowDialog();
 			if (result == DialogResult.OK) {
+				int.TryParse(txbTpsAttente.Text, out datas.tpsAttente);
 				FileStream file = File.Open(dlg.FileName, FileMode.Create);
 				try {
 					new XmlSerializer(typeof(Datas)).Serialize(file, datas);
@@ -372,6 +375,7 @@ namespace TriangulArt {
 			dlg.Filter = "Fichiers assembleur (*.asm)|*.asm";
 			DialogResult result = dlg.ShowDialog();
 			if (result == DialogResult.OK) {
+				int.TryParse(txbTpsAttente.Text, out datas.tpsAttente);
 				datas.GenereSourceAsm(dlg.FileName, chkCodeAsm.Checked, chkPlus.Checked);
 				SetInfo("Génération assembleur ok.");
 			}

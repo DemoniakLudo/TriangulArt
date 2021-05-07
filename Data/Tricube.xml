@@ -1036,4 +1036,5 @@
     <int>0</int>
   </palette>
   <cpcPlus>false</cpcPlus>
+  <tpsAttente>1</tpsAttente>
 </Datas>

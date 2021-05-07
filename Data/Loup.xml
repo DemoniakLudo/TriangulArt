@@ -288,4 +288,6 @@
     <int>3</int>
     <int>6</int>
   </palette>
+  <cpcPlus>false</cpcPlus>
+  <tpsAttente>512</tpsAttente>
 </Datas>

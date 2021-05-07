@@ -1,7 +1,18 @@
+; Généré par TriangulArt le 07/05/2021 (10 29 54)
 TriTriangle
+; 4 octets de palette
 	DB	"TNL\"
 	DW	#0100			; Tps d'affichage ?
 	DB	#00
+;
+; Donnees des triangles a afficher.
+; Chaque frame contient un ou plusieurs trianges defini de la sorte :
+; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
+; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
+; Seulement 1 octet par coordonnees (donc de 0 a 255...)
+; le 7eme octet de la structure (la couleur) defini le pen mode 1
+; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
+;
 	DB	#55,#00,#69,#00,#00,#AA,#01
 	DB	#69,#00,#1E,#96,#00,#AA,#01
 	DB	#1E,#96,#96,#AA,#00,#AA,#01
