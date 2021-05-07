@@ -74,7 +74,7 @@ namespace TriangulArt {
 				FillTriangle(bmpLock, 255 - x1, y1, 255 - x2, y2, 255 - x3, y3, GetPalCPC(BitmapCpc.Palette[c]), false);
 			else
 				if (modeRendu == 2)
-				FillTriangle(bmpLock, x3, 255 - y3, x2, 255 - y2, x1, 255 - y1, GetPalCPC(BitmapCpc.Palette[c]), false);
+					FillTriangle(bmpLock, x3, 255 - y3, x2, 255 - y2, x1, 255 - y1, GetPalCPC(BitmapCpc.Palette[c]), false);
 		}
 
 		public void FillTriangles(DirectBitmap bmpLock) {
@@ -93,7 +93,7 @@ namespace TriangulArt {
 		}
 
 		public int SelTriangle(int xReel, int yReel) {
-			for (int i = lstTriangle.Count; i-- > 0;) {
+			for (int i = lstTriangle.Count; i-- > 0; ) {
 				Triangle t = lstTriangle[i];
 				if (IsInTriancle(t, xReel, yReel)) {
 					return i;
@@ -114,14 +114,33 @@ namespace TriangulArt {
 			return IsLeft(t.x3, t.y3, t.x1, t.y1, posx, posy) * IsLeft(t.x3, t.y3, t.x1, t.y1, t.x2, t.y2) > 0 && IsLeft(t.x1, t.y1, t.x2, t.y2, posx, posy) * IsLeft(t.x1, t.y1, t.x2, t.y2, t.x3, t.y3) > 0 && IsLeft(t.x3, t.y3, t.x2, t.y2, posx, posy) * IsLeft(t.x3, t.y3, t.x2, t.y2, t.x1, t.y1) > 0;
 		}
 
-		public void EditSelTriangle(Triangle t, int c) {
-			lstTriangle[selLigne].x1 = t.x1;
-			lstTriangle[selLigne].y1 = t.y1;
-			lstTriangle[selLigne].x2 = t.x2;
-			lstTriangle[selLigne].y2 = t.y2;
-			lstTriangle[selLigne].x3 = t.x3;
-			lstTriangle[selLigne].y3 = t.y3;
-			lstTriangle[selLigne].color = c;
+		public void EditSelTriangle(Triangle t, int c, int newIndex) {
+			if (newIndex != selLigne && newIndex >= 0 && newIndex < lstTriangle.Count) {
+				lstTriangle[selLigne].x1 = lstTriangle[newIndex].x1;
+				lstTriangle[selLigne].y1 = lstTriangle[newIndex].y1;
+				lstTriangle[selLigne].x2 = lstTriangle[newIndex].x2;
+				lstTriangle[selLigne].y2 = lstTriangle[newIndex].y2;
+				lstTriangle[selLigne].x3 = lstTriangle[newIndex].x3;
+				lstTriangle[selLigne].y3 = lstTriangle[newIndex].y3;
+				lstTriangle[selLigne].color = lstTriangle[newIndex].color;
+				lstTriangle[newIndex].x1 = t.x1;
+				lstTriangle[newIndex].y1 = t.y1;
+				lstTriangle[newIndex].x2 = t.x2;
+				lstTriangle[newIndex].y2 = t.y2;
+				lstTriangle[newIndex].x3 = t.x3;
+				lstTriangle[newIndex].y3 = t.y3;
+				lstTriangle[newIndex].color = c;
+				selLigne = newIndex;
+			}
+			else {
+				lstTriangle[selLigne].x1 = t.x1;
+				lstTriangle[selLigne].y1 = t.y1;
+				lstTriangle[selLigne].x2 = t.x2;
+				lstTriangle[selLigne].y2 = t.y2;
+				lstTriangle[selLigne].x3 = t.x3;
+				lstTriangle[selLigne].y3 = t.y3;
+				lstTriangle[selLigne].color = c;
+			}
 		}
 
 		public void DeleteSelTriangle() {

@@ -36,13 +36,11 @@
 			this.ColorSel = new System.Windows.Forms.Label();
 			this.bpGenereAsm = new System.Windows.Forms.Button();
 			this.bpAddCoord = new System.Windows.Forms.Button();
-			this.txbX1 = new System.Windows.Forms.TextBox();
 			this.txbY1 = new System.Windows.Forms.TextBox();
 			this.txbX2 = new System.Windows.Forms.TextBox();
 			this.txbY2 = new System.Windows.Forms.TextBox();
 			this.txbX3 = new System.Windows.Forms.TextBox();
 			this.txbY3 = new System.Windows.Forms.TextBox();
-			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
 			this.label4 = new System.Windows.Forms.Label();
@@ -85,6 +83,10 @@
 			this.label11 = new System.Windows.Forms.Label();
 			this.label12 = new System.Windows.Forms.Label();
 			this.txbTpsAttente = new System.Windows.Forms.TextBox();
+			this.label1 = new System.Windows.Forms.Label();
+			this.txbX1 = new System.Windows.Forms.TextBox();
+			this.txbPos = new System.Windows.Forms.TextBox();
+			this.label13 = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -219,17 +221,9 @@
 			this.bpAddCoord.UseVisualStyleBackColor = true;
 			this.bpAddCoord.Click += new System.EventHandler(this.bpAddCoord_Click);
 			// 
-			// txbX1
-			// 
-			this.txbX1.Location = new System.Drawing.Point(881, 519);
-			this.txbX1.MaxLength = 3;
-			this.txbX1.Name = "txbX1";
-			this.txbX1.Size = new System.Drawing.Size(25, 20);
-			this.txbX1.TabIndex = 8;
-			// 
 			// txbY1
 			// 
-			this.txbY1.Location = new System.Drawing.Point(950, 519);
+			this.txbY1.Location = new System.Drawing.Point(1026, 495);
 			this.txbY1.MaxLength = 3;
 			this.txbY1.Name = "txbY1";
 			this.txbY1.Size = new System.Drawing.Size(25, 20);
@@ -237,7 +231,7 @@
 			// 
 			// txbX2
 			// 
-			this.txbX2.Location = new System.Drawing.Point(1019, 519);
+			this.txbX2.Location = new System.Drawing.Point(1083, 495);
 			this.txbX2.MaxLength = 3;
 			this.txbX2.Name = "txbX2";
 			this.txbX2.Size = new System.Drawing.Size(25, 20);
@@ -245,7 +239,7 @@
 			// 
 			// txbY2
 			// 
-			this.txbY2.Location = new System.Drawing.Point(1088, 519);
+			this.txbY2.Location = new System.Drawing.Point(1140, 495);
 			this.txbY2.MaxLength = 3;
 			this.txbY2.Name = "txbY2";
 			this.txbY2.Size = new System.Drawing.Size(25, 20);
@@ -253,7 +247,7 @@
 			// 
 			// txbX3
 			// 
-			this.txbX3.Location = new System.Drawing.Point(1157, 519);
+			this.txbX3.Location = new System.Drawing.Point(1197, 495);
 			this.txbX3.MaxLength = 3;
 			this.txbX3.Name = "txbX3";
 			this.txbX3.Size = new System.Drawing.Size(25, 20);
@@ -261,25 +255,16 @@
 			// 
 			// txbY3
 			// 
-			this.txbY3.Location = new System.Drawing.Point(1226, 519);
+			this.txbY3.Location = new System.Drawing.Point(1254, 495);
 			this.txbY3.MaxLength = 3;
 			this.txbY3.Name = "txbY3";
 			this.txbY3.Size = new System.Drawing.Size(25, 20);
 			this.txbY3.TabIndex = 13;
 			// 
-			// label1
-			// 
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(862, 522);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(21, 13);
-			this.label1.TabIndex = 14;
-			this.label1.Text = "x1:";
-			// 
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(931, 522);
+			this.label2.Location = new System.Drawing.Point(1007, 498);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(21, 13);
 			this.label2.TabIndex = 15;
@@ -288,7 +273,7 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(1000, 522);
+			this.label3.Location = new System.Drawing.Point(1064, 498);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(21, 13);
 			this.label3.TabIndex = 16;
@@ -297,7 +282,7 @@
 			// label4
 			// 
 			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(1069, 522);
+			this.label4.Location = new System.Drawing.Point(1121, 498);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(21, 13);
 			this.label4.TabIndex = 17;
@@ -306,7 +291,7 @@
 			// label5
 			// 
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(1138, 522);
+			this.label5.Location = new System.Drawing.Point(1178, 498);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(21, 13);
 			this.label5.TabIndex = 18;
@@ -315,7 +300,7 @@
 			// label6
 			// 
 			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(1207, 522);
+			this.label6.Location = new System.Drawing.Point(1235, 498);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(21, 13);
 			this.label6.TabIndex = 19;
@@ -646,7 +631,7 @@
 			// 
 			// txbY4
 			// 
-			this.txbY4.Location = new System.Drawing.Point(1364, 519);
+			this.txbY4.Location = new System.Drawing.Point(1368, 495);
 			this.txbY4.MaxLength = 3;
 			this.txbY4.Name = "txbY4";
 			this.txbY4.Size = new System.Drawing.Size(25, 20);
@@ -654,7 +639,7 @@
 			// 
 			// txbX4
 			// 
-			this.txbX4.Location = new System.Drawing.Point(1295, 519);
+			this.txbX4.Location = new System.Drawing.Point(1311, 495);
 			this.txbX4.MaxLength = 3;
 			this.txbX4.Name = "txbX4";
 			this.txbX4.Size = new System.Drawing.Size(25, 20);
@@ -663,7 +648,7 @@
 			// label10
 			// 
 			this.label10.AutoSize = true;
-			this.label10.Location = new System.Drawing.Point(1341, 522);
+			this.label10.Location = new System.Drawing.Point(1345, 498);
 			this.label10.Name = "label10";
 			this.label10.Size = new System.Drawing.Size(27, 13);
 			this.label10.TabIndex = 45;
@@ -672,7 +657,7 @@
 			// label11
 			// 
 			this.label11.AutoSize = true;
-			this.label11.Location = new System.Drawing.Point(1272, 522);
+			this.label11.Location = new System.Drawing.Point(1288, 498);
 			this.label11.Name = "label11";
 			this.label11.Size = new System.Drawing.Size(27, 13);
 			this.label11.TabIndex = 44;
@@ -695,11 +680,47 @@
 			this.txbTpsAttente.TabIndex = 47;
 			this.txbTpsAttente.Text = "16";
 			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(950, 498);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(21, 13);
+			this.label1.TabIndex = 14;
+			this.label1.Text = "x1:";
+			// 
+			// txbX1
+			// 
+			this.txbX1.Location = new System.Drawing.Point(969, 495);
+			this.txbX1.MaxLength = 3;
+			this.txbX1.Name = "txbX1";
+			this.txbX1.Size = new System.Drawing.Size(25, 20);
+			this.txbX1.TabIndex = 8;
+			// 
+			// txbPos
+			// 
+			this.txbPos.Location = new System.Drawing.Point(895, 495);
+			this.txbPos.MaxLength = 3;
+			this.txbPos.Name = "txbPos";
+			this.txbPos.Size = new System.Drawing.Size(40, 20);
+			this.txbPos.TabIndex = 48;
+			// 
+			// label13
+			// 
+			this.label13.AutoSize = true;
+			this.label13.Location = new System.Drawing.Point(866, 498);
+			this.label13.Name = "label13";
+			this.label13.Size = new System.Drawing.Size(30, 13);
+			this.label13.TabIndex = 49;
+			this.label13.Text = "pos :";
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1529, 774);
+			this.Controls.Add(this.txbPos);
+			this.Controls.Add(this.label13);
 			this.Controls.Add(this.txbTpsAttente);
 			this.Controls.Add(this.label12);
 			this.Controls.Add(this.txbY4);
@@ -781,13 +802,11 @@
 		private System.Windows.Forms.Label ColorSel;
 		private System.Windows.Forms.Button bpGenereAsm;
 		private System.Windows.Forms.Button bpAddCoord;
-		private System.Windows.Forms.TextBox txbX1;
 		private System.Windows.Forms.TextBox txbY1;
 		private System.Windows.Forms.TextBox txbX2;
 		private System.Windows.Forms.TextBox txbY2;
 		private System.Windows.Forms.TextBox txbX3;
 		private System.Windows.Forms.TextBox txbY3;
-		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.Label label4;
@@ -830,6 +849,10 @@
 		private System.Windows.Forms.Label label11;
 		private System.Windows.Forms.Label label12;
 		private System.Windows.Forms.TextBox txbTpsAttente;
+		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.TextBox txbX1;
+		private System.Windows.Forms.TextBox txbPos;
+		private System.Windows.Forms.Label label13;
 	}
 }
 

@@ -1,4 +1,4 @@
-; Généré par TriangulArt le 07/05/2021 (11 41 47)
+; Généré par TriangulArt le 07/05/2021 (18 21 42)
 	ORG	#8000
 	RUN	$
 	DI
@@ -81,7 +81,9 @@ InitPen:
 	DJNZ	InitPen
 	LD	BC,#7F8D			; Mode 1
 	OUT	(C),C
-
+	LD	HL,NewIrq
+	LD	(#39),HL
+	EI
 	LD	IX,World			; Donnees triangle
 	PUSH	IX
 	POP	HL
@@ -97,17 +99,17 @@ BclPalette:
 	INC	A
 	CP	4
 	JR	NZ,BclPalette
-	LD	E,(HL)
+	LD	A,(HL)
 	INC	HL
-	LD	D,(HL)
-	INC	HL
-	LD	(WaitTriangle+1),DE
+	LD	(TpsWaitTriangle+1),A
 	PUSH	HL
 	POP	IX
 	LD	A,(IX+0)				; Mode de trace
 	LD	(ModeDraw+1),A
 	INC	IX
 BclDrawFrame:
+	XOR	A
+	LD	(CntIrq+1),A
 	LD	A,(IX+6)				; Couleur
 	AND	3
 	ADD	A,PtMode1C1/256
@@ -143,12 +145,10 @@ ModeDraw:
 	LD	L,(IX+5)
 	CALL	DrawTriangle
 WaitTriangle:
-	LD	HL,0
-WaitTriangle1:
-	DEC HL
-	LD A, H
-	OR L
-JR NZ, WaitTriangle1
+	LD	A,(CntIrq+1)
+TpsWaitTriangle:
+	CP	0
+JR C,WaitTriangle
 	LD	HL,0
 	LD	A,(IX+6)
 	LD	BC,7
@@ -405,10 +405,20 @@ Set3Pen:
 	INC	L
 	INC	DE
 	RET
+
+NewIrq:
+	PUSH	AF
+	CntIrq:
+	LD	A,0
+	INC	A
+	LD	(CntIrq+1),A
+	POP	AF
+	EI
+	RET
 World
 ; 4 octets de palette
 	DB	"DVNK"
-	DW	#0800			; Tps d'affichage
+	DB	#0F			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
 ;
 ; Donnees des triangles a afficher.
