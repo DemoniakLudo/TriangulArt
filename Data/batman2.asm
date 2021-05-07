@@ -398,7 +398,7 @@ Set3Pen:
 
 DataFrame
 ; 4 octets de palette
-	DB	"CUTN"
+	DB	"KUTN"
 	DW	#2000			; Tps d'affichage ?
 	DB	#01
 ;
