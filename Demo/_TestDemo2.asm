@@ -139,7 +139,7 @@ Wait1:
 	DEC	HL
 	LD	B,16
 Wait2:
-;	DJNZ	Wait2
+	DJNZ	Wait2
 	LD	A,H
 	OR	L
 	JR	NZ,Wait1
