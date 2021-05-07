@@ -104,52 +104,47 @@ namespace TriangulArt {
 		}
 
 		private void TrtMouseMove(object sender, MouseEventArgs e) {
-			try {
-				int yReel = (e.Y + 2) / 3;
-				int xReel = (e.X + 2) / 3;
-				lblInfoPos.Text = "x:" + xReel.ToString("000") + " y:" + yReel.ToString("000");
-				if ((modeAddTriangle || modeAddQuadri) && triSel != null) {
-					if (numPt == 2) {
-						Graphics g = Graphics.FromImage(pictureBox.Image);
-						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1);
-						oldx1 = xReel;
-						oldy1 = yReel;
-						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1);
-					}
-					if (numPt == 3) {
-						Graphics g = Graphics.FromImage(pictureBox.Image);
-						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1);
-						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x2 << 1, triSel.y2 << 1, oldx1 << 1, oldy1 << 1);
-						oldx1 = xReel;
-						oldy1 = yReel;
-						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1);
-						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x2 << 1, triSel.y2 << 1, oldx1 << 1, oldy1 << 1);
-					}
-					if (numPt == 4) {
-						Graphics g = Graphics.FromImage(pictureBox.Image);
-						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1);
-						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x3 << 1, triSel.y3 << 1, oldx1 << 1, oldy1 << 1);
-						oldx1 = xReel;
-						oldy1 = yReel;
-						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1);
-						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x3 << 1, triSel.y3 << 1, oldx1 << 1, oldy1 << 1);
-					}
-					pictureBox.Refresh();
-				}
-				if (e.Button == MouseButtons.Left && modeMoveTriangle && triSel != null) {
+			int yReel = (e.Y + 2) / 3;
+			int xReel = (e.X + 2) / 3;
+			lblInfoPos.Text = "x:" + xReel.ToString("000") + " y:" + yReel.ToString("000");
+			if ((modeAddTriangle || modeAddQuadri) && triSel != null) {
+				if (numPt == 2) {
 					Graphics g = Graphics.FromImage(pictureBox.Image);
-					DrawMoveTriangle(g);
-					int dx = xReel - oldx1;
-					int dy = yReel - oldy1;
-					datas.DeplaceTriangle(dx, dy);
+					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1);
 					oldx1 = xReel;
 					oldy1 = yReel;
-					DrawMoveTriangle(g);
-					pictureBox.Refresh();
+					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1);
 				}
+				if (numPt == 3) {
+					Graphics g = Graphics.FromImage(pictureBox.Image);
+					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1);
+					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x2 << 1, triSel.y2 << 1, oldx1 << 1, oldy1 << 1);
+					oldx1 = xReel;
+					oldy1 = yReel;
+					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1);
+					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x2 << 1, triSel.y2 << 1, oldx1 << 1, oldy1 << 1);
+				}
+				if (numPt == 4) {
+					Graphics g = Graphics.FromImage(pictureBox.Image);
+					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1);
+					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x3 << 1, triSel.y3 << 1, oldx1 << 1, oldy1 << 1);
+					oldx1 = xReel;
+					oldy1 = yReel;
+					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1);
+					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x3 << 1, triSel.y3 << 1, oldx1 << 1, oldy1 << 1);
+				}
+				pictureBox.Refresh();
 			}
-			catch (Exception ex) {
-				MessageBox.Show(ex.StackTrace, ex.Message);
+			if (e.Button == MouseButtons.Left && modeMoveTriangle && triSel != null) {
+				Graphics g = Graphics.FromImage(pictureBox.Image);
+				DrawMoveTriangle(g);
+				int dx = xReel - oldx1;
+				int dy = yReel - oldy1;
+				datas.DeplaceTriangle(dx, dy);
+				oldx1 = xReel;
+				oldy1 = yReel;
+				DrawMoveTriangle(g);
+				pictureBox.Refresh();
 			}
 		}
 
@@ -266,12 +261,12 @@ namespace TriangulArt {
 							Render();
 							break;
 					}
-					if (modeMoveTriangle) {
-						DrawMoveTriangle(g);
-						modeMoveTriangle = false;
-						DisplayList();
-						FillTriangles();
-					}
+				}
+				if (modeMoveTriangle) {
+					DrawMoveTriangle(g);
+					modeMoveTriangle = false;
+					DisplayList();
+					FillTriangles();
 				}
 			}
 		}
@@ -574,13 +569,13 @@ namespace TriangulArt {
 				}
 				else
 					if (triSel != null) {
-						int memoSel = datas.GetSelTriangle();
-						datas.DeplaceTriangle(deplX, deplY);
-						DisplayList();
-						listTriangles.SelectedIndex = memoSel;
-					}
-					else
-						MessageBox.Show("Pas de triangle sélectionné");
+					int memoSel = datas.GetSelTriangle();
+					datas.DeplaceTriangle(deplX, deplY);
+					DisplayList();
+					listTriangles.SelectedIndex = memoSel;
+				}
+				else
+					MessageBox.Show("Pas de triangle sélectionné");
 			}
 			else
 				MessageBox.Show("Veuillez sélectionner des données de déplacement valide");
@@ -610,13 +605,13 @@ namespace TriangulArt {
 				}
 				else
 					if (triSel != null) {
-						int memoSel = datas.GetSelTriangle();
-						datas.CoefZoom(triSel, zoomX, zoomY);
-						DisplayList();
-						listTriangles.SelectedIndex = memoSel;
-					}
-					else
-						MessageBox.Show("Pas de triangle sélectionné");
+					int memoSel = datas.GetSelTriangle();
+					datas.CoefZoom(triSel, zoomX, zoomY);
+					DisplayList();
+					listTriangles.SelectedIndex = memoSel;
+				}
+				else
+					MessageBox.Show("Pas de triangle sélectionné");
 			}
 			else
 				MessageBox.Show("Veuillez sélectionner des données de zoom valide");
@@ -626,7 +621,7 @@ namespace TriangulArt {
 		private void bpClean_Click(object sender, EventArgs e) {
 			int nbAvant = datas.lstTriangle.Count;
 			datas.CleanUp(bmpLock);
-			int nbApres= datas.lstTriangle.Count;
+			int nbApres = datas.lstTriangle.Count;
 			if (nbApres != nbAvant)
 				SetInfo("Nbre de triangles optimisés : " + (nbAvant - nbApres).ToString());
 			else
