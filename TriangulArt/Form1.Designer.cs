@@ -100,6 +100,7 @@
 			this.txbNomImage = new System.Windows.Forms.TextBox();
 			this.lblInfoImage = new System.Windows.Forms.Label();
 			this.bpGenereProjetAsm = new System.Windows.Forms.Button();
+			this.bpNewProjet = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -745,6 +746,7 @@
 			// 
 			// grpProjet
 			// 
+			this.grpProjet.Controls.Add(this.bpNewProjet);
 			this.grpProjet.Controls.Add(this.bpGenereProjetAsm);
 			this.grpProjet.Controls.Add(this.grpImage);
 			this.grpProjet.Controls.Add(this.bpSaveProj);
@@ -865,6 +867,16 @@
 			this.bpGenereProjetAsm.Text = "Générér assembleur";
 			this.bpGenereProjetAsm.UseVisualStyleBackColor = true;
 			this.bpGenereProjetAsm.Click += new System.EventHandler(this.bpGenereProjetAsm_Click);
+			// 
+			// bpNewProjet
+			// 
+			this.bpNewProjet.Location = new System.Drawing.Point(532, 46);
+			this.bpNewProjet.Name = "bpNewProjet";
+			this.bpNewProjet.Size = new System.Drawing.Size(108, 23);
+			this.bpNewProjet.TabIndex = 3;
+			this.bpNewProjet.Text = "Nouveau Projet";
+			this.bpNewProjet.UseVisualStyleBackColor = true;
+			this.bpNewProjet.Click += new System.EventHandler(this.bpNewProjet_Click);
 			// 
 			// Form1
 			// 
@@ -1024,6 +1036,7 @@
 		private System.Windows.Forms.Button bpImageSuiv;
 		private System.Windows.Forms.Label lblInfoImage;
 		private System.Windows.Forms.Button bpGenereProjetAsm;
+		private System.Windows.Forms.Button bpNewProjet;
 	}
 }
 

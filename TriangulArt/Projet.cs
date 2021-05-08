@@ -37,6 +37,11 @@ namespace TriangulArt {
 				selData--;
 		}
 
+		public void Clear() {
+			lstData.Clear();
+			lstData.Add(new Datas());
+		}
+
 		public void GenereSourceAsm(string fileName) {
 			StreamWriter sw = GenereAsm.OpenAsm(fileName);
 			foreach (Datas d in lstData) {

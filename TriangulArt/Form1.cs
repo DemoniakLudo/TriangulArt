@@ -733,5 +733,12 @@ namespace TriangulArt {
 				SetInfo("Génération assembleur ok.");
 			}
 		}
+
+		private void bpNewProjet_Click(object sender, EventArgs e) {
+			if (MessageBox.Show("Etes vous sur(e) de vouloir créer un nouveau projet ? Ceci effacera le projet en cours.", "Confirmation création nouveau projet", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes) {
+				projet.Clear();
+				SetImageProjet();
+			}
+		}
 	}
 }
