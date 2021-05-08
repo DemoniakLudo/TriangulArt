@@ -1,4 +1,4 @@
-TpsWaitImage1	EQU	#6A00
+TpsWaitImage1	EQU	#6600
 
 	ORG	#200
 	RUN	$
@@ -754,58 +754,16 @@ message2
 ; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
 ;
 Logos
-	Read	"Impact.asm"
-	Read	"TriangulArt.asm"
-StartFrames
-; Theme triangle
-	Read	"Triangle.asm"
-	Read	"TriTriangle.asm"
-	Read	"Pyramide.asm"
-	Read	"Pyramides.asm"
-	Read	"Tricubes.asm"
-	Read	"Tricube.asm"
-; Divers
-	Read	"Batman.asm"
-	Read	"Batman2.asm"
-	Read	"Piece.asm"
-	Read	"ChessBoard.asm"
-	Read	"Montagne.asm"
-	Read	"Floral.asm"
-	Read	"Glaive.asm"
-	Read	"Apple.asm"
-	Read	"Linux.asm"
-	Read	"Amstrad.asm"
-; Objets 3D
-	Read	"Bidul.asm"
-	Read	"Etoile.asm"
-	Read	"Bouboule.asm"
-	Read	"Donut.asm"
-	Read	"Cylindre.asm"
-	Read	"Hex.asm"
-; Animaux
-	Read	"Hippo.asm"
-	Read	"Elephant.asm"
-	Read	"Elephant2.asm"
-	Read	"Girafe.asm"
-	Read	"Rhino.asm"
-	Read	"Dolphin.asm"
-	Read	"Goupil.asm"
-	Read	"Cerf.asm"
-	Read	"Loup.asm"
-	Read	"Panda.asm"
-	Read	"Lion.asm"
-
+	Read	"DataDemo.asm"
 	DB	#FF
-
-;	Read	"Alphabet.asm"
 	
-pen1:
 ;
 ; Structure
 ; octet 0 = premier octet de la ligne
 ; octet 1 = nbre d'octets a soustraire+1 du nombre de pixels
 ; octet 2 = dernier octet de la ligne
 ;
+pen1:
 	DB	#80,#02,#00
 	DB	#40,#02,#00
 	DB	#20,#02,#00

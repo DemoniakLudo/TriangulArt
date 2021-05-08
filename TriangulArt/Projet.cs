@@ -6,13 +6,12 @@ namespace TriangulArt {
 	[Serializable]
 	public class Projet {
 		public List<Datas> lstData = new List<Datas>();
-		public int nbData = 0, selData = 0;
+		public int selData = 0;
 
 		public Datas AddData() {
 			selData = lstData.Count;
 			Datas d = new Datas();
 			lstData.Add(d);
-			nbData++;
 			return d;
 		}
 
@@ -30,6 +29,12 @@ namespace TriangulArt {
 
 		public void SetImage(Datas d) {
 			lstData[selData] = d;
+		}
+
+		public void RemoveImage() {
+			lstData.RemoveAt(selData);
+			if (selData >=lstData.Count)
+				selData--;
 		}
 
 		public void GenereSourceAsm(string fileName) {

@@ -329,18 +329,18 @@ namespace TriangulArt {
 			DialogResult result = dlg.ShowDialog();
 			if (result == DialogResult.OK) {
 				FileStream fileParam = File.Open(dlg.FileName, FileMode.Open);
-				//try {
-				Datas d = (Datas)new XmlSerializer(typeof(Datas)).Deserialize(fileParam);
-				projet.SetImage(d);
-				SetInfo("Lecture image ok");
-				for (int i = 0; i < projet.SelImage().lstTriangle.Count; i++)
-					projet.SelImage().lstTriangle[i].Normalise();
+				try {
+					Datas d = (Datas)new XmlSerializer(typeof(Datas)).Deserialize(fileParam);
+					projet.SetImage(d);
+					SetInfo("Lecture image ok");
+					for (int i = 0; i < projet.SelImage().lstTriangle.Count; i++)
+						projet.SelImage().lstTriangle[i].Normalise();
 
-				InitImage();
-				//}
-				//catch {
-				//	MessageBox.Show("Erreur lecture image ...");
-				//}
+					InitImage();
+				}
+				catch {
+					MessageBox.Show("Erreur lecture image ...");
+				}
 				fileParam.Close();
 			}
 		}
@@ -657,8 +657,9 @@ namespace TriangulArt {
 
 		private void SetImageProjet() {
 			bpImagePrec.Visible = projet.selData > 0;
-			bpImageSuiv.Visible = projet.selData < projet.nbData - 1;
-			lblInfoImage.Text = (projet.selData + 1).ToString() + "/" + projet.nbData.ToString();
+			bpImageSuiv.Visible = projet.selData < projet.lstData.Count - 1;
+			bpSupImage.Visible = projet.lstData.Count > 1;
+			lblInfoImage.Text = (projet.selData + 1).ToString() + "/" + projet.lstData.Count.ToString();
 			InitImage();
 		}
 
@@ -706,6 +707,8 @@ namespace TriangulArt {
 
 		private void bpSupImage_Click(object sender, EventArgs e) {
 			if (MessageBox.Show("Etes vous sur(e) de vouloir supprimer cette image ?", "Confirmation suppression", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes) {
+				projet.RemoveImage();
+				SetImageProjet();
 			}
 		}
 
