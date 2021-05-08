@@ -1,8 +1,9 @@
 TpsWaitImage1	EQU	#6000
+
 	ORG	#200
 	RUN	$
 
-;	Write direct "demo.bin"
+	Write direct "demo.bin"
 
 	DI
 	LD	HL,#8000
@@ -97,7 +98,7 @@ InitPen:
 ;
 ;	JR	MoreSpeed	; decommenter pour aller direcement a la 2e partie
 ;
-	JP	EndMess		; decommenter pour aller directement au message de fin
+;	JP	EndMess		; decommenter pour aller directement au message de fin
 ;
 ; Debut, premiere image = logo impact
 ;
@@ -106,19 +107,7 @@ Debut
 Boucle
 	PUSH	IX
 	POP	HL	
-	CALL	WaitVBL
-	LD	BC,#7F10
-	LD	A,(HL)
-	OUT	(C),C
-	OUT	(C),A	
-	XOR	A
-BclPalette
-	OUT	(C),A
-	INC	B	
-	OUTI
-	INC	A
-	CP	4
-	JR	NZ,BclPalette
+	CALL	SetPalette
 	LD	A,(HL)
 	INC	HL
 	LD	(TpsWaitTriangle+1),A
@@ -175,21 +164,9 @@ Boucle2
 	LD	(CntIrq+1),A
 	CALL	DrawFrame
 	POP	HL	
-	CALL	WaitVBL
 	LD	BC,#BD30
 	OUT	(C),C
-	LD	BC,#7F10
-	LD	A,(HL)
-	OUT	(C),C
-	OUT	(C),A
-	XOR	A
-BclPalette2
-	OUT	(C),A
-	INC	B	
-	OUTI
-	INC	A
-	CP	4
-	JR	NZ,BclPalette2
+	CALL	SetPalette
 Wait12
 	LD	A,(CntIrq+1)
 	AND	A
@@ -197,6 +174,13 @@ Wait12
 	LD	A,(IX+0)
 	INC	A
 	JR	NZ,Boucle2
+
+	LD	B,150
+WaitForMess:
+	PUSH	BC
+	CALL	WaitVbl
+	POP	BC
+	DJNZ	WaitForMess
 ;
 ; Message de fin...
 ;
@@ -214,13 +198,16 @@ BclEndMess
 	CALL	PrintMess
 	LD	B,8
 WaitReadMess
+	PUSH	BC
 	XOR	A
 	LD	(CntIrq+1),A
 WaitReadMess2
 	LD	A,(CntIrq+1)
 	INC	A
 	JR	NZ,WaitReadMess2
+	POP	BC
 	DJNZ	WaitReadMess
+EndWaitReadMess
 	INC	HL
 	LD	A,(HL)
 	INC	A
@@ -251,6 +238,23 @@ FinDemo
 ;
 ; Fonctions
 ;
+
+SetPalette
+	CALL	WaitVBL
+	LD	BC,#7F10
+	LD	A,(HL)
+	OUT	(C),C
+	OUT	(C),A	
+	XOR	A
+BclPalette
+	OUT	(C),A
+	INC	B	
+	OUTI
+	INC	A
+	CP	4
+	JR	NZ,BclPalette
+	RET
+
 CopyScreen
 	LD	HL,#C000
 	LD	DE,#8000
@@ -370,6 +374,37 @@ EndWait
 	RET
 
 ;
+; Initialise la couleur 
+;
+PrintMessColor
+	INC	HL
+	LD	A,(HL)
+	PUSH	HL
+	CALL	SetTriangleColor
+	POP	HL
+	INC	HL
+	JR	PrintMess
+
+;
+; Positionne les coordonnees du message a afficher
+;
+PrintMessPos
+	INC	HL
+	LD	A,(HL)
+	LD	(PrintMessX+1),A
+	INC	HL
+	LD	A,(HL)
+	LD	(PrintMessY+1),A
+	INC	HL
+	JR	PrintMess
+;
+; Changement de palette
+;
+PrintMessPalette:
+	INC	HL
+	CALL	SetPalette
+
+;
 ; Affiche un message avec des lettres en triangle
 ; HL = adresse du message
 ; B = posX depart, C = posY depart
@@ -382,10 +417,12 @@ PrintMess
 	JR	Z,PrintMessColor
 	CP	2
 	JR	Z,PrintMessPos
+	CP	3
+	JR	Z,PrintMessPalette
 	LD	B,12
 	CP	' '
 	JR	Z,PrintSpace
-	SUB	'A'
+	SUB	'0'
 	ADD	A,A
 	PUSH	HL
 	LD	HL,Alphabet
@@ -434,7 +471,7 @@ PrintSpace
 	LD	A,(PrintMessX+1)
 	ADD	A,B
 	LD	(PrintMessX+1),A
-	CP	235
+	CP	237
 	JR	C,PrintMess
 	XOR	A
 	LD	(PrintMessX+1),A
@@ -442,29 +479,6 @@ PrintSpace
 	ADD	A,24
 	LD	(PrintMessY+1),A
 	JR	PrintMess
-;
-; Initialise la couleur 
-;
-PrintMessColor
-	INC	HL
-	LD	A,(HL)
-	PUSH	HL
-	CALL	SetTriangleColor
-	POP	HL
-	INC	HL
-	JR	PrintMess
-;
-; Positionne les coordonnees du message a afficher
-;
-PrintMessPos
-	INC	HL
-	LD	A,(HL)
-	LD	(PrintMessX+1),A
-	INC	HL
-	LD	A,(HL)
-	LD	(PrintMessY+1),A
-	INC	HL
-	JP	PrintMess
 
 ;
 ; Initialise la couleur du trace du triangle

@@ -391,9 +391,9 @@ namespace TriangulArt {
 				}
 			}
 			StreamWriter sw = GenereAsm.OpenAsm(fileName);
-			if (nomImage == "")
+			if (string.IsNullOrEmpty(nomImage))
 				nomImage = Path.GetFileName(fileName);
-			
+
 			string nom = nomImage;
 			int p = nom.IndexOf('.');
 			if (p > 0)

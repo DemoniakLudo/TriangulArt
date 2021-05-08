@@ -1,4 +1,4 @@
-; Généré par TriangulArt le 08/05/2021 (15 45 27)
+; Généré par TriangulArt le 08/05/2021 (18 13 34)
 Impact
 ; 4 octets de palette
 	DB	"XCNL"
@@ -1028,6 +1028,128 @@ Amstrad
 	DB	#F8,#5D,#FF,#64,#FF,#9B,#02
 	DB	#F8,#5D,#FF,#9B,#F8,#A1,#82
 ; Taille 448 octets
+World
+; 4 octets de palette
+	DB	"DVNK"
+	DB	#06			; Tps d'affichage
+	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
+;
+; Donnees des triangles a afficher.
+; Chaque frame contient un ou plusieurs trianges defini de la sorte :
+; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
+; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
+; Seulement 1 octet par coordonnees (donc de 0 a 255...)
+; le 7eme octet de la structure (la couleur) defini le pen mode 1
+; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
+;
+	DB	#D6,#21,#E0,#2C,#D7,#2D,#01
+	DB	#D7,#2D,#D2,#44,#D6,#4E,#01
+	DB	#D6,#21,#C2,#2B,#D2,#45,#01
+	DB	#C5,#1E,#D6,#21,#AE,#22,#01
+	DB	#D6,#21,#AE,#22,#C2,#2B,#01
+	DB	#C3,#2C,#AD,#3B,#CC,#4B,#01
+	DB	#C3,#2C,#D2,#46,#CC,#4B,#01
+	DB	#CD,#4B,#A7,#66,#B5,#70,#01
+	DB	#AD,#3B,#CD,#4B,#A8,#67,#01
+	DB	#AF,#22,#A7,#2A,#AD,#3C,#01
+	DB	#AF,#22,#C4,#2D,#AD,#3C,#01
+	DB	#8F,#46,#97,#58,#A8,#67,#01
+	DB	#AD,#3C,#8F,#46,#A8,#67,#01
+	DB	#8F,#29,#A8,#2A,#AD,#3C,#01
+	DB	#8F,#29,#AE,#3C,#8F,#47,#01
+	DB	#9C,#21,#B0,#22,#98,#28,#01
+	DB	#B0,#22,#98,#28,#A8,#2C,#01
+	DB	#7E,#1E,#8B,#25,#6D,#31,#01
+	DB	#8B,#25,#6E,#32,#90,#47,#01
+	DB	#6F,#32,#68,#34,#6B,#41,#01
+	DB	#6F,#32,#6C,#42,#72,#43,#01
+	DB	#6F,#33,#74,#44,#7A,#47,#01
+	DB	#6F,#33,#87,#42,#7A,#47,#01
+	DB	#87,#42,#82,#4E,#7A,#4E,#01
+	DB	#87,#42,#7A,#47,#7A,#4E,#01
+	DB	#5F,#40,#6D,#42,#67,#46,#01
+	DB	#62,#34,#5F,#40,#6D,#43,#01
+	DB	#68,#34,#62,#35,#62,#36,#01
+	DB	#68,#35,#63,#36,#6D,#43,#01
+	DB	#6D,#24,#68,#2E,#6F,#33,#01
+	DB	#6D,#24,#67,#2A,#68,#2E,#01
+	DB	#7E,#1F,#74,#20,#6F,#33,#01
+	DB	#7E,#1F,#78,#2A,#70,#34,#01
+	DB	#CD,#4B,#D2,#51,#CF,#62,#01
+	DB	#CE,#4D,#BF,#60,#D0,#63,#01
+	DB	#BF,#61,#B6,#71,#C8,#77,#01
+	DB	#C0,#62,#D1,#71,#C8,#78,#01
+	DB	#C0,#62,#CA,#62,#D1,#72,#01
+	DB	#C9,#78,#CA,#7F,#C4,#83,#01
+	DB	#BB,#76,#BE,#84,#C5,#84,#01
+	DB	#BB,#76,#C9,#79,#C5,#84,#01
+	DB	#B6,#72,#A9,#74,#AF,#7E,#01
+	DB	#A9,#68,#B6,#72,#A9,#74,#01
+	DB	#91,#47,#85,#52,#8A,#58,#01
+	DB	#91,#47,#8A,#58,#98,#58,#01
+	DB	#D6,#77,#D0,#7D,#D1,#88,#01
+	DB	#D6,#88,#DD,#94,#DD,#A2,#01
+	DB	#D6,#88,#D6,#9B,#DD,#A2,#01
+	DB	#D7,#89,#D3,#90,#D7,#9C,#01
+	DB	#E3,#92,#E8,#92,#E5,#9D,#01
+	DB	#E9,#92,#F2,#9B,#E6,#9D,#01
+	DB	#F2,#9B,#E7,#9E,#F0,#A1,#01
+	DB	#53,#6A,#62,#7B,#5A,#82,#01
+	DB	#62,#7B,#5A,#83,#6A,#87,#01
+	DB	#7A,#6E,#63,#7E,#83,#95,#01
+	DB	#68,#83,#84,#96,#6E,#A2,#01
+	DB	#84,#96,#6E,#A3,#7F,#A9,#01
+	DB	#7B,#6F,#88,#79,#84,#97,#01
+	DB	#8B,#9E,#85,#A5,#8E,#A5,#01
+	DB	#8E,#A5,#86,#A6,#88,#AD,#01
+	DB	#3E,#15,#2E,#16,#3C,#1C,#01
+	DB	#2E,#16,#38,#1B,#37,#25,#01
+	DB	#30,#16,#22,#1E,#37,#26,#01
+	DB	#11,#16,#23,#20,#0B,#2B,#01
+	DB	#02,#15,#12,#17,#0B,#2A,#01
+	DB	#0C,#2B,#03,#3E,#25,#4E,#01
+	DB	#23,#1F,#0C,#2B,#25,#4D,#01
+	DB	#23,#20,#31,#23,#25,#4D,#01
+	DB	#31,#23,#35,#2E,#25,#4E,#01
+	DB	#32,#24,#46,#28,#35,#2E,#01
+	DB	#46,#28,#35,#2F,#46,#32,#01
+	DB	#04,#3E,#26,#4E,#1D,#55,#01
+	DB	#04,#3E,#1E,#57,#22,#73,#01
+	DB	#23,#73,#0D,#8A,#14,#9A,#01
+	DB	#23,#74,#14,#9B,#33,#A9,#01
+	DB	#23,#75,#38,#93,#34,#AA,#01
+	DB	#3B,#86,#41,#94,#35,#AA,#01
+	DB	#2A,#7E,#3B,#87,#38,#93,#01
+	DB	#16,#9B,#33,#B8,#27,#C4,#01
+	DB	#16,#9B,#35,#AA,#34,#B9,#01
+	DB	#19,#BC,#27,#C5,#17,#D1,#01
+	DB	#8B,#58,#98,#59,#9A,#69,#02
+	DB	#8B,#59,#85,#61,#92,#74,#02
+	DB	#8B,#5A,#9A,#69,#92,#74,#02
+	DB	#9B,#6A,#93,#74,#9B,#76,#02
+	DB	#F5,#A3,#EE,#AD,#F9,#B2,#02
+	DB	#F9,#B2,#FE,#BF,#EB,#C8,#02
+	DB	#EF,#AE,#F9,#B3,#EB,#C9,#02
+	DB	#E0,#AC,#F0,#AE,#EB,#C9,#02
+	DB	#E1,#AD,#D5,#B9,#EB,#CA,#02
+	DB	#D6,#BA,#EB,#CA,#DC,#CF,#02
+	DB	#FF,#BE,#EC,#C8,#F0,#CF,#02
+	DB	#FF,#BE,#F1,#CF,#FA,#DE,#02
+	DB	#70,#4B,#58,#53,#53,#68,#02
+	DB	#70,#4B,#53,#68,#61,#7E,#02
+	DB	#70,#4B,#79,#6E,#62,#7E,#02
+	DB	#6F,#A3,#80,#AB,#75,#B3,#02
+	DB	#6F,#A4,#6B,#B5,#76,#B5,#02
+	DB	#70,#4B,#7C,#55,#7A,#6F,#02
+	DB	#7C,#55,#86,#62,#7A,#6F,#02
+	DB	#86,#63,#7B,#6F,#88,#78,#02
+	DB	#88,#79,#92,#7E,#84,#97,#02
+	DB	#15,#9B,#17,#BB,#26,#C4,#02
+	DB	#5F,#0E,#43,#0F,#57,#26,#03
+	DB	#4C,#15,#58,#1D,#46,#1F,#03
+	DB	#B1,#E7,#8A,#F1,#C3,#F1,#03
+	DB	#28,#E6,#1C,#F1,#22,#F1,#83
+; Taille 749 octets
 Bidul
 ; 4 octets de palette
 	DB	"CNL\"
@@ -1389,7 +1511,7 @@ Hex
 ; Taille 441 octets
 Hippo
 ; 4 octets de palette
-	DB	"D@TL"
+	DB	"D@T\"
 	DB	#08			; Tps d'affichage
 	DB	#01			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
 ;
@@ -1415,8 +1537,16 @@ Hippo
 	DB	#3A,#48,#49,#4D,#42,#53,#02
 	DB	#59,#AC,#47,#B1,#63,#BF,#02
 	DB	#47,#B1,#63,#BF,#4E,#C4,#02
-	DB	#21,#BE,#2D,#E4,#73,#FF,#81
-; Taille 105 octets
+	DB	#21,#BE,#2D,#E4,#73,#FF,#01
+	DB	#91,#61,#96,#7F,#94,#94,#03
+	DB	#7D,#F1,#83,#F2,#60,#F5,#03
+	DB	#34,#05,#42,#0B,#45,#17,#03
+	DB	#38,#37,#4A,#39,#4E,#3D,#03
+	DB	#4C,#38,#4B,#3B,#52,#47,#03
+	DB	#50,#67,#43,#7B,#41,#80,#03
+	DB	#33,#AE,#2D,#C0,#2E,#C2,#03
+	DB	#5A,#AF,#65,#BF,#64,#C1,#83
+; Taille 161 octets
 Elephant
 ; 4 octets de palette
 	DB	"TFLN"
@@ -1932,7 +2062,7 @@ Rhino
 Lion
 ; 4 octets de palette
 	DB	"TJLK"
-	DB	#06			; Tps d'affichage
+	DB	#09			; Tps d'affichage
 	DB	#01			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
 ;
 ; Donnees des triangles a afficher.
@@ -2006,7 +2136,6 @@ Lion
 	DB	#2C,#34,#23,#4E,#40,#58,#02
 	DB	#34,#54,#47,#5C,#2C,#63,#02
 	DB	#47,#5C,#3A,#60,#36,#6D,#02
-	DB	#22,#6C,#14,#74,#1B,#77,#02
 	DB	#35,#6D,#4D,#85,#2E,#89,#02
 	DB	#56,#6D,#69,#83,#50,#86,#02
 	DB	#70,#83,#3B,#88,#3E,#A4,#02
@@ -2048,4 +2177,4 @@ Lion
 	DB	#75,#C3,#7E,#C6,#69,#CF,#03
 	DB	#7E,#C6,#69,#CF,#73,#D4,#03
 	DB	#7E,#C6,#80,#D3,#73,#D4,#83
-; Taille 735 octets
+; Taille 728 octets

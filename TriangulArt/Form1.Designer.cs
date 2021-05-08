@@ -431,7 +431,6 @@
 			this.bpUp.TabIndex = 31;
 			this.bpUp.Text = "Up";
 			this.bpUp.UseVisualStyleBackColor = true;
-			this.bpUp.Visible = false;
 			this.bpUp.Click += new System.EventHandler(this.bpUp_Click);
 			// 
 			// bpDown
@@ -442,7 +441,6 @@
 			this.bpDown.TabIndex = 32;
 			this.bpDown.Text = "Down";
 			this.bpDown.UseVisualStyleBackColor = true;
-			this.bpDown.Visible = false;
 			this.bpDown.Click += new System.EventHandler(this.bpDown_Click);
 			// 
 			// groupBox1
