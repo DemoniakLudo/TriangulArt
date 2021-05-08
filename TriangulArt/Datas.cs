@@ -160,12 +160,12 @@ namespace TriangulArt {
 		}
 
 		private void MoveTriangle(Triangle t, int deplX, int deplY) {
-			t.x1 += deplX;
-			t.y1 += deplY;
-			t.x2 += deplX;
-			t.y2 += deplY;
-			t.x3 += deplX;
-			t.y3 += deplY;
+			t.x1 = Math.Max(Math.Min(t.x1 + deplX, 255), 0);
+			t.y1 = Math.Max(Math.Min(t.y1 + deplY, 255), 0);
+			t.x2 = Math.Max(Math.Min(t.x2 + deplX, 255), 0);
+			t.y2 = Math.Max(Math.Min(t.y2 + deplY, 255), 0);
+			t.x3 = Math.Max(Math.Min(t.x3 + deplX, 255), 0);
+			t.y3 = Math.Max(Math.Min(t.y3 + deplY, 255), 0);
 		}
 
 		public void DeplaceTriangle(int deplX, int deplY) {
@@ -301,24 +301,25 @@ namespace TriangulArt {
 				}
 		}
 
-		public void CoefZoom(Triangle t, double coefX, double coefY) {
-			double x1 = 127 + (t.x1 - 127) * coefX;
-			double y1 = 127 + (t.y1 - 127) * coefY;
-			double x2 = 127 + (t.x2 - 127) * coefX;
-			double y2 = 127 + (t.y2 - 127) * coefY;
-			double x3 = 127 + (t.x3 - 127) * coefX;
-			double y3 = 127 + (t.y3 - 127) * coefY;
-			t.x1 = (int)x1;
-			t.y1 = (int)y1;
-			t.x2 = (int)x2;
-			t.y2 = (int)y2;
-			t.x3 = (int)x3;
-			t.y3 = (int)y3;
+		public void CoefZoom(Triangle t, double coefX, double coefY, bool center) {
+			int addCenter = center ? 127 : 0;
+			double x1 = addCenter + (t.x1 - addCenter) * coefX;
+			double y1 = addCenter + (t.y1 - addCenter) * coefY;
+			double x2 = addCenter + (t.x2 - addCenter) * coefX;
+			double y2 = addCenter + (t.y2 - addCenter) * coefY;
+			double x3 = addCenter + (t.x3 - addCenter) * coefX;
+			double y3 = addCenter + (t.y3 - addCenter) * coefY;
+			t.x1 = (int)Math.Max(Math.Min(x1, 255), 0);
+			t.y1 = (int)Math.Max(Math.Min(y1, 255), 0);
+			t.x2 = (int)Math.Max(Math.Min(x2, 255), 0);
+			t.y2 = (int)Math.Max(Math.Min(y2, 255), 0);
+			t.x3 = (int)Math.Max(Math.Min(x3, 255), 0);
+			t.y3 = (int)Math.Max(Math.Min(y3, 255), 0);
 		}
 
-		public void CoefZoom(double coefX, double coefY) {
+		public void CoefZoom(double coefX, double coefY, bool center) {
 			foreach (Triangle t in lstTriangle)
-				CoefZoom(t, coefX, coefY);
+				CoefZoom(t, coefX, coefY, center);
 		}
 
 		public void Clear() {

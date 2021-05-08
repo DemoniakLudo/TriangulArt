@@ -87,7 +87,7 @@ namespace TriangulArt {
 				Triangle t = datas.lstTriangle[i];
 				listTriangles.Items.Add("Tr." + i.ToString("000") + "\t\t(" + t.x1 + "," + t.y1 + ")\t\t(" + t.x2 + "," + t.y2 + ")\t\t(" + t.x3 + "," + t.y3 + ")\t\tcouleur:" + t.color);
 			}
-			txbX1.Text = txbX2.Text = txbX3.Text = txbY1.Text = txbY2.Text = txbY3.Text = "";
+			txbX1.Text = txbX2.Text = txbX3.Text = txbY1.Text = txbY2.Text = txbY3.Text = txbX4.Text = txbY4.Text = txbPos.Text = "";
 			bpUp.Visible = bpDown.Visible = false;
 			triSel = datas.SelectTriangle(-1);
 			bpEdit.Enabled = bpDelete.Enabled = false;
@@ -175,7 +175,7 @@ namespace TriangulArt {
 			int xReel = (e.X + 2) / 3;
 			if (e.Button == MouseButtons.Left) {
 				Graphics g = Graphics.FromImage(pictureBox.Image);
-				if (modeAddTriangle) {
+				if (modeAddTriangle && triSel != null) {
 					switch (numPt) {
 						case 1:
 							triSel = new Triangle();
@@ -211,7 +211,7 @@ namespace TriangulArt {
 							break;
 					}
 				}
-				if (modeAddQuadri) {
+				if (modeAddQuadri && triSel != null) {
 					switch (numPt) {
 						case 1:
 							triSel = new Triangle();
@@ -227,7 +227,6 @@ namespace TriangulArt {
 						case 2:
 							triSel.x2 = xReel;
 							triSel.y2 = yReel;
-							//triSel.TriSommets();
 							numPt = 3;
 							SetInfo("Attente positionnement troisième point quadrilatère");
 							oldx1 = xReel;
@@ -346,6 +345,7 @@ namespace TriangulArt {
 				FileStream file = File.Open(dlg.FileName, FileMode.Create);
 				try {
 					new XmlSerializer(typeof(Datas)).Serialize(file, datas);
+					DisplayMemory();
 					SetInfo("Sauvegarde triangles ok");
 				}
 				catch {
@@ -453,6 +453,7 @@ namespace TriangulArt {
 		}
 
 		private void bpRedraw_Click(object sender, EventArgs e) {
+			modeAddQuadri = modeAddTriangle = modeMoveTriangle = false;
 			DisplayList();
 			FillTriangles();
 		}
@@ -612,14 +613,14 @@ namespace TriangulArt {
 			double zoomX = 0, zoomY = 0;
 			if (double.TryParse(txbTrX.Text.Replace('.', ','), out zoomX) && double.TryParse(txbTrY.Text.Replace('.', ','), out zoomY)) {
 				if (rbDepImage.Checked) {
-					datas.CoefZoom(zoomX, zoomY);
+					datas.CoefZoom(zoomX, zoomY, chkCenterZoom.Checked);
 					DisplayList();
 					FillTriangles();
 				}
 				else
 					if (triSel != null) {
 						int memoSel = datas.GetSelTriangle();
-						datas.CoefZoom(triSel, zoomX, zoomY);
+						datas.CoefZoom(triSel, zoomX, zoomY, chkCenterZoom.Checked);
 						DisplayList();
 						listTriangles.SelectedIndex = memoSel;
 					}

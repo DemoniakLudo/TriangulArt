@@ -87,6 +87,7 @@
 			this.txbX1 = new System.Windows.Forms.TextBox();
 			this.txbPos = new System.Windows.Forms.TextBox();
 			this.label13 = new System.Windows.Forms.Label();
+			this.chkCenterZoom = new System.Windows.Forms.CheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -481,6 +482,7 @@
 			// 
 			// groupBox2
 			// 
+			this.groupBox2.Controls.Add(this.chkCenterZoom);
 			this.groupBox2.Controls.Add(this.bpDeplace);
 			this.groupBox2.Controls.Add(this.txbTrY);
 			this.groupBox2.Controls.Add(this.label9);
@@ -491,7 +493,7 @@
 			this.groupBox2.Controls.Add(this.rbDepTriangle);
 			this.groupBox2.Location = new System.Drawing.Point(1002, 145);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(387, 73);
+			this.groupBox2.Size = new System.Drawing.Size(448, 73);
 			this.groupBox2.TabIndex = 34;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Opération spéciale";
@@ -714,6 +716,16 @@
 			this.label13.TabIndex = 49;
 			this.label13.Text = "pos :";
 			// 
+			// chkCenterZoom
+			// 
+			this.chkCenterZoom.AutoSize = true;
+			this.chkCenterZoom.Location = new System.Drawing.Point(350, 50);
+			this.chkCenterZoom.Name = "chkCenterZoom";
+			this.chkCenterZoom.Size = new System.Drawing.Size(86, 17);
+			this.chkCenterZoom.TabIndex = 36;
+			this.chkCenterZoom.Text = "Zoom centré";
+			this.chkCenterZoom.UseVisualStyleBackColor = true;
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -853,6 +865,7 @@
 		private System.Windows.Forms.TextBox txbX1;
 		private System.Windows.Forms.TextBox txbPos;
 		private System.Windows.Forms.Label label13;
+		private System.Windows.Forms.CheckBox chkCenterZoom;
 	}
 }
 

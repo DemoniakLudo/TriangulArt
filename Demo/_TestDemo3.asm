@@ -1,6 +1,9 @@
-; Généré par TriangulArt le 11/04/2021 (11 33 34)
+TpsWaitImage1	EQU	#6A00
+
 	ORG	#200
 	RUN	$
+
+;	Write direct "demo.bin"
 
 	DI
 	LD	HL,#8000
@@ -89,8 +92,13 @@ InitPen:
 	OUT	(C),C
 	LD	BC,#BC0C
 	OUT	(C),C
+; initialisation musique
+	LD	HL,MDLADDR
+	CALL	INIT
 	EI
-
+;
+;	JR	MoreSpeed	; decommenter pour aller direcement a la 2e partie
+;	JP	EndMess		; decommenter pour aller directement au message de fin
 ;
 ; Debut, premiere image = logo impact
 ;
@@ -101,10 +109,9 @@ Boucle:
 	POP	HL	
 	CALL	WaitVBL
 	LD	BC,#7F10
-	LD	BC,#7F10
 	LD	A,(HL)
 	OUT	(C),C
-	OUT	(C),A
+	OUT	(C),A	
 	XOR	A
 BclPalette:
 	OUT	(C),A
@@ -123,7 +130,7 @@ BclPalette:
 	POP	IX
 	CALL	DrawFrame
 ; Temps de pause pour affichage image
-	LD	HL,0
+	LD	HL,TpsWaitImage1
 Wait1:
 	DEC	HL
 	LD	B,16
@@ -138,6 +145,7 @@ Wait2:
 ;
 ; Message "We want more speed"
 ;
+MoreSpeed:
 	XOR	A
 	LD	(DoWait+1),A
 	CALL	CopyScreen
@@ -156,7 +164,7 @@ WaitMess2:
 	JR	NZ,WaitMess2
 	DJNZ	WaitMess1
 ;
-; Affichage rapide
+; Affichage rapide des images
 ;
 	LD	IX,Logos
 Boucle2:
@@ -193,6 +201,7 @@ Wait12:
 ;
 ; Message de fin...
 ;
+EndMess
 	CALL	CopyScreen
 	CALL	WaitVBL
 	LD	BC,#BD30
@@ -202,7 +211,9 @@ Wait12:
 
 FinDemo
 	JR	FinDemo
-
+;
+; Fonctions
+;
 CopyScreen:
 	LD	HL,#C000
 	LD	DE,#8000
@@ -225,16 +236,42 @@ WaitVbl:
 	IN	A,(C)
 	RRA
 	JR	NC,WaitVbl
+WaitEndVBL:
+	IN	A,(C)
+	RRA
+	JR	C,WaitEndVBL
 	RET
+	
 ;
 ; IRQ
 ;
 NewIrq
 	PUSH	AF
+	PUSH	BC
+	PUSH	DE
+	PUSH	HL
+	PUSH	IX
+	EX	AF,AF'
+	PUSH	AF
+Cnt50hZ:
+	LD	A,0
+	INC	A
+	LD	(Cnt50hZ+1),A
+	CP	6
+	JR	NZ,CntIrq
+	XOR	A
+	LD	(Cnt50hz+1),A
+	CALL	Play
 CntIrq:
 	LD	A,0
 	INC	A
 	LD	(CntIrq+1),A
+	POP	AF
+	EX	AF,AF'
+	POP	IX
+	POP	HL
+	POP	DE
+	POP	BC
 	POP	AF
 	EI
 	RET
@@ -347,11 +384,13 @@ PrintMessY:
 	LD	L,A	
 	CALL	DrawTriangle
 	LD	A,(IX+6)
-	LD	BC,7
+	LD	BC,6
 	ADD	IX,BC
-	RLA
-	JR	NC,PrintMessX
-	LD	B,(IX+0)				; Largeur lettre
+	LD	A,(IX+0)
+	BIT	7,A
+	JR	Z,PrintMessX
+	AND	#3F
+	LD	B,A					; Largeur lettre
 	POP	HL
 PrintSpace:
 	INC	HL
@@ -658,7 +697,11 @@ Set3Pen:
 	
 	nolist
 
-	Read	"alphabet2.asm"
+	Read	"PT2PlayCPC_V4.asm"
+MDLADDR:
+	INCBIN	"Rage.pt2"
+
+	Read	"alphabet3.asm"
 
 Message1
 	DB	1,1
@@ -672,9 +715,34 @@ Message1
 	DB	"NOW [[[[[",0
 
 message2
-	DB	1,3
+	DB	1,2
 	DB	2,0,0
-	DB	"MESSAGE DE FIN A METTRE ICI",0
+	DB	"\\\\\\\\\\\\"
+	DB	2,0,24,"\"
+	DB	2,231,24,"\"
+	DB	2,0,48,"\"
+	DB	2,231,48,"\"
+	DB	2,0,72,"\"
+	DB	2,231,72,"\"
+	DB	2,0,96,"\"
+	DB	2,231,96,"\"
+	DB	2,0,120,"\"
+	DB	2,231,120,"\"
+	DB	2,0,144,"\"
+	DB	2,231,144,"\"
+	DB	2,0,168,"\"
+	DB	2,231,168,"\"
+	DB	2,0,192,"\"
+	DB	2,231,192,"\"
+	DB	2,0,216,"\\\\\\\\\\\\"
+
+	DB	1,3
+	DB	2,90,58,"YOU"
+	DB	2,60,106,"WATCHED"
+	DB	1,1
+	DB	2,20,154,"TRIANGULART"
+
+	DB	0
 
 ;
 ; Donnees des triangles a afficher.
@@ -706,6 +774,7 @@ StartFrames
 	Read	"Glaive.asm"
 	Read	"Apple.asm"
 	Read	"Linux.asm"
+	Read	"Amstrad.asm"
 ; Objets 3D
 	Read	"Bidul.asm"
 	Read	"Etoile.asm"
