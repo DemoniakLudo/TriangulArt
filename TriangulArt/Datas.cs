@@ -4,15 +4,21 @@ using System.IO;
 using System.Xml.Serialization;
 
 namespace TriangulArt {
-	[System.Serializable]
+	[Serializable]
 	public class Datas {
 		public int modeRendu = 0;
 		public List<Triangle> lstTriangle = new List<Triangle>();
 		public int[] palette = new int[4];
 		public bool cpcPlus = false;
-		public int tpsAttente = 8192;
+		public int tpsAttente = 16;
+		public string nomImage;
 
 		private int selLigne = -1;
+
+		public Datas() {
+			for (int i = 0; i < 4; i++)
+				palette[i] = BitmapCpc.Palette[i];
+		}
 
 		public int GetPalCPC(int c) {
 			return BitmapCpc.cpcPlus ? (((c & 0xF0) >> 4) * 17) + ((((c & 0xF00) >> 8) * 17) << 8) + (((c & 0x0F) * 17) << 16) : BitmapCpc.RgbCPC[c < 27 ? c : 0].GetColor;
@@ -363,7 +369,7 @@ namespace TriangulArt {
 			}
 		}
 
-		public void GenereSourceAsm(string fileName, bool withCode, bool cpcPlus) {
+		public void GenereSourceAsm(string fileName, bool withCode) {
 			bool polyMode = false;
 			//
 			// Rapprocher les triangles ayant des coordonnées comparables
@@ -385,15 +391,18 @@ namespace TriangulArt {
 				}
 			}
 			StreamWriter sw = GenereAsm.OpenAsm(fileName);
-			string file = Path.GetFileName(fileName);
-			int p = file.IndexOf('.');
+			if (nomImage == "")
+				nomImage = Path.GetFileName(fileName);
+			
+			string nom = nomImage;
+			int p = nom.IndexOf('.');
 			if (p > 0)
-				file = file.Substring(0, p);
+				nom = nom.Substring(0, p);
 
 			if (withCode)
-				GenereAsm.GenereDrawTriangleCode(sw, file, cpcPlus);
+				GenereAsm.GenereDrawTriangleCode(sw, nom, cpcPlus);
 
-			GenereAsm.GenereDatas(sw, this, file, cpcPlus);
+			GenereAsm.GenereDatas(sw, this, nom, cpcPlus);
 			if (withCode)
 				GenereAsm.GenereDrawTriangleData(sw, cpcPlus);
 

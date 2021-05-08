@@ -10,11 +10,11 @@ namespace TriangulArt {
 			return sw;
 		}
 
-		static public void GenereDatas(StreamWriter sw, Datas data, string fileName, bool cpcPlus) {
+		static public void GenereDatas(StreamWriter sw, Datas data, string nom, bool cpcPlus) {
 			int nbOctets = 0;
 			string s = "";
 
-			sw.WriteLine(fileName);
+			sw.WriteLine(nom);
 			if (cpcPlus) {
 				string line = "";
 				for (int i = 0; i < 4; i++) {
@@ -52,9 +52,9 @@ namespace TriangulArt {
 			sw.WriteLine("; Taille " + nbOctets.ToString() + " octets");
 		}
 
-		static public void GenereDrawTriangleCode(StreamWriter sw, string fileName, bool cpcPlus) {
+		static public void GenereDrawTriangleCode(StreamWriter sw, string nom, bool cpcPlus) {
 			GenereInitCode(sw, cpcPlus);
-			GenereInitPalette(sw, fileName, cpcPlus);
+			GenereInitPalette(sw, nom, cpcPlus);
 			GenereDrawTriangle(sw);
 		}
 
@@ -160,8 +160,8 @@ namespace TriangulArt {
 			sw.WriteLine("	EI");
 		}
 
-		static private void GenereInitPalette(StreamWriter sw, string fileName, bool cpcPlus) {
-			sw.WriteLine("	LD	IX," + fileName + "			; Donnees triangle");
+		static private void GenereInitPalette(StreamWriter sw, string nom, bool cpcPlus) {
+			sw.WriteLine("	LD	IX," + nom + "			; Donnees triangle");
 			sw.WriteLine("	PUSH	IX");
 			sw.WriteLine("	POP	HL");
 			if (cpcPlus) {

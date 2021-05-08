@@ -15,17 +15,16 @@ namespace TriangulArt {
 		private int oldx1, oldy1;
 		private int selColor = 1;
 		private Bitmap bmpFond = null;
-		private Datas datas = new Datas();
+		private Projet projet = new Projet();
 		private Version version = Assembly.GetExecutingAssembly().GetName().Version;
 
 		public Form1() {
 			InitializeComponent();
+			lblInfoVersion.Text = "V " + version.ToString() + " - " + new DateTime(2000, 1, 1).AddDays(version.Build).ToShortDateString();
+			projet.AddData();
 			bmpLock = new DirectBitmap(512, 512);
 			Reset();
-			for (int i = 0; i < 4; i++)
-				datas.palette[i] = BitmapCpc.Palette[i];
-
-			lblInfoVersion.Text = "V " + version.ToString() + " - " + new DateTime(2000, 1, 1).AddDays(version.Build).ToShortDateString();
+			SetImageProjet();
 		}
 
 		public void Reset(bool force = false) {
@@ -37,7 +36,7 @@ namespace TriangulArt {
 			}
 			else
 				for (int y = 0; y < bmpLock.Height; y += 2)
-					bmpLock.SetHorLineDouble(0, y, BitmapCpc.TailleX, datas.GetPalCPC(BitmapCpc.Palette[0]));
+					bmpLock.SetHorLineDouble(0, y, BitmapCpc.TailleX, projet.SelImage().GetPalCPC(BitmapCpc.Palette[0]));
 
 			Render();
 		}
@@ -76,26 +75,26 @@ namespace TriangulArt {
 
 		private void FillTriangles() {
 			Reset();
-			datas.FillTriangles(bmpLock);
+			projet.SelImage().FillTriangles(bmpLock);
 			Render();
 		}
 
 
 		private void DisplayList() {
 			listTriangles.Items.Clear();
-			for (int i = 0; i < datas.lstTriangle.Count; i++) {
-				Triangle t = datas.lstTriangle[i];
+			for (int i = 0; i < projet.SelImage().lstTriangle.Count; i++) {
+				Triangle t = projet.SelImage().lstTriangle[i];
 				listTriangles.Items.Add("Tr." + i.ToString("000") + "\t\t(" + t.x1 + "," + t.y1 + ")\t\t(" + t.x2 + "," + t.y2 + ")\t\t(" + t.x3 + "," + t.y3 + ")\t\tcouleur:" + t.color);
 			}
 			txbX1.Text = txbX2.Text = txbX3.Text = txbY1.Text = txbY2.Text = txbY3.Text = txbX4.Text = txbY4.Text = txbPos.Text = "";
 			bpUp.Visible = bpDown.Visible = false;
-			triSel = datas.SelectTriangle(-1);
+			triSel = projet.SelImage().SelectTriangle(-1);
 			bpEdit.Enabled = bpDelete.Enabled = false;
 		}
 
 		private void AddTriangle(Triangle t) {
-			datas.lstTriangle.Add(t);
-			datas.FillTriangle(bmpLock, t);
+			projet.SelImage().lstTriangle.Add(t);
+			projet.SelImage().FillTriangle(bmpLock, t);
 			DisplayList();
 		}
 
@@ -140,7 +139,7 @@ namespace TriangulArt {
 				DrawMoveTriangle(g);
 				int dx = xReel - oldx1;
 				int dy = yReel - oldy1;
-				datas.DeplaceTriangle(dx, dy);
+				projet.SelImage().DeplaceTriangle(dx, dy);
 				oldx1 = xReel;
 				oldy1 = yReel;
 				DrawMoveTriangle(g);
@@ -153,7 +152,7 @@ namespace TriangulArt {
 			int xReel = (e.X + 2) / 3;
 			if (e.Button == MouseButtons.Right)
 				if (!modeAddTriangle && !modeAddQuadri)
-					listTriangles.SelectedIndex = datas.SelTriangle(xReel, yReel);
+					listTriangles.SelectedIndex = projet.SelImage().SelTriangle(xReel, yReel);
 				else {
 					modeAddTriangle = modeAddQuadri = false;
 					bpAddTriangle.Enabled = bpAjoutQuadri.Enabled = true;
@@ -287,8 +286,41 @@ namespace TriangulArt {
 		}
 
 		private void DisplayMemory() {
-			int nb = datas.lstTriangle.Count;
+			int nb = projet.SelImage().lstTriangle.Count;
 			SetInfo("Nbre de triangles:" + nb.ToString() + " - Mémoire utilisée:" + (nb * 7).ToString() + " octets");
+		}
+
+		private void InitImage() {
+			for (int i = 0; i < 4; i++)
+				BitmapCpc.Palette[i] = projet.SelImage().palette[i];
+
+			BitmapCpc.cpcPlus = chkPlus.Checked = projet.SelImage().cpcPlus;
+			txbNomImage.Text = projet.SelImage().nomImage;
+			txbTpsAttente.Text = projet.SelImage().tpsAttente.ToString();
+			UpdatePalette();
+			FillTriangles();
+			DisplayList();
+			//Text = "TriangulArt - " + dlg.FileName;
+			switch (projet.SelImage().modeRendu) {
+				case 0:
+					rbStandard.Checked = true;
+					break;
+
+				case 1:
+					rbHorizontal.Checked = true;
+					break;
+
+				case 2:
+					rbVertical.Checked = true;
+					break;
+			}
+			DisplayMemory();
+		}
+
+		private void MemImage() {
+			int.TryParse(txbTpsAttente.Text, out projet.SelImage().tpsAttente);
+			projet.SelImage().tpsAttente = Math.Min(850, Math.Max(1, projet.SelImage().tpsAttente));
+			projet.SelImage().nomImage = txbNomImage.Text;
 		}
 
 		private void bpLoad_Click(object sender, EventArgs e) {
@@ -297,40 +329,18 @@ namespace TriangulArt {
 			DialogResult result = dlg.ShowDialog();
 			if (result == DialogResult.OK) {
 				FileStream fileParam = File.Open(dlg.FileName, FileMode.Open);
-				try {
-					datas = (Datas)new XmlSerializer(typeof(Datas)).Deserialize(fileParam);
-					SetInfo("Lecture triangles ok");
-					for (int i = 0; i < datas.lstTriangle.Count; i++)
-						datas.lstTriangle[i].Normalise();
+				//try {
+				Datas d = (Datas)new XmlSerializer(typeof(Datas)).Deserialize(fileParam);
+				projet.SetImage(d);
+				SetInfo("Lecture image ok");
+				for (int i = 0; i < projet.SelImage().lstTriangle.Count; i++)
+					projet.SelImage().lstTriangle[i].Normalise();
 
-					switch (datas.modeRendu) {
-						case 0:
-							rbStandard.Checked = true;
-							break;
-
-						case 1:
-							rbHorizontal.Checked = true;
-							break;
-
-						case 2:
-							rbVertical.Checked = true;
-							break;
-					}
-
-					for (int i = 0; i < 4; i++)
-						BitmapCpc.Palette[i] = datas.palette[i];
-
-					BitmapCpc.cpcPlus = chkPlus.Checked = datas.cpcPlus;
-					txbTpsAttente.Text = datas.tpsAttente.ToString();
-					UpdatePalette();
-					FillTriangles();
-					DisplayList();
-					Text = "TriangulArt - " + dlg.FileName;
-					DisplayMemory();
-				}
-				catch {
-					MessageBox.Show("Erreur lecture fichier...");
-				}
+				InitImage();
+				//}
+				//catch {
+				//	MessageBox.Show("Erreur lecture image ...");
+				//}
 				fileParam.Close();
 			}
 		}
@@ -340,16 +350,15 @@ namespace TriangulArt {
 			dlg.Filter = "Fichiers xml (*.xml)|*.xml";
 			DialogResult result = dlg.ShowDialog();
 			if (result == DialogResult.OK) {
-				int.TryParse(txbTpsAttente.Text, out datas.tpsAttente);
-				datas.tpsAttente = Math.Min(850, Math.Max(1, datas.tpsAttente));
+				MemImage();
 				FileStream file = File.Open(dlg.FileName, FileMode.Create);
 				try {
-					new XmlSerializer(typeof(Datas)).Serialize(file, datas);
+					new XmlSerializer(typeof(Datas)).Serialize(file, projet.SelImage());
 					DisplayMemory();
-					SetInfo("Sauvegarde triangles ok");
+					SetInfo("Sauvegarde image ok");
 				}
 				catch {
-					MessageBox.Show("Erreur sauvegarde triangles...");
+					MessageBox.Show("Erreur sauvegarde image...");
 				}
 				file.Close();
 			}
@@ -361,7 +370,7 @@ namespace TriangulArt {
 			DialogResult result = dlg.ShowDialog();
 			if (result == DialogResult.OK) {
 				try {
-					datas.Import(dlg.FileName, chkClearData.Checked);
+					projet.SelImage().Import(dlg.FileName, chkClearData.Checked);
 					SetInfo("Import triangles ok");
 					FillTriangles();
 					DisplayList();
@@ -377,9 +386,9 @@ namespace TriangulArt {
 			dlg.Filter = "Fichiers assembleur (*.asm)|*.asm";
 			DialogResult result = dlg.ShowDialog();
 			if (result == DialogResult.OK) {
-				int.TryParse(txbTpsAttente.Text, out datas.tpsAttente);
-				datas.tpsAttente = Math.Min(850, Math.Max(1, datas.tpsAttente));
-				datas.GenereSourceAsm(dlg.FileName, chkCodeAsm.Checked, chkPlus.Checked);
+				int.TryParse(txbTpsAttente.Text, out projet.SelImage().tpsAttente);
+				projet.SelImage().tpsAttente = Math.Min(850, Math.Max(1, projet.SelImage().tpsAttente));
+				projet.SelImage().GenereSourceAsm(dlg.FileName, chkCodeAsm.Checked);
 				SetInfo("Génération assembleur ok.");
 			}
 		}
@@ -388,7 +397,7 @@ namespace TriangulArt {
 			EditColor ed = new EditColor(pen, BitmapCpc.Palette[pen], bitmapCpc.GetColorPal(pen).GetColorArgb, BitmapCpc.cpcPlus);
 			ed.ShowDialog(this);
 			if (ed.isValide) {
-				BitmapCpc.Palette[pen] = datas.palette[pen] = ed.ValColor;
+				BitmapCpc.Palette[pen] = projet.SelImage().palette[pen] = ed.ValColor;
 				UpdatePalette();
 				FillTriangles();
 			}
@@ -431,7 +440,7 @@ namespace TriangulArt {
 		}
 
 		private void listTriangles_SelectedIndexChanged(object sender, EventArgs e) {
-			triSel = datas.SelectTriangle(listTriangles.SelectedIndex);
+			triSel = projet.SelImage().SelectTriangle(listTriangles.SelectedIndex);
 			if (triSel != null) {
 				txbPos.Text = listTriangles.SelectedIndex.ToString();
 				txbX1.Text = triSel.x1.ToString();
@@ -446,7 +455,7 @@ namespace TriangulArt {
 				UpdatePalette();
 				bpEdit.Enabled = bpDelete.Enabled = true;
 				bpUp.Visible = listTriangles.SelectedIndex > 0;
-				bpDown.Visible = listTriangles.SelectedIndex < datas.lstTriangle.Count - 1;
+				bpDown.Visible = listTriangles.SelectedIndex < projet.SelImage().lstTriangle.Count - 1;
 			}
 			else
 				DisplayList();
@@ -460,7 +469,7 @@ namespace TriangulArt {
 
 		private void bpDelete_Click(object sender, EventArgs e) {
 			if (MessageBox.Show("Etes vous sur(e) de vouloir supprimer ce triangle ?", "Confirmation suppression", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes) {
-				datas.DeleteSelTriangle();
+				projet.SelImage().DeleteSelTriangle();
 				DisplayList();
 				FillTriangles();
 			}
@@ -471,8 +480,8 @@ namespace TriangulArt {
 			if (t != null) {
 				int newIndex = -1;
 				int.TryParse(txbPos.Text, out newIndex);
-				datas.EditSelTriangle(t, selColor, newIndex);
-				int memoSel = datas.GetSelTriangle();
+				projet.SelImage().EditSelTriangle(t, selColor, newIndex);
+				int memoSel = projet.SelImage().GetSelTriangle();
 				DisplayList();
 				listTriangles.SelectedIndex = memoSel;
 			}
@@ -505,7 +514,7 @@ namespace TriangulArt {
 		}
 
 		private void chkPlus_CheckedChanged(object sender, EventArgs e) {
-			datas.cpcPlus = BitmapCpc.cpcPlus = chkPlus.Checked;
+			projet.SelImage().cpcPlus = BitmapCpc.cpcPlus = chkPlus.Checked;
 			FillTriangles();
 		}
 
@@ -532,7 +541,7 @@ namespace TriangulArt {
 					bmpFond.Dispose();
 					bmpFond = null;
 				}
-				datas.Clear();
+				projet.SelImage().Clear();
 				DisplayList();
 				Reset();
 			}
@@ -540,31 +549,31 @@ namespace TriangulArt {
 
 		private void bpUp_Click(object sender, EventArgs e) {
 			int memoSel = listTriangles.SelectedIndex;
-			datas.UpTriangle();
+			projet.SelImage().UpTriangle();
 			listTriangles.SelectedIndex = memoSel - 1;
 
 		}
 
 		private void bpDown_Click(object sender, EventArgs e) {
 			int memoSel = listTriangles.SelectedIndex;
-			datas.DownTriangle();
+			projet.SelImage().DownTriangle();
 			listTriangles.SelectedIndex = memoSel + 1;
 		}
 
 		private void rbStandard_CheckedChanged(object sender, EventArgs e) {
-			datas.modeRendu = 0;
+			projet.SelImage().modeRendu = 0;
 			DisplayList();
 			FillTriangles();
 		}
 
 		private void rbHorizontal_CheckedChanged(object sender, EventArgs e) {
-			datas.modeRendu = 1;
+			projet.SelImage().modeRendu = 1;
 			DisplayList();
 			FillTriangles();
 		}
 
 		private void rbVertical_CheckedChanged(object sender, EventArgs e) {
-			datas.modeRendu = 2;
+			projet.SelImage().modeRendu = 2;
 			DisplayList();
 			FillTriangles();
 		}
@@ -577,14 +586,14 @@ namespace TriangulArt {
 			int deplX = 0, deplY = 0;
 			if (int.TryParse(txbTrX.Text, out deplX) && int.TryParse(txbTrY.Text, out deplY)) {
 				if (rbDepImage.Checked) {
-					datas.DeplaceImage(deplX, deplY);
+					projet.SelImage().DeplaceImage(deplX, deplY);
 					DisplayList();
 					FillTriangles();
 				}
 				else
 					if (triSel != null) {
-						int memoSel = datas.GetSelTriangle();
-						datas.DeplaceTriangle(deplX, deplY);
+						int memoSel = projet.SelImage().GetSelTriangle();
+						projet.SelImage().DeplaceTriangle(deplX, deplY);
 						DisplayList();
 						listTriangles.SelectedIndex = memoSel;
 					}
@@ -596,8 +605,8 @@ namespace TriangulArt {
 		}
 
 		private void bpRapproche_Click(object sender, EventArgs e) {
-			datas.Rapproche(4);
-			datas.CleanUp(bmpLock);
+			projet.SelImage().Rapproche(4);
+			projet.SelImage().CleanUp(bmpLock);
 			DisplayList();
 			FillTriangles();
 		}
@@ -613,14 +622,14 @@ namespace TriangulArt {
 			double zoomX = 0, zoomY = 0;
 			if (double.TryParse(txbTrX.Text.Replace('.', ','), out zoomX) && double.TryParse(txbTrY.Text.Replace('.', ','), out zoomY)) {
 				if (rbDepImage.Checked) {
-					datas.CoefZoom(zoomX, zoomY, chkCenterZoom.Checked);
+					projet.SelImage().CoefZoom(zoomX, zoomY, chkCenterZoom.Checked);
 					DisplayList();
 					FillTriangles();
 				}
 				else
 					if (triSel != null) {
-						int memoSel = datas.GetSelTriangle();
-						datas.CoefZoom(triSel, zoomX, zoomY, chkCenterZoom.Checked);
+						int memoSel = projet.SelImage().GetSelTriangle();
+						projet.SelImage().CoefZoom(triSel, zoomX, zoomY, chkCenterZoom.Checked);
 						DisplayList();
 						listTriangles.SelectedIndex = memoSel;
 					}
@@ -633,9 +642,9 @@ namespace TriangulArt {
 		}
 
 		private void bpClean_Click(object sender, EventArgs e) {
-			int nbAvant = datas.lstTriangle.Count;
-			datas.CleanUp(bmpLock);
-			int nbApres = datas.lstTriangle.Count;
+			int nbAvant = projet.SelImage().lstTriangle.Count;
+			projet.SelImage().CleanUp(bmpLock);
+			int nbApres = projet.SelImage().lstTriangle.Count;
 			if (nbApres != nbAvant)
 				SetInfo("Nbre de triangles optimisés : " + (nbAvant - nbApres).ToString());
 			else
@@ -644,6 +653,82 @@ namespace TriangulArt {
 			DisplayList();
 			FillTriangles();
 			DisplayMemory();
+		}
+
+		private void SetImageProjet() {
+			bpImagePrec.Visible = projet.selData > 0;
+			bpImageSuiv.Visible = projet.selData < projet.nbData - 1;
+			lblInfoImage.Text = (projet.selData + 1).ToString() + "/" + projet.nbData.ToString();
+			InitImage();
+		}
+
+		private void bpReadProj_Click(object sender, EventArgs e) {
+			OpenFileDialog dlg = new OpenFileDialog();
+			dlg.Filter = "Fichiers xml (*.xml)|*.xml";
+			DialogResult result = dlg.ShowDialog();
+			if (result == DialogResult.OK) {
+				FileStream fileParam = File.Open(dlg.FileName, FileMode.Open);
+				try {
+					projet = (Projet)new XmlSerializer(typeof(Projet)).Deserialize(fileParam);
+					SetInfo("Lecture projet ok");
+					projet.SelectImage(0);
+					SetImageProjet();
+				}
+				catch {
+					MessageBox.Show("Erreur lecture projet...");
+				}
+				fileParam.Close();
+			}
+		}
+
+		private void bpSaveProj_Click(object sender, EventArgs e) {
+			SaveFileDialog dlg = new SaveFileDialog();
+			dlg.Filter = "Fichiers xml (*.xml)|*.xml";
+			DialogResult result = dlg.ShowDialog();
+			if (result == DialogResult.OK) {
+				MemImage();
+				FileStream file = File.Open(dlg.FileName, FileMode.Create);
+				try {
+					new XmlSerializer(typeof(Projet)).Serialize(file, projet);
+					SetInfo("Sauvegarde projet ok");
+				}
+				catch {
+					MessageBox.Show("Erreur sauvegarde projet...");
+				}
+				file.Close();
+			}
+		}
+
+		private void bpNewImage_Click(object sender, EventArgs e) {
+			projet.AddData();
+			SetImageProjet();
+		}
+
+		private void bpSupImage_Click(object sender, EventArgs e) {
+			if (MessageBox.Show("Etes vous sur(e) de vouloir supprimer cette image ?", "Confirmation suppression", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes) {
+			}
+		}
+
+		private void bpImagePrec_Click(object sender, EventArgs e) {
+			MemImage();
+			projet.SelectImage(projet.selData - 1);
+			SetImageProjet();
+		}
+
+		private void bpImageSuiv_Click(object sender, EventArgs e) {
+			MemImage();
+			projet.SelectImage(projet.selData + 1);
+			SetImageProjet();
+		}
+
+		private void bpGenereProjetAsm_Click(object sender, EventArgs e) {
+			SaveFileDialog dlg = new SaveFileDialog();
+			dlg.Filter = "Fichiers assembleur (*.asm)|*.asm";
+			DialogResult result = dlg.ShowDialog();
+			if (result == DialogResult.OK) {
+				projet.GenereSourceAsm(dlg.FileName);
+				SetInfo("Génération assembleur ok.");
+			}
 		}
 	}
 }

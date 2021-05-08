@@ -1,4 +1,5 @@
-﻿namespace TriangulArt {
+﻿using System;
+namespace TriangulArt {
 	[System.Serializable]
 	public class Triangle {
 		public int x1, y1, x2, y2, x3, y3;
@@ -19,21 +20,13 @@
 			this.color = color;
 		}
 
-		private void NormaliseCoord(ref int coord) {
-			if (coord < 0)
-				coord = 0;
-			else
-				if (coord > 255)
-					coord = 255;
-		}
-
 		public void Normalise() {
-			NormaliseCoord(ref x1);
-			NormaliseCoord(ref x2);
-			NormaliseCoord(ref x3);
-			NormaliseCoord(ref y1);
-			NormaliseCoord(ref y2);
-			NormaliseCoord(ref y3);
+			x1 = Math.Max(Math.Min(x1, 255), 0);
+			y1 = Math.Max(Math.Min(y1, 255), 0);
+			x2 = Math.Max(Math.Min(x2, 255), 0);
+			y2 = Math.Max(Math.Min(y2, 255), 0);
+			x3 = Math.Max(Math.Min(x3, 255), 0);
+			y3 = Math.Max(Math.Min(y3, 255), 0);
 		}
 
 		public void TriSommets() {

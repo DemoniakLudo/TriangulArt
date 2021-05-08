@@ -59,6 +59,7 @@
     </Compile>
     <Compile Include="GenereAsm.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Projet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RvbColor.cs" />
     <Compile Include="Triangle.cs" />
