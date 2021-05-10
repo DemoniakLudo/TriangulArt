@@ -1,8 +1,9 @@
-TpsWaitImage1	EQU	#6000
+TpsWaitImage1	EQU	#7800
+
 	ORG	#200
 	RUN	$
 
-;	Write direct "demo.bin"
+	Write direct "Demo.bin"
 
 	DI
 	LD	HL,#8000
@@ -46,7 +47,9 @@ TpsWaitImage1	EQU	#6000
 CalcAdr:
 	LD	(HL),E
 	INC	H
-	LD	(HL),D
+	LD	A,D
+	AND	#3F
+	LD	(HL),A
 	DEC	H
 	INC	HL
 	LD	A,D
@@ -97,28 +100,16 @@ InitPen:
 ;
 ;	JR	MoreSpeed	; decommenter pour aller direcement a la 2e partie
 ;
-	JP	EndMess		; decommenter pour aller directement au message de fin
+;	JP	EndMess		; decommenter pour aller directement au message de fin
 ;
 ; Debut, premiere image = logo impact
 ;
 Debut
-	LD	IX,Logos
+	LD	IX,Impact
 Boucle
 	PUSH	IX
 	POP	HL	
-	CALL	WaitVBL
-	LD	BC,#7F10
-	LD	A,(HL)
-	OUT	(C),C
-	OUT	(C),A	
-	XOR	A
-BclPalette
-	OUT	(C),A
-	INC	B	
-	OUTI
-	INC	A
-	CP	4
-	JR	NZ,BclPalette
+	CALL	SetPalette
 	LD	A,(HL)
 	INC	HL
 	LD	(TpsWaitTriangle+1),A
@@ -165,7 +156,7 @@ WaitMess2
 ;
 ; Affichage rapide des images
 ;
-	LD	IX,Logos
+	LD	IX,Triangle
 Boucle2
 	CALL	CopyScreen
 	PUSH	IX
@@ -175,21 +166,9 @@ Boucle2
 	LD	(CntIrq+1),A
 	CALL	DrawFrame
 	POP	HL	
-	CALL	WaitVBL
 	LD	BC,#BD30
 	OUT	(C),C
-	LD	BC,#7F10
-	LD	A,(HL)
-	OUT	(C),C
-	OUT	(C),A
-	XOR	A
-BclPalette2
-	OUT	(C),A
-	INC	B	
-	OUTI
-	INC	A
-	CP	4
-	JR	NZ,BclPalette2
+	CALL	SetPalette
 Wait12
 	LD	A,(CntIrq+1)
 	AND	A
@@ -197,10 +176,19 @@ Wait12
 	LD	A,(IX+0)
 	INC	A
 	JR	NZ,Boucle2
+
+	LD	B,150
+WaitForMess:
+	PUSH	BC
+	CALL	WaitVbl
+	POP	BC
+	DJNZ	WaitForMess
 ;
 ; Message de fin...
 ;
 EndMess
+	XOR	A
+	LD	(CntVblMess+1),A
 	LD	BC,#7F10
 	LD	A,#54
 	OUT	(C),C
@@ -221,12 +209,9 @@ WaitReadMess2
 	INC	A
 	JR	NZ,WaitReadMess2
 	DJNZ	WaitReadMess
-	INC	HL
-	LD	A,(HL)
-	INC	A
-	JR	Z,FinDemo
-	PUSH	HL
 	
+EndWaitReadMess
+	PUSH	HL
 	LD	A,#FF
 ClearLine
 	LD	H,TabAdr/256		; Adresse des poids faibles
@@ -234,6 +219,8 @@ ClearLine
 	LD	E,(HL)
 	INC	H			; Adresse des poids forts
 	LD	D,(HL)
+	SET	7,D
+	SET	6,D
 	LD	H,D
 	LD	L,E
 	LD	BC,63
@@ -244,13 +231,51 @@ ClearLine
 	CP	#FF
 	JR	NZ,ClearLine
 	POP	HL
-	JR	BclEndMess
+	INC	HL
+	LD	A,(HL)
+	INC	A
+	JR	NZ,BclEndMess
 	
-FinDemo
-	JR	FinDemo
+FinDemo	
+	LD	HL,PalAnim
+	CALL	SetPalette
+	LD	HL,#2E1E
+	LD	BC,#BC02
+	OUT	(C),C
+	INC	B
+	OUT	(C),H
+	LD	A,7
+	DEC	B
+	OUT	(C),A
+	INC	B
+	OUT	(C),L
+	
+	LD	HL,0
+	LD	(IrqSwapColor+1),HL
+	CALL	CopyScreen
+	JP	StartAnim
+PalAnim:
+	DB	"TSUD"
 ;
 ; Fonctions
 ;
+
+SetPalette
+	CALL	WaitVBL
+	LD	BC,#7F10
+	LD	A,(HL)
+	OUT	(C),C
+	OUT	(C),A	
+	XOR	A
+BclPalette
+	OUT	(C),A
+	INC	B	
+	OUTI
+	INC	A
+	CP	4
+	JR	NZ,BclPalette
+	RET
+
 CopyScreen
 	LD	HL,#C000
 	LD	DE,#8000
@@ -290,15 +315,37 @@ NewIrq
 	PUSH	IX
 	EX	AF,AF'
 	PUSH	AF
-Cnt50hZ
+	LD	B,#F5
+	IN	A,(C)
+	RRA
+	JR	NC,CntIrq
+	CALL	Play
+	
+IrqSwapColor:	
+	LD	DE,0
+	LD	A,D
+	XOR	E
+	AND	A
+	JR	Z,CntIrq
+CntVblMess:
 	LD	A,0
 	INC	A
-	LD	(Cnt50hZ+1),A
-	CP	6
-	JR	NZ,CntIrq
+	LD	(CntVblMess+1),A
+	CP	20
+	JR	C,CntIrq
 	XOR	A
-	LD	(Cnt50hz+1),A
-	CALL	Play
+	LD	(CntVblMess+1),A
+	LD	BC,#7F02
+	OUT	(C),C
+	OUT	(C),D
+	INC	C
+	OUT	(C),C
+	OUT	(C),E
+	LD	A,D
+	LD	D,E
+	LD	E,A
+	LD	(IrqSwapColor+1),DE
+	
 CntIrq
 	LD	A,0
 	INC	A
@@ -320,7 +367,7 @@ DrawFrame
 	LD	A,(IX+0)				; Mode de trace
 	LD	(ModeDraw+1),A
 	INC	IX
-BclDrawFrame
+BclDrawImage
 	XOR	A
 	LD	(CntIrq+1),A
 	LD	A,(IX+6)				; Couleur
@@ -366,9 +413,51 @@ EndWait
 	LD	BC,7
 	ADD	IX,BC
 	RLA
-	JR	NC,BclDrawFrame
+	JR	NC,BclDrawImage
 	RET
 
+;
+; Initialise la couleur 
+;
+PrintMessColor
+	INC	HL
+	LD	A,(HL)
+	PUSH	HL
+	CALL	SetTriangleColor
+	POP	HL
+	INC	HL
+	JR	PrintMess
+
+;
+; Positionne les coordonnees du message a afficher
+;
+PrintMessPos
+	INC	HL
+	LD	A,(HL)
+	LD	(PrintMessX+1),A
+	INC	HL
+	LD	A,(HL)
+	LD	(PrintMessY+1),A
+	INC	HL
+	JR	PrintMess
+;
+; Changement de palette
+;
+PrintMessPalette
+	INC	HL
+	CALL	SetPalette
+	JR	PrintMess
+	
+;
+; Swap de 2 couleurs pendant le message (Pen 2 & 3)
+;
+PrintMessSwapInk
+	INC	HL
+	LD	D,(HL)
+	INC	HL
+	LD	E,(HL)
+	INC	HL
+	LD	(IrqSwapColor+1),DE
 ;
 ; Affiche un message avec des lettres en triangle
 ; HL = adresse du message
@@ -382,10 +471,14 @@ PrintMess
 	JR	Z,PrintMessColor
 	CP	2
 	JR	Z,PrintMessPos
+	CP	3
+	JR	Z,PrintMessPalette
+	CP	4
+	JR	Z,PrintMessSwapInk
 	LD	B,12
-	CP	' '
+	CP	32
 	JR	Z,PrintSpace
-	SUB	'A'
+	SUB	39
 	ADD	A,A
 	PUSH	HL
 	LD	HL,Alphabet
@@ -434,37 +527,14 @@ PrintSpace
 	LD	A,(PrintMessX+1)
 	ADD	A,B
 	LD	(PrintMessX+1),A
-	CP	235
-	JR	C,PrintMess
-	XOR	A
-	LD	(PrintMessX+1),A
-	LD	A,(PrintMessY+1)
-	ADD	A,24
-	LD	(PrintMessY+1),A
+;	CP	237
+;	JR	C,PrintMess
+;	XOR	A
+;	LD	(PrintMessX+1),A
+;	LD	A,(PrintMessY+1)
+;	ADD	A,24
+;	LD	(PrintMessY+1),A
 	JR	PrintMess
-;
-; Initialise la couleur 
-;
-PrintMessColor
-	INC	HL
-	LD	A,(HL)
-	PUSH	HL
-	CALL	SetTriangleColor
-	POP	HL
-	INC	HL
-	JR	PrintMess
-;
-; Positionne les coordonnees du message a afficher
-;
-PrintMessPos
-	INC	HL
-	LD	A,(HL)
-	LD	(PrintMessX+1),A
-	INC	HL
-	LD	A,(HL)
-	LD	(PrintMessY+1),A
-	INC	HL
-	JP	PrintMess
 
 ;
 ; Initialise la couleur du trace du triangle
@@ -566,8 +636,11 @@ DrawLigneCoordOk:
 	ADD	A,(HL)
 	LD	E,A
 	INC	H					; Adresse des poids forts
-	LD	D,(HL)					; Reg.DE = adresse memoire ecran (0,y)
-
+	LD	A,(HL)					; Reg.DE = adresse memoire ecran (0,y)
+OffsetVideo
+	ADD	A,#C0
+	LD	D,A
+	
 	LD	A,B					; x
 	AND	3
 	LD	L,A					; Reg.L = position fine x (0 a 3)
@@ -671,7 +744,7 @@ SetErr2:
 	INC	A
 Ymax:
 	CP	0					; Arrive en bas ?
-	JR	C,BclDrawTriangle
+	JP	C,BclDrawTriangle
 	JR	FinTriangle
 ;
 ; Parametres pour tracer le deuxieme triangle
@@ -732,15 +805,8 @@ Set3Pen:
 	INC	DE
 	RET
 	
+	Read	"Rotation.asm"
 	nolist
-
-	Read	"PT2PlayCPC_V4.asm"
-MDLADDR:
-	INCBIN	"Rage.pt2"
-
-	Read	"alphabet3.asm"
-
-	Read	"Messages.asm"
 
 ;
 ; Donnees des triangles a afficher.
@@ -751,7 +817,6 @@ MDLADDR:
 ; le 7eme octet de la structure (la couleur) defini le pen mode 1
 ; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
 ;
-Logos
 	Read	"DataDemo.asm"
 	DB	#FF
 	
@@ -794,10 +859,18 @@ pen1:
 	DB	#70,#05,#80
 	DB	#30,#05,#C0
 	DB	#10,#05,#E0
-;
+
+	Read	"alphabet3.asm"
+
+	Read	"Messages.asm"
+	
+MDLADDR:
+	INCBIN	"Rage.pt2"
+
+	Read	"PT2PlayCPC_V4.asm"
 
 	list
-	
+
 	align	256
 TabAdr
 	DS	512

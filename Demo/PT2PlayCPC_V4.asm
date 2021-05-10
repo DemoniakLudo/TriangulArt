@@ -149,7 +149,7 @@ INITV1:
         RLA
         LD A,H
         ADC A,0
-        LD (IX),A
+        LD (IX+0),A
         INC IX
         ADD HL,DE
         INC C

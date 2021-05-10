@@ -40,6 +40,7 @@ namespace TriangulArt {
 		public void Clear() {
 			lstData.Clear();
 			lstData.Add(new Datas());
+			selData = 0;
 		}
 
 		public void GenereSourceAsm(string fileName) {
