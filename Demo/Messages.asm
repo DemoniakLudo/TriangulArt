@@ -89,7 +89,7 @@ message2
 	DB	"IMPACT TEAM"
 	DB	0
 	
-	DB	3,"T@Y["
+	DB	3,"D@Y["
 	DB	4,"[Y"
 	DB	2,10,0
 	DB	1,1
@@ -236,4 +236,11 @@ message2
 	DB	"MEMBERS"
 	DB	0
 	DB	#FF
+	
+MessageEnd1
+	DB	2,100,225,1,1,"T",1,2,"H",1,1,"E"," ",1,2,"E",1,1,"N",1,2,"D"
+	DB	0
+MessageEnd2
+	DB	2,100,225,1,2,"T",1,1,"H",1,2,"E"," ",1,1,"E",1,2,"N",1,1,"D"
+	DB	0
 	

@@ -3,7 +3,7 @@ TpsWaitImage1	EQU	#7800
 	ORG	#200
 	RUN	$
 
-;	Write direct "Demo.bin"
+	Write direct "Demo.bin"
 
 	DI
 	LD	HL,#8000
@@ -70,7 +70,6 @@ InitPen:
 	CALL	Init		; initialisation musique
 	EI
 
-
 ;
 ; Formater ecran en 256x256 pixels, mode 1
 ;
@@ -101,6 +100,7 @@ Debut
 	OUT	(C),C
 	LD	BC,#BD30
 	OUT	(C),C
+	CALL	CopyScreen
 
 ;
 ;	JR	MoreSpeed	; decommenter pour aller direcement a la 2e partie
@@ -110,7 +110,9 @@ Debut
 ; Debut, premiere image = logo impact
 ;
 	LD	IX,Impact
-Boucle
+	LD	A,#C1
+	LD	(LogoBarre),A		; Pause entre la croix et le logo Apple
+BoucleNormale
 	PUSH	IX
 	POP	HL	
 	CALL	SetPalette
@@ -122,7 +124,9 @@ Boucle
 	LD	BC,#BD30
 	OUT	(C),C
 	POP	IX
+BoucleNorm2
 	CALL	DrawFrame
+	LD	C,A				; mémo octet de fin (pour logo apple barre)
 ; Temps de pause pour affichage image
 	LD	HL,TpsWaitImage1
 Wait1
@@ -133,9 +137,15 @@ Wait2
 	LD	A,H
 	OR	L
 	JR	NZ,Wait1
+	LD	A,C
+	RLA
+	JR	NC,Wait3
+	DEC	IX
+	JR	BoucleNorm2
+Wait3:
 	LD	A,(IX+0)
 	INC	A
-	JR	NZ,Boucle
+	JR	NZ,BoucleNormale
 ;
 ; Message "We want more speed"
 ;
@@ -160,8 +170,11 @@ WaitMess2
 ;
 ; Affichage rapide des images
 ;
+	LD	A,1
+	LD	(LogoBarre),A		; supprimer la pause de la croix sur le logo pour l'option rapide
+
 	LD	IX,Triangle
-Boucle2
+BoucleRapide
 	CALL	CopyScreen
 	PUSH	IX
 	LD	BC,5
@@ -188,7 +201,7 @@ Wait12
 	JR	NZ,Wait12
 	LD	A,(IX+0)
 	INC	A
-	JR	NZ,Boucle2
+	JR	NZ,BoucleRapide
 
 	LD	B,100
 WaitForMess:
@@ -248,145 +261,143 @@ ClearLine
 	LD	A,(HL)
 	INC	A
 	JR	NZ,BclEndMess
-	
-FinDemo	
-	LD	HL,PalAnim
-	CALL	SetPalette
-	LD	HL,#2E1E
-	LD	BC,#BC02
-	OUT	(C),C
-	INC	B
-	OUT	(C),H
-	LD	A,7
-	DEC	B
-	OUT	(C),A
-	INC	B
-	OUT	(C),L
-	
-	LD	HL,0
-	LD	(IrqSwapColor+1),HL
-	CALL	CopyScreen
 
-
+		
 ;
 ; Animation rotation 3D
 ;
-StartAnim
-        LD      IY,Frame_58             ; Avant dernière frame
+	LD	HL,PalAnim
+	CALL	SetPalette
+	LD	A,#2E
+	LD	BC,#BC02
+	OUT	(C),C
+	INC	B
+	OUT	(C),A
         LD      BC,#BC0C
         OUT     (C),C
+	LD	HL,0
+	LD	(IrqSwapColor+1),HL
+	CALL	CopyScreen
+	LD	HL,MessageEnd1
+	CALL	PrintMess
+	LD	A,#80
+	LD	(OffsetVideo+1),A
+	LD	HL,MessageEnd2
+	CALL	PrintMess
+StartAnim
+        LD      IY,Frame_58             ; Avant derniere frame
 InitAnim:
-        LD      IX,Frame_0              ; Première frame
+        LD      IX,Frame_0              ; Premiere frame
 BclAnim
 	CALL	WaitVbl
 MemVideo:
-        LD      A,#C0                   ; Mémoire écran
-        LD      (OffsetVideo+1),A
-        LD      (OffsetVideoClear+1),A
-        XOR     #40                     ; Swap mémoire écran
-        LD      (MemVideo+1),A
-        RRA
-        RRA
-        LD      B,#BD
-        OUT     (C),A                   ; Sélection mémoire vidéo à afficher
+	LD      A,#C0                   ; Memoire ecran
+	LD      (OffsetVideo+1),A
+	LD      (OffsetVideoClear+1),A
+	XOR     #40                     ; Swap memoire ecran
+	LD      (MemVideo+1),A
+	RRA
+	RRA
+	LD      B,#BD
+	OUT     (C),A                   ; Selection memoire video a afficher
 BclClearFrame:
-        LD      A,(ZoneYmin+1)
-        LD      C,(IY+1)
-        CP      C
-        JR      C,CalcCoord2
-        LD      A,C
-        LD      (ZoneYmin+1),A
+	LD      A,(ZoneYmin+1)
+	LD      C,(IY+1)
+	CP      C
+	JR      C,CalcCoord2
+	LD      A,C
+	LD      (ZoneYmin+1),A
 CalcCoord2:
-        LD      A,(ZoneYmax+1)
-        LD      L,(IY+5)
-        CP      L
-        JR      NC,CalcCoord3
-        LD      A,L
-        LD      (ZoneYmax+1),A
+	LD      A,(ZoneYmax+1)
+	LD      L,(IY+5)
+	CP      L
+	JR      NC,CalcCoord3
+	LD      A,L
+	LD      (ZoneYmax+1),A
 CalcCoord3:
-        LD      B,(IY+0)
-        LD      A,B
-        LD      D,(IY+2)
-        CP      D
-        JR      C,CalcCoord4            ; si B<D
-        LD      B,D                     ; Sinon on inverse B et D
-        LD      D,A
+	LD      B,(IY+0)
+	LD      A,B
+	LD      D,(IY+2)
+	CP      D
+	JR      C,CalcCoord4            ; si B<D
+	LD      B,D                     ; Sinon on inverse B et D
+	LD      D,A
 CalcCoord4:
-        LD      A,D
-        LD      H,(IY+4)
-        CP      H
-        JR      C,CalcCoord5            ; si D<H
-        LD      D,H                     ; sinon on inverse D et H
-        LD      H,A
+	LD      A,D
+	LD      H,(IY+4)
+	CP      H
+	JR      C,CalcCoord5            ; si D<H
+	LD      D,H                     ; sinon on inverse D et H
+	LD      H,A
 CalcCoord5:
-        LD      A,(ZoneXmax+1)
-        CP      H
-        JR      NC,CalcCoord6
-        LD      A,H
-        LD      (ZoneXmax+1),A
+	LD      A,(ZoneXmax+1)
+	CP      H
+	JR      NC,CalcCoord6
+	LD      A,H
+	LD      (ZoneXmax+1),A
 CalcCoord6:
-        LD      A,(ZoneXmin+1)
-        CP      B
-        JR      C,CalcCoord7
-        LD      A,B
-        LD      (ZoneXmin+1),A
+	LD      A,(ZoneXmin+1)
+	CP      B
+	JR      C,CalcCoord7
+	LD      A,B
+	LD      (ZoneXmin+1),A
 CalcCoord7:		
-        LD      A,(IY+6)
-        LD      BC,7
-        ADD     IY,BC
-        RLA
-        JR      NC,BclClearFrame
-        XOR     A
-        LD      B,A                     ; Parce que A vaut zéro
+	LD      A,(IY+6)
+	LD      BC,7
+	ADD     IY,BC
+	RLA
+	JR      NC,BclClearFrame
+	XOR     A
+	LD      B,A                     ; Parce que A vaut zero
 ZoneXMin:
-        LD      A,0
-        LD      C,A
-        RRA
-        AND     A
-        RRA
-        LD      (OffsetClear+1),A       ; X/4 = début à effacer
+	LD      A,0
+	LD      C,A
+	RRA
+	AND     A
+	RRA
+	LD      (OffsetClear+1),A       ; X/4 = debut a effacer
 ZoneXMax:
-        LD      A,0
-        SUB     C
-        ADD     A,7
-        RRA
-        AND     A
-        RRA
-        LD      (BclClearZone+1),A      ; Nbre d'octets à effacer
+	LD      A,0
+	SUB     C
+	ADD     A,7
+	RRA
+	AND     A
+	RRA
+	LD      (BclClearZone+1),A      ; Nbre d'octets a effacer
 ZoneYMin:
-        LD      A,0                     ; Position y de départ
+        LD      A,0                     ; Position y de depart
 
 BclClearZone:
-        LD      C,0                     ; Nbre d'octets à éffacer
+        LD      C,0                     ; Nbre d'octets a effacer
         LD      L,A                     ; Reg.L = y
         EX      AF,AF'                  ; Sauvegarde position Y
         LD      H,TabAdr/256
-        LD      A,(HL)                  ; Poids faible adresse écran
+        LD      A,(HL)                  ; Poids faible adresse ecran
         INC     H
 OffsetClear:
         ADD     A,0
         LD      E,A
-        LD      A,(HL)                  ; Poids fort adresse écran
+        LD      A,(HL)                  ; Poids fort adresse ecran
 OffsetVideoClear:
         OR	#C0
         LD      H,A
-        LD      L,E                     ; Reg HL = adresse mémoire écran (x,y)
+        LD      L,E                     ; Reg HL = adresse memoire ecran (x,y)
         LD      (HL),B                  ; Efface premier octet
-        DEC     C                       ; Si un seul octet à effacer
+        DEC     C                       ; Si un seul octet a effacer
         JR      Z,FinClear              ; Alors on a fini
         LD      D,H
         INC     DE
         LDIR
 FinClear:
-        EX      AF,AF'                  ; Récupère position Y
+        EX      AF,AF'                  ; Recupere position Y
         INC     A
 ZoneYMax:
         CP      0                       ; Y = Ymax ?
         JR      NZ,BclClearZone
-        XOR     A                       ; Mettre les "max" à Zéro
+        XOR     A                       ; Mettre les "max" a Zero
         LD      (ZoneYmax+1),A
         LD      (ZoneXmax+1),A
-        DEC     A                       ; Mettre les "min" à 255
+        DEC     A                       ; Mettre les "min" a 255
         LD      (ZoneYmin+1),A
         LD      (ZoneXmin+1),A
         LD      A,(IY+0)
@@ -421,6 +432,8 @@ NbBclAnim:
 	XOR	A
 	LD	(NbBclAnim+1),A
 	CALL	ClearScreen
+	LD	A,#C0
+	LD	(OffsetVideo+1),A
 	JP	Debut
 
 ;
@@ -971,7 +984,8 @@ PaletteWhite
 PalAnim
 ;	DB	"TWUD"
 ;	DB	"TNL\"
-	DB	"TCNL"
+;	DB	"@CNL"
+	DB	"DEMO"
 
 	Read	"DataDemo.asm"
 	DB	#FF
