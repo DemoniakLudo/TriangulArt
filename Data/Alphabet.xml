@@ -437,16 +437,16 @@
         <Triangle>
           <x1>0</x1>
           <y1>0</y1>
-          <x2>18</x2>
+          <x2>15</x2>
           <y2>0</y2>
-          <x3>18</x3>
+          <x3>15</x3>
           <y3>3</y3>
           <color>1</color>
         </Triangle>
         <Triangle>
           <x1>0</x1>
           <y1>0</y1>
-          <x2>18</x2>
+          <x2>15</x2>
           <y2>3</y2>
           <x3>0</x3>
           <y3>3</y3>
@@ -745,16 +745,16 @@
         <Triangle>
           <x1>3</x1>
           <y1>0</y1>
-          <x2>18</x2>
+          <x2>15</x2>
           <y2>0</y2>
-          <x3>18</x3>
+          <x3>15</x3>
           <y3>3</y3>
           <color>1</color>
         </Triangle>
         <Triangle>
           <x1>3</x1>
           <y1>0</y1>
-          <x2>18</x2>
+          <x2>15</x2>
           <y2>3</y2>
           <x3>3</x3>
           <y3>3</y3>
@@ -2143,39 +2143,21 @@
       <modeRendu>0</modeRendu>
       <lstTriangle>
         <Triangle>
-          <x1>0</x1>
-          <y1>0</y1>
-          <x2>12</x2>
-          <y2>0</y2>
-          <x3>12</x3>
-          <y3>3</y3>
-          <color>1</color>
-        </Triangle>
-        <Triangle>
-          <x1>0</x1>
-          <y1>0</y1>
+          <x1>9</x1>
+          <y1>3</y1>
           <x2>12</x2>
           <y2>3</y2>
-          <x3>0</x3>
-          <y3>3</y3>
+          <x3>12</x3>
+          <y3>18</y3>
           <color>1</color>
         </Triangle>
         <Triangle>
           <x1>9</x1>
           <y1>3</y1>
           <x2>12</x2>
-          <y2>3</y2>
-          <x3>12</x3>
-          <y3>21</y3>
-          <color>1</color>
-        </Triangle>
-        <Triangle>
-          <x1>9</x1>
-          <y1>3</y1>
-          <x2>12</x2>
-          <y2>21</y2>
+          <y2>18</y2>
           <x3>9</x3>
-          <y3>21</y3>
+          <y3>18</y3>
           <color>1</color>
         </Triangle>
         <Triangle>
@@ -2201,17 +2183,35 @@
           <y1>18</y1>
           <x2>12</x2>
           <y2>18</y2>
-          <x3>12</x3>
+          <x3>9</x3>
           <y3>21</y3>
           <color>1</color>
         </Triangle>
         <Triangle>
           <x1>0</x1>
           <y1>18</y1>
-          <x2>12</x2>
+          <x2>9</x2>
           <y2>21</y2>
-          <x3>0</x3>
+          <x3>3</x3>
           <y3>21</y3>
+          <color>1</color>
+        </Triangle>
+        <Triangle>
+          <x1>3</x1>
+          <y1>0</y1>
+          <x2>9</x2>
+          <y2>0</y2>
+          <x3>12</x3>
+          <y3>3</y3>
+          <color>1</color>
+        </Triangle>
+        <Triangle>
+          <x1>3</x1>
+          <y1>0</y1>
+          <x2>12</x2>
+          <y2>3</y2>
+          <x3>0</x3>
+          <y3>3</y3>
           <color>1</color>
         </Triangle>
       </lstTriangle>
@@ -2229,42 +2229,6 @@
       <modeRendu>0</modeRendu>
       <lstTriangle>
         <Triangle>
-          <x1>0</x1>
-          <y1>0</y1>
-          <x2>12</x2>
-          <y2>0</y2>
-          <x3>12</x3>
-          <y3>3</y3>
-          <color>1</color>
-        </Triangle>
-        <Triangle>
-          <x1>0</x1>
-          <y1>0</y1>
-          <x2>12</x2>
-          <y2>3</y2>
-          <x3>0</x3>
-          <y3>3</y3>
-          <color>1</color>
-        </Triangle>
-        <Triangle>
-          <x1>9</x1>
-          <y1>3</y1>
-          <x2>12</x2>
-          <y2>3</y2>
-          <x3>12</x3>
-          <y3>21</y3>
-          <color>1</color>
-        </Triangle>
-        <Triangle>
-          <x1>9</x1>
-          <y1>3</y1>
-          <x2>12</x2>
-          <y2>21</y2>
-          <x3>9</x3>
-          <y3>21</y3>
-          <color>1</color>
-        </Triangle>
-        <Triangle>
           <x1>3</x1>
           <y1>9</y1>
           <x2>9</x2>
@@ -2284,38 +2248,74 @@
         </Triangle>
         <Triangle>
           <x1>0</x1>
-          <y1>18</y1>
-          <x2>12</x2>
-          <y2>18</y2>
-          <x3>12</x3>
-          <y3>21</y3>
-          <color>1</color>
-        </Triangle>
-        <Triangle>
-          <x1>0</x1>
-          <y1>18</y1>
-          <x2>12</x2>
-          <y2>21</y2>
-          <x3>0</x3>
-          <y3>21</y3>
-          <color>1</color>
-        </Triangle>
-        <Triangle>
-          <x1>0</x1>
-          <y1>0</y1>
+          <y1>3</y1>
           <x2>3</x2>
-          <y2>0</y2>
+          <y2>3</y2>
           <x3>3</x3>
           <y3>18</y3>
           <color>1</color>
         </Triangle>
         <Triangle>
           <x1>0</x1>
-          <y1>0</y1>
+          <y1>3</y1>
           <x2>3</x2>
           <y2>18</y2>
           <x3>0</x3>
           <y3>18</y3>
+          <color>1</color>
+        </Triangle>
+        <Triangle>
+          <x1>9</x1>
+          <y1>3</y1>
+          <x2>12</x2>
+          <y2>3</y2>
+          <x3>12</x3>
+          <y3>18</y3>
+          <color>1</color>
+        </Triangle>
+        <Triangle>
+          <x1>9</x1>
+          <y1>3</y1>
+          <x2>12</x2>
+          <y2>18</y2>
+          <x3>9</x3>
+          <y3>18</y3>
+          <color>1</color>
+        </Triangle>
+        <Triangle>
+          <x1>3</x1>
+          <y1>0</y1>
+          <x2>9</x2>
+          <y2>0</y2>
+          <x3>12</x3>
+          <y3>3</y3>
+          <color>1</color>
+        </Triangle>
+        <Triangle>
+          <x1>3</x1>
+          <y1>0</y1>
+          <x2>12</x2>
+          <y2>3</y2>
+          <x3>0</x3>
+          <y3>3</y3>
+          <color>1</color>
+        </Triangle>
+        <Triangle>
+          <x1>0</x1>
+          <y1>18</y1>
+          <x2>12</x2>
+          <y2>18</y2>
+          <x3>9</x3>
+          <y3>21</y3>
+          <color>1</color>
+        </Triangle>
+        <Triangle>
+          <x1>0</x1>
+          <y1>18</y1>
+          <x2>9</x2>
+          <y2>21</y2>
+          <x3>3</x3>
+          <y3>21</y3>
           <color>1</color>
         </Triangle>
       </lstTriangle>
@@ -2596,6 +2596,133 @@
       <tpsAttente>16</tpsAttente>
       <nomImage>CHAR_Smiley</nomImage>
     </Datas>
+    <Datas>
+      <modeRendu>0</modeRendu>
+      <lstTriangle>
+        <Triangle>
+          <x1>0</x1>
+          <y1>7</y1>
+          <x2>3</x2>
+          <y2>7</y2>
+          <x3>3</x3>
+          <y3>12</y3>
+          <color>1</color>
+        </Triangle>
+        <Triangle>
+          <x1>0</x1>
+          <y1>7</y1>
+          <x2>3</x2>
+          <y2>12</y2>
+          <x3>0</x3>
+          <y3>12</y3>
+          <color>1</color>
+        </Triangle>
+        <Triangle>
+          <x1>0</x1>
+          <y1>14</y1>
+          <x2>3</x2>
+          <y2>14</y2>
+          <x3>3</x3>
+          <y3>19</y3>
+          <color>1</color>
+        </Triangle>
+        <Triangle>
+          <x1>0</x1>
+          <y1>14</y1>
+          <x2>3</x2>
+          <y2>19</y2>
+          <x3>0</x3>
+          <y3>19</y3>
+          <color>1</color>
+        </Triangle>
+      </lstTriangle>
+      <palette>
+        <int>1</int>
+        <int>24</int>
+        <int>20</int>
+        <int>6</int>
+      </palette>
+      <cpcPlus>false</cpcPlus>
+      <tpsAttente>16</tpsAttente>
+      <nomImage>CHAR_DeuxPoint</nomImage>
+    </Datas>
+    <Datas>
+      <modeRendu>0</modeRendu>
+      <lstTriangle>
+        <Triangle>
+          <x1>0</x1>
+          <y1>9</y1>
+          <x2>12</x2>
+          <y2>9</y2>
+          <x3>12</x3>
+          <y3>12</y3>
+          <color>1</color>
+        </Triangle>
+        <Triangle>
+          <x1>0</x1>
+          <y1>9</y1>
+          <x2>12</x2>
+          <y2>12</y2>
+          <x3>0</x3>
+          <y3>12</y3>
+          <color>1</color>
+        </Triangle>
+      </lstTriangle>
+      <palette>
+        <int>1</int>
+        <int>24</int>
+        <int>20</int>
+        <int>6</int>
+      </palette>
+      <cpcPlus>false</cpcPlus>
+      <tpsAttente>16</tpsAttente>
+      <nomImage>CHAR_Moins</nomImage>
+    </Datas>
+    <Datas>
+      <modeRendu>0</modeRendu>
+      <lstTriangle>
+        <Triangle>
+          <x1>20</x1>
+          <y1>0</y1>
+          <x2>20</x2>
+          <y2>20</y2>
+          <x3>0</x3>
+          <y3>20</y3>
+          <color>1</color>
+        </Triangle>
+      </lstTriangle>
+      <palette>
+        <int>1</int>
+        <int>24</int>
+        <int>20</int>
+        <int>6</int>
+      </palette>
+      <cpcPlus>false</cpcPlus>
+      <tpsAttente>16</tpsAttente>
+    </Datas>
+    <Datas>
+      <modeRendu>0</modeRendu>
+      <lstTriangle>
+        <Triangle>
+          <x1>0</x1>
+          <y1>0</y1>
+          <x2>0</x2>
+          <y2>20</y2>
+          <x3>20</x3>
+          <y3>20</y3>
+          <color>1</color>
+        </Triangle>
+      </lstTriangle>
+      <palette>
+        <int>1</int>
+        <int>24</int>
+        <int>20</int>
+        <int>6</int>
+      </palette>
+      <cpcPlus>false</cpcPlus>
+      <tpsAttente>16</tpsAttente>
+      <nomImage />
+    </Datas>
   </lstData>
-  <selData>10</selData>
+  <selData>36</selData>
 </Projet>

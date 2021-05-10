@@ -57,7 +57,7 @@ Impact
 	DB	#A6,#D1,#A3,#DA,#AF,#EE,#81
 ; Taille 364 octets
 
-Triangulart
+;Triangulart
 	DB	"XCSL"
 	DB	#16			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
@@ -147,7 +147,7 @@ Triangle
 	DB	#F0,#64,#50,#8C,#50,#B4,#81
 ; Taille 84 octets
 
-TriTriangle
+;TriTriangle
 	DB	"TNL\"
 	DB	#07			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
@@ -189,7 +189,7 @@ TriTriangle
 	DB	#5A,#BE,#50,#D2,#3C,#D2,#83
 ; Taille 252 octets
 
-Pyramide
+;Pyramide
 	DB	"]C^N"
 	DB	#0F			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
@@ -220,7 +220,7 @@ Pyramide
 	DB	#90,#14,#94,#1A,#B4,#D1,#82
 ; Taille 175 octets
 
-Pyramides
+;Pyramides
 	DB	"KJLN"
 	DB	#0F			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
@@ -241,7 +241,7 @@ Pyramides
 	DB	#AE,#97,#AE,#98,#DD,#D5,#83
 ; Taille 105 octets
 
-Tricubes
+;Tricubes
 	DB	"@SUD"
 	DB	#06			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
@@ -301,7 +301,7 @@ Tricubes
 	DB	#89,#46,#B1,#46,#C4,#69,#82
 ; Taille 378 octets
 
-Tricube
+;Tricube
 	DB	"KVNT"
 	DB	#01			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
@@ -421,7 +421,7 @@ Tricube
 	DB	#1A,#B3,#3B,#C3,#1A,#CC,#83
 ; Taille 798 octets
 
-Batman
+;Batman
 	DB	"KTSL"
 	DB	#0F			; Tps d'affichage
 	DB	#01			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
@@ -439,7 +439,7 @@ Batman
 	DB	#7C,#56,#77,#6A,#80,#6A,#81
 ; Taille 84 octets
 
-Batman2
+;Batman2
 	DB	"KUTN"
 	DB	#07			; Tps d'affichage
 	DB	#01			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
@@ -485,7 +485,7 @@ Batman2
 	DB	#7A,#9E,#80,#A8,#7A,#A8,#83
 ; Taille 280 octets
 
-Piece
+;Piece
 	DB	"@TDL"
 	DB	#0F			; Tps d'affichage
 	DB	#01			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
@@ -511,7 +511,7 @@ Piece
 	DB	#6B,#65,#80,#67,#80,#69,#82
 ; Taille 140 octets
 
-ChessBoard
+;ChessBoard
 	DB	"@KT["
 	DB	#03			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
@@ -583,7 +583,7 @@ ChessBoard
 	DB	#D0,#91,#CD,#9D,#EB,#9E,#81
 ; Taille 462 octets
 
-Montagne
+;Montagne
 	DB	"S@KL"
 	DB	#06			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
@@ -636,7 +636,7 @@ Montagne
 	DB	#5E,#5A,#6E,#6A,#5D,#6E,#82
 ; Taille 329 octets
 
-Floral
+;Floral
 	DB	"CYSO"
 	DB	#03			; Tps d'affichage
 	DB	#01			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
@@ -656,38 +656,7 @@ Floral
 	DB	#1C,#6B,#08,#80,#1C,#94,#82
 ; Taille 98 octets
 
-Glaive
-	DB	"K@FN"
-	DB	#09			; Tps d'affichage
-	DB	#01			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
-	DB	#80,#00,#7D,#01,#80,#0A,#01
-	DB	#7D,#01,#79,#08,#80,#0A,#01
-	DB	#79,#08,#80,#0A,#76,#11,#01
-	DB	#80,#0A,#76,#11,#80,#1A,#01
-	DB	#76,#11,#74,#1A,#80,#1A,#01
-	DB	#74,#1A,#80,#1A,#80,#83,#01
-	DB	#74,#1A,#74,#82,#80,#83,#01
-	DB	#75,#82,#80,#83,#75,#BA,#01
-	DB	#80,#83,#75,#BA,#80,#C2,#01
-	DB	#75,#BA,#80,#C2,#72,#CC,#02
-	DB	#75,#BA,#69,#CC,#72,#CC,#02
-	DB	#6E,#C3,#67,#C9,#69,#CC,#02
-	DB	#6F,#B7,#74,#B9,#6E,#C3,#02
-	DB	#68,#AF,#6F,#B7,#6E,#C3,#02
-	DB	#68,#AF,#5F,#AF,#6E,#C3,#02
-	DB	#5F,#AF,#6E,#C3,#67,#C9,#02
-	DB	#6E,#C3,#67,#C9,#69,#CC,#02
-	DB	#80,#C2,#75,#CA,#77,#CD,#02
-	DB	#80,#C2,#80,#CD,#77,#CD,#02
-	DB	#77,#CD,#80,#CD,#77,#EF,#03
-	DB	#80,#CD,#77,#EF,#80,#F0,#03
-	DB	#77,#EF,#80,#F0,#79,#F5,#03
-	DB	#80,#F0,#79,#F5,#80,#F9,#03
-	DB	#79,#F5,#80,#F9,#78,#FE,#03
-	DB	#80,#F9,#78,#FE,#80,#FF,#83
-; Taille 175 octets
-
-Apple
+;Apple
 	DB	"@TWK"
 	DB	#0F			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
@@ -732,7 +701,7 @@ LogoBarre
 
 ; Taille 210 + 28 octets
 
-Amstrad
+;Amstrad
 	DB	"@EKL"
 	DB	#01			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
@@ -802,7 +771,7 @@ Amstrad
 	DB	#F8,#5D,#FF,#9B,#F8,#A1,#82
 ; Taille 448 octets
 
-Bidul
+;Bidul
 	DB	"CNL\"
 	DB	#0F			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
@@ -826,7 +795,7 @@ Bidul
 	DB	#34,#37,#13,#C0,#6C,#D7,#83
 ; Taille 126 octets
 
-Etoile
+;Etoile
 	DB	"@OMX"
 	DB	#0F			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
@@ -858,7 +827,7 @@ Etoile
 	DB	#C5,#64,#C5,#66,#B5,#7D,#83
 ; Taille 182 octets
 
-Bouboule
+;Bouboule
 	DB	"K_WU"
 	DB	#0F			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
@@ -894,7 +863,7 @@ Bouboule
 	DB	#AA,#46,#5B,#50,#82,#95,#81
 ; Taille 210 octets
 
-Donut
+;Donut
 	DB	"XCSL"
 	DB	#06			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
@@ -934,7 +903,7 @@ Donut
 	DB	#6C,#14,#77,#37,#23,#6D,#81
 ; Taille 238 octets
 
-Cylindre
+;Cylindre
 	DB	"DUWL"
 	DB	#03			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
@@ -1038,7 +1007,7 @@ Cylindre
 	DB	#A3,#74,#4A,#74,#52,#98,#82
 ; Taille 686 octets
 
-Hex
+;Hex
 	DB	"DUWS"
 	DB	#02			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
@@ -1107,7 +1076,7 @@ Hex
 	DB	#5F,#9C,#77,#AE,#77,#AF,#80
 ; Taille 441 octets
 
-World
+;World
 	DB	"DVNK"
 	DB	#06			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
@@ -1220,7 +1189,7 @@ World
 	DB	#28,#E6,#1C,#F1,#22,#F1,#83
 ; Taille 749 octets
 
-Linux
+;Linux
 	DB	"WKTL"
 	DB	#08			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
@@ -1264,7 +1233,7 @@ Linux
 	DB	#9B,#19,#A3,#1D,#9B,#20,#82
 ; Taille 266 octets
 
-Hippo
+;Hippo
 	DB	"D@T\"
 	DB	#08			; Tps d'affichage
 	DB	#01			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
@@ -1293,7 +1262,7 @@ Hippo
 	DB	#5A,#AF,#65,#BF,#64,#C1,#83
 ; Taille 161 octets
 
-Elephant
+;Elephant
 	DB	"TFLN"
 	DB	#0F			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
@@ -1340,7 +1309,7 @@ Elephant
 	DB	#B3,#C2,#A9,#C5,#AA,#CF,#82
 ; Taille 287 octets
 
-Elephant2
+;Elephant2
 	DB	"O_[K"
 	DB	#07			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
@@ -1416,7 +1385,7 @@ Elephant2
 	DB	#23,#AA,#2D,#C6,#46,#C9,#82
 ; Taille 490 octets
 
-Girafe
+;Girafe
 	DB	"WJNT"
 	DB	#07			; Tps d'affichage
 	DB	#01			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
@@ -1462,7 +1431,7 @@ Girafe
 	DB	#68,#81,#52,#94,#57,#A0,#81
 ; Taille 280 octets
 
-Rhino
+;Rhino
 	DB	"N@KT"
 	DB	#09			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
@@ -1719,7 +1688,7 @@ Rhino
 	DB	#F7,#8E,#FF,#8E,#F7,#9C,#82
 ; Taille 336 octets
 
-Lion
+;Lion
 	DB	"TJLK"
 	DB	#09			; Tps d'affichage
 	DB	#01			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
@@ -1828,3 +1797,36 @@ Lion
 	DB	#7E,#C6,#69,#CF,#73,#D4,#03
 	DB	#7E,#C6,#80,#D3,#73,#D4,#83
 ; Taille 728 octets
+
+Glaive
+	DB	"K@FN"
+	DB	#09			; Tps d'affichage
+	DB	#01			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
+	DB	#80,#00,#7D,#01,#80,#0A,#01
+	DB	#7D,#01,#79,#08,#80,#0A,#01
+	DB	#79,#08,#80,#0A,#76,#11,#01
+	DB	#80,#0A,#76,#11,#80,#1A,#01
+	DB	#76,#11,#74,#1A,#80,#1A,#01
+	DB	#74,#1A,#80,#1A,#80,#83,#01
+	DB	#74,#1A,#74,#82,#80,#83,#01
+	DB	#75,#82,#80,#83,#75,#BA,#01
+	DB	#80,#83,#75,#BA,#80,#C2,#01
+	DB	#75,#BA,#80,#C2,#72,#CC,#02
+	DB	#75,#BA,#69,#CC,#72,#CC,#02
+	DB	#6E,#C3,#67,#C9,#69,#CC,#02
+	DB	#6F,#B7,#74,#B9,#6E,#C3,#02
+	DB	#68,#AF,#6F,#B7,#6E,#C3,#02
+	DB	#68,#AF,#5F,#AF,#6E,#C3,#02
+	DB	#5F,#AF,#6E,#C3,#67,#C9,#02
+	DB	#6E,#C3,#67,#C9,#69,#CC,#02
+	DB	#80,#C2,#75,#CA,#77,#CD,#02
+	DB	#80,#C2,#80,#CD,#77,#CD,#02
+	DB	#77,#CD,#80,#CD,#77,#EF,#03
+	DB	#80,#CD,#77,#EF,#80,#F0,#03
+	DB	#77,#EF,#80,#F0,#79,#F5,#03
+	DB	#80,#F0,#79,#F5,#80,#F9,#03
+	DB	#79,#F5,#80,#F9,#78,#FE,#03
+	DB	#80,#F9,#78,#FE,#80,#FF,#83
+; Taille 175 octets
+
+	DB	#FF

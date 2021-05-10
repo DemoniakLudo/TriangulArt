@@ -369,7 +369,7 @@ namespace TriangulArt {
 			}
 		}
 
-		public void GenereSourceAsm(string fileName, bool withCode) {
+		public void GenereSourceAsm(string fileName, bool withCode, bool modePolice) {
 			bool polyMode = false;
 			//
 			// Rapprocher les triangles ayant des coordonnées comparables
@@ -402,7 +402,7 @@ namespace TriangulArt {
 			if (withCode)
 				GenereAsm.GenereDrawTriangleCode(sw, nom, cpcPlus);
 
-			GenereAsm.GenereDatas(sw, this, nom, cpcPlus);
+			GenereAsm.GenereDatas(sw, this, nom, cpcPlus, modePolice);
 			if (withCode)
 				GenereAsm.GenereDrawTriangleData(sw, cpcPlus);
 

@@ -237,21 +237,21 @@ message2
 	DB	0
 	
 	DB	2,30,0
-	DB	1,1,"IMPACT TEAM:"
-	DB	2,0,32
-	DB	1,2,"*",1,3," AST"
-	DB	2,0,64
-	DB	1,3,"*",1,2," CMP"
-	DB	2,0,96
-	DB	1,2,"*",1,3," DEMONIAK"
-	DB	2,0,128
-	DB	1,3,"*",1,2," DEVIL MARKUS"
-	DB	2,0,160
-	DB	1,2,"*",1,3," DRILL"
-	DB	2,0,192
-	DB	1,3,"*",1,2," KRIS"
-	DB	2,0,224
-	DB	1,2,"*",1,3," SID"
+	DB	1,1,"IMPACT TEAM"
+	DB	2,100,32
+	DB	1,2,"AST"
+	DB	2,100,64
+	DB	1,3,"CMP"
+	DB	2,60,96
+	DB	1,2,"DEMONIAK"
+	DB	2,20,128
+	DB	1,3,"DEVIL MARKUS"
+	DB	2,80,160
+	DB	1,2,"DRILL"
+	DB	2,90,192
+	DB	1,3,"KRIS"
+	DB	2,100,224
+	DB	1,2,"SID"
 	DB	0
 	DB	#FF
 	

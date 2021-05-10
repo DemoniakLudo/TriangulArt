@@ -1,5 +1,3 @@
-Frames:
- 
 ; Frame 0 - Nb triangles 2
 Frame_0:
         DB      #77, #64, #C8, #64, #A0, #B4, #01
@@ -340,5 +338,3 @@ Frame_58:
         DB      #6F, #64, #BE, #6C, #99, #B3, #01
         DB      #A6, #15, #6F, #64, #BE, #6C, #82
         DB      #FF ; fin des frames
-_EndFrame
-

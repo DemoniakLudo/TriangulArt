@@ -89,7 +89,10 @@
 			this.txbPos = new System.Windows.Forms.TextBox();
 			this.label13 = new System.Windows.Forms.Label();
 			this.grpProjet = new System.Windows.Forms.GroupBox();
+			this.bpNewProjet = new System.Windows.Forms.Button();
+			this.bpGenereProjetAsm = new System.Windows.Forms.Button();
 			this.grpImage = new System.Windows.Forms.GroupBox();
+			this.lblInfoImage = new System.Windows.Forms.Label();
 			this.bpImageSuiv = new System.Windows.Forms.Button();
 			this.bpImagePrec = new System.Windows.Forms.Button();
 			this.bpSupImage = new System.Windows.Forms.Button();
@@ -98,9 +101,7 @@
 			this.bpReadProj = new System.Windows.Forms.Button();
 			this.label14 = new System.Windows.Forms.Label();
 			this.txbNomImage = new System.Windows.Forms.TextBox();
-			this.lblInfoImage = new System.Windows.Forms.Label();
-			this.bpGenereProjetAsm = new System.Windows.Forms.Button();
-			this.bpNewProjet = new System.Windows.Forms.Button();
+			this.chkModePolice = new System.Windows.Forms.CheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -132,7 +133,7 @@
 			// 
 			// bpAddTriangle
 			// 
-			this.bpAddTriangle.Location = new System.Drawing.Point(866, 237);
+			this.bpAddTriangle.Location = new System.Drawing.Point(866, 241);
 			this.bpAddTriangle.Name = "bpAddTriangle";
 			this.bpAddTriangle.Size = new System.Drawing.Size(113, 23);
 			this.bpAddTriangle.TabIndex = 2;
@@ -219,7 +220,7 @@
 			// 
 			// bpGenereAsm
 			// 
-			this.bpGenereAsm.Location = new System.Drawing.Point(866, 146);
+			this.bpGenereAsm.Location = new System.Drawing.Point(866, 159);
 			this.bpGenereAsm.Name = "bpGenereAsm";
 			this.bpGenereAsm.Size = new System.Drawing.Size(116, 23);
 			this.bpGenereAsm.TabIndex = 6;
@@ -448,9 +449,9 @@
 			this.groupBox1.Controls.Add(this.rbVertical);
 			this.groupBox1.Controls.Add(this.rbHorizontal);
 			this.groupBox1.Controls.Add(this.rbStandard);
-			this.groupBox1.Location = new System.Drawing.Point(872, 173);
+			this.groupBox1.Location = new System.Drawing.Point(1181, 173);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(517, 42);
+			this.groupBox1.Size = new System.Drawing.Size(330, 42);
 			this.groupBox1.TabIndex = 33;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Mode de rendu";
@@ -459,7 +460,7 @@
 			// 
 			this.rbVertical.AutoSize = true;
 			this.rbVertical.Enabled = false;
-			this.rbVertical.Location = new System.Drawing.Point(253, 19);
+			this.rbVertical.Location = new System.Drawing.Point(213, 19);
 			this.rbVertical.Name = "rbVertical";
 			this.rbVertical.Size = new System.Drawing.Size(87, 17);
 			this.rbVertical.TabIndex = 2;
@@ -471,7 +472,7 @@
 			// rbHorizontal
 			// 
 			this.rbHorizontal.AutoSize = true;
-			this.rbHorizontal.Location = new System.Drawing.Point(116, 19);
+			this.rbHorizontal.Location = new System.Drawing.Point(96, 19);
 			this.rbHorizontal.Name = "rbHorizontal";
 			this.rbHorizontal.Size = new System.Drawing.Size(98, 17);
 			this.rbHorizontal.TabIndex = 1;
@@ -646,7 +647,7 @@
 			// 
 			// bpAjoutQuadri
 			// 
-			this.bpAjoutQuadri.Location = new System.Drawing.Point(866, 267);
+			this.bpAjoutQuadri.Location = new System.Drawing.Point(866, 269);
 			this.bpAjoutQuadri.Name = "bpAjoutQuadri";
 			this.bpAjoutQuadri.Size = new System.Drawing.Size(113, 23);
 			this.bpAjoutQuadri.TabIndex = 41;
@@ -756,6 +757,26 @@
 			this.grpProjet.TabStop = false;
 			this.grpProjet.Text = "Projet";
 			// 
+			// bpNewProjet
+			// 
+			this.bpNewProjet.Location = new System.Drawing.Point(532, 46);
+			this.bpNewProjet.Name = "bpNewProjet";
+			this.bpNewProjet.Size = new System.Drawing.Size(108, 23);
+			this.bpNewProjet.TabIndex = 3;
+			this.bpNewProjet.Text = "Nouveau Projet";
+			this.bpNewProjet.UseVisualStyleBackColor = true;
+			this.bpNewProjet.Click += new System.EventHandler(this.bpNewProjet_Click);
+			// 
+			// bpGenereProjetAsm
+			// 
+			this.bpGenereProjetAsm.Location = new System.Drawing.Point(532, 19);
+			this.bpGenereProjetAsm.Name = "bpGenereProjetAsm";
+			this.bpGenereProjetAsm.Size = new System.Drawing.Size(109, 23);
+			this.bpGenereProjetAsm.TabIndex = 2;
+			this.bpGenereProjetAsm.Text = "Générér assembleur";
+			this.bpGenereProjetAsm.UseVisualStyleBackColor = true;
+			this.bpGenereProjetAsm.Click += new System.EventHandler(this.bpGenereProjetAsm_Click);
+			// 
 			// grpImage
 			// 
 			this.grpImage.Controls.Add(this.lblInfoImage);
@@ -770,6 +791,15 @@
 			this.grpImage.TabIndex = 1;
 			this.grpImage.TabStop = false;
 			this.grpImage.Text = "Images";
+			// 
+			// lblInfoImage
+			// 
+			this.lblInfoImage.AutoSize = true;
+			this.lblInfoImage.Location = new System.Drawing.Point(289, 26);
+			this.lblInfoImage.Name = "lblInfoImage";
+			this.lblInfoImage.Size = new System.Drawing.Size(41, 13);
+			this.lblInfoImage.TabIndex = 1;
+			this.lblInfoImage.Text = "label15";
 			// 
 			// bpImageSuiv
 			// 
@@ -847,40 +877,22 @@
 			this.txbNomImage.Size = new System.Drawing.Size(210, 20);
 			this.txbNomImage.TabIndex = 52;
 			// 
-			// lblInfoImage
+			// chkModePolice
 			// 
-			this.lblInfoImage.AutoSize = true;
-			this.lblInfoImage.Location = new System.Drawing.Point(289, 26);
-			this.lblInfoImage.Name = "lblInfoImage";
-			this.lblInfoImage.Size = new System.Drawing.Size(41, 13);
-			this.lblInfoImage.TabIndex = 1;
-			this.lblInfoImage.Text = "label15";
-			// 
-			// bpGenereProjetAsm
-			// 
-			this.bpGenereProjetAsm.Location = new System.Drawing.Point(532, 19);
-			this.bpGenereProjetAsm.Name = "bpGenereProjetAsm";
-			this.bpGenereProjetAsm.Size = new System.Drawing.Size(109, 23);
-			this.bpGenereProjetAsm.TabIndex = 2;
-			this.bpGenereProjetAsm.Text = "Générér assembleur";
-			this.bpGenereProjetAsm.UseVisualStyleBackColor = true;
-			this.bpGenereProjetAsm.Click += new System.EventHandler(this.bpGenereProjetAsm_Click);
-			// 
-			// bpNewProjet
-			// 
-			this.bpNewProjet.Location = new System.Drawing.Point(532, 46);
-			this.bpNewProjet.Name = "bpNewProjet";
-			this.bpNewProjet.Size = new System.Drawing.Size(108, 23);
-			this.bpNewProjet.TabIndex = 3;
-			this.bpNewProjet.Text = "Nouveau Projet";
-			this.bpNewProjet.UseVisualStyleBackColor = true;
-			this.bpNewProjet.Click += new System.EventHandler(this.bpNewProjet_Click);
+			this.chkModePolice.AutoSize = true;
+			this.chkModePolice.Location = new System.Drawing.Point(988, 173);
+			this.chkModePolice.Name = "chkModePolice";
+			this.chkModePolice.Size = new System.Drawing.Size(157, 17);
+			this.chkModePolice.TabIndex = 53;
+			this.chkModePolice.Text = "Mode \'Police de caractères\'";
+			this.chkModePolice.UseVisualStyleBackColor = true;
 			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1519, 770);
+			this.Controls.Add(this.chkModePolice);
 			this.Controls.Add(this.txbNomImage);
 			this.Controls.Add(this.label14);
 			this.Controls.Add(this.grpProjet);
@@ -1035,6 +1047,7 @@
 		private System.Windows.Forms.Label lblInfoImage;
 		private System.Windows.Forms.Button bpGenereProjetAsm;
 		private System.Windows.Forms.Button bpNewProjet;
+		private System.Windows.Forms.CheckBox chkModePolice;
 	}
 }
 

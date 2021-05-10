@@ -107,11 +107,15 @@ Debut
 ;
 ;	JP	EndMess		; decommenter pour aller directement au message de fin
 ;
+;	JP	StartAnim	; decommenter pour aller directement a l'anim
+;
 ; Debut, premiere image = logo impact
 ;
 	LD	IX,Impact
 	LD	A,#C1
 	LD	(LogoBarre),A		; Pause entre la croix et le logo Apple
+	LD	A,#FF
+	LD	(Glaive),A			; Ne pas afficher le glaive
 BoucleNormale
 	PUSH	IX
 	POP	HL	
@@ -172,7 +176,8 @@ WaitMess2
 ;
 	LD	A,1
 	LD	(LogoBarre),A		; supprimer la pause de la croix sur le logo pour l'option rapide
-
+	LD	A,'K'
+	LD	(Glaive),A			; Afficher le glaive
 	LD	IX,Triangle
 BoucleRapide
 	CALL	CopyScreen
@@ -203,7 +208,7 @@ Wait12
 	INC	A
 	JR	NZ,BoucleRapide
 
-	LD	B,100
+	LD	B,50
 WaitForMess:
 	PUSH	BC
 	CALL	WaitVbl
@@ -215,10 +220,6 @@ WaitForMess:
 EndMess
 	XOR	A
 	LD	(CntVblMess+1),A
-	LD	BC,#7F10
-	LD	A,#54
-	OUT	(C),C
-	OUT	(C),A
 	CALL	CopyScreen
 	CALL	WaitVBL
 	LD	BC,#BD30
@@ -235,13 +236,13 @@ WaitReadMess2
 	INC	A
 	JR	NZ,WaitReadMess2
 	DJNZ	WaitReadMess
-	
-EndWaitReadMess
+; Effacer l'ecran du bas vers le haut	
 	PUSH	HL
-	LD	A,#FF
+	XOR	A
 ClearLine
 	LD	H,TabAdr/256		; Adresse des poids faibles
 	LD	L,A
+	DEC	L
 	LD	E,(HL)
 	INC	H			; Adresse des poids forts
 	LD	D,(HL)
@@ -254,18 +255,16 @@ ClearLine
 	INC DE
 	LDIR
 	DEC	A
-	CP	#FF
 	JR	NZ,ClearLine
 	POP	HL
 	INC	HL
 	LD	A,(HL)
 	INC	A
-	JR	NZ,BclEndMess
-
-		
+	JR	NZ,BclEndMess		
 ;
 ; Animation rotation 3D
 ;
+StartAnim
 	LD	HL,PalAnim
 	CALL	SetPalette
 	LD	A,#2E
@@ -284,7 +283,7 @@ ClearLine
 	LD	(OffsetVideo+1),A
 	LD	HL,MessageEnd2
 	CALL	PrintMess
-StartAnim
+
         LD      IY,Frame_58             ; Avant derniere frame
 InitAnim:
         LD      IX,Frame_0              ; Premiere frame
@@ -982,13 +981,15 @@ PaletteBlack
 PaletteWhite
 	DB	"KKKK"
 PalAnim
-;	DB	"TWUD"
+	DB	"TUWS"
+;	DB	"T]_["
+;	DB	"TS[K"
+;	DB	"DWUS"
 ;	DB	"TNL\"
 ;	DB	"@CNL"
-	DB	"DEMO"
+;	DB	"DEMO"
 
 	Read	"DataDemo.asm"
-	DB	#FF
 	
 ;
 ; Structure

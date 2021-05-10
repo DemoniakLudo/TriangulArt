@@ -43,10 +43,10 @@ namespace TriangulArt {
 			selData = 0;
 		}
 
-		public void GenereSourceAsm(string fileName) {
+		public void GenereSourceAsm(string fileName, bool modePolice) {
 			StreamWriter sw = GenereAsm.OpenAsm(fileName);
 			foreach (Datas d in lstData) {
-				GenereAsm.GenereDatas(sw, d, d.nomImage, d.cpcPlus);
+				GenereAsm.GenereDatas(sw, d, d.nomImage, d.cpcPlus, modePolice);
 			}
 			GenereAsm.CloseAsm(sw);
 		}

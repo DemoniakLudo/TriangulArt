@@ -10,45 +10,54 @@ namespace TriangulArt {
 			return sw;
 		}
 
-		static public void GenereDatas(StreamWriter sw, Datas data, string nom, bool cpcPlus) {
+		static public void GenereDatas(StreamWriter sw, Datas data, string nom, bool cpcPlus, bool modePolice) {
 			int nbOctets = 0;
 			string s = "";
 
 			sw.WriteLine(nom);
-			if (cpcPlus) {
-				string line = "";
-				for (int i = 0; i < 4; i++) {
-					int c = BitmapCpc.Palette[i];
-					line += (line != "" ? "," : "") + "#" + ((byte)(((c >> 4) & 0x0F) | (c << 4))).ToString("X2") + ",#" + ((byte)(c >> 8)).ToString("X2");
+			if (!modePolice) {
+				if (cpcPlus) {
+					string line = "";
+					for (int i = 0; i < 4; i++) {
+						int c = BitmapCpc.Palette[i];
+						line += (line != "" ? "," : "") + "#" + ((byte)(((c >> 4) & 0x0F) | (c << 4))).ToString("X2") + ",#" + ((byte)(c >> 8)).ToString("X2");
+					}
+					sw.WriteLine("; 8 octets (4 mots) de palette");
+					sw.WriteLine("	DB	" + line);
 				}
-				sw.WriteLine("; 8 octets (4 mots) de palette");
-				sw.WriteLine("	DB	" + line);
-			}
-			else {
-				for (int i = 0; i < 4; i++)
-					s += BitmapCpc.CpcVGA[data.palette[i]];
+				else {
+					for (int i = 0; i < 4; i++)
+						s += BitmapCpc.CpcVGA[data.palette[i]];
 
-				sw.WriteLine("; 4 octets de palette");
-				sw.WriteLine("	DB	\"" + s + "\"");
+					sw.WriteLine("; 4 octets de palette");
+					sw.WriteLine("	DB	\"" + s + "\"");
+				}
+				int tps = (int)Math.Max(Math.Min(255, data.tpsAttente / 3.333333), 1);
+				sw.WriteLine("	DB	#" + tps.ToString("X2") + "			; Tps d'affichage");
+				sw.WriteLine("	DB	#" + data.modeRendu.ToString("X2") + "			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)");
+				sw.WriteLine(";");
 			}
-			int tps = (int)Math.Max(Math.Min(255, data.tpsAttente / 3.333333), 1);
-			sw.WriteLine("	DB	#" + tps.ToString("X2") + "			; Tps d'affichage");
-			sw.WriteLine("	DB	#" + data.modeRendu.ToString("X2") + "			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)");
-			sw.WriteLine(";");
-			sw.WriteLine("; Donnees des triangles a afficher.");
-			sw.WriteLine("; Chaque frame contient un ou plusieurs trianges defini de la sorte :");
-			sw.WriteLine("; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur");
-			sw.WriteLine("; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand");
-			sw.WriteLine("; Seulement 1 octet par coordonnees (donc de 0 a 255...)");
-			sw.WriteLine("; le 7eme octet de la structure (la couleur) defini le pen mode 1");
-			sw.WriteLine("; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame");
-			sw.WriteLine(";");
+			//sw.WriteLine("; Donnees des triangles a afficher.");
+			//sw.WriteLine("; Chaque frame contient un ou plusieurs trianges defini de la sorte :");
+			//sw.WriteLine("; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur");
+			//sw.WriteLine("; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand");
+			//sw.WriteLine("; Seulement 1 octet par coordonnees (donc de 0 a 255...)");
+			//sw.WriteLine("; le 7eme octet de la structure (la couleur) defini le pen mode 1");
+			//sw.WriteLine("; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame");
+			//sw.WriteLine(";");
+			int xMax = 0;
 			for (int i = 0; i < data.lstTriangle.Count; i++) {
 				Triangle t = data.lstTriangle[i];
 				int color = i < data.lstTriangle.Count - 1 ? t.color : t.color + 0x80;
-				sw.WriteLine("	DB	#" + t.x1.ToString("X2") + ",#" + t.y1.ToString("X2") + ",#" + t.x2.ToString("X2") + ",#" + t.y2.ToString("X2") + ",#" + t.x3.ToString("X2") + ",#" + t.y3.ToString("X2") + ",#" + color.ToString("X2"));
-				nbOctets += 7;
+				s = "	DB	#" + t.x1.ToString("X2") + ",#" + t.y1.ToString("X2") + ",#" + t.x2.ToString("X2") + ",#" + t.y2.ToString("X2") + ",#" + t.x3.ToString("X2") + ",#" + t.y3.ToString("X2") + (modePolice ? "" : (",#" + color.ToString("X2")));
+				xMax = Math.Max(Math.Max(Math.Max(t.x1, xMax), t.x2), t.x3);
+				sw.WriteLine(s);
+				nbOctets += (modePolice ? 6 : 7);
 			}
+			xMax++;
+			if (modePolice)
+				sw.WriteLine("	DB	128+" + xMax.ToString());
+
 			sw.WriteLine("; Taille " + nbOctets.ToString() + " octets");
 		}
 

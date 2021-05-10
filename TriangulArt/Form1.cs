@@ -398,7 +398,7 @@ namespace TriangulArt {
 			if (result == DialogResult.OK) {
 				int.TryParse(txbTpsAttente.Text, out projet.SelImage().tpsAttente);
 				projet.SelImage().tpsAttente = Math.Min(850, Math.Max(1, projet.SelImage().tpsAttente));
-				projet.SelImage().GenereSourceAsm(dlg.FileName, chkCodeAsm.Checked);
+				projet.SelImage().GenereSourceAsm(dlg.FileName, chkCodeAsm.Checked, chkModePolice.Checked);
 				SetInfo("Génération assembleur ok.");
 			}
 		}
@@ -602,13 +602,13 @@ namespace TriangulArt {
 				}
 				else
 					if (triSel != null) {
-						int memoSel = projet.SelImage().GetSelTriangle();
-						projet.SelImage().DeplaceTriangle(deplX, deplY);
-						DisplayList();
-						listTriangles.SelectedIndex = memoSel;
-					}
-					else
-						MessageBox.Show("Pas de triangle sélectionné");
+					int memoSel = projet.SelImage().GetSelTriangle();
+					projet.SelImage().DeplaceTriangle(deplX, deplY);
+					DisplayList();
+					listTriangles.SelectedIndex = memoSel;
+				}
+				else
+					MessageBox.Show("Pas de triangle sélectionné");
 			}
 			else
 				MessageBox.Show("Veuillez sélectionner des données de déplacement valide");
@@ -638,13 +638,13 @@ namespace TriangulArt {
 				}
 				else
 					if (triSel != null) {
-						int memoSel = projet.SelImage().GetSelTriangle();
-						projet.SelImage().CoefZoom(triSel, zoomX, zoomY, chkCenterZoom.Checked);
-						DisplayList();
-						listTriangles.SelectedIndex = memoSel;
-					}
-					else
-						MessageBox.Show("Pas de triangle sélectionné");
+					int memoSel = projet.SelImage().GetSelTriangle();
+					projet.SelImage().CoefZoom(triSel, zoomX, zoomY, chkCenterZoom.Checked);
+					DisplayList();
+					listTriangles.SelectedIndex = memoSel;
+				}
+				else
+					MessageBox.Show("Pas de triangle sélectionné");
 			}
 			else
 				MessageBox.Show("Veuillez sélectionner des données de zoom valide");
@@ -739,7 +739,7 @@ namespace TriangulArt {
 			dlg.Filter = "Fichiers assembleur (*.asm)|*.asm";
 			DialogResult result = dlg.ShowDialog();
 			if (result == DialogResult.OK) {
-				projet.GenereSourceAsm(dlg.FileName);
+				projet.GenereSourceAsm(dlg.FileName, chkModePolice.Checked);
 				SetInfo("Génération assembleur ok.");
 			}
 		}
