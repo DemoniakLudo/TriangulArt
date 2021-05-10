@@ -1634,8 +1634,8 @@ LogoBarre
 	DB	#7C,#C8,#49,#EC,#55,#F8,#02
 	DB	#72,#5F,#6A,#D5,#49,#EB,#82
 ; Taille 217 octets
-
-	DB	"RKTL"
+;Panda
+	DB	"VKTL"
 	DB	#08			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
 	DB	#17,#A7,#75,#AE,#36,#B0,#01
