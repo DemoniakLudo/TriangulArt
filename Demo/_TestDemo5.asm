@@ -3,7 +3,7 @@ TpsWaitImage1	EQU	#7800
 	ORG	#200
 	RUN	$
 
-	Write direct "Demo.bin"
+;	Write direct "Demo.bin"
 
 	DI
 	LD	HL,#8000
@@ -41,23 +41,22 @@ TpsWaitImage1	EQU	#7800
 	OUT	(C),L
 
 ; calculer adresse ecran pour chaque ligne
-	LD	B,0					; 256 lignes
- 	LD	DE,#C000
+	LD	BC,#40					; 256 lignes
+ 	LD	DE,0
 	LD	HL,TabAdr
 CalcAdr:
 	LD	(HL),E
 	INC	H
-	LD	A,D
-	AND	#3F
-	LD	(HL),A
+	LD	(HL),D
 	DEC	H
 	INC	HL
 	LD	A,D
 	ADD	A,8
 	LD	D,A
-	JR	NC,CalcSuite
+	CP	C
+	JR	C,CalcSuite
 	PUSH	BC
-	LD	BC,#C040
+	LD	B,#C0
 	EX	DE,HL
 	ADD	HL,BC
 	EX	DE,HL
@@ -100,7 +99,7 @@ InitPen:
 ;
 ;	JR	MoreSpeed	; decommenter pour aller direcement a la 2e partie
 ;
-;	JP	EndMess		; decommenter pour aller directement au message de fin
+	JP	EndMess		; decommenter pour aller directement au message de fin
 ;
 ; Debut, premiere image = logo impact
 ;
@@ -165,6 +164,15 @@ Boucle2
 	XOR	A
 	LD	(CntIrq+1),A
 	CALL	DrawFrame
+	LD	HL,PaletteBlack
+	CALL	SetPalette
+	CALL	WaitVbl
+	LD	HL,PaletteWhite	
+	CALL	SetPalette
+	CALL	WaitVbl
+	LD	HL,PaletteBlack
+	CALL	SetPalette
+	CALL	WaitVbl
 	POP	HL	
 	LD	BC,#BD30
 	OUT	(C),C
@@ -177,7 +185,7 @@ Wait12
 	INC	A
 	JR	NZ,Boucle2
 
-	LD	B,150
+	LD	B,100
 WaitForMess:
 	PUSH	BC
 	CALL	WaitVbl
@@ -254,8 +262,6 @@ FinDemo
 	LD	(IrqSwapColor+1),HL
 	CALL	CopyScreen
 	JP	StartAnim
-PalAnim:
-	DB	"TSUD"
 ;
 ; Fonctions
 ;
@@ -491,21 +497,24 @@ PrintMess
 	PUSH	DE
 	POP	IX
 PrintMessX
-	LD	H,0
+	LD	H,0					; Position X
 PrintMessY
-	LD	L,0
+	LD	L,0					; Position Y
+
 	LD	A,(IX+0)				; X1
 	ADD	A,H
 	LD	B,A	
 	LD	A,(IX+1)				; Y1
 	ADD	A,L
 	LD	C,A	
+
 	LD	A,(IX+2)				; X2
 	ADD	A,H
 	LD	D,A	
 	LD	A,(IX+3)				; Y2
 	ADD	A,L
 	LD	E,A	
+
 	LD	A,(IX+4)				; X3
 	ADD	A,H
 	LD	H,A	
@@ -527,13 +536,6 @@ PrintSpace
 	LD	A,(PrintMessX+1)
 	ADD	A,B
 	LD	(PrintMessX+1),A
-;	CP	237
-;	JR	C,PrintMess
-;	XOR	A
-;	LD	(PrintMessX+1),A
-;	LD	A,(PrintMessY+1)
-;	ADD	A,24
-;	LD	(PrintMessY+1),A
 	JR	PrintMess
 
 ;
@@ -808,15 +810,13 @@ Set3Pen:
 	Read	"Rotation.asm"
 	nolist
 
-;
-; Donnees des triangles a afficher.
-; Chaque frame contient un ou plusieurs trianges defini de la sorte :
-; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
-; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
-; Seulement 1 octet par coordonnees (donc de 0 a 255...)
-; le 7eme octet de la structure (la couleur) defini le pen mode 1
-; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
-;
+PaletteBlack
+	DB	"TTTT"
+PaletteWhite
+	DB	"KKKK"
+PalAnim
+	DB	"TSUD"
+
 	Read	"DataDemo.asm"
 	DB	#FF
 	

@@ -1,18 +1,8 @@
 ; Généré par TriangulArt le 08/05/2021 (18 13 34)
 Impact
-; 4 octets de palette
 	DB	"XMOC"
 	DB	#04			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
-;
-; Donnees des triangles a afficher.
-; Chaque frame contient un ou plusieurs trianges defini de la sorte :
-; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
-; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
-; Seulement 1 octet par coordonnees (donc de 0 a 255...)
-; le 7eme octet de la structure (la couleur) defini le pen mode 1
-; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
-;
 	DB	#4E,#17,#03,#26,#03,#2F,#03
 	DB	#4E,#14,#4E,#17,#03,#26,#03
 	DB	#32,#20,#22,#25,#2A,#6D,#03
@@ -66,20 +56,11 @@ Impact
 	DB	#A3,#DA,#AF,#EE,#AB,#F3,#01
 	DB	#A6,#D1,#A3,#DA,#AF,#EE,#81
 ; Taille 364 octets
+
 Triangulart
-; 4 octets de palette
 	DB	"XCSL"
 	DB	#16			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
-;
-; Donnees des triangles a afficher.
-; Chaque frame contient un ou plusieurs trianges defini de la sorte :
-; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
-; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
-; Seulement 1 octet par coordonnees (donc de 0 a 255...)
-; le 7eme octet de la structure (la couleur) defini le pen mode 1
-; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
-;
 	DB	#0B,#4D,#29,#4D,#06,#57,#01
 	DB	#29,#4D,#24,#57,#06,#57,#01
 	DB	#10,#57,#1A,#57,#01,#75,#01
@@ -147,20 +128,11 @@ Triangulart
 	DB	#EA,#70,#F4,#70,#EC,#75,#01
 	DB	#F4,#70,#F1,#75,#EC,#75,#81
 ; Taille 462 octets
+
 Triangle
-; 4 octets de palette
 	DB	"T\LN"
 	DB	#16			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
-;
-; Donnees des triangles a afficher.
-; Chaque frame contient un ou plusieurs trianges defini de la sorte :
-; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
-; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
-; Seulement 1 octet par coordonnees (donc de 0 a 255...)
-; le 7eme octet de la structure (la couleur) defini le pen mode 1
-; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
-;
 	DB	#28,#00,#00,#14,#F0,#64,#01
 	DB	#00,#14,#A0,#64,#F0,#64,#01
 	DB	#00,#14,#A0,#64,#78,#78,#02
@@ -174,20 +146,11 @@ Triangle
 	DB	#A0,#64,#F0,#64,#50,#8C,#01
 	DB	#F0,#64,#50,#8C,#50,#B4,#81
 ; Taille 84 octets
+
 TriTriangle
-; 4 octets de palette
 	DB	"TNL\"
 	DB	#07			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
-;
-; Donnees des triangles a afficher.
-; Chaque frame contient un ou plusieurs trianges defini de la sorte :
-; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
-; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
-; Seulement 1 octet par coordonnees (donc de 0 a 255...)
-; le 7eme octet de la structure (la couleur) defini le pen mode 1
-; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
-;
 	DB	#55,#00,#69,#00,#00,#AA,#01
 	DB	#69,#00,#1E,#96,#00,#AA,#01
 	DB	#1E,#96,#96,#AA,#00,#AA,#01
@@ -225,20 +188,11 @@ TriTriangle
 	DB	#46,#BE,#5A,#BE,#3C,#D2,#03
 	DB	#5A,#BE,#50,#D2,#3C,#D2,#83
 ; Taille 252 octets
+
 Pyramide
-; 4 octets de palette
 	DB	"]C^N"
 	DB	#0F			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
-;
-; Donnees des triangles a afficher.
-; Chaque frame contient un ou plusieurs trianges defini de la sorte :
-; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
-; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
-; Seulement 1 octet par coordonnees (donc de 0 a 255...)
-; le 7eme octet de la structure (la couleur) defini le pen mode 1
-; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
-;
 	DB	#C6,#9D,#2B,#A5,#2B,#B0,#01
 	DB	#C6,#9D,#C6,#A7,#2B,#B0,#01
 	DB	#85,#14,#D0,#99,#C7,#9C,#01
@@ -265,20 +219,11 @@ Pyramide
 	DB	#90,#14,#B4,#D1,#B2,#DF,#02
 	DB	#90,#14,#94,#1A,#B4,#D1,#82
 ; Taille 175 octets
+
 Pyramides
-; 4 octets de palette
 	DB	"KJLN"
 	DB	#0F			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
-;
-; Donnees des triangles a afficher.
-; Chaque frame contient un ou plusieurs trianges defini de la sorte :
-; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
-; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
-; Seulement 1 octet par coordonnees (donc de 0 a 255...)
-; le 7eme octet de la structure (la couleur) defini le pen mode 1
-; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
-;
 	DB	#CF,#5A,#98,#AC,#E7,#C3,#03
 	DB	#CF,#5A,#FE,#9A,#E7,#C3,#01
 	DB	#3A,#73,#01,#C4,#52,#DC,#03
@@ -295,20 +240,11 @@ Pyramides
 	DB	#AE,#97,#DD,#D5,#DE,#D5,#03
 	DB	#AE,#97,#AE,#98,#DD,#D5,#83
 ; Taille 105 octets
+
 Tricubes
-; 4 octets de palette
 	DB	"@SUD"
 	DB	#06			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
-;
-; Donnees des triangles a afficher.
-; Chaque frame contient un ou plusieurs trianges defini de la sorte :
-; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
-; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
-; Seulement 1 octet par coordonnees (donc de 0 a 255...)
-; le 7eme octet de la structure (la couleur) defini le pen mode 1
-; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
-;
 	DB	#C4,#69,#9E,#69,#89,#8B,#03
 	DB	#C4,#69,#89,#8B,#B1,#8B,#03
 	DB	#A6,#78,#91,#9B,#A6,#BD,#01
@@ -364,20 +300,11 @@ Tricubes
 	DB	#89,#46,#9E,#69,#C4,#69,#02
 	DB	#89,#46,#B1,#46,#C4,#69,#82
 ; Taille 378 octets
+
 Tricube
-; 4 octets de palette
 	DB	"KVNT"
 	DB	#01			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
-;
-; Donnees des triangles a afficher.
-; Chaque frame contient un ou plusieurs trianges defini de la sorte :
-; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
-; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
-; Seulement 1 octet par coordonnees (donc de 0 a 255...)
-; le 7eme octet de la structure (la couleur) defini le pen mode 1
-; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
-;
 	DB	#B9,#1E,#B9,#36,#A0,#43,#02
 	DB	#80,#00,#80,#19,#46,#1E,#01
 	DB	#80,#19,#46,#1E,#61,#2A,#01
@@ -493,20 +420,11 @@ Tricube
 	DB	#3B,#C3,#1A,#CC,#3B,#DC,#03
 	DB	#1A,#B3,#3B,#C3,#1A,#CC,#83
 ; Taille 798 octets
+
 Batman
-; 4 octets de palette
 	DB	"KTSL"
 	DB	#0F			; Tps d'affichage
 	DB	#01			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
-;
-; Donnees des triangles a afficher.
-; Chaque frame contient un ou plusieurs trianges defini de la sorte :
-; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
-; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
-; Seulement 1 octet par coordonnees (donc de 0 a 255...)
-; le 7eme octet de la structure (la couleur) defini le pen mode 1
-; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
-;
 	DB	#04,#57,#58,#57,#18,#62,#01
 	DB	#58,#57,#18,#62,#23,#6C,#01
 	DB	#58,#57,#23,#6C,#29,#76,#01
@@ -520,20 +438,11 @@ Batman
 	DB	#80,#6A,#76,#9B,#80,#AF,#01
 	DB	#7C,#56,#77,#6A,#80,#6A,#81
 ; Taille 84 octets
+
 Batman2
-; 4 octets de palette
 	DB	"KUTN"
 	DB	#07			; Tps d'affichage
 	DB	#01			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
-;
-; Donnees des triangles a afficher.
-; Chaque frame contient un ou plusieurs trianges defini de la sorte :
-; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
-; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
-; Seulement 1 octet par coordonnees (donc de 0 a 255...)
-; le 7eme octet de la structure (la couleur) defini le pen mode 1
-; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
-;
 	DB	#80,#00,#19,#C4,#80,#C4,#01
 	DB	#60,#0C,#74,#17,#69,#2C,#01
 	DB	#19,#C4,#2C,#C4,#23,#D2,#01
@@ -575,20 +484,11 @@ Batman2
 	DB	#7A,#9E,#80,#9E,#80,#A8,#03
 	DB	#7A,#9E,#80,#A8,#7A,#A8,#83
 ; Taille 280 octets
+
 Piece
-; 4 octets de palette
 	DB	"@TDL"
 	DB	#0F			; Tps d'affichage
 	DB	#01			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
-;
-; Donnees des triangles a afficher.
-; Chaque frame contient un ou plusieurs trianges defini de la sorte :
-; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
-; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
-; Seulement 1 octet par coordonnees (donc de 0 a 255...)
-; le 7eme octet de la structure (la couleur) defini le pen mode 1
-; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
-;
 	DB	#80,#01,#71,#04,#80,#2C,#01
 	DB	#71,#04,#63,#0E,#80,#2C,#01
 	DB	#63,#0E,#5A,#1A,#80,#2C,#01
@@ -610,20 +510,11 @@ Piece
 	DB	#6A,#4E,#80,#50,#80,#53,#02
 	DB	#6B,#65,#80,#67,#80,#69,#82
 ; Taille 140 octets
+
 ChessBoard
-; 4 octets de palette
 	DB	"@KT["
 	DB	#03			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
-;
-; Donnees des triangles a afficher.
-; Chaque frame contient un ou plusieurs trianges defini de la sorte :
-; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
-; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
-; Seulement 1 octet par coordonnees (donc de 0 a 255...)
-; le 7eme octet de la structure (la couleur) defini le pen mode 1
-; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
-;
 	DB	#F9,#4F,#3B,#50,#EB,#9E,#02
 	DB	#3B,#50,#00,#9B,#EB,#9E,#02
 	DB	#3B,#50,#52,#50,#4D,#58,#01
@@ -691,20 +582,11 @@ ChessBoard
 	DB	#D0,#91,#EE,#91,#EB,#9E,#01
 	DB	#D0,#91,#CD,#9D,#EB,#9E,#81
 ; Taille 462 octets
+
 Montagne
-; 4 octets de palette
 	DB	"S@KL"
 	DB	#06			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
-;
-; Donnees des triangles a afficher.
-; Chaque frame contient un ou plusieurs trianges defini de la sorte :
-; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
-; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
-; Seulement 1 octet par coordonnees (donc de 0 a 255...)
-; le 7eme octet de la structure (la couleur) defini le pen mode 1
-; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
-;
 	DB	#1C,#89,#00,#A4,#12,#A4,#01
 	DB	#48,#6F,#1C,#87,#12,#A4,#01
 	DB	#30,#73,#39,#78,#27,#82,#01
@@ -753,20 +635,11 @@ Montagne
 	DB	#E1,#8E,#FF,#A4,#D9,#A4,#02
 	DB	#5E,#5A,#6E,#6A,#5D,#6E,#82
 ; Taille 329 octets
+
 Floral
-; 4 octets de palette
 	DB	"CYSO"
 	DB	#03			; Tps d'affichage
 	DB	#01			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
-;
-; Donnees des triangles a afficher.
-; Chaque frame contient un ou plusieurs trianges defini de la sorte :
-; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
-; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
-; Seulement 1 octet par coordonnees (donc de 0 a 255...)
-; le 7eme octet de la structure (la couleur) defini le pen mode 1
-; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
-;
 	DB	#18,#00,#00,#00,#00,#18,#01
 	DB	#00,#E7,#00,#FF,#18,#FF,#01
 	DB	#30,#00,#00,#30,#30,#30,#02
@@ -782,20 +655,11 @@ Floral
 	DB	#32,#6B,#1D,#80,#32,#94,#01
 	DB	#1C,#6B,#08,#80,#1C,#94,#82
 ; Taille 98 octets
+
 Glaive
-; 4 octets de palette
 	DB	"K@FN"
 	DB	#09			; Tps d'affichage
 	DB	#01			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
-;
-; Donnees des triangles a afficher.
-; Chaque frame contient un ou plusieurs trianges defini de la sorte :
-; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
-; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
-; Seulement 1 octet par coordonnees (donc de 0 a 255...)
-; le 7eme octet de la structure (la couleur) defini le pen mode 1
-; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
-;
 	DB	#80,#00,#7D,#01,#80,#0A,#01
 	DB	#7D,#01,#79,#08,#80,#0A,#01
 	DB	#79,#08,#80,#0A,#76,#11,#01
@@ -822,20 +686,11 @@ Glaive
 	DB	#79,#F5,#80,#F9,#78,#FE,#03
 	DB	#80,#F9,#78,#FE,#80,#FF,#83
 ; Taille 175 octets
+
 Apple
-; 4 octets de palette
 	DB	"@TWK"
 	DB	#0F			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
-;
-; Donnees des triangles a afficher.
-; Chaque frame contient un ou plusieurs trianges defini de la sorte :
-; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
-; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
-; Seulement 1 octet par coordonnees (donc de 0 a 255...)
-; le 7eme octet de la structure (la couleur) defini le pen mode 1
-; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
-;
 	DB	#00,#00,#6C,#7F,#00,#FF,#02
 	DB	#00,#00,#85,#00,#6C,#7F,#02
 	DB	#6C,#7F,#8E,#7F,#00,#FF,#02
@@ -867,20 +722,11 @@ Apple
 	DB	#C9,#9E,#B3,#B1,#B7,#B8,#01
 	DB	#C9,#9E,#CF,#A4,#B7,#B8,#81
 ; Taille 210 octets
+
 Linux
-; 4 octets de palette
 	DB	"WKTL"
 	DB	#08			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
-;
-; Donnees des triangles a afficher.
-; Chaque frame contient un ou plusieurs trianges defini de la sorte :
-; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
-; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
-; Seulement 1 octet par coordonnees (donc de 0 a 255...)
-; le 7eme octet de la structure (la couleur) defini le pen mode 1
-; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
-;
 	DB	#AC,#19,#80,#36,#BF,#3F,#01
 	DB	#80,#36,#AA,#54,#9A,#5C,#01
 	DB	#80,#36,#BF,#3E,#AA,#54,#01
@@ -920,20 +766,11 @@ Linux
 	DB	#A3,#1D,#9B,#20,#A1,#21,#02
 	DB	#9B,#19,#A3,#1D,#9B,#20,#82
 ; Taille 266 octets
+
 Amstrad
-; 4 octets de palette
 	DB	"@EKL"
 	DB	#01			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
-;
-; Donnees des triangles a afficher.
-; Chaque frame contient un ou plusieurs trianges defini de la sorte :
-; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
-; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
-; Seulement 1 octet par coordonnees (donc de 0 a 255...)
-; le 7eme octet de la structure (la couleur) defini le pen mode 1
-; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
-;
 	DB	#9F,#4C,#DF,#4C,#AC,#B3,#01
 	DB	#9F,#4C,#AC,#B3,#6B,#B3,#01
 	DB	#07,#5D,#00,#A1,#0F,#A1,#02
@@ -999,20 +836,11 @@ Amstrad
 	DB	#F8,#5D,#FF,#64,#FF,#9B,#02
 	DB	#F8,#5D,#FF,#9B,#F8,#A1,#82
 ; Taille 448 octets
+
 World
-; 4 octets de palette
 	DB	"DVNK"
 	DB	#06			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
-;
-; Donnees des triangles a afficher.
-; Chaque frame contient un ou plusieurs trianges defini de la sorte :
-; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
-; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
-; Seulement 1 octet par coordonnees (donc de 0 a 255...)
-; le 7eme octet de la structure (la couleur) defini le pen mode 1
-; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
-;
 	DB	#D6,#21,#E0,#2C,#D7,#2D,#01
 	DB	#D7,#2D,#D2,#44,#D6,#4E,#01
 	DB	#D6,#21,#C2,#2B,#D2,#45,#01
@@ -1121,20 +949,11 @@ World
 	DB	#B1,#E7,#8A,#F1,#C3,#F1,#03
 	DB	#28,#E6,#1C,#F1,#22,#F1,#83
 ; Taille 749 octets
+
 Bidul
-; 4 octets de palette
 	DB	"CNL\"
 	DB	#0F			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
-;
-; Donnees des triangles a afficher.
-; Chaque frame contient un ou plusieurs trianges defini de la sorte :
-; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
-; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
-; Seulement 1 octet par coordonnees (donc de 0 a 255...)
-; le 7eme octet de la structure (la couleur) defini le pen mode 1
-; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
-;
 	DB	#28,#68,#1D,#7B,#43,#A7,#02
 	DB	#43,#A7,#6C,#D7,#5B,#E0,#01
 	DB	#92,#2D,#E3,#44,#C0,#56,#03
@@ -1154,20 +973,11 @@ Bidul
 	DB	#96,#6B,#53,#97,#82,#CB,#02
 	DB	#34,#37,#13,#C0,#6C,#D7,#83
 ; Taille 126 octets
+
 Etoile
-; 4 octets de palette
 	DB	"@OMX"
 	DB	#0F			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
-;
-; Donnees des triangles a afficher.
-; Chaque frame contient un ou plusieurs trianges defini de la sorte :
-; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
-; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
-; Seulement 1 octet par coordonnees (donc de 0 a 255...)
-; le 7eme octet de la structure (la couleur) defini le pen mode 1
-; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
-;
 	DB	#4E,#07,#A6,#53,#53,#8E,#02
 	DB	#50,#56,#75,#56,#00,#99,#03
 	DB	#5C,#88,#A0,#99,#7A,#B1,#03
@@ -1195,20 +1005,11 @@ Etoile
 	DB	#C5,#64,#C5,#65,#B5,#7D,#03
 	DB	#C5,#64,#C5,#66,#B5,#7D,#83
 ; Taille 182 octets
+
 Bouboule
-; 4 octets de palette
 	DB	"K_WU"
 	DB	#0F			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
-;
-; Donnees des triangles a afficher.
-; Chaque frame contient un ou plusieurs trianges defini de la sorte :
-; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
-; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
-; Seulement 1 octet par coordonnees (donc de 0 a 255...)
-; le 7eme octet de la structure (la couleur) defini le pen mode 1
-; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
-;
 	DB	#8A,#00,#6E,#0F,#BB,#19,#03
 	DB	#8A,#00,#6C,#0F,#3D,#11,#03
 	DB	#6D,#10,#3E,#12,#1F,#3D,#03
@@ -1240,20 +1041,11 @@ Bouboule
 	DB	#5A,#50,#2A,#90,#81,#94,#01
 	DB	#AA,#46,#5B,#50,#82,#95,#81
 ; Taille 210 octets
+
 Donut
-; 4 octets de palette
 	DB	"XCSL"
 	DB	#06			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
-;
-; Donnees des triangles a afficher.
-; Chaque frame contient un ou plusieurs trianges defini de la sorte :
-; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
-; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
-; Seulement 1 octet par coordonnees (donc de 0 a 255...)
-; le 7eme octet de la structure (la couleur) defini le pen mode 1
-; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
-;
 	DB	#55,#A2,#81,#A2,#8C,#C6,#03
 	DB	#8C,#C6,#3E,#EA,#97,#EA,#03
 	DB	#C4,#A2,#EA,#B4,#97,#EA,#03
@@ -1289,20 +1081,11 @@ Donut
 	DB	#77,#37,#23,#6D,#4A,#80,#03
 	DB	#6C,#14,#77,#37,#23,#6D,#81
 ; Taille 238 octets
+
 Cylindre
-; 4 octets de palette
 	DB	"DUWL"
 	DB	#03			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
-;
-; Donnees des triangles a afficher.
-; Chaque frame contient un ou plusieurs trianges defini de la sorte :
-; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
-; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
-; Seulement 1 octet par coordonnees (donc de 0 a 255...)
-; le 7eme octet de la structure (la couleur) defini le pen mode 1
-; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
-;
 	DB	#8B,#ED,#5A,#F1,#7A,#F1,#02
 	DB	#0D,#53,#08,#64,#02,#6E,#01
 	DB	#15,#45,#0D,#53,#08,#64,#01
@@ -1402,20 +1185,11 @@ Cylindre
 	DB	#A3,#74,#52,#98,#64,#B8,#01
 	DB	#A3,#74,#4A,#74,#52,#98,#82
 ; Taille 686 octets
+
 Hex
-; 4 octets de palette
 	DB	"DUWS"
 	DB	#02			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
-;
-; Donnees des triangles a afficher.
-; Chaque frame contient un ou plusieurs trianges defini de la sorte :
-; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
-; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
-; Seulement 1 octet par coordonnees (donc de 0 a 255...)
-; le 7eme octet de la structure (la couleur) defini le pen mode 1
-; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
-;
 	DB	#52,#17,#95,#24,#21,#3D,#01
 	DB	#21,#3D,#34,#72,#77,#7F,#01
 	DB	#95,#23,#A7,#57,#77,#7F,#01
@@ -1480,20 +1254,11 @@ Hex
 	DB	#68,#87,#5F,#9C,#5E,#9C,#00
 	DB	#5F,#9C,#77,#AE,#77,#AF,#80
 ; Taille 441 octets
+
 Hippo
-; 4 octets de palette
 	DB	"D@T\"
 	DB	#08			; Tps d'affichage
 	DB	#01			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
-;
-; Donnees des triangles a afficher.
-; Chaque frame contient un ou plusieurs trianges defini de la sorte :
-; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
-; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
-; Seulement 1 octet par coordonnees (donc de 0 a 255...)
-; le 7eme octet de la structure (la couleur) defini le pen mode 1
-; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
-;
 	DB	#65,#0A,#80,#0F,#80,#34,#01
 	DB	#65,#0A,#4B,#0E,#80,#34,#01
 	DB	#4B,#0E,#36,#34,#80,#34,#01
@@ -1518,20 +1283,11 @@ Hippo
 	DB	#33,#AE,#2D,#C0,#2E,#C2,#03
 	DB	#5A,#AF,#65,#BF,#64,#C1,#83
 ; Taille 161 octets
+
 Elephant
-; 4 octets de palette
 	DB	"TFLN"
 	DB	#0F			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
-;
-; Donnees des triangles a afficher.
-; Chaque frame contient un ou plusieurs trianges defini de la sorte :
-; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
-; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
-; Seulement 1 octet par coordonnees (donc de 0 a 255...)
-; le 7eme octet de la structure (la couleur) defini le pen mode 1
-; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
-;
 	DB	#7F,#12,#61,#1B,#6E,#65,#02
 	DB	#7F,#12,#9F,#1B,#93,#65,#02
 	DB	#93,#65,#93,#9E,#70,#A3,#02
@@ -1574,20 +1330,11 @@ Elephant
 	DB	#4C,#C2,#56,#C5,#56,#CF,#02
 	DB	#B3,#C2,#A9,#C5,#AA,#CF,#82
 ; Taille 287 octets
+
 Elephant2
-; 4 octets de palette
 	DB	"O_[K"
 	DB	#07			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
-;
-; Donnees des triangles a afficher.
-; Chaque frame contient un ou plusieurs trianges defini de la sorte :
-; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
-; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
-; Seulement 1 octet par coordonnees (donc de 0 a 255...)
-; le 7eme octet de la structure (la couleur) defini le pen mode 1
-; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
-;
 	DB	#92,#2C,#85,#37,#9F,#57,#01
 	DB	#92,#2C,#A6,#36,#9E,#57,#01
 	DB	#AB,#3A,#9D,#57,#AE,#62,#01
@@ -1659,20 +1406,11 @@ Elephant2
 	DB	#24,#AA,#24,#BE,#2D,#C6,#02
 	DB	#23,#AA,#2D,#C6,#46,#C9,#82
 ; Taille 490 octets
+
 Girafe
-; 4 octets de palette
 	DB	"WJNT"
 	DB	#07			; Tps d'affichage
 	DB	#01			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
-;
-; Donnees des triangles a afficher.
-; Chaque frame contient un ou plusieurs trianges defini de la sorte :
-; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
-; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
-; Seulement 1 octet par coordonnees (donc de 0 a 255...)
-; le 7eme octet de la structure (la couleur) defini le pen mode 1
-; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
-;
 	DB	#61,#01,#54,#0E,#5E,#37,#01
 	DB	#61,#01,#74,#04,#5E,#37,#01
 	DB	#74,#04,#5E,#37,#6A,#43,#02
@@ -1714,20 +1452,11 @@ Girafe
 	DB	#72,#7B,#68,#81,#74,#A2,#02
 	DB	#68,#81,#52,#94,#57,#A0,#81
 ; Taille 280 octets
+
 Rhino
-; 4 octets de palette
 	DB	"N@KT"
 	DB	#09			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
-;
-; Donnees des triangles a afficher.
-; Chaque frame contient un ou plusieurs trianges defini de la sorte :
-; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
-; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
-; Seulement 1 octet par coordonnees (donc de 0 a 255...)
-; le 7eme octet de la structure (la couleur) defini le pen mode 1
-; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
-;
 	DB	#5D,#00,#29,#0F,#89,#27,#01
 	DB	#29,#0F,#89,#27,#0A,#38,#01
 	DB	#89,#27,#0A,#38,#00,#6E,#01
@@ -1776,19 +1505,9 @@ Rhino
 	DB	#69,#C6,#82,#D6,#83,#D6,#83
 ; Taille 322 octets
 
-; 4 octets de palette
 	DB	"D_ST"
 	DB	#09			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
-;
-; Donnees des triangles a afficher.
-; Chaque frame contient un ou plusieurs trianges defini de la sorte :
-; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
-; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
-; Seulement 1 octet par coordonnees (donc de 0 a 255...)
-; le 7eme octet de la structure (la couleur) defini le pen mode 1
-; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
-;
 	DB	#82,#A3,#74,#AC,#82,#BC,#01
 	DB	#BF,#29,#DF,#4C,#CC,#5C,#01
 	DB	#DE,#4C,#CC,#5C,#E0,#74,#01
@@ -1839,19 +1558,9 @@ Rhino
 	DB	#55,#28,#5D,#28,#59,#2F,#83
 ; Taille 336 octets
 
-; 4 octets de palette
 	DB	"JKNT"
 	DB	#0F			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
-;
-; Donnees des triangles a afficher.
-; Chaque frame contient un ou plusieurs trianges defini de la sorte :
-; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
-; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
-; Seulement 1 octet par coordonnees (donc de 0 a 255...)
-; le 7eme octet de la structure (la couleur) defini le pen mode 1
-; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
-;
 	DB	#16,#00,#40,#21,#37,#28,#02
 	DB	#16,#00,#37,#28,#1F,#39,#01
 	DB	#72,#00,#48,#21,#51,#28,#02
@@ -1883,19 +1592,9 @@ Rhino
 	DB	#FF,#4B,#DA,#4C,#FF,#79,#81
 ; Taille 203 octets
 
-; 4 octets de palette
 	DB	"V\NT"
 	DB	#0F			; Tps d'affichage
 	DB	#01			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
-;
-; Donnees des triangles a afficher.
-; Chaque frame contient un ou plusieurs trianges defini de la sorte :
-; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
-; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
-; Seulement 1 octet par coordonnees (donc de 0 a 255...)
-; le 7eme octet de la structure (la couleur) defini le pen mode 1
-; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
-;
 	DB	#33,#00,#2D,#22,#37,#29,#01
 	DB	#2D,#22,#37,#29,#1A,#30,#01
 	DB	#37,#29,#1A,#30,#21,#38,#01
@@ -1922,19 +1621,9 @@ Rhino
 	DB	#63,#9D,#6A,#A6,#66,#AA,#83
 ; Taille 168 octets
 
-; 4 octets de palette
 	DB	"DT\L"
 	DB	#08			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
-;
-; Donnees des triangles a afficher.
-; Chaque frame contient un ou plusieurs trianges defini de la sorte :
-; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
-; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
-; Seulement 1 octet par coordonnees (donc de 0 a 255...)
-; le 7eme octet de la structure (la couleur) defini le pen mode 1
-; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
-;
 	DB	#77,#1C,#99,#22,#73,#38,#02
 	DB	#98,#22,#9D,#37,#73,#38,#02
 	DB	#D9,#1E,#D7,#39,#CD,#3B,#01
@@ -1968,19 +1657,9 @@ Rhino
 	DB	#72,#5F,#6A,#D5,#49,#EB,#82
 ; Taille 217 octets
 
-; 4 octets de palette
 	DB	"RKTL"
 	DB	#08			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
-;
-; Donnees des triangles a afficher.
-; Chaque frame contient un ou plusieurs trianges defini de la sorte :
-; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
-; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
-; Seulement 1 octet par coordonnees (donc de 0 a 255...)
-; le 7eme octet de la structure (la couleur) defini le pen mode 1
-; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
-;
 	DB	#17,#A7,#75,#AE,#36,#B0,#01
 	DB	#03,#8B,#17,#A7,#75,#AE,#01
 	DB	#04,#75,#03,#8B,#75,#AE,#01
@@ -2030,20 +1709,11 @@ Rhino
 	DB	#D9,#79,#E2,#89,#DB,#98,#02
 	DB	#F7,#8E,#FF,#8E,#F7,#9C,#82
 ; Taille 336 octets
+
 Lion
-; 4 octets de palette
 	DB	"TJLK"
 	DB	#09			; Tps d'affichage
 	DB	#01			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
-;
-; Donnees des triangles a afficher.
-; Chaque frame contient un ou plusieurs trianges defini de la sorte :
-; coordonnees X1,Y1,X2,Y2,X3,Y3 puis couleur
-; Les coordonnees des triangles doivent etre triees des Y les plus petit au plus grand
-; Seulement 1 octet par coordonnees (donc de 0 a 255...)
-; le 7eme octet de la structure (la couleur) defini le pen mode 1
-; Si le bit 7 de cet octet est positionne, cela signifie la fin d'une frame
-;
 	DB	#48,#16,#3A,#21,#4A,#24,#01
 	DB	#3A,#21,#4A,#24,#2C,#27,#01
 	DB	#6C,#47,#5E,#4A,#65,#5D,#01
