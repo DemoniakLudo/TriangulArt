@@ -1,4 +1,8 @@
 ; Généré par TriangulArt le 10/05/2021 (15 35 36)
+CHAR_Apostrophe
+	DB	#00,#00,#03,#00,#00,#06
+	DB	128+2
+; Taille 6 octets
 Char_A
 	DB	#06,#00,#09,#00,#02,#15
 	DB	#06,#00,#02,#15,#00,#15
@@ -308,10 +312,6 @@ Char_Etoile
 	DB	#07,#00,#03,#0B,#0D,#13
 	DB	128+16
 ; Taille 24 octets
-CHAR_Apostrophe
-	DB	#00,#00,#03,#00,#00,#06
-	DB	128+4
-; Taille 6 octets
 CHAR_Smiley
 	DB	#04,#00,#0C,#00,#00,#04
 	DB	#0C,#00,#00,#04,#10,#04

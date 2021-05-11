@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 
 namespace TriangulArt {
@@ -14,7 +13,7 @@ namespace TriangulArt {
 			int nbOctets = 0;
 			string s = "";
 
-			sw.WriteLine(nom);
+			sw.WriteLine(";" + nom);
 			if (!modePolice) {
 				if (cpcPlus) {
 					string line = "";
@@ -22,20 +21,20 @@ namespace TriangulArt {
 						int c = BitmapCpc.Palette[i];
 						line += (line != "" ? "," : "") + "#" + ((byte)(((c >> 4) & 0x0F) | (c << 4))).ToString("X2") + ",#" + ((byte)(c >> 8)).ToString("X2");
 					}
-					sw.WriteLine("; 8 octets (4 mots) de palette");
+					//sw.WriteLine("; 8 octets (4 mots) de palette");
 					sw.WriteLine("	DB	" + line);
 				}
 				else {
 					for (int i = 0; i < 4; i++)
 						s += BitmapCpc.CpcVGA[data.palette[i]];
 
-					sw.WriteLine("; 4 octets de palette");
+					//sw.WriteLine("; 4 octets de palette");
 					sw.WriteLine("	DB	\"" + s + "\"");
 				}
 				int tps = (int)Math.Max(Math.Min(255, data.tpsAttente / 3.333333), 1);
 				sw.WriteLine("	DB	#" + tps.ToString("X2") + "			; Tps d'affichage");
 				sw.WriteLine("	DB	#" + data.modeRendu.ToString("X2") + "			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)");
-				sw.WriteLine(";");
+				//sw.WriteLine(";");
 			}
 			//sw.WriteLine("; Donnees des triangles a afficher.");
 			//sw.WriteLine("; Chaque frame contient un ou plusieurs trianges defini de la sorte :");

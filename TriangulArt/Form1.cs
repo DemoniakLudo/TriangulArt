@@ -296,16 +296,18 @@ namespace TriangulArt {
 		}
 
 		private void DisplayMemory() {
-			int nb = projet.SelImage().lstTriangle.Count;
-			SetInfo("Nbre de triangles:" + nb.ToString() + " - Mémoire utilisée:" + (nb * 7).ToString() + " octets");
+			int nbTri = projet.SelImage().lstTriangle.Count;
+			int mem = chkModePolice.Checked ? (nbTri * 6) + 2 : (nbTri * 7) + 6;
+			SetInfo("Nbre de triangles:" + nbTri.ToString() + " - Mémoire utilisée:" + mem + " octets");
 		}
 
 		private void DisplayMemoryProjet() {
-			int nb=0;
+			int nbTri = 0, nbImg = projet.lstData.Count;
 			foreach (Datas d in projet.lstData) {
-				nb += d.lstTriangle.Count;
+				nbTri += d.lstTriangle.Count;
 			}
-			SetInfo("Nbre de triangles du projet:" + nb.ToString() + " - Mémoire utilisée:" + (nb * 7).ToString() + " octets");
+			int mem = chkModePolice.Checked ? (nbTri * 6) + (nbImg * 2) : (nbTri * 7) + (nbImg * 6);
+			SetInfo("Nbre de triangles du projet:" + nbTri.ToString() + " - Mémoire utilisée:" + mem.ToString() + " octets");
 		}
 
 		private void InitImage() {

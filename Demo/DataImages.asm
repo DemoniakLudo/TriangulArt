@@ -56,7 +56,6 @@ Impact
 	DB	#A3,#DA,#AF,#EE,#AB,#F3,#01
 	DB	#A6,#D1,#A3,#DA,#AF,#EE,#81
 ; Taille 364 octets
-
 ;Triangulart
 	DB	"XCSL"
 	DB	#16			; Tps d'affichage
@@ -146,7 +145,6 @@ Triangle
 	DB	#A0,#64,#F0,#64,#50,#8C,#01
 	DB	#F0,#64,#50,#8C,#50,#B4,#81
 ; Taille 84 octets
-
 ;TriTriangle
 	DB	"TNL\"
 	DB	#07			; Tps d'affichage
@@ -188,7 +186,6 @@ Triangle
 	DB	#46,#BE,#5A,#BE,#3C,#D2,#03
 	DB	#5A,#BE,#50,#D2,#3C,#D2,#83
 ; Taille 252 octets
-
 ;Pyramide
 	DB	"]C^N"
 	DB	#0F			; Tps d'affichage
@@ -219,7 +216,6 @@ Triangle
 	DB	#90,#14,#B4,#D1,#B2,#DF,#02
 	DB	#90,#14,#94,#1A,#B4,#D1,#82
 ; Taille 175 octets
-
 ;Pyramides
 	DB	"KJLN"
 	DB	#0F			; Tps d'affichage
@@ -240,7 +236,6 @@ Triangle
 	DB	#AE,#97,#DD,#D5,#DE,#D5,#03
 	DB	#AE,#97,#AE,#98,#DD,#D5,#83
 ; Taille 105 octets
-
 ;Tricubes
 	DB	"@SUD"
 	DB	#06			; Tps d'affichage
@@ -300,7 +295,6 @@ Triangle
 	DB	#89,#46,#9E,#69,#C4,#69,#02
 	DB	#89,#46,#B1,#46,#C4,#69,#82
 ; Taille 378 octets
-
 ;Tricube
 	DB	"KVNT"
 	DB	#01			; Tps d'affichage
@@ -420,7 +414,6 @@ Triangle
 	DB	#3B,#C3,#1A,#CC,#3B,#DC,#03
 	DB	#1A,#B3,#3B,#C3,#1A,#CC,#83
 ; Taille 798 octets
-
 ;Batman
 	DB	"KTSL"
 	DB	#0F			; Tps d'affichage
@@ -438,7 +431,6 @@ Triangle
 	DB	#80,#6A,#76,#9B,#80,#AF,#01
 	DB	#7C,#56,#77,#6A,#80,#6A,#81
 ; Taille 84 octets
-
 ;Batman2
 	DB	"KUTN"
 	DB	#07			; Tps d'affichage
@@ -484,7 +476,6 @@ Triangle
 	DB	#7A,#9E,#80,#9E,#80,#A8,#03
 	DB	#7A,#9E,#80,#A8,#7A,#A8,#83
 ; Taille 280 octets
-
 ;Piece
 	DB	"@TDL"
 	DB	#0F			; Tps d'affichage
@@ -510,7 +501,6 @@ Triangle
 	DB	#6A,#4E,#80,#50,#80,#53,#02
 	DB	#6B,#65,#80,#67,#80,#69,#82
 ; Taille 140 octets
-
 ;ChessBoard
 	DB	"@KT["
 	DB	#03			; Tps d'affichage
@@ -582,7 +572,6 @@ Triangle
 	DB	#D0,#91,#EE,#91,#EB,#9E,#01
 	DB	#D0,#91,#CD,#9D,#EB,#9E,#81
 ; Taille 462 octets
-
 ;Montagne
 	DB	"S@KL"
 	DB	#06			; Tps d'affichage
@@ -635,7 +624,6 @@ Triangle
 	DB	#E1,#8E,#FF,#A4,#D9,#A4,#02
 	DB	#5E,#5A,#6E,#6A,#5D,#6E,#82
 ; Taille 329 octets
-
 ;Floral
 	DB	"CYSO"
 	DB	#03			; Tps d'affichage
@@ -655,9 +643,8 @@ Triangle
 	DB	#32,#6B,#1D,#80,#32,#94,#01
 	DB	#1C,#6B,#08,#80,#1C,#94,#82
 ; Taille 98 octets
-
 ;Apple
-	DB	"@TWK"
+	DB	"LTWK"
 	DB	#0F			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
 	DB	#00,#00,#6C,#7F,#00,#FF,#02
@@ -694,13 +681,11 @@ Triangle
 LogoBarre
 	DB	#C1
 ; Croix pour barrer le logo
-	DB	#05,#00,#FF,#FA,#FA,#FF,#01
-	DB	#05,#00,#00,#05,#FA,#FF,#01
-	DB	#FA,#00,#FF,#05,#05,#FF,#01
-	DB	#FA,#00,#00,#FA,#05,#FF,#81
-
-; Taille 210 + 28 octets
-
+	DB	#28,#18,#E8,#D8,#D8,#E8,#00
+	DB	#28,#18,#18,#28,#D8,#E8,#00
+	DB	#D8,#18,#E8,#28,#28,#E8,#00
+	DB	#D8,#18,#18,#D8,#28,#E8,#80
+; Taille 238 octets
 ;Amstrad
 	DB	"@EKL"
 	DB	#01			; Tps d'affichage
@@ -770,7 +755,6 @@ LogoBarre
 	DB	#F8,#5D,#FF,#64,#FF,#9B,#02
 	DB	#F8,#5D,#FF,#9B,#F8,#A1,#82
 ; Taille 448 octets
-
 ;Bidul
 	DB	"CNL\"
 	DB	#0F			; Tps d'affichage
@@ -794,7 +778,6 @@ LogoBarre
 	DB	#96,#6B,#53,#97,#82,#CB,#02
 	DB	#34,#37,#13,#C0,#6C,#D7,#83
 ; Taille 126 octets
-
 ;Etoile
 	DB	"@OMX"
 	DB	#0F			; Tps d'affichage
@@ -826,7 +809,6 @@ LogoBarre
 	DB	#C5,#64,#C5,#65,#B5,#7D,#03
 	DB	#C5,#64,#C5,#66,#B5,#7D,#83
 ; Taille 182 octets
-
 ;Bouboule
 	DB	"K_WU"
 	DB	#0F			; Tps d'affichage
@@ -862,7 +844,6 @@ LogoBarre
 	DB	#5A,#50,#2A,#90,#81,#94,#01
 	DB	#AA,#46,#5B,#50,#82,#95,#81
 ; Taille 210 octets
-
 ;Donut
 	DB	"XCSL"
 	DB	#06			; Tps d'affichage
@@ -902,7 +883,6 @@ LogoBarre
 	DB	#77,#37,#23,#6D,#4A,#80,#03
 	DB	#6C,#14,#77,#37,#23,#6D,#81
 ; Taille 238 octets
-
 ;Cylindre
 	DB	"DUWL"
 	DB	#03			; Tps d'affichage
@@ -1006,7 +986,6 @@ LogoBarre
 	DB	#A3,#74,#52,#98,#64,#B8,#01
 	DB	#A3,#74,#4A,#74,#52,#98,#82
 ; Taille 686 octets
-
 ;Hex
 	DB	"DUWS"
 	DB	#02			; Tps d'affichage
@@ -1075,7 +1054,6 @@ LogoBarre
 	DB	#68,#87,#5F,#9C,#5E,#9C,#00
 	DB	#5F,#9C,#77,#AE,#77,#AF,#80
 ; Taille 441 octets
-
 ;World
 	DB	"DVNK"
 	DB	#06			; Tps d'affichage
@@ -1188,19 +1166,18 @@ LogoBarre
 	DB	#B1,#E7,#8A,#F1,#C3,#F1,#03
 	DB	#28,#E6,#1C,#F1,#22,#F1,#83
 ; Taille 749 octets
-
 ;Linux
 	DB	"WKTL"
 	DB	#08			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
-	DB	#AC,#19,#80,#36,#BF,#3F,#01
-	DB	#80,#36,#AA,#54,#9A,#5C,#01
-	DB	#80,#36,#BF,#3E,#AA,#54,#01
-	DB	#81,#21,#A0,#21,#80,#36,#01
-	DB	#A1,#12,#AC,#19,#80,#37,#01
-	DB	#92,#10,#A1,#12,#8F,#2A,#01
-	DB	#7B,#01,#93,#10,#90,#23,#01
 	DB	#7C,#01,#72,#04,#90,#23,#01
+	DB	#7B,#01,#93,#10,#90,#23,#01
+	DB	#92,#10,#A1,#12,#8F,#2A,#01
+	DB	#A1,#12,#AC,#19,#80,#37,#01
+	DB	#81,#21,#A0,#21,#80,#36,#01
+	DB	#AC,#19,#80,#36,#BF,#3F,#01
+	DB	#80,#36,#BF,#3E,#AA,#54,#01
+	DB	#80,#36,#AA,#54,#9A,#5C,#01
 	DB	#81,#37,#6F,#57,#9A,#5C,#01
 	DB	#6F,#57,#9A,#5C,#63,#8F,#01
 	DB	#9A,#5C,#62,#8F,#99,#91,#01
@@ -1232,7 +1209,6 @@ LogoBarre
 	DB	#A3,#1D,#9B,#20,#A1,#21,#02
 	DB	#9B,#19,#A3,#1D,#9B,#20,#82
 ; Taille 266 octets
-
 ;Hippo
 	DB	"D@T\"
 	DB	#08			; Tps d'affichage
@@ -1261,7 +1237,6 @@ LogoBarre
 	DB	#33,#AE,#2D,#C0,#2E,#C2,#03
 	DB	#5A,#AF,#65,#BF,#64,#C1,#83
 ; Taille 161 octets
-
 ;Elephant
 	DB	"TFLN"
 	DB	#0F			; Tps d'affichage
@@ -1308,7 +1283,6 @@ LogoBarre
 	DB	#4C,#C2,#56,#C5,#56,#CF,#02
 	DB	#B3,#C2,#A9,#C5,#AA,#CF,#82
 ; Taille 287 octets
-
 ;Elephant2
 	DB	"O_[K"
 	DB	#07			; Tps d'affichage
@@ -1384,7 +1358,6 @@ LogoBarre
 	DB	#24,#AA,#24,#BE,#2D,#C6,#02
 	DB	#23,#AA,#2D,#C6,#46,#C9,#82
 ; Taille 490 octets
-
 ;Girafe
 	DB	"WJNT"
 	DB	#07			; Tps d'affichage
@@ -1430,7 +1403,6 @@ LogoBarre
 	DB	#72,#7B,#68,#81,#74,#A2,#02
 	DB	#68,#81,#52,#94,#57,#A0,#81
 ; Taille 280 octets
-
 ;Rhino
 	DB	"N@KT"
 	DB	#09			; Tps d'affichage
@@ -1482,7 +1454,7 @@ LogoBarre
 	DB	#4C,#9B,#69,#C6,#6A,#C6,#03
 	DB	#69,#C6,#82,#D6,#83,#D6,#83
 ; Taille 322 octets
-
+;Dolphin
 	DB	"D_ST"
 	DB	#09			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
@@ -1535,7 +1507,7 @@ LogoBarre
 	DB	#55,#28,#59,#2F,#50,#30,#03
 	DB	#55,#28,#5D,#28,#59,#2F,#83
 ; Taille 336 octets
-
+;Goupil
 	DB	"JKNT"
 	DB	#0F			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
@@ -1569,7 +1541,7 @@ LogoBarre
 	DB	#FF,#79,#DA,#7A,#A6,#E0,#02
 	DB	#FF,#4B,#DA,#4C,#FF,#79,#81
 ; Taille 203 octets
-
+;Cerf
 	DB	"V\NT"
 	DB	#0F			; Tps d'affichage
 	DB	#01			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
@@ -1598,7 +1570,7 @@ LogoBarre
 	DB	#62,#7F,#4B,#81,#5B,#99,#02
 	DB	#63,#9D,#6A,#A6,#66,#AA,#83
 ; Taille 168 octets
-
+;Loup
 	DB	"DT\L"
 	DB	#08			; Tps d'affichage
 	DB	#00			; Mode rendu (0=normal, 1=miroir horizontal, 2=miroir vertical)
@@ -1687,7 +1659,6 @@ LogoBarre
 	DB	#D9,#79,#E2,#89,#DB,#98,#02
 	DB	#F7,#8E,#FF,#8E,#F7,#9C,#82
 ; Taille 336 octets
-
 ;Lion
 	DB	"TJLK"
 	DB	#09			; Tps d'affichage
