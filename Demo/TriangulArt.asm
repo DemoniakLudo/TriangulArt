@@ -1,4 +1,6 @@
-TpsWaitImage1	EQU	#7780
+TpsWaitImage1	EQU	#7780		; Temps de pause entre chaque images (première partie)
+
+StartCharAscii	EQU	48		; début des caractères ASCII dans la police
 
 	ORG	#200
 	RUN	$
@@ -8,18 +10,11 @@ TpsWaitImage1	EQU	#7780
 	DI
 	LD	HL,#8000				; Effacer 2 buffers video
 	LD	SP,HL
-	LD	D,H
-	LD	E,L
-	LD	B,H
-	LD	C,L
-	LD	(HL),L
-	INC	DE
-	DEC	BC
-	LDIR
+
 
 ; calculer adresse ecran pour chaque ligne
-	LD	BC,#40			; 256 lignes
- 	LD	DE,0
+	LD	BC,#C0			; 256 lignes, c=adresse haute a ne pas depasser
+ 	LD	DE,#8000		; adresse de depart
 	LD	HL,TabAdr
 CalcAdr:
 	LD	(HL),E			; Poids faibles
@@ -33,13 +28,14 @@ CalcAdr:
 	CP	C
 	JR	C,CalcSuite
 	PUSH	BC
-	LD	B,#C0
+	LD	BC,#C040
 	EX	DE,HL
 	ADD	HL,BC
 	EX	DE,HL
 	POP	BC
 CalcSuite:
 	DJNZ	CalcAdr
+	
 ; calculer points a afficher en fonction de la couleur
 	LD	DE,pen1
 	LD	HL,PtMode1C1 
@@ -66,13 +62,14 @@ InitPen:
 	DJNZ	InitPen
 	LD	HL,NewIrq
 	LD	(#39),HL
-	CALL	Init			; initialisation musique
-	EI
 
 ;
 ; Formater ecran en 256x256 pixels, mode 1
 ;
 Debut
+	DI
+	CALL	Init			; Initialisation de la musique
+	EI
 	LD	HL,#202A
 	LD	BC,#BC01		; 64 colones
 	OUT	(C),C
@@ -99,7 +96,10 @@ Debut
 	OUT	(C),C
 	LD	BC,#BD30		; Memoire video en #C000
 	OUT	(C),C
-	CALL	CopyScreen
+	CALL	CopyAndClearScreen
+
+	LD	A,#C0
+	LD	(OffsetVideo+1),A	; Trace de triangles en #C000
 
 ;
 ;	JR	MoreSpeed	; decommenter pour aller direcement a la 2e partie
@@ -154,7 +154,7 @@ Wait3:
 MoreSpeed:
 	XOR	A
 	LD	(DoWait+1),A		; ne plus faire de pauses entre chaque triangles
-	CALL	CopyScreen		; Copier ecran en #8000 et effacer #C000
+	CALL	CopyAndClearScreen	; Copier ecran en #8000 et effacer #C000
 	CALL	WaitVBL
 	LD	BC,#BD30
 	OUT (C),C
@@ -179,28 +179,20 @@ WaitMess2
 	LD	(Glaive),A		; Afficher le glaive
 	LD	IX,Triangle
 BoucleRapide
-	CALL	CopyScreen		; Copier ecran en #8000 et basculer video en #8000
+	CALL	CopyAndClearScreen	; Copier ecran en #8000 et basculer video en #8000
 	PUSH	IX
 	LD	BC,5
 	ADD	IX,BC
 	CALL	DrawFrame		; Afficher l'image en #C000
-BoucleRapide1
-	LD	A,0
-	XOR	1			; Une fois scrollV, une fois scrollH
-	LD	(BoucleRapide1+1),A
-	JR	Z,BoucleRapide2
-	CALL	ClearScrollH		; Efface image en #8000 et bascule video en #C000
-	JR	BoucleRapide3
+	CALL	ClearScroll		; Efface image en #8000 et bascule video en #C000
 BoucleRapide2
-	CALL	ClearScrollV		; Efface image en #8000 et bascule video en #C000
-BoucleRapide3
 	LD	A,0
 	INC	A
-	LD	(BoucleRapide3+1),A
+	LD	(BoucleRapide2+1),A
 	CP	7			; Une fois sur 7, flash de l'ecran
-	JR	C,BoucleRapide4
+	JR	C,BoucleRapide3
 	XOR A				
-	LD	(BoucleRapide3+1),A
+	LD	(BoucleRapide2+1),A
 	LD	HL,PaletteBlack		; Passe l'ecran en noir
 	CALL	SetPalette
 	CALL	WaitVbl
@@ -208,14 +200,14 @@ BoucleRapide3
 	CALL	WaitVbl
 	LD	HL,PaletteBlack		; Passe l'ecren en noir
 	CALL	SetPalette
-BoucleRapide4	
+BoucleRapide3	
 	POP	HL			; Recupere palette de l'image
 	CALL	SetPalette
 	LD	A,(IX+0)
 	INC	A
 	JR	NZ,BoucleRapide		; Boucler tant qu'il y a des images
 
-	LD	B,20
+	LD	B,10
 WaitForMess:
 	PUSH	BC
 	CALL	WaitVbl
@@ -227,7 +219,7 @@ WaitForMess:
 EndMess
 	XOR	A
 	LD	(CntVblMess+1),A
-	CALL	CopyScreen
+	CALL	CopyAndClearScreen
 	CALL	WaitVBL
 	LD	BC,#BD30
 	OUT	(C),C
@@ -242,10 +234,10 @@ WaitReadMess2
 	LD	A,(CntIrq+1)
 	INC	A
 	JR	NZ,WaitReadMess2	
-	DJNZ	WaitReadMess		; 8 x 256 IRQ pour le temps de pause (3.2 sec)
+	DJNZ	WaitReadMess		; 8 x 256 IRQ pour le temps de pause (6.8 sec)
 	PUSH	HL
-	CALL	CopyScreen
-	CALL	ClearScrollV
+	CALL	CopyAndClearScreen
+	CALL	ClearScroll
 	POP	HL
 	INC	HL
 	LD	A,(HL)
@@ -266,7 +258,7 @@ StartAnim
 	OUT	(C),C
 	LD	HL,0
 	LD	(IrqSwapColor+1),HL	; Plus de clignottement de couleurs
-	CALL	CopyScreen
+	CALL	CopyAndClearScreen
 	LD	HL,MessageEnd1		; Message "THE END" en #C000
 	CALL	PrintMess
 	LD	A,#80
@@ -364,7 +356,7 @@ BclClearZone:
 	LD	A,(HL)			; Poids faible adresse ecran
 	INC	H
 OffsetClear:
-	ADD	A,0
+	OR	#F6			; Sera remplacé par #80 ou #C0
 	LD	E,A
 	LD	A,(HL)			; Poids fort adresse ecran
 OffsetVideoClear:
@@ -415,19 +407,16 @@ NbBclAnim:
 	LD	A,0
 	INC	A
 	LD	(NbBclAnim+1),A
-	CP	6
+	CP	9
 	JP	C,InitAnim
 	XOR	A
 	LD	(NbBclAnim+1),A
 	CALL	ClearScreen
-	LD	A,#C0
-	LD	(OffsetVideo+1),A
 	JP	Debut
 
 ;
 ; Fonctions
 ;
-
 SetPalette
 	CALL	WaitVBL
 	LD	BC,#7F10
@@ -444,7 +433,7 @@ BclPalette
 	JR	NZ,BclPalette
 	RET
 
-CopyScreen
+CopyAndClearScreen
 	LD	HL,#C000
 	LD	DE,#8000
 	LD	BC,#3FFF
@@ -474,6 +463,28 @@ WaitEndVBL
 	JR	C,WaitEndVBL
 	RET
 
+ClearScroll
+	LD	A,0
+	XOR	1			; Une fois scrollV, une fois scrollH
+	LD	(ClearScroll+1),A
+	JR	Z,ClearScroll2
+	CALL	ClearScrollH		; Efface image en #8000 et bascule video en #C000
+	JR	ClearScroll3
+ClearScroll2
+	CALL	ClearScrollV		; Efface image en #8000 et bascule video en #C000
+ClearScroll3
+	LD	BC,#BC0C
+	LD	HL,#3000
+	OUT	(C),C
+	INC	B
+	OUT	(C),H
+	DEC	B
+	INC	C
+	OUT	(C),C
+	INC	B
+	OUT	(C),L
+	RET
+
 ClearScrollV:
 	LD	HL,#20
 	XOR	A
@@ -500,7 +511,6 @@ BclClearScrollV2:
 	LD	E,(HL)
 	INC	H			; Adresse des poids forts
 	LD	D,(HL)
-	SET	7,D
 	LD	H,D
 	LD	L,E
 	LD	BC,63
@@ -520,16 +530,6 @@ BclClearScrollV3:
 	ADD	HL,BC
 	ADD	A,8
 	JR	NZ,BclClearScrollV
-	LD	BC,#BC0C
-	LD	HL,#3000
-	OUT	(C),C
-	INC	B
-	OUT	(C),H
-	DEC	B
-	INC	C
-	OUT	(C),C
-	INC	B
-	OUT	(C),L
 	RET
 	
 ClearScrollH:
@@ -548,7 +548,6 @@ BclClearScrollH2:
 	LD	E,(HL)
 	INC	H			; Adresse des poids forts
 	LD	D,(HL)
-	SET	7,D
 	EX	DE,HL
 	LD	D,0
 	LD	A,C
@@ -563,18 +562,7 @@ BclClearScrollH2:
 	INC	A
 	CP	32
 	JR	NZ,BclClearScrollH
-	LD	BC,#BC0C
-	LD	HL,#3000
-	OUT	(C),C
-	INC	B
-	OUT	(C),H
-	DEC	B
-	INC	C
-	OUT	(C),C
-	INC	B
-	OUT	(C),L
 	RET
-	
 	
 ;
 ; Dessine les triangles d'une image
@@ -662,6 +650,7 @@ PrintMessPos
 	LD	(PrintMessY+1),A
 	INC	HL
 	JR	PrintMess
+	
 ;
 ; Changement de palette
 ;
@@ -695,7 +684,7 @@ PrintMessAutoCenter1
 	JR	C,PrintMessAutoCenterOk
 	EXX
 	JR	Z,PrintMessAutoCenterSpace	
-	SUB	48
+	SUB	StartCharAscii
 	ADD	A,A
 	LD	HL,Alphabet
 	LD	C,A
@@ -723,9 +712,8 @@ PrintMessAutoCenterAdd
 	JR	PrintMessAutoCenter1
 PrintMessAutoCenterOk:	
 	POP	HL
-	XOR	A
-	SUB	B
-	AND	A
+	LD	A,B
+	NEG
 	SRL	A
 	LD	(PrintMessX+1),A
 	JR	PrintMess
@@ -759,7 +747,7 @@ PrintMess
 	LD	B,12
 	CP	32
 	JR	Z,PrintSpace
-	SUB	48
+	SUB	StartCharAscii
 	ADD	A,A
 	PUSH	HL
 	LD	HL,Alphabet
@@ -914,7 +902,7 @@ DrawLigneCoordOk:
 	INC	H			; Adresse des poids forts
 	LD	A,(HL)			; Reg.DE = adresse memoire ecran (0,y)
 OffsetVideo
-	ADD	A,#C0
+	OR	#F6			; Sera remplacé par #80 ou #C0
 	LD	D,A
 	
 	LD	A,B			; x
