@@ -6,7 +6,7 @@ TpsWaitImage1	EQU	#7780
 	Write direct "Demo.bin"
 
 	DI
-	LD	HL,#8000
+	LD	HL,#8000				; Effacer 2 buffers video
 	LD	SP,HL
 	LD	D,H
 	LD	E,L
@@ -18,13 +18,13 @@ TpsWaitImage1	EQU	#7780
 	LDIR
 
 ; calculer adresse ecran pour chaque ligne
-	LD	BC,#40					; 256 lignes
+	LD	BC,#40			; 256 lignes
  	LD	DE,0
 	LD	HL,TabAdr
 CalcAdr:
-	LD	(HL),E
+	LD	(HL),E			; Poids faibles
 	INC	H
-	LD	(HL),D
+	LD	(HL),D			; Poids forts
 	DEC	H
 	INC	HL
 	LD	A,D
@@ -43,10 +43,10 @@ CalcSuite:
 ; calculer points a afficher en fonction de la couleur
 	LD	DE,pen1
 	LD	HL,PtMode1C1 
-	LD	B,32					; Tableau structure {Point} (32 valeurs)
+	LD	B,32			; Tableau structure {Point} (32 valeurs)
 InitPen:
-	CALL	Set3Pen					; Ecriture Masque + premier octet a ecrire
-	LD	A,(DE)					; Octet suivant = nbre de pixels a soustraire
+	CALL	Set3Pen			; Ecriture Masque + premier octet a ecrire
+	LD	A,(DE)			; Octet suivant = nbre de pixels a soustraire
 	LD	(HL),A
 	INC	H
 	LD	(HL),A
@@ -59,15 +59,14 @@ InitPen:
 	DEC	H
 	INC	L
 	INC	DE
-	CALL	Set3Pen					; Ecriture Masque + dernier octet a ecrire
+	CALL	Set3Pen			; Ecriture Masque + dernier octet a ecrire
 	INC	L
 	INC	L
-	INC	L					; 3 valeurs a zeros pour aligner sur 8 octets
+	INC	L			; 3 valeurs a zeros pour aligner sur 8 octets
 	DJNZ	InitPen
 	LD	HL,NewIrq
 	LD	(#39),HL
-	LD	HL,MdlAddr
-	CALL	Init		; initialisation musique
+	CALL	Init			; initialisation musique
 	EI
 
 ;
@@ -75,7 +74,7 @@ InitPen:
 ;
 Debut
 	LD	HL,#202A
-	LD	BC,#BC01
+	LD	BC,#BC01		; 64 colones
 	OUT	(C),C
 	INC	B
 	OUT	(C),H
@@ -85,7 +84,7 @@ Debut
 	INC	B
 	OUT	(C),L
 	LD	HL,#2022
-	LD	BC,#BC06
+	LD	BC,#BC06		; 256 lignes
 	OUT	(C),C
 	INC	B
 	OUT	(C),H
@@ -94,11 +93,11 @@ Debut
 	OUT	(C),C
 	INC	B
 	OUT	(C),L
-	LD	BC,#7F8D
+	LD	BC,#7F8D		; Mode 1
 	OUT	(C),C
 	LD	BC,#BC0C
 	OUT	(C),C
-	LD	BC,#BD30
+	LD	BC,#BD30		; Memoire video en #C000
 	OUT	(C),C
 	CALL	CopyScreen
 
@@ -115,24 +114,23 @@ Debut
 	LD	A,#C1
 	LD	(LogoBarre),A		; Pause entre la croix et le logo Apple
 	LD	A,#FF
-	LD	(Glaive),A			; Ne pas afficher le glaive
+	LD	(Glaive),A		; Ne pas afficher le glaive
 BoucleNormale
 	PUSH	IX
 	POP	HL	
-	CALL	SetPalette
+	CALL	SetPalette		; Palette de l'image
 	LD	A,(HL)
 	INC	HL
-	LD	(TpsWaitTriangle+1),A
+	LD	(TpsWaitTriangle+1),A	; Temps de pause entre chaque triangles
 	PUSH	HL
-	CALL	ClearScreen
+	CALL	ClearScreen		; Effacer ecran
 	LD	BC,#BD30
 	OUT	(C),C
 	POP	IX
 BoucleNorm2
-	CALL	DrawFrame
-	LD	C,A				; mémo octet de fin (pour logo apple barre)
-; Temps de pause pour affichage image
-	LD	HL,TpsWaitImage1
+	CALL	DrawFrame		; Afficher image
+	LD	C,A			; memo octet de fin (pour logo apple barre)
+	LD	HL,TpsWaitImage1	; Temps de pause pour affichage image
 Wait1
 	DEC	HL
 	LD	B,16
@@ -140,37 +138,37 @@ Wait2
 	DJNZ	Wait2
 	LD	A,H
 	OR	L
-	JR	NZ,Wait1
-	LD	A,C
+	JR	NZ,Wait1		; Boucle pour temps de pause
+	LD	A,C			; Recupere octet de fin
 	RLA
-	JR	NC,Wait3
-	DEC	IX
-	JR	BoucleNorm2
+	JR	NC,Wait3		; Si bit 6=1 => croix sur logo Apple
+	DEC	IX				
+	JR	BoucleNorm2		; Affichage croix sans effacer ecran
 Wait3:
 	LD	A,(IX+0)
 	INC	A
-	JR	NZ,BoucleNormale
+	JR	NZ,BoucleNormale	; Si pas fin des images, on continue
 ;
-; Message "We want more speed"
+; Message "We want true speed"
 ;
 MoreSpeed:
 	XOR	A
-	LD	(DoWait+1),A
-	CALL	CopyScreen
+	LD	(DoWait+1),A		; ne plus faire de pauses entre chaque triangles
+	CALL	CopyScreen		; Copier ecran en #8000 et effacer #C000
 	CALL	WaitVBL
 	LD	BC,#BD30
 	OUT (C),C
-	LD	HL,Message1
+	LD	HL,Message1		; message "WE WANT TRUE SPEED NOW"
 	CALL	PrintMess
 	LD	B,4
 WaitMess1
 	XOR	A
 	LD	(CntIrq+1),A
 WaitMess2
-	LD	A,(CntIrq+1)
+	LD	A,(CntIrq+1)		; Attendre 256 interruptions (a peu pres 0.8 secondes)
 	INC	A
 	JR	NZ,WaitMess2
-	DJNZ	WaitMess1
+	DJNZ	WaitMess1		; Boucler 4 fois (soit 3.2 secondes)
 ;
 ; Affichage rapide des images
 ;
@@ -178,51 +176,51 @@ WaitMess2
 	LD	A,1
 	LD	(LogoBarre),A		; supprimer la pause de la croix sur le logo pour l'option rapide
 	LD	A,'K'
-	LD	(Glaive),A			; Afficher le glaive
+	LD	(Glaive),A		; Afficher le glaive
 	LD	IX,Triangle
 BoucleRapide
 	CALL	CopyScreen		; Copier ecran en #8000 et basculer video en #8000
 	PUSH	IX
 	LD	BC,5
 	ADD	IX,BC
-	CALL	DrawFrame
+	CALL	DrawFrame		; Afficher l'image en #C000
 BoucleRapide1
 	LD	A,0
-	XOR	1
+	XOR	1			; Une fois scrollV, une fois scrollH
 	LD	(BoucleRapide1+1),A
 	JR	Z,BoucleRapide2
-	CALL	ClearScrollH
+	CALL	ClearScrollH		; Efface image en #8000 et bascule video en #C000
 	JR	BoucleRapide3
 BoucleRapide2
-	CALL	ClearScrollV
+	CALL	ClearScrollV		; Efface image en #8000 et bascule video en #C000
 BoucleRapide3
 	LD	A,0
 	INC	A
 	LD	(BoucleRapide3+1),A
-	CP	7
+	CP	7			; Une fois sur 7, flash de l'ecran
 	JR	C,BoucleRapide4
-	XOR A
+	XOR A				
 	LD	(BoucleRapide3+1),A
-	LD	HL,PaletteBlack
+	LD	HL,PaletteBlack		; Passe l'ecran en noir
 	CALL	SetPalette
 	CALL	WaitVbl
-	CALL	SetPalette
+	CALL	SetPalette		; Passe l'ecran en blanc
 	CALL	WaitVbl
-	LD	HL,PaletteBlack
+	LD	HL,PaletteBlack		; Passe l'ecren en noir
 	CALL	SetPalette
 BoucleRapide4	
-	POP	HL
+	POP	HL			; Recupere palette de l'image
 	CALL	SetPalette
 	LD	A,(IX+0)
 	INC	A
-	JR	NZ,BoucleRapide
+	JR	NZ,BoucleRapide		; Boucler tant qu'il y a des images
 
 	LD	B,20
 WaitForMess:
 	PUSH	BC
 	CALL	WaitVbl
 	POP	BC
-	DJNZ	WaitForMess
+	DJNZ	WaitForMess		; Pause pour affichage derniere image
 ;
 ; Message de fin...
 ;
@@ -235,7 +233,7 @@ EndMess
 	OUT	(C),C
 	LD	HL,Message2
 BclEndMess
-	CALL	PrintMess
+	CALL	PrintMess		; Affichage page complete
 	LD	B,8
 WaitReadMess
 	XOR	A
@@ -243,8 +241,8 @@ WaitReadMess
 WaitReadMess2
 	LD	A,(CntIrq+1)
 	INC	A
-	JR	NZ,WaitReadMess2
-	DJNZ	WaitReadMess
+	JR	NZ,WaitReadMess2	
+	DJNZ	WaitReadMess		; 8 x 256 IRQ pour le temps de pause (3.2 sec)
 	PUSH	HL
 	CALL	CopyScreen
 	CALL	ClearScrollV
@@ -252,7 +250,7 @@ WaitReadMess2
 	INC	HL
 	LD	A,(HL)
 	INC	A
-	JR	NZ,BclEndMess		
+	JR	NZ,BclEndMess		; Tant qu'il y a des pages a afficher...		
 ;
 ; Animation rotation 3D
 ;
@@ -260,37 +258,37 @@ StartAnim
 	LD	HL,PalAnim
 	CALL	SetPalette
 	LD	A,#2E
-	LD	BC,#BC02
+	LD	BC,#BC02		; Decentrer ecran (anim calculee en 320x200....)
 	OUT	(C),C
 	INC	B
 	OUT	(C),A
 	LD	BC,#BC0C
 	OUT	(C),C
 	LD	HL,0
-	LD	(IrqSwapColor+1),HL
+	LD	(IrqSwapColor+1),HL	; Plus de clignottement de couleurs
 	CALL	CopyScreen
-	LD	HL,MessageEnd1
+	LD	HL,MessageEnd1		; Message "THE END" en #C000
 	CALL	PrintMess
 	LD	A,#80
 	LD	(OffsetVideo+1),A
-	LD	HL,MessageEnd2
+	LD	HL,MessageEnd2		; Message "THE END" en #8000
 	CALL	PrintMess
 
-	LD	IY,Frame_58             ; Avant derniere frame
+	LD	IY,Frame_58		; Avant derniere frame
 InitAnim:
-	LD	IX,Frame_0              ; Premiere frame
+	LD	IX,Frame_0		; Premiere frame
 BclAnim
 	CALL	WaitVbl
 MemVideo:
-	LD	A,#C0                   ; Memoire ecran
+	LD	A,#C0			; Memoire ecran
 	LD	(OffsetVideo+1),A
 	LD	(OffsetVideoClear+1),A
-	XOR	#40                     ; Swap memoire ecran
+	XOR	#40			; Swap memoire ecran
 	LD	(MemVideo+1),A
 	RRA
 	RRA
 	LD	B,#BD
-	OUT	(C),A                   ; Selection memoire video a afficher
+	OUT	(C),A			; Selection memoire video a afficher
 BclClearFrame:
 	LD	A,(ZoneYmin+1)
 	LD	C,(IY+1)
@@ -310,15 +308,15 @@ CalcCoord3:
 	LD	A,D
 	LD	B,(IY+2)
 	CP	B
-	JR	NC,CalcCoord4            ; si B<D
-	LD	D,B                     ; Sinon on inverse B et D
+	JR	NC,CalcCoord4		; si B<D
+	LD	D,B			; Sinon on inverse B et D
 	LD	B,A
 CalcCoord4:
 	LD	A,D
 	LD	H,(IY+4)
 	CP	H
-	JR	C,CalcCoord5            ; si D<H
-	LD	D,H                     ; sinon on inverse D et H
+	JR	C,CalcCoord5		; si D<H
+	LD	D,H			; sinon on inverse D et H
 	LD	H,A
 CalcCoord5:
 	LD	A,(ZoneXmax+1)
@@ -339,14 +337,14 @@ CalcCoord7:
 	RLA
 	JR	NC,BclClearFrame
 	XOR	A
-	LD	B,A                     ; Parce que A vaut zero
+	LD	B,A			; Parce que A vaut zero
 ZoneXMin:
 	LD	A,0
 	LD	C,A
 	RRA
 	AND	A
 	RRA
-	LD	(OffsetClear+1),A       ; X/4 = debut a effacer
+	LD	(OffsetClear+1),A	; X/4 = debut a effacer
 ZoneXMax:
 	LD	A,0
 	SUB	C
@@ -354,47 +352,47 @@ ZoneXMax:
 	RRA
 	AND	A
 	RRA
-	LD	(BclClearZone+1),A      ; Nbre d'octets a effacer
+	LD	(BclClearZone+1),A	; Nbre d'octets a effacer
 ZoneYMin:
-	LD	A,0                     ; Position y de depart
+	LD	A,0			; Position y de depart
 
 BclClearZone:
-	LD	C,0                     ; Nbre d'octets a effacer
-	LD	L,A                     ; Reg.L = y
-	EX	AF,AF'                  ; Sauvegarde position Y
+	LD	C,0			; Nbre d'octets a effacer
+	LD	L,A			; Reg.L = y
+	EX	AF,AF'			; Sauvegarde position Y
 	LD	H,TabAdr/256
-	LD	A,(HL)                  ; Poids faible adresse ecran
+	LD	A,(HL)			; Poids faible adresse ecran
 	INC	H
 OffsetClear:
 	ADD	A,0
 	LD	E,A
-	LD	A,(HL)                  ; Poids fort adresse ecran
+	LD	A,(HL)			; Poids fort adresse ecran
 OffsetVideoClear:
 	OR	#C0
 	LD	H,A
-	LD	L,E                     ; Reg HL = adresse memoire ecran (x,y)
-	LD	(HL),B                  ; Efface premier octet
-	DEC	C                       ; Si un seul octet a effacer
-	JR	Z,FinClear              ; Alors on a fini
+	LD	L,E			; Reg HL = adresse memoire ecran (x,y)
+	LD	(HL),B			; Efface premier octet
+	DEC	C			; Si un seul octet a effacer
+	JR	Z,FinClear		; Alors on a fini
 	LD	D,H
 	INC	DE
 	LDIR
 FinClear:
-	EX	AF,AF'                  ; Recupere position Y
+	EX	AF,AF'			; Recupere position Y
 	INC	A
 ZoneYMax:
-	CP	0                       ; Y = Ymax ?
+	CP	0			; Y = Ymax ?
 	JR	NZ,BclClearZone
-	XOR	A                       ; Mettre les "max" a Zero
+	XOR	A			; Mettre les "max" a Zero
 	LD	(ZoneYmax+1),A
 	LD	(ZoneXmax+1),A
-	DEC	A                       ; Mettre les "min" a 255
+	DEC	A			; Mettre les "min" a 255
 	LD	(ZoneYmin+1),A
 	LD	(ZoneXmin+1),A
 	LD	A,(IY+0)
 	INC	A
 	JR	NZ,BclDrawFrame
-	LD	IY,Frame_0               ; Si A=#FF, fin des frames, on recommence
+	LD	IY,Frame_0		; Si A=#FF, fin des frames, on recommence
 BclDrawFrame:
 	LD	A,(IX+6)
 	CALL	SetTriangleColor
@@ -582,20 +580,20 @@ BclClearScrollH2:
 ; Dessine les triangles d'une image
 ;
 DrawFrame
-	LD	A,(IX+0)				; Mode de trace
+	LD	A,(IX+0)		; Mode de trace
 	LD	(ModeDraw+1),A
 	INC	IX
 BclDrawImage
 	XOR	A
 	LD	(CntIrq+1),A
-	LD	A,(IX+6)				; Couleur
+	LD	A,(IX+6)		; Couleur
 	CALL	SetTriangleColor	
-	LD	B,(IX+0)				; X1
-	LD	C,(IX+1)				; Y1
-	LD	D,(IX+2)				; X2
-	LD	E,(IX+3)				; Y2
-	LD	H,(IX+4)				; X3
-	LD	L,(IX+5)				; Y3
+	LD	B,(IX+0)		; X1
+	LD	C,(IX+1)		; Y1
+	LD	D,(IX+2)		; X2
+	LD	E,(IX+3)		; Y2
+	LD	H,(IX+4)		; X3
+	LD	L,(IX+5)		; Y3
 	CALL	DrawTriangle
 ModeDraw
 	LD	A,0
@@ -781,20 +779,20 @@ PrintSwapInk:
 	LD	(PrintSwapInk+1),A
 	CALL	SetTriangleColor
 PrintMessX
-	LD	B,0					; Position X
+	LD	B,0			; Position X
 PrintMessY
-	LD	C,0					; Position Y
-	LD	H,(IX+2)				; X2
-	LD	L,(IX+3)				; Y2
+	LD	C,0			; Position Y
+	LD	H,(IX+2)		; X2
+	LD	L,(IX+3)		; Y2
 	ADD	HL,BC
 	EX	DE,HL
-	LD	H,(IX+4)				; X3
-	LD	L,(IX+5)				; Y3
+	LD	H,(IX+4)		; X3
+	LD	L,(IX+5)		; Y3
 	ADD	HL,BC
-	LD	A,(IX+0)				; X1
+	LD	A,(IX+0)		; X1
 	ADD	A,B
 	LD	B,A	
-	LD	A,(IX+1)				; Y1
+	LD	A,(IX+1)		; Y1
 	ADD	A,C
 	LD	C,A	
 	CALL	DrawTriangle
@@ -805,7 +803,7 @@ PrintMessY
 	BIT	7,A
 	JR	Z,PrintMessX
 	AND	#3F
-	LD	B,A					; Largeur lettre
+	LD	B,A			; Largeur lettre
 	POP	HL
 PrintSpace
 	INC	HL
@@ -836,53 +834,53 @@ DrawTriangle
 	SUB	B
 	JR	C,SetDx1Neg
 	LD	(DX1+1),A
-	LD	A,#04					; INC B
+	LD	A,#04			; INC B
 	JR	SetSgn1
 SetDx1Neg:
 	NEG
 	LD	(DX1+1),A
-	LD	A,#05					; DEC B
+	LD	A,#05			; DEC B
 SetSgn1:
 	LD	(Sgn1),A
 	LD	A,H
 	SUB	D
 	JR	C,SetDx3Neg
 	LD	(DX3+1),A
-	LD	A,#0C					; INC C
+	LD	A,#0C			; INC C
 	JR	SetSgn3
 SetDx3Neg:
 	NEG
 	LD	(DX3+1),A
-	LD	A,#0D					; DEC C
+	LD	A,#0D			; DEC C
 SetSgn3:
 	LD	(Sgn3+1),A
 	LD	A,L
 	LD	(Ymax+1),A
 	SUB	C
-	LD	H,A					; Reg.H = DY1
+	LD	H,A			; Reg.H = DY1
 	LD	A,L
 	SUB	E
 	LD	(DY3+1),A
 	LD	A,E
 	LD	(Y2+1),A
 	SUB	C
-	LD	L,A					; Reg.L = DY2
+	LD	L,A			; Reg.L = DY2
 	LD	A,D
 	SUB	B
 	JR	C,SetDx2Neg
 	LD	(DX2+1),A
-	LD	A,#0C					; INC C
+	LD	A,#0C			; INC C
 	JR	SetSgn2
 SetDx2Neg:
 	NEG
 	LD	(DX2+1),A
-	LD	A,#0D					; DEC C
+	LD	A,#0D			; DEC C
 SetSgn2:
 	LD	(Sgn2),A
-	LD	A,C					; Y de depart = Reg.C
+	LD	A,C			; Y de depart = Reg.C
 	CP	E
 	LD	C,D
-	LD	DE,0					; Reg.D = Err2, Reg.E = Err1
+	LD	DE,0			; Reg.D = Err2, Reg.E = Err1
 	JR	Z,BclDrawTriangle
 	LD	C,B
 ;
@@ -896,35 +894,35 @@ BclDrawTriangle:
 	PUSH	BC
 	EXX
 	POP	BC
-	LD	L,A					; Reg.L = y
+	LD	L,A			; Reg.L = y
 	EX	AF,AF'
-	LD	A,B					; x
+	LD	A,B			; x
 	CP	C
-	JR	Z,LigneVide				; Si B = C, rien a faire
-	JR	C,DrawLigneCoordOk			; Si B < C, ok
-	LD	B,C					; Sinon on inverse
+	JR	Z,LigneVide		; Si B = C, rien a faire
+	JR	C,DrawLigneCoordOk	; Si B < C, ok
+	LD	B,C			; Sinon on inverse
 	LD	C,A
-	LD	A,B					; x
+	LD	A,B			; x
 DrawLigneCoordOk:
-	LD	H,TabAdr/256				; Adresse des poids faibles
+	LD	H,TabAdr/256		; Adresse des poids faibles
 	AND	A
 	RRA
 	AND	A
-	RRA						; x/4
+	RRA				; x/4
 	ADD	A,(HL)
 	LD	E,A
-	INC	H					; Adresse des poids forts
-	LD	A,(HL)					; Reg.DE = adresse memoire ecran (0,y)
+	INC	H			; Adresse des poids forts
+	LD	A,(HL)			; Reg.DE = adresse memoire ecran (0,y)
 OffsetVideo
 	ADD	A,#C0
 	LD	D,A
 	
-	LD	A,B					; x
+	LD	A,B			; x
 	AND	3
-	LD	L,A					; Reg.L = position fine x (0 a 3)
-	LD	A,C					; xfin
+	LD	L,A			; Reg.L = position fine x (0 a 3)
+	LD	A,C			; xfin
 	SUB	B
-	LD	B,A					; Reg.B = nbre de points en x
+	LD	B,A			; Reg.B = nbre de points en x
 	DEC	A
 	CP	7
 	JR	C,DrawLigneOk
@@ -936,19 +934,19 @@ DrawLigneOk:
 	OR	L
 	RLCA
 	RLCA
-	RLCA						; 8 octets par structure
+	RLCA				; 8 octets par structure
 	LD	L,A
 DrawLigneCoul:
 	LD	H,PtMode1C1/256
-	LD	A,(DE)					; Octet memoire ecran
-	AND	(HL)					; Masque
+	LD	A,(DE)			; Octet memoire ecran
+	AND	(HL)			; Masque
 	INC	L
-	OR	(HL)					; Premier octet
+	OR	(HL)			; Premier octet
 	LD	(DE),A
 	INC	L
 	INC	DE
-	LD	A,B					; Nbre de points
-	SUB	(HL)					; Nbre de points a soustraire
+	LD	A,B			; Nbre de points
+	SUB	(HL)			; Nbre de points a soustraire
 	JR	C,DrawLigneFin
 	INC	A
 	RRA
@@ -956,7 +954,7 @@ DrawLigneCoul:
 	RRA
 	LD	C,A
 DrawLigneCoul2:
-	LD	A,#3E					; Octet du milieu (4 pixels allumes)
+	LD	A,#3E			; Octet du milieu (4 pixels allumes)
 	LD	(DE),A
 	LD	H,D
 	LD	A,L
@@ -972,39 +970,39 @@ DrawLigneCoul3:
 
 DrawLigneFin:
 	INC	L
-	LD	A,(DE)					; Octet memoire ecran
-	AND	(HL)					; Masque
+	LD	A,(DE)			; Octet memoire ecran
+	AND	(HL)			; Masque
 	INC	L
-	OR	(HL)					; Dernier octet
+	OR	(HL)			; Dernier octet
 	LD	(DE),A
 LigneVide:
 	EXX
 ;
 ; Fin trace de ligne
 ;
-	LD	A,E					; Err1
+	LD	A,E			; Err1
 DX1:
-	ADD	A,0					; Err1=Err1+Dx1
+	ADD	A,0			; Err1=Err1+Dx1
 	JR	C,ForceErr1
 DY1:
 	CP	H
-	JR	C,SetErr1				; Si Err1<Dy1, arrÃªt de la boucle
+	JR	C,SetErr1		; Si Err1<Dy1, arret de la boucle
 ForceErr1:
-	SUB	H					; - DY1
+	SUB	H			; - DY1
 SGN1:
-	INC	B					; OU DEC B (B=xl)
+	INC	B			; OU DEC B (B=xl)
 	JR	DY1
 SetErr1:
-	LD	E,A					; Sauvegarde Err1
-	EX	AF,AF'					; Recupere ordonnee de la ligne en cours (Y)
+	LD	E,A			; Sauvegarde Err1
+	EX	AF,AF'			; Recupere ordonnee de la ligne en cours (Y)
 Y2:
-	CP	0					; Y==E ?
-	JR	Z,SetErr3					; Il est moins couteux en tps de faire
-							; un saut conditionnel dont la condition
-							; arrive peu frequement (ici le JR Z ne
-							; peut arriver qu'une seule fois)
-	EX	AF,AF'					; Re-sauvegarde Y
-	LD	A,D					; Err2
+	CP	0			; Y==E ?
+	JR	Z,SetErr3		; Il est moins couteux en tps de faire
+					; un saut conditionnel dont la condition
+					; arrive peu frequement (ici le JR Z ne
+					; peut arriver qu'une seule fois)
+	EX	AF,AF'			; Re-sauvegarde Y
+	LD	A,D			; Err2
 DX2:
 	ADD	A,0
 	JR	C,ForceErr2
@@ -1012,16 +1010,16 @@ DY2:
 	CP	L
 	JR	C,SetErr2
 ForceErr2:
-	SUB	L					; -DY2
+	SUB	L			; -DY2
 SGN2:
-	INC	C					; OU DEC C(C=xr)
+	INC	C			; OU DEC C(C=xr)
 	JR	DY2
 SetErr2:
 	LD	D,A
-	EX	AF,AF'					; Recupere ordonee de la ligne en cours
+	EX	AF,AF'			; Recupere ordonee de la ligne en cours
 	INC	A
 Ymax:
-	CP	0					; Arrive en bas ?
+	CP	0			; Arrive en bas ?
 	JP	C,BclDrawTriangle
 	JR	FinTriangle
 ;
@@ -1043,39 +1041,42 @@ DY3:
 FinTriangle:	
 	RET	
 
+;
+; Creation donnees pixels couleurs trace ligne mode 1
+;
 Set3Pen:
-	LD	A,(DE)					; Point en Pen 1
+	LD	A,(DE)			; Point en Pen 1
 	LD	C,A
 	RRCA
 	RRCA
 	RRCA
 	RRCA
 	OR	C
-	CPL						; Creation du masque
+	CPL				; Creation du masque
 	LD	(HL),A
 	INC	H
 	LD	(HL),A
 	INC	H
 	LD	(HL),A
 	INC	H
-	LD	(HL),A					; Stockage du masque pour les 3 pens
+	LD	(HL),A			; Stockage du masque pour les 3 pens
 	DEC	H
 	DEC	H
 	DEC	H
 	INC	L
-	LD	(HL),0					; Pen 0
+	LD	(HL),0			; Pen 0
 	INC	H
-	LD	(HL),C					; Pen 1
+	LD	(HL),C			; Pen 1
 	INC	H
 	LD	A,C
 	RRCA
 	RRCA
 	RRCA
 	RRCA
-	LD	(HL),A					; Pen 2
+	LD	(HL),A			; Pen 2
 	INC	H
 	OR	C
-	LD	(HL),A					; Pen 3
+	LD	(HL),A			; Pen 3
 	DEC	H
 	DEC	H
 	DEC	H
@@ -1098,23 +1099,23 @@ NewIrq
 	IN	A,(C)
 	RRA
 	JR	NC,CntIrq
-	CALL	Play
+	CALL	Play			; Jouer la musique sur detection VBL
 	
 IrqSwapColor:	
 	LD	DE,0
 	LD	A,D
 	XOR	E
-	AND	A
+	AND	A			; Si demande swap couleur
 	JR	Z,CntIrq
 CntVblMess:
 	LD	A,0
 	INC	A
 	LD	(CntVblMess+1),A
-	CP	20
+	CP	20			; Attendre 20 VBL
 	JR	C,CntIrq
 	XOR	A
 	LD	(CntVblMess+1),A
-	LD	BC,#7F02
+	LD	BC,#7F02		; Swap PEN 2 et PEN 3
 	OUT	(C),C
 	OUT	(C),D
 	INC	C
@@ -1128,7 +1129,7 @@ CntVblMess:
 CntIrq
 	LD	A,0
 	INC	A
-	LD	(CntIrq+1),A
+	LD	(CntIrq+1),A		; Compter les IRQ
 	POP	AF
 	EX	AF,AF'
 	POP	IX
