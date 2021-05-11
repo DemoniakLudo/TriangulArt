@@ -300,6 +300,14 @@ namespace TriangulArt {
 			SetInfo("Nbre de triangles:" + nb.ToString() + " - Mémoire utilisée:" + (nb * 7).ToString() + " octets");
 		}
 
+		private void DisplayMemoryProjet() {
+			int nb=0;
+			foreach (Datas d in projet.lstData) {
+				nb += d.lstTriangle.Count;
+			}
+			SetInfo("Nbre de triangles du projet:" + nb.ToString() + " - Mémoire utilisée:" + (nb * 7).ToString() + " octets");
+		}
+
 		private void InitImage() {
 			for (int i = 0; i < 4; i++)
 				BitmapCpc.Palette[i] = projet.SelImage().palette[i];
@@ -702,6 +710,7 @@ namespace TriangulArt {
 				try {
 					new XmlSerializer(typeof(Projet)).Serialize(file, projet);
 					SetInfo("Sauvegarde projet ok");
+					DisplayMemoryProjet();
 				}
 				catch {
 					MessageBox.Show("Erreur sauvegarde projet...");
