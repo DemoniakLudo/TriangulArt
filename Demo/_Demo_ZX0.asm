@@ -14,7 +14,6 @@ CodeDemo:
 	LD	HL,CodeDemo
 	LD	DE,#200
 	PUSH	DE
-DepkZX0:
 	ld	bc,#ffff			; preserve default offset 1
 	push	bc
 	inc	bc

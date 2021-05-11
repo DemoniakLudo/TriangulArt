@@ -342,19 +342,13 @@ CHAR_DeuxPoint
 	DB	#00,#0E,#03,#13,#00,#13
 	DB	128+4
 ; Taille 24 octets
-CHAR_Moins
-	DB	#00,#09,#0C,#09,#0C,#0C
-	DB	#00,#09,#0C,#0C,#00,#0C
-	DB	128+13
-; Taille 12 octets
 
 
 Alphabet
-	DW	CHAR_Apostrophe,0,0,Char_Etoile,0,0,CHAR_Moins,0,0
 	DW	0,CHAR_1,0,CHAR_3,0,0,0,0,CHAR_8,0
-	DW	CHAR_DeuxPoint,0,0,0,0,0,CHAR_Smiley
+	DW	CHAR_DeuxPoint,CHAR_Apostrophe,0,Char_Etoile,0,Char_OpenTab,CHAR_Smiley
 	DW	Char_A,Char_B,Char_C,Char_D,Char_E,Char_F,Char_G,Char_H
 	DW	Char_I,Char_J,Char_K,Char_L,Char_M,Char_N,Char_O,Char_P
 	DW	Char_Q,Char_R,Char_S,Char_T,Char_U,Char_V,Char_W,Char_X
-	DW	Char_Y,Char_Z,Char_OpenTab
+	DW	Char_Y,Char_Z
 	

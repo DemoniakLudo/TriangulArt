@@ -3,7 +3,7 @@ TpsWaitImage1	EQU	#7780
 	ORG	#200
 	RUN	$
 
-;	Write direct "Demo.bin"
+	Write direct "Demo.bin"
 
 	DI
 	LD	HL,#8000
@@ -103,7 +103,7 @@ Debut
 	CALL	CopyScreen
 
 ;
-	JR	MoreSpeed	; decommenter pour aller direcement a la 2e partie
+;	JR	MoreSpeed	; decommenter pour aller direcement a la 2e partie
 ;
 ;	JP	EndMess		; decommenter pour aller directement au message de fin
 ;
@@ -185,8 +185,6 @@ BoucleRapide
 	PUSH	IX
 	LD	BC,5
 	ADD	IX,BC
-	XOR	A
-	LD	(CntIrq+1),A
 	CALL	DrawFrame
 BoucleRapide1
 	LD	A,0
@@ -215,10 +213,6 @@ BoucleRapide3
 BoucleRapide4	
 	POP	HL
 	CALL	SetPalette
-BoucleRapide5
-	LD	A,(CntIrq+1)
-	AND	A
-	JR	NZ,BoucleRapide5
 	LD	A,(IX+0)
 	INC	A
 	JR	NZ,BoucleRapide
@@ -703,7 +697,7 @@ PrintMessAutoCenter1
 	JR	C,PrintMessAutoCenterOk
 	EXX
 	JR	Z,PrintMessAutoCenterSpace	
-	SUB	39
+	SUB	48
 	ADD	A,A
 	LD	HL,Alphabet
 	LD	C,A
@@ -767,7 +761,7 @@ PrintMess
 	LD	B,12
 	CP	32
 	JR	Z,PrintSpace
-	SUB	39
+	SUB	48
 	ADD	A,A
 	PUSH	HL
 	LD	HL,Alphabet
@@ -790,7 +784,6 @@ PrintMessX
 	LD	B,0					; Position X
 PrintMessY
 	LD	C,0					; Position Y
-PrintNext:
 	LD	H,(IX+2)				; X2
 	LD	L,(IX+3)				; Y2
 	ADD	HL,BC
@@ -1148,16 +1141,16 @@ CntIrq
 
 	nolist
 
-	Read	"Rotation.asm"
+	Read	"DataRotation.asm"
 
 PaletteBlack
 	DB	"TTTT"
-PaletteWhite
+;PaletteWhite
 	DB	"KKKK"
 PalAnim
 	DB	"TUWS"
 
-	Read	"DataDemo2.asm"
+	Read	"DataImages.asm"
 	
 ;
 ; Structure
@@ -1201,12 +1194,12 @@ pen1:
 
 	Read	"police.asm"
 
-	Read	"Messages_2.asm"
+	Read	"Messages.asm"
 	
 MDLADDR:
 	INCBIN	"Rage.pt2"
 
-	Read	"PT2PlayCPC_V4.asm"
+	Read	"PT2PlayCPC_V5.asm"
 
 	list
 

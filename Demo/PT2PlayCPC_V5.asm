@@ -16,33 +16,8 @@ Env    EQU 11
 EnvTp    EQU 13
 
 
-SETUP:
-        DB 0 ;set bit0 to 1, if you want to play without looping
-         ;bit7 is set each time, when loop point is passed
-CrPsPtr:
-        DW 0
-
-CHECKLP:
-        LD HL,SETUP
-        SET 7,(HL)
-        BIT 0,(HL)
-        RET Z
-        POP HL
-        LD HL,DelyCnt
-        INC (HL)
-        LD HL,ChanA+SkpCnt
-        INC (HL)
-MUTE:
-        XOR A
-        LD H,A
-        LD L,A
-        LD (AYREGS+AmplA),A
-        LD (AYREGS+AmplB),HL
-        JP ROUT_A0
-
 INIT:
-        LD (MODADDR+1),HL
-        LD (MDADDR2+1),HL
+		LD	HL,MdlAddr
         LD A,(HL)
         LD (PL1D+1),A
         PUSH HL
@@ -68,7 +43,7 @@ INIT:
         LD B,(HL)
         LD E,30
         ADD HL,DE
-        LD (CrPsPtr),HL
+        LD (CrPsPtr+1),HL
         INC HL
         EX AF,AF'
         LD E,A
@@ -227,7 +202,7 @@ SamPtrs:
         INC HL
         LD D,(HL)
 MODADDR:
-        LD HL,#2121
+        LD HL,MdlAddr
         ADD HL,DE
         LD (IX+SamPtr),L
         LD (IX+SamPtr+1),H
@@ -259,8 +234,7 @@ OrnPtrs:
         LD E,(HL)
         INC HL
         LD D,(HL)
-MDADDR2:
-        LD HL,#2121
+        LD HL,MdlAddr
         ADD HL,DE
         LD (IX+OrnPtr),L
         LD (IX+OrnPtr+1),H
@@ -518,7 +492,6 @@ CH_STPP:
 CH_AMP:
         LD A,B
         AND #F0
-CH_VOL:
         OR (IX+Volume)
         RRCA
         RRCA
@@ -571,18 +544,18 @@ AdInPtA:
         AND A
         JR NZ,PL1A
         LD D,A
-        LD HL,(CrPsPtr)
+CrPsPtr
+        LD HL,0
         INC HL
         LD A,(HL)
         ADD A,A
         JR NC,PLNLP
-        CALL CHECKLP
 LPosPtr:
         LD HL,#2121
         LD A,(HL)
         ADD A,A
 PLNLP:
-        LD (CrPsPtr),HL
+        LD (CrPsPtr+1),HL
         ADD A,(HL)
         ADD A,A
         LD E,A
@@ -651,8 +624,6 @@ PL2:
         LD HL,(AYREGS+TonC)
         CALL CHREGS
         LD (AYREGS+TonC),HL
-
-ROUT:
         XOR     A
 ROUT_A0:
         LD      DE,#0DF4
@@ -710,7 +681,6 @@ SkpCnt  EQU     16
 Volume  EQU     17
 Env_En  EQU     18
 AddToN  EQU     19
-Size    EQU     20
 
 ChanA   DS      21
 ChanB   DS      21
@@ -728,4 +698,3 @@ EMPTYORN EQU    VT_+31 ;1,0,0 sequence
 
 NT_     DS      192
 
-VARSEND
