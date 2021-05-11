@@ -3,7 +3,7 @@ TpsWaitImage1	EQU	#7780
 	ORG	#200
 	RUN	$
 
-	Write direct "Demo-nf.bin"
+	Write direct "DFlash.bin"
 
 	DI
 	LD	HL,#8000
@@ -189,14 +189,14 @@ BoucleRapide
 	LD	(CntIrq+1),A
 	CALL	DrawFrame
 	CALL	ClearScroll
-;	LD	HL,PaletteBlack
-;	CALL	SetPalette
-;	CALL	WaitVbl
-;	LD	HL,PaletteWhite	
-;	CALL	SetPalette
-;	CALL	WaitVbl
-;	LD	HL,PaletteBlack
-;	CALL	SetPalette
+	LD	HL,PaletteBlack
+	CALL	SetPalette
+	CALL	WaitVbl
+	LD	HL,PaletteWhite	
+	CALL	SetPalette
+	CALL	WaitVbl
+	LD	HL,PaletteBlack
+	CALL	SetPalette
 	POP	HL
 	CALL	SetPalette
 Wait12
