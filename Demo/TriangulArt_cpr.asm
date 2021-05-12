@@ -110,6 +110,12 @@ initdemo
 	LD	(#38),A			; Jump en rst 38
 	IM	1
 	
+	LD   BC,#F782 ; PPi In
+	OUT  (C),C
+
+	LD   BC,#DF80
+	OUT  (C),C
+
 	LD	HL,RelocDemo
 	LD	DE,#200
 	LD	BC,#6200

@@ -5,7 +5,7 @@ StartCharAscii	EQU	48		; début des caractères ASCII dans la police
 	ORG	#200
 	RUN	$
 
-;	Write direct "Demo.bin"
+	Write direct "Demo.bin"
 
 	DI
 	LD	SP,#8000				; Effacer 2 buffers video
