@@ -10,7 +10,15 @@ CodeDemo:
 ; DE = adresse destination
 	run	$
 
-
+	DI
+	LD	BC,#BC01
+	XOR	A
+	OUT	(C),C
+	INC	B
+	OUT	(C),A
+	LD	BC,#7F10
+	OUT	(C),C
+	EXX
 	LD	HL,CodeDemo
 	LD	DE,#200
 	PUSH	DE
@@ -24,11 +32,23 @@ dzx0s_literals:
 	add	a,a					; copy from last offset or new offset?
 	jr	c,dzx0s_new_offset
 	call	dzx0s_elias		; obtain length
+
+
 dzx0s_copy:
 	ex	(sp),hl				; preserve source,restore offset
 	push	hl				; preserve offset
 	add	hl,de				; calculate destination - offset
 	ldir					; copy from offset
+
+; Amigaaaaaaaaaaaaaa
+	LD	I,A
+	AND	#1F
+	OR	#40
+	EXX						; Récuperer B=#7F
+	OUT	(C),A
+	EXX
+	LD	A,I
+
 	pop	hl					; restore offset
 	ex	(sp),hl				; preserve offset,restore source
 	add	a,a					; copy from literals or new offset?

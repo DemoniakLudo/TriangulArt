@@ -5,11 +5,10 @@ StartCharAscii	EQU	48		; début des caractères ASCII dans la police
 	ORG	#200
 	RUN	$
 
-	Write direct "Demo.bin"
+;	Write direct "Demo.bin"
 
 	DI
-	LD	HL,#8000				; Effacer 2 buffers video
-	LD	SP,HL
+	LD	SP,#8000				; Effacer 2 buffers video
 
 
 ; calculer adresse ecran pour chaque ligne
@@ -70,48 +69,27 @@ Debut
 	DI
 	CALL	Init			; Initialisation de la musique
 	EI
-	LD	HL,#202A
-	LD	BC,#BC01		; 64 colones
-	OUT	(C),C
-	INC	B
-	OUT	(C),H
-	DEC	B
-	INC	C
-	OUT	(C),C
-	INC	B
-	OUT	(C),L
-	LD	HL,#2022
-	LD	BC,#BC06		; 256 lignes
-	OUT	(C),C
-	INC	B
-	OUT	(C),H
-	DEC	B
-	INC	C
-	OUT	(C),C
-	INC	B
-	OUT	(C),L
-	LD	BC,#7F8D		; Mode 1
-	OUT	(C),C
-	LD	BC,#BC0C
-	OUT	(C),C
-	LD	BC,#BD30		; Memoire video en #C000
-	OUT	(C),C
+	LD	HL,CrtcValues
+SetCrtc:
+	LD	B,#BD
+	OUTI
+	LD	B,#BE
+	OUTI
+	LD	A,(HL)
+	AND	A
+	JR	NZ,SetCrtc
+	LD	HL,Impact
+	CALL	SetPalette		; Fond violet
+	LD	A,#8D
+	OUT	(C),A			; Mode 1
 	CALL	CopyAndClearScreen
-
-	LD	A,#C0
-	LD	(OffsetVideo+1),A	; Trace de triangles en #C000
-
-;
-;	JR	MoreSpeed	; decommenter pour aller direcement a la 2e partie
-;
-;	JP	EndMess		; decommenter pour aller directement au message de fin
-;
-;	JP	StartAnim	; decommenter pour aller directement a l'anim
 ;
 ; Debut, premiere image = logo impact
 ;
 	LD	IX,Impact
-	LD	A,#C1
+	LD	A,#C0
+	LD	(OffsetVideo+1),A	; Trace de triangles en #C000
+	INC	A			; LD	A,#C1
 	LD	(LogoBarre),A		; Pause entre la croix et le logo Apple
 	LD	A,#FF
 	LD	(Glaive),A		; Ne pas afficher le glaive
@@ -128,7 +106,7 @@ BoucleNormale
 	OUT	(C),C
 	POP	IX
 BoucleNorm2
-	CALL	DrawFrame		; Afficher image
+	CALL	DrawImage		; Afficher image
 	LD	C,A			; memo octet de fin (pour logo apple barre)
 	LD	HL,TpsWaitImage1	; Temps de pause pour affichage image
 Wait1
@@ -151,7 +129,6 @@ Wait3:
 ;
 ; Message "We want true speed"
 ;
-MoreSpeed:
 	XOR	A
 	LD	(DoWait+1),A		; ne plus faire de pauses entre chaque triangles
 	CALL	CopyAndClearScreen	; Copier ecran en #8000 et effacer #C000
@@ -183,7 +160,7 @@ BoucleRapide
 	PUSH	IX
 	LD	BC,5
 	ADD	IX,BC
-	CALL	DrawFrame		; Afficher l'image en #C000
+	CALL	DrawImage		; Afficher l'image en #C000
 	CALL	ClearScroll		; Efface image en #8000 et bascule video en #C000
 BoucleRapide2
 	LD	A,0
@@ -216,7 +193,6 @@ WaitForMess:
 ;
 ; Message de fin...
 ;
-EndMess
 	XOR	A
 	LD	(CntVblMess+1),A
 	CALL	CopyAndClearScreen
@@ -246,7 +222,6 @@ WaitReadMess2
 ;
 ; Animation rotation 3D
 ;
-StartAnim
 	LD	HL,PalAnim
 	CALL	SetPalette
 	LD	A,#2E
@@ -386,15 +361,7 @@ ZoneYMax:
 	JR	NZ,BclDrawFrame
 	LD	IY,Frame_0		; Si A=#FF, fin des frames, on recommence
 BclDrawFrame:
-	LD	A,(IX+6)
-	CALL	SetTriangleColor
-	LD	B,(IX+0)
-	LD	C,(IX+1)
-	LD	D,(IX+2)
-	LD	E,(IX+3)
-	LD	H,(IX+4)
-	LD	L,(IX+5)
-	CALL	DrawTriangle
+	CALL	DrawTriangleParam
 	LD	A,(IX+6)
 	LD	BC,7
 	ADD	IX,BC
@@ -474,7 +441,7 @@ ClearScroll2
 	CALL	ClearScrollV		; Efface image en #8000 et bascule video en #C000
 ClearScroll3
 	LD	BC,#BC0C
-	LD	HL,#3000
+	LD	HL,#3000		; Memoire video en #C000
 	OUT	(C),C
 	INC	B
 	OUT	(C),H
@@ -495,7 +462,7 @@ BclClearScrollV:
 	LD	BC,#BC0C
 	OUT	(C),C
 	LD	A,H
-	OR	#20
+	OR	#20			; Memoire video en #8000
 	INC	B
 	OUT	(C),A
 	DEC	B
@@ -514,7 +481,7 @@ BclClearScrollV2:
 	LD	H,D
 	LD	L,E
 	LD	BC,63
-	LD	(HL),B
+	LD	(HL),B			; effacer 64 lignes
 	INC DE
 	LDIR
 	POP	DE
@@ -539,9 +506,9 @@ BclClearScrollH:
 	LD	BC,#BC0D
 	OUT	(C),C
 	INC	B
-	OUT	(C),A
-	LD	B,0
-	LD	C,A
+	OUT	(C),A			; Decalage seulement registre 13 crtc
+	LD	B,0			; 256 lignes a effacer
+	LD	C,A			; C=numero ligne
 BclClearScrollH2:
 	LD	H,TabAdr/256		; Adresse des poids faibles
 	LD	L,B
@@ -567,22 +534,14 @@ BclClearScrollH2:
 ;
 ; Dessine les triangles d'une image
 ;
-DrawFrame
+DrawImage
 	LD	A,(IX+0)		; Mode de trace
 	LD	(ModeDraw+1),A
 	INC	IX
 BclDrawImage
 	XOR	A
 	LD	(CntIrq+1),A
-	LD	A,(IX+6)		; Couleur
-	CALL	SetTriangleColor	
-	LD	B,(IX+0)		; X1
-	LD	C,(IX+1)		; Y1
-	LD	D,(IX+2)		; X2
-	LD	E,(IX+3)		; Y2
-	LD	H,(IX+4)		; X3
-	LD	L,(IX+5)		; Y3
-	CALL	DrawTriangle
+	CALL	DrawTriangleParam
 ModeDraw
 	LD	A,0
 	AND	A
@@ -814,6 +773,15 @@ SetTriangleColor
 	LD	(DrawLigneCoul2+1),A	; Initialisation couleur du triangle
 	RET
 
+DrawTriangleParam:
+	LD	A,(IX+6)		; Couleur
+	CALL	SetTriangleColor	
+	LD	B,(IX+0)		; X1
+	LD	C,(IX+1)		; Y1
+	LD	D,(IX+2)		; X2
+	LD	E,(IX+3)		; Y2
+	LD	H,(IX+4)		; X3
+	LD	L,(IX+5)		; Y3
 ;
 ; Dessine un triangle - (B=X1 C=Y1), (D=X2 E=Y2), (H=X3 L=Y3)
 ;
@@ -1079,15 +1047,20 @@ NewIrq
 	PUSH	AF
 	PUSH	BC
 	PUSH	DE
-	PUSH	HL
-	PUSH	IX
-	EX	AF,AF'
-	PUSH	AF
 	LD	B,#F5
 	IN	A,(C)
 	RRA
 	JR	NC,CntIrq
+
+	PUSH	HL
+	PUSH	IX
+	EX	AF,AF'
+	PUSH	AF
 	CALL	Play			; Jouer la musique sur detection VBL
+	POP	AF
+	EX	AF,AF'
+	POP	IX
+	POP	HL
 	
 IrqSwapColor:	
 	LD	DE,0
@@ -1118,10 +1091,6 @@ CntIrq
 	LD	A,0
 	INC	A
 	LD	(CntIrq+1),A		; Compter les IRQ
-	POP	AF
-	EX	AF,AF'
-	POP	IX
-	POP	HL
 	POP	DE
 	POP	BC
 	POP	AF
@@ -1129,8 +1098,6 @@ CntIrq
 	RET
 
 	nolist
-
-	Read	"DataRotation.asm"
 
 PaletteBlack
 	DB	"TTTT"
@@ -1140,7 +1107,12 @@ PalAnim
 	DB	"TUWS"
 
 	Read	"DataImages.asm"
+
+	Read	"DataRotation.asm"
 	
+CrtcValues
+	DB	1,#20,2,#2A,6,#20,7,#22,12,#30,13,0,0
+
 ;
 ; Structure
 ; octet 0 = premier octet de la ligne

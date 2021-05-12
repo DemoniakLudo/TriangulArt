@@ -226,12 +226,10 @@ message2
 	DB	"AND OF COURSE"
 	DB	5,135
 	DB	"THE WHOLE"
-	DB	1,3,2,0,169,"@"
-	DB	2,36,165
-	DB	1,3,"I",1,2,"M",1,3,"P",1,2,"A",1,3,"C",1,2,"T ",1,3,"T",1,2,"E",1,3,"A",1,2,"M"
-	DB	2,38,167
-	DB	1,1,"IMPACT TEAM"
-	DB	1,2,2,239,169,"@"
+	DB	6,3
+	DB	5,165,"@ IMPACT TEAM @"
+	DB	6,0
+	DB	1,1,5,167,"IMPACT TEAM"
 	DB	5,195
 	DB	"MEMBERS"
 	DB	0

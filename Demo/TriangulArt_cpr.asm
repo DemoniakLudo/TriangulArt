@@ -6,8 +6,6 @@ RelocDemo	EQU	#8000
 	org	0
 
 
-	;
-
 	DI                  ; Disable Interruptions
 	LD	SP,#8000
 	
@@ -20,6 +18,7 @@ RelocDemo	EQU	#8000
 	LD	HL,#1044
 	OUT	(C),H
 	OUT	(C),L
+	EXX					; Pour sauvegarder B
 	LD	HL,0
 	LD	DE,0
 	LD	BC,#3FFF
@@ -34,13 +33,16 @@ RelocDemo	EQU	#8000
 dzx0s_literals:
 	call	dzx0s_elias		; obtain length
 	ldir					; copy literals
-	PUSH	AF
+
+; Amigaaaaaaaaaaaaaa
+	LD	I,A
 	AND	#1F
 	OR	#40
-	LD	B,#7F
+	EXX						; Récuperer B=#7F
 	OUT	(C),A
-	LD	B,0
-	POP		AF
+	EXX
+	LD	A,I
+
 	add	a,a					; copy from last offset or new offset?
 	jr	c,dzx0s_new_offset
 	call	dzx0s_elias		; obtain length
@@ -49,13 +51,16 @@ dzx0s_copy:
 	push	hl				; preserve offset
 	add	hl,de				; calculate destination - offset
 	ldir					; copy from offset
-	PUSH	AF
+
+; Amigaaaaaaaaaaaaaa
+	LD	I,A
 	AND	#1F
 	OR	#40
-	LD	B,#7F
+	EXX
 	OUT	(C),A
-	LD	B,0
-	POP		AF
+	EXX
+	LD	A,I
+
 	pop	hl					; restore offset
 	ex	(sp),hl				; preserve offset,restore source
 	add	a,a					; copy from literals or new offset?
@@ -66,7 +71,7 @@ dzx0s_new_offset:
 	pop	af					; discard last offset
 	xor	a					; adjust for negative offset
 	sub	c
-	jr	Z,initdemo				; Plus d'octets à traiter = fini
+	jr	z,initdemo			; Plus d'octets à traiter = fini
 
 	ld	c,a
 	ld	a,b
@@ -96,22 +101,18 @@ dzx0s_elias_backtrack:
 	rl	b
 	jr	dzx0s_elias_loop
 
-Crtc
-	DB	#3F,#28,#2E,#8E,#26,#00,#19,#1E,#00,#07
-	
-	
 initdemo
-	LD	BC,#7F55
-	OUT	(C),C
+	EXX
+	LD	HL,#558D
+	OUT	(C),H			; Border bleu
+	OUT	(C),L			; Mode 1 et roms off
 	LD	A,#C3
-	LD	(#38),A
+	LD	(#38),A			; Jump en rst 38
 	IM	1
-	LD	BC,#7F8D
-	OUT	(C),C
 	
 	LD	HL,RelocDemo
 	LD	DE,#200
-	LD	BC,#7E00
+	LD	BC,#6200
 	LDIR
 	LD	HL,#8000
 	LD	D,H
@@ -121,7 +122,7 @@ initdemo
 	INC	DE
 	LD	(HL),L
 	LDIR
-	LD	BC,#7F54
+	LD	BC,#7F54		; Border noir
 	OUT	(C),C
 	LD	HL,Crtc
 	LD	BC,#BC00
@@ -137,6 +138,9 @@ SetCrtcValue:
 	CP	10
 	JR	C,SetCrtcValue
 	JP	#200
+	
+Crtc
+	DB	#3F,#28,#2E,#8E,#26,#00,#19,#1E,#00,#07
 	
 StartDemo
 	INCZX0 'demo.bin'
