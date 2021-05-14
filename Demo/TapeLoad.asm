@@ -57,15 +57,16 @@ SetCrtc:
 	PUSH HL
 	PUSH DE
 	PUSH DE
-	LD	BC,#F610
+	LD	BC,#F610	; Moteur on
 	OUT	(C),C
 	EXX 
 	POP DE
-	INC DE        ;EXTRA BYTE FOR CHECKSUM
+	INC DE			; Ajouter un octet pour le checksum
 	EXX 
+	
 	LD B,#F5
 	IN A,(C)
-	LD C,A
+	LD C,A			; Valeur lue dans C
 LSHT:
 	LD E,#20
 LCNT:
@@ -87,7 +88,7 @@ LSYNC:
 	JR C,LSYNC
 	CALL LEDG1
 	JR NC,LSHT
-	LD DE,#B801
+	LD DE,#B801			; E=1 pour que RL donne Carry a 1 si fait 8x  
 L8BIT:
 	LD A,9
 L8BENT:
@@ -95,22 +96,22 @@ L8BENT:
 	JR NC,ERR
 	LD A,#D4
 	CP D
-	RL E
+	RL E				; rotation bit, carry dans b0 de E
 	LD D,#B8
-	JR NC,L8BIT
+	JR NC,L8BIT			; Si pas 8 bits, on continue
 	LD (HL),E
 	INC HL
 	LD E,1
-
+; Dessine le pixel du triangle
 	EXX
 	LD	HL,Length
 	LD	B,D
 	LD	C,E
-	SBC	HL,BC
+	SBC	HL,BC			; HL = Nbre d'octets restant à lire
 	LD	A,H
 	ADD	HL,HL
 	ADD	HL,HL
-	INC	H
+	INC	H			; H = nb (octets restant * 4) / 256  (nbre de ko * 16)
 	PUSH	HL
 	LD	L,H
 	LD	H,TabAdr/256		; Adresse des poids faibles
@@ -118,13 +119,13 @@ L8BENT:
 	INC	H			; Adresse des poids forts
 	LD	B,(HL)
 	LD	H,0
-	LD	L,A
+	LD	L,A			; Position X
 	ADD	HL,BC
 	LD	B,H
 	LD	C,L
-	POP	AF
+	POP	AF			; A = nbre de ko restant * 16
 	AND	3
-	LD	L,A
+	LD	L,A			; Numero pixel
 	LD	H,TabPixel/256
 	LD	A,(HL)
 	LD	(BC),A
@@ -136,11 +137,11 @@ L8BENT:
 	JR NZ,L8BENT
 ERR:
 	LD	BC,#F600
-	OUT	(C),C
+	OUT	(C),C			; arret moteur K7
 	POP DE
 	POP HL
 	XOR A
-CSL2:
+CalcChecksum:
 	ADD (HL)
 	INC HL
 	DEC DE
@@ -148,21 +149,20 @@ CSL2:
 	LD A,D
 	OR E
 	LD A,C
-	JR NZ,CSL2
+	JR NZ,CalcChecksum
 	SUB (HL)
-	CP 1          ;CARRY SET IF CHECKSUM=0
-LDEND:
-	JR C,DemoOk
-ERROR:
-	RET
-
+	CP 1          
+	RET	NC			; Si pas carry, erreur checksum...
+	CALL	Cls
+	JP	#9F0B			; Executer decompactage demo
+	
 LEDG2:
 	CALL LEDGE
 	RET NC
 LEDG1:
 	LD A,11
 LEDGE:
-	DEC A
+	DEC A				; Tempo
 	JR NZ,LEDGE
 LSAMP:
 	INC D
@@ -170,21 +170,22 @@ LSAMP:
 	LD B,#F5
 	IN A,(C)
 	XOR C
-	JP P,LSAMP
-	LD B,#7F
+	JP P,LSAMP			; Attente changement valeur
 	LD A,C
 	CPL 
-	LD C,A
+	LD C,A				; Inversion valeur lue
 	RRA 
-	JR	C,TestVal
+	JR	C,TestVal		; Bit a 1 ?
+; Changement couleur bordure
 	INC	IX
-	TestVal
-	LD	A,(IX+0)
+TestVal
+	LD	A,(IX+0)	
 	AND	A
 	JR	NZ,OutOk
-	LD	A,#55
 	LD	IX,TabColor
+	LD	A,(IX+0)
 OutOk
+	LD B,#7F			; Changement couleur bordure
 	OUT (C),A
 	SCF 
 	RET 
@@ -212,9 +213,6 @@ BclPalette
 	JR	NZ,BclPalette
 	RET
 
-DemoOk:
-	CALL	Cls
-	JP	#9F0B
 
 TabColor:
 	DB	#55,#4B,#4C,0
