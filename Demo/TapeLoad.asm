@@ -2,12 +2,57 @@ START	EQU #6000
 LENGTH	EQU 16244
 
 	ORG #4000
+	run	$
 
 	DI
+	LD	HL,Palette
+	CALL	SetPalette
+	LD	SP,#200
+	LD	HL,DrawPixel
+	LD	DE,TabPixel
+	LDI
+	LDI
+	LDI
+	LDI
+; calculer adresse ecran pour chaque ligne
+	LD	BC,#40			; 256 lignes, c=adresse haute a ne pas depasser
+ 	LD	DE,#C000		; adresse de depart
+	LD	HL,TabAdr
+CalcAdr:
+	LD	(HL),E			; Poids faibles
+	INC	H
+	LD	(HL),D			; Poids forts
+	DEC	H
+	INC	HL
+	LD	A,D
+	ADD	A,8
+	LD	D,A
+	JR	NC,CalcSuite
+	PUSH	BC
+	LD	B,#C0
+	EX	DE,HL
+	ADD	HL,BC
+	EX	DE,HL
+	POP	BC
+CalcSuite:
+	DJNZ	CalcAdr
+
+	CALL	Cls
+	LD	HL,CrtcValues
+SetCrtc:
+	LD	B,#BD
+	OUTI
+	LD	B,#BE
+	OUTI
+	LD	A,(HL)
+	AND	A
+	JR	NZ,SetCrtc
 	LD HL,START
 	LD DE,LENGTH
 	LD	BC,#7F10
-	OUT	(C),C      
+	OUT	(C),C    
+	LD	A,#8D
+	OUT	(C),A  
 	LD	IX,TabColor 
 	PUSH HL
 	PUSH DE
@@ -56,7 +101,33 @@ L8BENT:
 	LD (HL),E
 	INC HL
 	LD E,1
-	EXX 
+
+	EXX
+	LD	HL,Length
+	LD	B,D
+	LD	C,E
+	SBC	HL,BC
+	LD	A,H
+	ADD	HL,HL
+	ADD	HL,HL
+	INC	H
+	PUSH	HL
+	LD	L,H
+	LD	H,TabAdr/256		; Adresse des poids faibles
+	LD	C,(HL)
+	INC	H			; Adresse des poids forts
+	LD	B,(HL)
+	LD	H,0
+	LD	L,A
+	ADD	HL,BC
+	LD	B,H
+	LD	C,L
+	POP	AF
+	AND	3
+	LD	L,A
+	LD	H,TabPixel/256
+	LD	A,(HL)
+	LD	(BC),A
 	DEC DE
 	LD A,D
 	OR E
@@ -81,7 +152,7 @@ CSL2:
 	SUB (HL)
 	CP 1          ;CARRY SET IF CHECKSUM=0
 LDEND:
-	JP C,#9F0B        ;RETURN IF NO ERRORS
+	JR C,DemoOk
 ERROR:
 	RET
 
@@ -118,5 +189,46 @@ OutOk
 	SCF 
 	RET 
 
+Cls:
+	LD	HL,#A000
+	LD	DE,#A001
+	LD	BC,#5FFF
+	LD	(HL),L
+	LDIR	
+	RET
+
+SetPalette
+	LD	BC,#7F10
+	LD	A,(HL)
+	OUT	(C),C
+	OUT	(C),A	
+	XOR	A
+BclPalette
+	OUT	(C),A
+	INC	B	
+	OUTI
+	INC	A
+	CP	4
+	JR	NZ,BclPalette
+	RET
+
+DemoOk:
+	CALL	Cls
+	JP	#9F0B
+
 TabColor:
-	DB	#55,#4B,#4C
+	DB	#55,#4B,#4C,0
+
+DrawPixel
+	DB	#10,#88,#40,#22
+
+Palette
+	DB	#44,#57,#4B,#53
+	
+CrtcValues
+	DB	1,#20,2,#2A,6,#20,7,#22,12,#30,13,0,0
+
+	align	256
+TabPixel
+	ds	256
+TabAdr
