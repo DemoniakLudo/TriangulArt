@@ -105,8 +105,10 @@ L8BENT:
 ; Dessine le pixel du triangle
 	EXX
 	LD	HL,Length
+	INC	HL
 	LD	B,D
 	LD	C,E
+	XOR	A
 	SBC	HL,BC			; HL = Nbre d'octets restant à lire
 	LD	A,H
 	ADD	HL,HL
