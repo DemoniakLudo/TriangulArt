@@ -12,7 +12,7 @@
 	JP triangulart
 
 name_table:
-	DEFB "CWTA RO","M"+#80   ;bad name
+	DEFB "IMPX RO","M"+#80   ;bad name
 	DEFB "TRIANGULAR","T"+#80       
 	DEFB 0
 
