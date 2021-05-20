@@ -153,15 +153,15 @@ public static class XorDrawing {
 		DeleteObject(hdc);
 	}
 
-	public static void DrawXorLine(Graphics graphics, Bitmap bmp, int x1, int y1, int x2, int y2, bool dash = true) {
+	public static void DrawXorLine(Graphics g, Bitmap bmp, int x1, int y1, int x2, int y2, bool dash = true) {
 		int oldRop;
-		IntPtr oldpen, img, hdc = BeginDraw(bmp, graphics, x1, y1, x2, y2, dash, out oldRop, out img, out oldpen);
+		IntPtr oldpen, img, hdc = BeginDraw(bmp, g, x1, y1, x2, y2, dash, out oldRop, out img, out oldpen);
 		MoveToEx(hdc, x1, y1, IntPtr.Zero);
 		LineTo(hdc, x2, y2);
-		FinishDraw(bmp, graphics, hdc, oldpen, oldRop, img, dash);
+		FinishDraw(bmp, g, hdc, oldpen, oldRop, img, dash);
 	}
 
-	public static void DrawXorTriangle(Graphics g, Bitmap bmp, int x1, int y1, int x2, int y2, int x3, int y3, bool dash=true) {
+	public static void DrawXorTriangle(Graphics g, Bitmap bmp, int x1, int y1, int x2, int y2, int x3, int y3, bool dash = true) {
 		int oldRop;
 		IntPtr oldpen, img, hdc = BeginDraw(bmp, g, x1, y1, x2, y2, dash, out oldRop, out img, out oldpen);
 		MoveToEx(hdc, x1, y1, IntPtr.Zero);
@@ -170,6 +170,36 @@ public static class XorDrawing {
 		LineTo(hdc, x3, y3);
 		MoveToEx(hdc, x2, y2, IntPtr.Zero);
 		LineTo(hdc, x3, y3);
+		FinishDraw(bmp, g, hdc, oldpen, oldRop, img, dash);
+	}
+
+	public static void DrawXorRectangle(Graphics g, Bitmap bmp, int x1, int y1, int x2, int y2, bool dash = true) {
+		int oldRop;
+		IntPtr oldpen, img, hdc = BeginDraw(bmp, g, x1, y1, x2, y2, dash, out oldRop, out img, out oldpen);
+		MoveToEx(hdc, x1, y1, IntPtr.Zero);
+		LineTo(hdc, x2, y1);
+		MoveToEx(hdc, x2, y1, IntPtr.Zero);
+		LineTo(hdc, x2, y2);
+		MoveToEx(hdc, x2, y2, IntPtr.Zero);
+		LineTo(hdc, x1, y2);
+		MoveToEx(hdc, x1, y2, IntPtr.Zero);
+		LineTo(hdc, x1, y1);
+		FinishDraw(bmp, g, hdc, oldpen, oldRop, img, dash);
+	}
+
+	public static void DrawXorCercle(Graphics g, Bitmap bmp, int x1, int y1, int x2, int y2, int nbr, bool dash = true) {
+		double r = Math.Sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+		int ang = (int)(360 / nbr);
+		int oldRop;
+		IntPtr oldpen, img, hdc = BeginDraw(bmp, g, x1, y1, x2, y2, dash, out oldRop, out img, out oldpen);
+		for (int a = 0; a < 360; a += ang) {
+			int xa = x1 + (int)(r * Math.Cos(a / 180.0 * Math.PI));
+			int ya = y1 + (int)(r * Math.Sin(a / 180.0 * Math.PI));
+			int xb = x1 + (int)(r * Math.Cos((a + ang) / 180.0 * Math.PI));
+			int yb = y1 + (int)(r * Math.Sin((a + ang) / 180.0 * Math.PI));
+			MoveToEx(hdc, xa, ya, IntPtr.Zero);
+			LineTo(hdc, xb, yb);
+		}
 		FinishDraw(bmp, g, hdc, oldpen, oldRop, img, dash);
 	}
 }

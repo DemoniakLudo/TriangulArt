@@ -45,6 +45,7 @@
     <Compile Include="BitmapCpc.cs" />
     <Compile Include="Datas.cs" />
     <Compile Include="DirectBitmap.cs" />
+    <Compile Include="drawLine.cs" />
     <Compile Include="EditColor.cs">
       <SubType>Form</SubType>
     </Compile>

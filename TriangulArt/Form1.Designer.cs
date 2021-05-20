@@ -25,7 +25,7 @@
 		private void InitializeComponent() {
 			this.pictureBox = new System.Windows.Forms.PictureBox();
 			this.lblInfoPos = new System.Windows.Forms.Label();
-			this.bpAddTriangle = new System.Windows.Forms.Button();
+			this.bpAjoutTriangle = new System.Windows.Forms.Button();
 			this.listInfo = new System.Windows.Forms.ListBox();
 			this.bpLoad = new System.Windows.Forms.Button();
 			this.bpSave = new System.Windows.Forms.Button();
@@ -102,6 +102,10 @@
 			this.label14 = new System.Windows.Forms.Label();
 			this.txbNomImage = new System.Windows.Forms.TextBox();
 			this.chkModePolice = new System.Windows.Forms.CheckBox();
+			this.bpAjoutRect = new System.Windows.Forms.Button();
+			this.bpAjoutCercle = new System.Windows.Forms.Button();
+			this.txbNbRayons = new System.Windows.Forms.TextBox();
+			this.label15 = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -125,21 +129,21 @@
 			// lblInfoPos
 			// 
 			this.lblInfoPos.AutoSize = true;
-			this.lblInfoPos.Location = new System.Drawing.Point(869, 220);
+			this.lblInfoPos.Location = new System.Drawing.Point(863, 590);
 			this.lblInfoPos.Name = "lblInfoPos";
 			this.lblInfoPos.Size = new System.Drawing.Size(43, 13);
 			this.lblInfoPos.TabIndex = 1;
 			this.lblInfoPos.Text = "position";
 			// 
-			// bpAddTriangle
+			// bpAjoutTriangle
 			// 
-			this.bpAddTriangle.Location = new System.Drawing.Point(866, 241);
-			this.bpAddTriangle.Name = "bpAddTriangle";
-			this.bpAddTriangle.Size = new System.Drawing.Size(113, 23);
-			this.bpAddTriangle.TabIndex = 2;
-			this.bpAddTriangle.Text = "Ajouter triangle";
-			this.bpAddTriangle.UseVisualStyleBackColor = true;
-			this.bpAddTriangle.Click += new System.EventHandler(this.bpAddTriangle_Click);
+			this.bpAjoutTriangle.Location = new System.Drawing.Point(866, 211);
+			this.bpAjoutTriangle.Name = "bpAjoutTriangle";
+			this.bpAjoutTriangle.Size = new System.Drawing.Size(113, 23);
+			this.bpAjoutTriangle.TabIndex = 2;
+			this.bpAjoutTriangle.Text = "Ajouter triangle";
+			this.bpAjoutTriangle.UseVisualStyleBackColor = true;
+			this.bpAjoutTriangle.Click += new System.EventHandler(this.bpAddTriangle_Click);
 			// 
 			// listInfo
 			// 
@@ -173,7 +177,7 @@
 			// 
 			this.Color0.BackColor = System.Drawing.Color.Transparent;
 			this.Color0.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.Color0.Location = new System.Drawing.Point(774, 9);
+			this.Color0.Location = new System.Drawing.Point(774, 1);
 			this.Color0.Name = "Color0";
 			this.Color0.Size = new System.Drawing.Size(82, 56);
 			this.Color0.TabIndex = 5;
@@ -183,7 +187,7 @@
 			// 
 			this.Color1.BackColor = System.Drawing.Color.Transparent;
 			this.Color1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.Color1.Location = new System.Drawing.Point(774, 105);
+			this.Color1.Location = new System.Drawing.Point(774, 97);
 			this.Color1.Name = "Color1";
 			this.Color1.Size = new System.Drawing.Size(82, 56);
 			this.Color1.TabIndex = 5;
@@ -193,7 +197,7 @@
 			// 
 			this.Color2.BackColor = System.Drawing.Color.Transparent;
 			this.Color2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.Color2.Location = new System.Drawing.Point(774, 201);
+			this.Color2.Location = new System.Drawing.Point(774, 193);
 			this.Color2.Name = "Color2";
 			this.Color2.Size = new System.Drawing.Size(82, 56);
 			this.Color2.TabIndex = 5;
@@ -203,7 +207,7 @@
 			// 
 			this.Color3.BackColor = System.Drawing.Color.Transparent;
 			this.Color3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.Color3.Location = new System.Drawing.Point(774, 297);
+			this.Color3.Location = new System.Drawing.Point(774, 289);
 			this.Color3.Name = "Color3";
 			this.Color3.Size = new System.Drawing.Size(82, 56);
 			this.Color3.TabIndex = 5;
@@ -213,7 +217,7 @@
 			// 
 			this.ColorSel.BackColor = System.Drawing.Color.Transparent;
 			this.ColorSel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.ColorSel.Location = new System.Drawing.Point(950, 568);
+			this.ColorSel.Location = new System.Drawing.Point(1046, 568);
 			this.ColorSel.Name = "ColorSel";
 			this.ColorSel.Size = new System.Drawing.Size(82, 56);
 			this.ColorSel.TabIndex = 5;
@@ -345,7 +349,7 @@
 			// 
 			// bpRedraw
 			// 
-			this.bpRedraw.Location = new System.Drawing.Point(866, 296);
+			this.bpRedraw.Location = new System.Drawing.Point(1145, 573);
 			this.bpRedraw.Name = "bpRedraw";
 			this.bpRedraw.Size = new System.Drawing.Size(113, 25);
 			this.bpRedraw.TabIndex = 21;
@@ -367,7 +371,7 @@
 			// label7
 			// 
 			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(855, 590);
+			this.label7.Location = new System.Drawing.Point(951, 590);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(94, 13);
 			this.label7.TabIndex = 23;
@@ -416,7 +420,7 @@
 			// 
 			// bpClear
 			// 
-			this.bpClear.Location = new System.Drawing.Point(1140, 585);
+			this.bpClear.Location = new System.Drawing.Point(1271, 574);
 			this.bpClear.Name = "bpClear";
 			this.bpClear.Size = new System.Drawing.Size(116, 22);
 			this.bpClear.TabIndex = 28;
@@ -647,7 +651,7 @@
 			// 
 			// bpAjoutQuadri
 			// 
-			this.bpAjoutQuadri.Location = new System.Drawing.Point(866, 269);
+			this.bpAjoutQuadri.Location = new System.Drawing.Point(866, 239);
 			this.bpAjoutQuadri.Name = "bpAjoutQuadri";
 			this.bpAjoutQuadri.Size = new System.Drawing.Size(113, 23);
 			this.bpAjoutQuadri.TabIndex = 41;
@@ -694,7 +698,7 @@
 			// label12
 			// 
 			this.label12.AutoSize = true;
-			this.label12.Location = new System.Drawing.Point(1057, 308);
+			this.label12.Location = new System.Drawing.Point(1156, 308);
 			this.label12.Name = "label12";
 			this.label12.Size = new System.Drawing.Size(249, 13);
 			this.label12.TabIndex = 46;
@@ -702,7 +706,7 @@
 			// 
 			// txbTpsAttente
 			// 
-			this.txbTpsAttente.Location = new System.Drawing.Point(1312, 305);
+			this.txbTpsAttente.Location = new System.Drawing.Point(1411, 305);
 			this.txbTpsAttente.Name = "txbTpsAttente";
 			this.txbTpsAttente.Size = new System.Drawing.Size(39, 20);
 			this.txbTpsAttente.TabIndex = 47;
@@ -727,7 +731,7 @@
 			// 
 			// txbPos
 			// 
-			this.txbPos.Location = new System.Drawing.Point(893, 527);
+			this.txbPos.Location = new System.Drawing.Point(895, 527);
 			this.txbPos.MaxLength = 3;
 			this.txbPos.Name = "txbPos";
 			this.txbPos.Size = new System.Drawing.Size(40, 20);
@@ -739,9 +743,9 @@
 			this.label13.ForeColor = System.Drawing.SystemColors.WindowFrame;
 			this.label13.Location = new System.Drawing.Point(866, 531);
 			this.label13.Name = "label13";
-			this.label13.Size = new System.Drawing.Size(30, 13);
+			this.label13.Size = new System.Drawing.Size(32, 13);
 			this.label13.TabIndex = 49;
-			this.label13.Text = "pos :";
+			this.label13.Text = "indx :";
 			// 
 			// grpProjet
 			// 
@@ -887,11 +891,52 @@
 			this.chkModePolice.Text = "Mode \'Police de caractères\'";
 			this.chkModePolice.UseVisualStyleBackColor = true;
 			// 
+			// bpAjoutRect
+			// 
+			this.bpAjoutRect.Location = new System.Drawing.Point(866, 268);
+			this.bpAjoutRect.Name = "bpAjoutRect";
+			this.bpAjoutRect.Size = new System.Drawing.Size(113, 23);
+			this.bpAjoutRect.TabIndex = 54;
+			this.bpAjoutRect.Text = "Ajouter rectangle";
+			this.bpAjoutRect.UseVisualStyleBackColor = true;
+			this.bpAjoutRect.Click += new System.EventHandler(this.bpAjoutRect_Click);
+			// 
+			// bpAjoutCercle
+			// 
+			this.bpAjoutCercle.Location = new System.Drawing.Point(866, 297);
+			this.bpAjoutCercle.Name = "bpAjoutCercle";
+			this.bpAjoutCercle.Size = new System.Drawing.Size(113, 23);
+			this.bpAjoutCercle.TabIndex = 54;
+			this.bpAjoutCercle.Text = "Ajouter cercle";
+			this.bpAjoutCercle.UseVisualStyleBackColor = true;
+			this.bpAjoutCercle.Click += new System.EventHandler(this.bpAjoutCercle_Click);
+			// 
+			// txbNbRayons
+			// 
+			this.txbNbRayons.Location = new System.Drawing.Point(985, 299);
+			this.txbNbRayons.Name = "txbNbRayons";
+			this.txbNbRayons.Size = new System.Drawing.Size(43, 20);
+			this.txbNbRayons.TabIndex = 55;
+			this.txbNbRayons.Text = "8";
+			// 
+			// label15
+			// 
+			this.label15.AutoSize = true;
+			this.label15.Location = new System.Drawing.Point(1034, 302);
+			this.label15.Name = "label15";
+			this.label15.Size = new System.Drawing.Size(38, 13);
+			this.label15.TabIndex = 56;
+			this.label15.Text = "rayons";
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1519, 770);
+			this.Controls.Add(this.label15);
+			this.Controls.Add(this.txbNbRayons);
+			this.Controls.Add(this.bpAjoutCercle);
+			this.Controls.Add(this.bpAjoutRect);
 			this.Controls.Add(this.chkModePolice);
 			this.Controls.Add(this.txbNomImage);
 			this.Controls.Add(this.label14);
@@ -946,7 +991,7 @@
 			this.Controls.Add(this.bpSave);
 			this.Controls.Add(this.bpLoad);
 			this.Controls.Add(this.listInfo);
-			this.Controls.Add(this.bpAddTriangle);
+			this.Controls.Add(this.bpAjoutTriangle);
 			this.Controls.Add(this.lblInfoPos);
 			this.Controls.Add(this.pictureBox);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -971,7 +1016,7 @@
 
 		private System.Windows.Forms.PictureBox pictureBox;
 		private System.Windows.Forms.Label lblInfoPos;
-		private System.Windows.Forms.Button bpAddTriangle;
+		private System.Windows.Forms.Button bpAjoutTriangle;
 		private System.Windows.Forms.ListBox listInfo;
 		private System.Windows.Forms.Button bpLoad;
 		private System.Windows.Forms.Button bpSave;
@@ -1048,6 +1093,10 @@
 		private System.Windows.Forms.Button bpGenereProjetAsm;
 		private System.Windows.Forms.Button bpNewProjet;
 		private System.Windows.Forms.CheckBox chkModePolice;
+		private System.Windows.Forms.Button bpAjoutRect;
+		private System.Windows.Forms.Button bpAjoutCercle;
+		private System.Windows.Forms.TextBox txbNbRayons;
+		private System.Windows.Forms.Label label15;
 	}
 }
 

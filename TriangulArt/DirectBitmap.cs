@@ -63,6 +63,104 @@ public class DirectBitmap : IDisposable {
 		}
 	}
 
+	public void DrawLine(int x1, int y1, int x2, int y2, int c) {
+		if (x2 < x1) {
+			int a = x2;
+			x2 = x1;
+			x1 = a;
+			a = y2;
+			y2 = y1;
+			y1 = a;
+		}
+		int dx = x2 - x1;
+		if (dx == 0 && y1 > y2) {
+			int a = y2;
+			y2 = y1;
+			y1 = a;
+		}
+		int dy = y2 - y1;
+		int e;
+		if (dx != 0) {
+			if (dy != 0) {
+				if (dy > 0) {
+					if (dx >= dy) {
+						e = dx;
+						dx <<= 1;
+						dy <<= 1;
+						while (x1 != x2) {
+							SetPixel(x1, y1, c);
+							x1++;
+							e = e - dy;
+							if (e < 0) {
+								y1++;
+								e = e + dx;
+							};
+						}
+					}
+					else {
+						e = dy;
+						dy <<= 1;
+						dx <<= 1;
+						while (y1 != y2) {
+							SetPixel(x1, y1, c);
+							y1++;
+							e = e - dx;
+							if (e < 0) {
+								x1++;
+								e = e + dy;
+							}
+						}
+					}
+				}
+				else {
+					if (dx >= -dy) {
+						e = dx;
+						dy <<= 1;
+						dx <<= 1;
+						while (x1 != x2) {
+							SetPixel(x1, y1, c);
+							x1++;
+							e = e + dy;
+							if (e < 0) {
+								y1--;
+								e = e + dx;
+							}
+						}
+					}
+					else {
+						e = dy;
+						dy <<= 1;
+						dx <<= 1;
+						while (y1 != y2) {
+							SetPixel(x1, y1, c);
+							y1--;
+							e = e + dx;
+							if (e > 0) {
+								x1++;
+								e = e + dy;
+							}
+						}
+					}
+				}
+			}
+			else {  // dy = 0 (et dx > 0)
+				do {
+					SetPixel(x1, y1, c);
+					x1++;
+				}
+				while (x1 != x2);
+			}
+		}
+		else {  // dx = 0
+			if (dy != 0) {
+				do {
+					SetPixel(x1, y1, c);
+					y1++;
+				} while (y1 != y2);
+			}
+		}
+	}
+
 	public void Dispose() {
 		if (!Disposed) {
 			Disposed = true;

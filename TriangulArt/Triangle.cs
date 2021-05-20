@@ -15,6 +15,7 @@ namespace TriangulArt {
 			this.y2 = y2;
 			this.x3 = x3;
 			this.y3 = y3;
+			Normalise();
 			TriSommets();
 			TriSommets3();
 			this.color = color;
