@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Xml.Serialization;
 
 namespace TriangulArt {
 	[Serializable]
@@ -17,11 +16,11 @@ namespace TriangulArt {
 
 		public Datas() {
 			for (int i = 0; i < 4; i++)
-				palette[i] = BitmapCpc.Palette[i];
+				palette[i] = PaletteCpc.Palette[i];
 		}
 
 		public int GetPalCPC(int c) {
-			return BitmapCpc.cpcPlus ? (((c & 0xF0) >> 4) * 17) + ((((c & 0xF00) >> 8) * 17) << 8) + (((c & 0x0F) * 17) << 16) : BitmapCpc.RgbCPC[c < 27 ? c : 0].GetColor;
+			return PaletteCpc.cpcPlus ? (((c & 0xF0) >> 4) * 17) + ((((c & 0xF00) >> 8) * 17) << 8) + (((c & 0x0F) * 17) << 16) : PaletteCpc.RgbCPC[c < 27 ? c : 0].GetColor;
 		}
 
 		private void FillTriangle(DirectBitmap bmpLock, int x1, int y1, int x2, int y2, int x3, int y3, int c, bool selected = false) {
@@ -43,9 +42,9 @@ namespace TriangulArt {
 			for (int y = y1; y < y3; y++) {
 				int color = selected ? (y << 13) + (y << 4) + (y << 22) : c;
 				if (xr > xl)
-					bmpLock.SetHorLineDouble(xl << 1, y << 1, (xr - xl) << 1, color, selected);
+					bmpLock.SetHorLine(xl, y, (xr - xl), color, selected);
 				else
-					bmpLock.SetHorLineDouble((xl + xr - xl) << 1, y << 1, (xl - xr) << 1, color, selected);
+					bmpLock.SetHorLine((xl + xr - xl), y, (xl - xr), color, selected);
 
 				err1 += dx1;
 				while (err1 >= dy1) {
@@ -67,7 +66,7 @@ namespace TriangulArt {
 			}
 		}
 
-		public void FillTriangle(DirectBitmap bmpLock, Triangle t, bool selected = false) {
+		public void FillTriangle(DirectBitmap bmpLock, Triangle t, bool selected = false, int trueCol = 0) {
 			int x1 = t.x1;
 			int y1 = t.y1;
 			int x2 = t.x2;
@@ -75,12 +74,12 @@ namespace TriangulArt {
 			int x3 = t.x3;
 			int y3 = t.y3;
 			int c = t.color;
-			FillTriangle(bmpLock, x1, y1, x2, y2, x3, y3, GetPalCPC(BitmapCpc.Palette[c]), selected);
+			FillTriangle(bmpLock, x1, y1, x2, y2, x3, y3, trueCol != 0 ? trueCol : GetPalCPC(PaletteCpc.Palette[c]), selected);
 			if (modeRendu == 1)
-				FillTriangle(bmpLock, 255 - x1, y1, 255 - x2, y2, 255 - x3, y3, GetPalCPC(BitmapCpc.Palette[c]), false);
+				FillTriangle(bmpLock, 255 - x1, y1, 255 - x2, y2, 255 - x3, y3, trueCol != 0 ? trueCol : GetPalCPC(PaletteCpc.Palette[c]), false);
 			else
 				if (modeRendu == 2)
-					FillTriangle(bmpLock, x3, 255 - y3, x2, 255 - y2, x1, 255 - y1, GetPalCPC(BitmapCpc.Palette[c]), false);
+				FillTriangle(bmpLock, x3, 255 - y3, x2, 255 - y2, x1, 255 - y1, trueCol != 0 ? trueCol : GetPalCPC(PaletteCpc.Palette[c]), false);
 		}
 
 		public void FillTriangles(DirectBitmap bmpLock) {
@@ -99,7 +98,7 @@ namespace TriangulArt {
 		}
 
 		public int SelTriangle(int xReel, int yReel) {
-			for (int i = lstTriangle.Count; i-- > 0; ) {
+			for (int i = lstTriangle.Count; i-- > 0;) {
 				Triangle t = lstTriangle[i];
 				if (IsInTriancle(t, xReel, yReel)) {
 					return i;
@@ -183,22 +182,26 @@ namespace TriangulArt {
 				MoveTriangle(t, deplX, deplY);
 		}
 
-		public void CleanUp(DirectBitmap bmpLock) {
-			// vérifier triangle non complètement recouvert
-			FillTriangles(bmpLock);
+		public void CleanUp() {
 			int nbTri = lstTriangle.Count;
+
+			// Premiere passe : vérifier triangle complètement recouvert
+			DirectBitmap bmpLock = new DirectBitmap(256, 256);	// Bitmap temporaire pour tracé des triangles
+			for (int i = 0; i < nbTri; i++)
+				FillTriangle(bmpLock, lstTriangle[i], false, i + 1); // tracé triangle dans la couleur i+1
+
 			for (int i = 0; i < nbTri; i++) {
 				bool found = false;
-				for (int x = 0; x < 512; x++)
-					for (int y = 0; y < 512; y++)
-						if (bmpLock.GetPixel(x, y) == GetPalCPC(BitmapCpc.Palette[lstTriangle[i].color])) {
+				for (int x = 0; x < 256; x++)
+					for (int y = 0; y < 256; y++)
+						if (bmpLock.GetPixel(x, y) == i + 1) { // Vérifier image contient au moins un pixel de la couleur i+1
 							found = true;
-							x = 512;
-							y = 512;
+							x = y = 256;
 						}
 				if (!found)
 					lstTriangle[i].x1 = lstTriangle[i].y1 = lstTriangle[i].x2 = lstTriangle[i].y2 = 0;
 			}
+			bmpLock.Dispose();
 
 			// Seconde passe : supprimer les triangles ayant des coordonnées identiques
 			for (int i = 0; i < nbTri; i++) {

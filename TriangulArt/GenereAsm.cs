@@ -18,7 +18,7 @@ namespace TriangulArt {
 				if (cpcPlus) {
 					string line = "";
 					for (int i = 0; i < 4; i++) {
-						int c = BitmapCpc.Palette[i];
+						int c = PaletteCpc.Palette[i];
 						line += (line != "" ? "," : "") + "#" + ((byte)(((c >> 4) & 0x0F) | (c << 4))).ToString("X2") + ",#" + ((byte)(c >> 8)).ToString("X2");
 					}
 					//sw.WriteLine("; 8 octets (4 mots) de palette");
@@ -26,7 +26,7 @@ namespace TriangulArt {
 				}
 				else {
 					for (int i = 0; i < 4; i++)
-						s += BitmapCpc.CpcVGA[data.palette[i]];
+						s += PaletteCpc.CpcVGA[data.palette[i]];
 
 					//sw.WriteLine("; 4 octets de palette");
 					sw.WriteLine("	DB	\"" + s + "\"");

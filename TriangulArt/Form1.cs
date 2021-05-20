@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 
 namespace TriangulArt {
 	public partial class Form1 : Form {
-		private BitmapCpc bitmapCpc = new BitmapCpc();
+		private PaletteCpc bitmapCpc = new PaletteCpc();
 		private DirectBitmap bmpLock;
 		private enum DrawMd { NONE = 0, MOVETRIANGLE, ADDTRIANGLE, ADDQUADRI, ADDRECTANGLE, ADDCERCLE };
 		private DrawMd mouseOpt = DrawMd.NONE;
@@ -24,7 +24,7 @@ namespace TriangulArt {
 			InitializeComponent();
 			lblInfoVersion.Text = "V " + version.ToString() + " - " + new DateTime(2000, 1, 1).AddDays(version.Build).ToShortDateString();
 			projet.AddData();
-			bmpLock = new DirectBitmap(512, 512);
+			bmpLock = new DirectBitmap(256, 256);
 			Reset();
 			SetImageProjet();
 		}
@@ -33,21 +33,22 @@ namespace TriangulArt {
 			if (bmpFond != null) {
 				for (int y = 0; y < 256; y++)
 					for (int x = 0; x < 256; x++)
-						bmpLock.SetHorLineDouble(x << 1, y << 1, 2, bmpFond.GetPixel(x, y).ToArgb());
+						bmpLock.SetPixel(x, y, bmpFond.GetPixel(x, y).ToArgb());
 			}
 			else
-				for (int y = 0; y < bmpLock.Height; y += 2)
-					bmpLock.SetHorLineDouble(0, y, BitmapCpc.TailleX, projet.SelImage().GetPalCPC(BitmapCpc.Palette[0]));
+				for (int y = 0; y < bmpLock.Height; y++)
+					bmpLock.SetHorLine(0, y, 256, projet.SelImage().GetPalCPC(PaletteCpc.Palette[0]));
 
 			Render();
 		}
 
+	
 		private void UpdatePalette() {
-			Color0.BackColor = Color.FromArgb(bitmapCpc.GetColorPal(0).GetColorArgb);
-			Color1.BackColor = Color.FromArgb(bitmapCpc.GetColorPal(1).GetColorArgb);
-			Color2.BackColor = Color.FromArgb(bitmapCpc.GetColorPal(2).GetColorArgb);
-			Color3.BackColor = Color.FromArgb(bitmapCpc.GetColorPal(3).GetColorArgb);
-			ColorSel.BackColor = Color.FromArgb(bitmapCpc.GetColorPal(selColor).GetColorArgb);
+			Color0.BackColor = Color.FromArgb(PaletteCpc.GetColorPal(0).GetColorArgb);
+			Color1.BackColor = Color.FromArgb(PaletteCpc.GetColorPal(1).GetColorArgb);
+			Color2.BackColor = Color.FromArgb(PaletteCpc.GetColorPal(2).GetColorArgb);
+			Color3.BackColor = Color.FromArgb(PaletteCpc.GetColorPal(3).GetColorArgb);
+			ColorSel.BackColor = Color.FromArgb(PaletteCpc.GetColorPal(selColor).GetColorArgb);
 		}
 
 		private void Render(bool forceDrawZoom = false) {
@@ -102,7 +103,7 @@ namespace TriangulArt {
 		}
 
 		private void DrawMoveTriangle(Graphics g) {
-			XorDrawing.DrawXorTriangle(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, triSel.x2 << 1, triSel.y2 << 1, triSel.x3 << 1, triSel.y3 << 1);
+			XorDrawing.DrawXorTriangle(g, (Bitmap)pictureBox.Image, triSel.x1, triSel.y1, triSel.x2, triSel.y2, triSel.x3, triSel.y3);
 		}
 
 		private void TrtMouseMove(object sender, MouseEventArgs e) {
@@ -112,46 +113,46 @@ namespace TriangulArt {
 			if ((mouseOpt == DrawMd.ADDTRIANGLE || mouseOpt == DrawMd.ADDQUADRI) && triSel != null) {
 				Graphics g = Graphics.FromImage(pictureBox.Image);
 				if (numPt == 2) {
-					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1);
+					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1, triSel.y1, oldx1, oldy1);
 					oldx1 = xReel;
 					oldy1 = yReel;
-					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1);
+					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1, triSel.y1, oldx1, oldy1);
 				}
 				if (numPt == 3) {
-					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1);
-					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x2 << 1, triSel.y2 << 1, oldx1 << 1, oldy1 << 1);
+					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1, triSel.y1, oldx1, oldy1);
+					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x2, triSel.y2, oldx1, oldy1);
 					oldx1 = xReel;
 					oldy1 = yReel;
-					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1);
-					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x2 << 1, triSel.y2 << 1, oldx1 << 1, oldy1 << 1);
+					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1, triSel.y1, oldx1, oldy1);
+					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x2, triSel.y2, oldx1, oldy1);
 				}
 				if (numPt == 4) {
-					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1);
-					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x3 << 1, triSel.y3 << 1, oldx1 << 1, oldy1 << 1);
+					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1, triSel.y1, oldx1, oldy1);
+					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x3, triSel.y3, oldx1, oldy1);
 					oldx1 = xReel;
 					oldy1 = yReel;
-					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1);
-					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x3 << 1, triSel.y3 << 1, oldx1 << 1, oldy1 << 1);
+					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1, triSel.y1, oldx1, oldy1);
+					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x3, triSel.y3, oldx1, oldy1);
 				}
 				pictureBox.Refresh();
 			}
 			if (mouseOpt == DrawMd.ADDRECTANGLE && triSel != null) {
 				Graphics g = Graphics.FromImage(pictureBox.Image);
 				if (numPt == 2) {
-					XorDrawing.DrawXorRectangle(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1);
+					XorDrawing.DrawXorRectangle(g, (Bitmap)pictureBox.Image, triSel.x1, triSel.y1, oldx1, oldy1);
 					oldx1 = xReel;
 					oldy1 = yReel;
-					XorDrawing.DrawXorRectangle(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1);
+					XorDrawing.DrawXorRectangle(g, (Bitmap)pictureBox.Image, triSel.x1, triSel.y1, oldx1, oldy1);
 				}
 				pictureBox.Refresh();
 			}
 			if (mouseOpt == DrawMd.ADDCERCLE && triSel != null) {
 				Graphics g = Graphics.FromImage(pictureBox.Image);
 				if (numPt == 2) {
-					XorDrawing.DrawXorCercle(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1, nbr);
+					XorDrawing.DrawXorCercle(g, (Bitmap)pictureBox.Image, triSel.x1, triSel.y1, oldx1, oldy1, nbr);
 					oldx1 = xReel;
 					oldy1 = yReel;
-					XorDrawing.DrawXorCercle(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1, nbr);
+					XorDrawing.DrawXorCercle(g, (Bitmap)pictureBox.Image, triSel.x1, triSel.y1, oldx1, oldy1, nbr);
 				}
 				pictureBox.Refresh();
 			}
@@ -211,13 +212,13 @@ namespace TriangulArt {
 						SetInfo("Attente positionnement troisième point triangle");
 						oldx1 = xReel;
 						oldy1 = yReel;
-						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, triSel.x2 << 1, triSel.y2 << 1);
+						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1, triSel.y1, triSel.x2, triSel.y2);
 					}
 					break;
 
 				case 3:
 					if (triSel != null) {
-						XorDrawing.DrawXorTriangle(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, triSel.x2 << 1, triSel.y2 << 1, oldx1 << 1, oldy1 << 1);
+						XorDrawing.DrawXorTriangle(g, (Bitmap)pictureBox.Image, triSel.x1, triSel.y1, triSel.x2, triSel.y2, oldx1, oldy1);
 						triSel.x3 = xReel;
 						triSel.y3 = yReel;
 						numPt = 1;
@@ -252,7 +253,7 @@ namespace TriangulArt {
 						SetInfo("Attente positionnement troisième point quadrilatère");
 						oldx1 = xReel;
 						oldy1 = yReel;
-						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, triSel.x2 << 1, triSel.y2 << 1);
+						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1, triSel.y1, triSel.x2, triSel.y2);
 					}
 					break;
 
@@ -267,10 +268,10 @@ namespace TriangulArt {
 
 				case 4:
 					if (triSel != null) {
-						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, triSel.x2 << 1, triSel.y2 << 1);
-						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x2 << 1, triSel.y2 << 1, triSel.x3 << 1, triSel.y3 << 1);
-						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1);
-						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x3 << 1, triSel.y3 << 1, oldx1 << 1, oldy1 << 1);
+						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1, triSel.y1, triSel.x2, triSel.y2);
+						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x2, triSel.y2, triSel.x3, triSel.y3);
+						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1, triSel.y1, oldx1, oldy1);
+						XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x3, triSel.y3, oldx1, oldy1);
 						Triangle nt = new Triangle(triSel.x1, triSel.y1, triSel.x3, triSel.y3, oldx1, oldy1, selColor);
 						triSel.TriSommets();
 						triSel.TriSommets3();
@@ -300,7 +301,7 @@ namespace TriangulArt {
 					break;
 
 				case 2:
-					XorDrawing.DrawXorRectangle(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1);
+					XorDrawing.DrawXorRectangle(g, (Bitmap)pictureBox.Image, triSel.x1, triSel.y1, oldx1, oldy1);
 					triSel.x3 = oldx1;
 					triSel.y3 = oldy1;
 					triSel.x2 = triSel.x3;
@@ -333,7 +334,7 @@ namespace TriangulArt {
 					break;
 
 				case 2:
-					XorDrawing.DrawXorCercle(g, (Bitmap)pictureBox.Image, triSel.x1 << 1, triSel.y1 << 1, oldx1 << 1, oldy1 << 1, nbr);
+					XorDrawing.DrawXorCercle(g, (Bitmap)pictureBox.Image, triSel.x1, triSel.y1, oldx1, oldy1, nbr);
 					double r = Math.Sqrt((oldx1 - triSel.x1) * (oldx1 - triSel.x1) + (oldy1 - triSel.y1) * (oldy1 - triSel.y1));
 					int x1 = triSel.x1;
 					int y1 = triSel.y1;
@@ -410,9 +411,9 @@ namespace TriangulArt {
 
 		private void InitImage() {
 			for (int i = 0; i < 4; i++)
-				BitmapCpc.Palette[i] = projet.SelImage().palette[i];
+				PaletteCpc.Palette[i] = projet.SelImage().palette[i];
 
-			BitmapCpc.cpcPlus = chkPlus.Checked = projet.SelImage().cpcPlus;
+			PaletteCpc.cpcPlus = chkPlus.Checked = projet.SelImage().cpcPlus;
 			txbNomImage.Text = projet.SelImage().nomImage;
 			txbTpsAttente.Text = projet.SelImage().tpsAttente.ToString();
 			UpdatePalette();
@@ -512,10 +513,10 @@ namespace TriangulArt {
 		}
 
 		private void SetNewColor(int pen) {
-			EditColor ed = new EditColor(pen, BitmapCpc.Palette[pen], bitmapCpc.GetColorPal(pen).GetColorArgb, BitmapCpc.cpcPlus);
+			EditColor ed = new EditColor(pen, PaletteCpc.Palette[pen], PaletteCpc.GetColorPal(pen).GetColorArgb, PaletteCpc.cpcPlus);
 			ed.ShowDialog(this);
 			if (ed.isValide) {
-				BitmapCpc.Palette[pen] = projet.SelImage().palette[pen] = ed.ValColor;
+				PaletteCpc.Palette[pen] = projet.SelImage().palette[pen] = ed.ValColor;
 				UpdatePalette();
 				FillTriangles();
 			}
@@ -631,7 +632,7 @@ namespace TriangulArt {
 		}
 
 		private void chkPlus_CheckedChanged(object sender, EventArgs e) {
-			projet.SelImage().cpcPlus = BitmapCpc.cpcPlus = chkPlus.Checked;
+			projet.SelImage().cpcPlus = PaletteCpc.cpcPlus = chkPlus.Checked;
 			FillTriangles();
 		}
 
@@ -723,7 +724,7 @@ namespace TriangulArt {
 
 		private void bpRapproche_Click(object sender, EventArgs e) {
 			projet.SelImage().Rapproche(4);
-			projet.SelImage().CleanUp(bmpLock);
+			projet.SelImage().CleanUp();
 			DisplayList();
 			FillTriangles();
 		}
@@ -787,7 +788,7 @@ namespace TriangulArt {
 
 		private void bpClean_Click(object sender, EventArgs e) {
 			int nbAvant = projet.SelImage().lstTriangle.Count;
-			projet.SelImage().CleanUp(bmpLock);
+			projet.SelImage().CleanUp();
 			int nbApres = projet.SelImage().lstTriangle.Count;
 			if (nbApres != nbAvant)
 				SetInfo("Nbre de triangles optimisés : " + (nbAvant - nbApres).ToString());

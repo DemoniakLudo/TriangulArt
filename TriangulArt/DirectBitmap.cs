@@ -48,15 +48,13 @@ public class DirectBitmap : IDisposable {
 		return new RvbColor((int)tabBits[y < Height ? (x + (y * Width)) : 0]);
 	}
 
-	public void SetHorLineDouble(int pixelX, int pixelY, int lineLength, int c, bool increment = false) {
+	public void SetHorLine(int pixelX, int pixelY, int lineLength, int c, bool increment = false) {
 		uint color = (uint)c | 0xFF000000;
 		int index = pixelX + (pixelY * Width);
 		for (; lineLength-- > 0;) {
-			if (index < Length) {
+			if (index < Length)
 				tabBits[index] = color;
-				if (index + Width < Length)
-					tabBits[index + Width] = color;
-			}
+
 			index++;
 			if (increment)
 				color += 2381;
