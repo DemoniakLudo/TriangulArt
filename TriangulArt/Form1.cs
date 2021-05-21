@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
@@ -19,12 +20,13 @@ namespace TriangulArt {
 		private Projet projet = new Projet();
 		private Version version = Assembly.GetExecutingAssembly().GetName().Version;
 		private const int MAX_RAYONS = 32;
-
+		private int maxWidth = 128;
+		private int coefX = 6;
 		public Form1() {
 			InitializeComponent();
 			lblInfoVersion.Text = "V " + version.ToString() + " - " + new DateTime(2000, 1, 1).AddDays(version.Build).ToShortDateString();
 			projet.AddData();
-			bmpLock = new DirectBitmap(256, 256);
+			bmpLock = new DirectBitmap(maxWidth, 256);
 			Reset();
 			SetImageProjet();
 		}
@@ -40,12 +42,12 @@ namespace TriangulArt {
 		public void Reset(bool force = false) {
 			if (bmpFond != null) {
 				for (int y = 0; y < 256; y++)
-					for (int x = 0; x < 256; x++)
+					for (int x = 0; x < maxWidth; x++)
 						bmpLock.SetPixel(x, y, bmpFond.GetPixel(x, y).ToArgb());
 			}
 			else
 				for (int y = 0; y < bmpLock.Height; y++)
-					bmpLock.SetHorLine(0, y, 256, projet.SelImage().GetPalCPC(PaletteCpc.Palette[0]));
+					bmpLock.SetHorLine(0, y, maxWidth, projet.SelImage().GetPalCPC(PaletteCpc.Palette[0]));
 
 			Render();
 		}
@@ -73,7 +75,7 @@ namespace TriangulArt {
 				&& int.TryParse(txbY2.Text, out y2)
 				&& int.TryParse(txbX3.Text, out x3)
 				&& int.TryParse(txbY3.Text, out y3)) {
-				if (x1 >= 0 && x1 < 256 && y1 >= 0 && y1 < 256 && x2 >= 0 && x2 < 256 && y2 >= 0 && y2 < 256 && x3 >= 0 && x3 < 256 && y3 >= 0 && y3 < 256)
+				if (x1 >= 0 && x1 < maxWidth && y1 >= 0 && y1 < 256 && x2 >= 0 && x2 < maxWidth && y2 >= 0 && y2 < 256 && x3 >= 0 && x3 < maxWidth && y3 >= 0 && y3 < 256)
 					return new Triangle(x1, y1, x2, y2, x3, y3, selColor);
 				else
 					MessageBox.Show("Les coordonnées doivent être comprises entre 0 et 255");
@@ -85,7 +87,7 @@ namespace TriangulArt {
 
 		private void FillTriangles() {
 			Reset();
-			projet.SelImage().FillTriangles(bmpLock);
+			projet.SelImage().FillTriangles(bmpLock, maxWidth);
 			Render();
 			bpAjoutTriangle.Enabled = bpAjoutQuadri.Enabled = bpAjoutRect.Enabled = bpAjoutCercle.Enabled = txbNbRayons.Enabled = true;
 			mouseOpt = DrawMd.NONE;
@@ -106,7 +108,7 @@ namespace TriangulArt {
 
 		private void AddTriangle(Triangle t) {
 			projet.SelImage().lstTriangle.Add(t);
-			projet.SelImage().FillTriangle(bmpLock, t);
+			projet.SelImage().FillTriangle(bmpLock, t, maxWidth);
 			DisplayList();
 		}
 
@@ -116,7 +118,7 @@ namespace TriangulArt {
 
 		private void TrtMouseMove(object sender, MouseEventArgs e) {
 			int yReel = (e.Y + 2) / 3;
-			int xReel = (e.X + 2) / 3;
+			int xReel = (e.X + 2) / coefX;
 			lblInfoPos.Text = "x:" + xReel.ToString("000") + " y:" + yReel.ToString("000");
 			if ((mouseOpt == DrawMd.ADDTRIANGLE || mouseOpt == DrawMd.ADDQUADRI) && triSel != null) {
 				Graphics g = Graphics.FromImage(pictureBox.Image);
@@ -169,7 +171,7 @@ namespace TriangulArt {
 				DrawMoveTriangle(g);
 				int dx = xReel - oldx1;
 				int dy = yReel - oldy1;
-				projet.SelImage().DeplaceTriangle(dx, dy);
+				projet.SelImage().DeplaceTriangle(dx, dy, maxWidth);
 				oldx1 = xReel;
 				oldy1 = yReel;
 				DrawMoveTriangle(g);
@@ -179,7 +181,7 @@ namespace TriangulArt {
 
 		private void pictureBox_MouseDown(object sender, MouseEventArgs e) {
 			int yReel = (e.Y + 2) / 3;
-			int xReel = (e.X + 2) / 3;
+			int xReel = (e.X + 2) / coefX;
 			if (e.Button == MouseButtons.Right)
 				if (mouseOpt == DrawMd.NONE)
 					listTriangles.SelectedIndex = projet.SelImage().SelTriangle(xReel, yReel);
@@ -364,7 +366,7 @@ namespace TriangulArt {
 
 		private void pictureBox_MouseUp(object sender, MouseEventArgs e) {
 			int yReel = (e.Y + 2) / 3;
-			int xReel = (e.X + 2) / 3;
+			int xReel = (e.X + 2) / coefX;
 			if (e.Button == MouseButtons.Left) {
 				Graphics g = Graphics.FromImage(pictureBox.Image);
 				switch (mouseOpt) {
@@ -629,7 +631,7 @@ namespace TriangulArt {
 					int y3 = Convert.ToInt32(txbY3.Text);
 					int x4 = 0, y4 = 0;
 					if (int.TryParse(txbX4.Text, out x4) && int.TryParse(txbY4.Text, out y4)) {
-						if (x4 >= 0 && x4 < 256 && y4 >= 0 && y4 < 256)
+						if (x4 >= 0 && x4 < maxWidth && y4 >= 0 && y4 < 256)
 							tnew = new Triangle(x1, y1, x3, y3, x4, y4, selColor);
 					}
 				}
@@ -655,13 +657,13 @@ namespace TriangulArt {
 			DialogResult result = dlg.ShowDialog();
 			if (result == DialogResult.OK) {
 				using (Bitmap b = new Bitmap(dlg.FileName)) {
-					if (b.Width == 256 && b.Height == 256) {
+					if (b.Width == maxWidth && b.Height == 256) {
 						bmpFond = new Bitmap(b);
 						Reset();
 						SetInfo("Lecture image de fond ok.");
 					}
 					else
-						MessageBox.Show("L'image n'a pas le bon format (256x256 pixels)");
+						MessageBox.Show("L'image n'a pas le bon format (" + maxWidth.ToString() + "x256 pixels)");
 				}
 			}
 		}
@@ -717,19 +719,19 @@ namespace TriangulArt {
 			int deplX = 0, deplY = 0;
 			if (int.TryParse(txbTrX.Text, out deplX) && int.TryParse(txbTrY.Text, out deplY)) {
 				if (rbDepImage.Checked) {
-					projet.SelImage().DeplaceImage(deplX, deplY);
+					projet.SelImage().DeplaceImage(deplX, deplY, maxWidth);
 					DisplayList();
 					FillTriangles();
 				}
 				else
 					if (triSel != null) {
-						int memoSel = projet.SelImage().GetSelTriangle();
-						projet.SelImage().DeplaceTriangle(deplX, deplY);
-						DisplayList();
-						listTriangles.SelectedIndex = memoSel;
-					}
-					else
-						MessageBox.Show("Pas de triangle sélectionné");
+					int memoSel = projet.SelImage().GetSelTriangle();
+					projet.SelImage().DeplaceTriangle(deplX, deplY, maxWidth);
+					DisplayList();
+					listTriangles.SelectedIndex = memoSel;
+				}
+				else
+					MessageBox.Show("Pas de triangle sélectionné");
 			}
 			else
 				MessageBox.Show("Veuillez sélectionner des données de déplacement valide");
@@ -737,7 +739,7 @@ namespace TriangulArt {
 
 		private void bpRapproche_Click(object sender, EventArgs e) {
 			projet.SelImage().Rapproche(4);
-			projet.SelImage().CleanUp();
+			projet.SelImage().CleanUp(maxWidth);
 			DisplayList();
 			FillTriangles();
 		}
@@ -780,19 +782,19 @@ namespace TriangulArt {
 			double zoomX = 0, zoomY = 0;
 			if (double.TryParse(txbTrX.Text.Replace('.', ','), out zoomX) && double.TryParse(txbTrY.Text.Replace('.', ','), out zoomY)) {
 				if (rbDepImage.Checked) {
-					projet.SelImage().CoefZoom(zoomX, zoomY, chkCenterZoom.Checked);
+					projet.SelImage().CoefZoom(zoomX, zoomY, chkCenterZoom.Checked, maxWidth);
 					DisplayList();
 					FillTriangles();
 				}
 				else
 					if (triSel != null) {
-						int memoSel = projet.SelImage().GetSelTriangle();
-						projet.SelImage().CoefZoom(triSel, zoomX, zoomY, chkCenterZoom.Checked);
-						DisplayList();
-						listTriangles.SelectedIndex = memoSel;
-					}
-					else
-						MessageBox.Show("Pas de triangle sélectionné");
+					int memoSel = projet.SelImage().GetSelTriangle();
+					projet.SelImage().CoefZoom(triSel, zoomX, zoomY, chkCenterZoom.Checked, maxWidth);
+					DisplayList();
+					listTriangles.SelectedIndex = memoSel;
+				}
+				else
+					MessageBox.Show("Pas de triangle sélectionné");
 			}
 			else
 				MessageBox.Show("Veuillez sélectionner des données de zoom valide");
@@ -801,7 +803,7 @@ namespace TriangulArt {
 
 		private void bpClean_Click(object sender, EventArgs e) {
 			int nbAvant = projet.SelImage().lstTriangle.Count;
-			projet.SelImage().CleanUp();
+			projet.SelImage().CleanUp(maxWidth);
 			int nbApres = projet.SelImage().lstTriangle.Count;
 			if (nbApres != nbAvant)
 				SetInfo("Nbre de triangles optimisés : " + (nbAvant - nbApres).ToString());
@@ -882,6 +884,19 @@ namespace TriangulArt {
 			MemImage();
 			projet.SelectImage(projet.selData + 1);
 			SetImageProjet();
+		}
+
+		private void pictureBox_Paint(object sender, PaintEventArgs e) {
+			e.Graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
+			e.Graphics.DrawImage(
+				bmpLock.Bitmap,
+				new Rectangle(0, 0, pictureBox.Width, pictureBox.Height),
+				// destination rectangle 
+				0,
+				0,           // upper-left corner of source rectangle
+				 bmpLock.Bitmap.Width,       // width of source rectangle
+				 bmpLock.Bitmap.Height,      // height of source rectangle
+				GraphicsUnit.Pixel);
 		}
 
 		private void bpGenereProjetAsm_Click(object sender, EventArgs e) {
