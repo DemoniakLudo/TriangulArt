@@ -29,6 +29,14 @@ namespace TriangulArt {
 			SetImageProjet();
 		}
 
+		protected override bool ProcessCmdKey(ref Message msg, Keys keyData) {
+			if (keyData == Keys.Delete) {
+				DeleteSelTriangle();
+				return true;
+			}
+			return base.ProcessCmdKey(ref msg, keyData);
+		}
+
 		public void Reset(bool force = false) {
 			if (bmpFond != null) {
 				for (int y = 0; y < 256; y++)
@@ -42,7 +50,7 @@ namespace TriangulArt {
 			Render();
 		}
 
-	
+
 		private void UpdatePalette() {
 			Color0.BackColor = Color.FromArgb(PaletteCpc.GetColorPal(0).GetColorArgb);
 			Color1.BackColor = Color.FromArgb(PaletteCpc.GetColorPal(1).GetColorArgb);
@@ -585,12 +593,17 @@ namespace TriangulArt {
 			FillTriangles();
 		}
 
-		private void bpDelete_Click(object sender, EventArgs e) {
-			if (MessageBox.Show("Etes vous sur(e) de vouloir supprimer ce triangle ?", "Confirmation suppression", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes) {
+		private void DeleteSelTriangle() {
+			if (triSel != null) {
 				projet.SelImage().DeleteSelTriangle();
 				DisplayList();
 				FillTriangles();
 			}
+		}
+
+		private void bpDelete_Click(object sender, EventArgs e) {
+			if (MessageBox.Show("Etes vous sur(e) de vouloir supprimer ce triangle ?", "Confirmation suppression", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+				DeleteSelTriangle();
 		}
 
 		private void bpEdit_Click(object sender, EventArgs e) {
@@ -710,13 +723,13 @@ namespace TriangulArt {
 				}
 				else
 					if (triSel != null) {
-					int memoSel = projet.SelImage().GetSelTriangle();
-					projet.SelImage().DeplaceTriangle(deplX, deplY);
-					DisplayList();
-					listTriangles.SelectedIndex = memoSel;
-				}
-				else
-					MessageBox.Show("Pas de triangle sélectionné");
+						int memoSel = projet.SelImage().GetSelTriangle();
+						projet.SelImage().DeplaceTriangle(deplX, deplY);
+						DisplayList();
+						listTriangles.SelectedIndex = memoSel;
+					}
+					else
+						MessageBox.Show("Pas de triangle sélectionné");
 			}
 			else
 				MessageBox.Show("Veuillez sélectionner des données de déplacement valide");
@@ -773,13 +786,13 @@ namespace TriangulArt {
 				}
 				else
 					if (triSel != null) {
-					int memoSel = projet.SelImage().GetSelTriangle();
-					projet.SelImage().CoefZoom(triSel, zoomX, zoomY, chkCenterZoom.Checked);
-					DisplayList();
-					listTriangles.SelectedIndex = memoSel;
-				}
-				else
-					MessageBox.Show("Pas de triangle sélectionné");
+						int memoSel = projet.SelImage().GetSelTriangle();
+						projet.SelImage().CoefZoom(triSel, zoomX, zoomY, chkCenterZoom.Checked);
+						DisplayList();
+						listTriangles.SelectedIndex = memoSel;
+					}
+					else
+						MessageBox.Show("Pas de triangle sélectionné");
 			}
 			else
 				MessageBox.Show("Veuillez sélectionner des données de zoom valide");
