@@ -66,7 +66,7 @@ namespace TriangulArt {
 			}
 		}
 
-		public void FillTriangle(DirectBitmap bmpLock, Triangle t, bool selected = false, int trueCol = 0) {
+		public void FillTriangle(DirectBitmap bmpLock, Triangle t, int maxWidth, bool selected = false, int trueCol = 0) {
 			int x1 = t.x1;
 			int y1 = t.y1;
 			int x2 = t.x2;
@@ -76,16 +76,16 @@ namespace TriangulArt {
 			int c = t.color;
 			FillTriangle(bmpLock, x1, y1, x2, y2, x3, y3, trueCol != 0 ? trueCol : GetPalCPC(PaletteCpc.Palette[c]), selected);
 			if (modeRendu == 1)
-				FillTriangle(bmpLock, 255 - x1, y1, 255 - x2, y2, 255 - x3, y3, trueCol != 0 ? trueCol : GetPalCPC(PaletteCpc.Palette[c]), false);
+				FillTriangle(bmpLock, maxWidth - 1 - x1, y1, maxWidth - 1 - x2, y2, maxWidth - 1 - x3, y3, trueCol != 0 ? trueCol : GetPalCPC(PaletteCpc.Palette[c]), false);
 			else
 				if (modeRendu == 2)
 				FillTriangle(bmpLock, x3, 255 - y3, x2, 255 - y2, x1, 255 - y1, trueCol != 0 ? trueCol : GetPalCPC(PaletteCpc.Palette[c]), false);
 		}
 
-		public void FillTriangles(DirectBitmap bmpLock) {
+		public void FillTriangles(DirectBitmap bmpLock, int maxWidth) {
 			for (int i = 0; i < lstTriangle.Count; i++) {
 				Triangle t = lstTriangle[i];
-				FillTriangle(bmpLock, t, i == selLigne);
+				FillTriangle(bmpLock, t, maxWidth, i == selLigne);
 			}
 		}
 
@@ -164,35 +164,35 @@ namespace TriangulArt {
 			lstTriangle[selLigne + 1] = t;
 		}
 
-		private void MoveTriangle(Triangle t, int deplX, int deplY) {
-			t.x1 = Math.Max(Math.Min(t.x1 + deplX, 255), 0);
+		private void MoveTriangle(Triangle t, int deplX, int deplY, int maxWidth) {
+			t.x1 = Math.Max(Math.Min(t.x1 + deplX, maxWidth - 1), 0);
 			t.y1 = Math.Max(Math.Min(t.y1 + deplY, 255), 0);
-			t.x2 = Math.Max(Math.Min(t.x2 + deplX, 255), 0);
+			t.x2 = Math.Max(Math.Min(t.x2 + deplX, maxWidth - 1), 0);
 			t.y2 = Math.Max(Math.Min(t.y2 + deplY, 255), 0);
-			t.x3 = Math.Max(Math.Min(t.x3 + deplX, 255), 0);
+			t.x3 = Math.Max(Math.Min(t.x3 + deplX, maxWidth - 1), 0);
 			t.y3 = Math.Max(Math.Min(t.y3 + deplY, 255), 0);
 		}
 
-		public void DeplaceTriangle(int deplX, int deplY) {
-			MoveTriangle(lstTriangle[selLigne], deplX, deplY);
+		public void DeplaceTriangle(int deplX, int deplY, int maxWidth) {
+			MoveTriangle(lstTriangle[selLigne], deplX, deplY, maxWidth);
 		}
 
-		public void DeplaceImage(int deplX, int deplY) {
+		public void DeplaceImage(int deplX, int deplY, int maxWidth) {
 			foreach (Triangle t in lstTriangle)
-				MoveTriangle(t, deplX, deplY);
+				MoveTriangle(t, deplX, deplY, maxWidth);
 		}
 
-		public void CleanUp() {
+		public void CleanUp(int maxWidth) {
 			int nbTri = lstTriangle.Count;
 
 			// Premiere passe : vérifier triangle complètement recouvert
-			DirectBitmap bmpLock = new DirectBitmap(256, 256);	// Bitmap temporaire pour tracé des triangles
+			DirectBitmap bmpLock = new DirectBitmap(maxWidth, 256); // Bitmap temporaire pour tracé des triangles
 			for (int i = 0; i < nbTri; i++)
-				FillTriangle(bmpLock, lstTriangle[i], false, i + 1); // tracé triangle dans la couleur i+1
+				FillTriangle(bmpLock, lstTriangle[i], maxWidth, false, i + 1); // tracé triangle dans la couleur i+1
 
 			for (int i = 0; i < nbTri; i++) {
 				bool found = false;
-				for (int x = 0; x < 256; x++)
+				for (int x = 0; x < maxWidth; x++)
 					for (int y = 0; y < 256; y++)
 						if (bmpLock.GetPixel(x, y) == i + 1) { // Vérifier image contient au moins un pixel de la couleur i+1
 							found = true;
@@ -310,7 +310,7 @@ namespace TriangulArt {
 				}
 		}
 
-		public void CoefZoom(Triangle t, double coefX, double coefY, bool center) {
+		public void CoefZoom(Triangle t, double coefX, double coefY, bool center, int maxWidth) {
 			int addCenter = center ? 127 : 0;
 			double x1 = addCenter + (t.x1 - addCenter) * coefX;
 			double y1 = addCenter + (t.y1 - addCenter) * coefY;
@@ -318,17 +318,17 @@ namespace TriangulArt {
 			double y2 = addCenter + (t.y2 - addCenter) * coefY;
 			double x3 = addCenter + (t.x3 - addCenter) * coefX;
 			double y3 = addCenter + (t.y3 - addCenter) * coefY;
-			t.x1 = (int)Math.Max(Math.Min(x1, 255), 0);
+			t.x1 = (int)Math.Max(Math.Min(x1, maxWidth - 1), 0);
 			t.y1 = (int)Math.Max(Math.Min(y1, 255), 0);
-			t.x2 = (int)Math.Max(Math.Min(x2, 255), 0);
+			t.x2 = (int)Math.Max(Math.Min(x2, maxWidth - 1), 0);
 			t.y2 = (int)Math.Max(Math.Min(y2, 255), 0);
-			t.x3 = (int)Math.Max(Math.Min(x3, 255), 0);
+			t.x3 = (int)Math.Max(Math.Min(x3, maxWidth - 1), 0);
 			t.y3 = (int)Math.Max(Math.Min(y3, 255), 0);
 		}
 
-		public void CoefZoom(double coefX, double coefY, bool center) {
+		public void CoefZoom(double coefX, double coefY, bool center, int maxWidth) {
 			foreach (Triangle t in lstTriangle)
-				CoefZoom(t, coefX, coefY, center);
+				CoefZoom(t, coefX, coefY, center, maxWidth);
 		}
 
 		public void Clear() {
