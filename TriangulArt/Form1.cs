@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
@@ -870,6 +871,19 @@ namespace TriangulArt {
 			MemImage();
 			projet.SelectImage(projet.selData + 1);
 			SetImageProjet();
+		}
+
+		private void pictureBox_Paint(object sender, PaintEventArgs e) {
+			e.Graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
+			e.Graphics.DrawImage(
+				bmpLock.Bitmap,
+				new Rectangle(0, 0, pictureBox.Width, pictureBox.Height),
+				// destination rectangle 
+				0,
+				0,           // upper-left corner of source rectangle
+				 bmpLock.Bitmap.Width,       // width of source rectangle
+				 bmpLock.Bitmap.Height,      // height of source rectangle
+				GraphicsUnit.Pixel);
 		}
 
 		private void bpGenereProjetAsm_Click(object sender, EventArgs e) {
