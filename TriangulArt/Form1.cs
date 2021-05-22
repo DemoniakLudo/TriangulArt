@@ -20,13 +20,25 @@ namespace TriangulArt {
 		private Projet projet = new Projet();
 		private Version version = Assembly.GetExecutingAssembly().GetName().Version;
 		private const int MAX_RAYONS = 32;
-		private int maxWidth = 128;
-		private int coefX = 6;
+		private int maxWidth;
+		private int coefX;
+		private Label[] colors = new Label[16];
+
 		public Form1() {
 			InitializeComponent();
+			for (int i = 0; i < 16; i++) {
+				// Générer les contrôles de "couleurs"
+				colors[i] = new Label();
+				colors[i].BorderStyle = BorderStyle.FixedSingle;
+				colors[i].Location = new Point(774, i * 48);
+				colors[i].Size = new Size(40, 32);
+				colors[i].Tag = i;
+				colors[i].MouseClick += ClickColor;
+				Controls.Add(colors[i]);
+			}
 			lblInfoVersion.Text = "V " + version.ToString() + " - " + new DateTime(2000, 1, 1).AddDays(version.Build).ToShortDateString();
 			projet.AddData();
-			bmpLock = new DirectBitmap(maxWidth, 256);
+			SetNewMode();
 			Reset();
 			SetImageProjet();
 		}
@@ -52,13 +64,28 @@ namespace TriangulArt {
 			Render();
 		}
 
+		// Changement de la palette
+		private void ClickColor(object sender, MouseEventArgs e) {
+			Label colorClick = sender as Label;
+			int pen = colorClick.Tag != null ? (int)colorClick.Tag : 0;
+			if (e.Button == MouseButtons.Left) {
+				selColor = pen;
+				UpdatePalette();
+			}
+			else
+				SetNewColor(pen);
+		}
 
 		private void UpdatePalette() {
-			Color0.BackColor = Color.FromArgb(PaletteCpc.GetColorPal(0).GetColorArgb);
-			Color1.BackColor = Color.FromArgb(PaletteCpc.GetColorPal(1).GetColorArgb);
-			Color2.BackColor = Color.FromArgb(PaletteCpc.GetColorPal(2).GetColorArgb);
-			Color3.BackColor = Color.FromArgb(PaletteCpc.GetColorPal(3).GetColorArgb);
+			for (int i = 0; i < 16; i++)
+				colors[i].BackColor = Color.FromArgb(PaletteCpc.GetColorPal(i).GetColorArgb);
+
 			ColorSel.BackColor = Color.FromArgb(PaletteCpc.GetColorPal(selColor).GetColorArgb);
+		}
+
+		private void pictureBox_Paint(object sender, PaintEventArgs e) {
+			e.Graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
+			e.Graphics.DrawImage(bmpLock.Bitmap, new Rectangle(0, 0, pictureBox.Width, pictureBox.Height), 0, 0, bmpLock.Bitmap.Width, bmpLock.Bitmap.Height, GraphicsUnit.Pixel);
 		}
 
 		private void Render(bool forceDrawZoom = false) {
@@ -92,7 +119,6 @@ namespace TriangulArt {
 			bpAjoutTriangle.Enabled = bpAjoutQuadri.Enabled = bpAjoutRect.Enabled = bpAjoutCercle.Enabled = txbNbRayons.Enabled = true;
 			mouseOpt = DrawMd.NONE;
 		}
-
 
 		private void DisplayList() {
 			listTriangles.Items.Clear();
@@ -517,7 +543,7 @@ namespace TriangulArt {
 			if (result == DialogResult.OK) {
 				int.TryParse(txbTpsAttente.Text, out projet.SelImage().tpsAttente);
 				projet.SelImage().tpsAttente = Math.Min(850, Math.Max(1, projet.SelImage().tpsAttente));
-				projet.SelImage().GenereSourceAsm(dlg.FileName, chkCodeAsm.Checked, chkModePolice.Checked);
+				projet.SelImage().GenereSourceAsm(dlg.FileName, projet.mode, chkCodeAsm.Checked, chkModePolice.Checked);
 				SetInfo("Génération assembleur ok.");
 			}
 		}
@@ -530,42 +556,6 @@ namespace TriangulArt {
 				UpdatePalette();
 				FillTriangles();
 			}
-		}
-
-		private void Color0_MouseClick(object sender, MouseEventArgs e) {
-			if (e.Button == MouseButtons.Left) {
-				selColor = 0;
-				UpdatePalette();
-			}
-			else
-				SetNewColor(0);
-		}
-
-		private void Color1_MouseClick(object sender, MouseEventArgs e) {
-			if (e.Button == MouseButtons.Left) {
-				selColor = 1;
-				UpdatePalette();
-			}
-			else
-				SetNewColor(1);
-		}
-
-		private void Color2_MouseClick(object sender, MouseEventArgs e) {
-			if (e.Button == MouseButtons.Left) {
-				selColor = 2;
-				UpdatePalette();
-			}
-			else
-				SetNewColor(2);
-		}
-
-		private void Color3_MouseClick(object sender, MouseEventArgs e) {
-			if (e.Button == MouseButtons.Left) {
-				selColor = 3;
-				UpdatePalette();
-			}
-			else
-				SetNewColor(3);
 		}
 
 		private void listTriangles_SelectedIndexChanged(object sender, EventArgs e) {
@@ -725,13 +715,13 @@ namespace TriangulArt {
 				}
 				else
 					if (triSel != null) {
-					int memoSel = projet.SelImage().GetSelTriangle();
-					projet.SelImage().DeplaceTriangle(deplX, deplY, maxWidth);
-					DisplayList();
-					listTriangles.SelectedIndex = memoSel;
-				}
-				else
-					MessageBox.Show("Pas de triangle sélectionné");
+						int memoSel = projet.SelImage().GetSelTriangle();
+						projet.SelImage().DeplaceTriangle(deplX, deplY, maxWidth);
+						DisplayList();
+						listTriangles.SelectedIndex = memoSel;
+					}
+					else
+						MessageBox.Show("Pas de triangle sélectionné");
 			}
 			else
 				MessageBox.Show("Veuillez sélectionner des données de déplacement valide");
@@ -788,13 +778,13 @@ namespace TriangulArt {
 				}
 				else
 					if (triSel != null) {
-					int memoSel = projet.SelImage().GetSelTriangle();
-					projet.SelImage().CoefZoom(triSel, zoomX, zoomY, chkCenterZoom.Checked, maxWidth);
-					DisplayList();
-					listTriangles.SelectedIndex = memoSel;
-				}
-				else
-					MessageBox.Show("Pas de triangle sélectionné");
+						int memoSel = projet.SelImage().GetSelTriangle();
+						projet.SelImage().CoefZoom(triSel, zoomX, zoomY, chkCenterZoom.Checked, maxWidth);
+						DisplayList();
+						listTriangles.SelectedIndex = memoSel;
+					}
+					else
+						MessageBox.Show("Pas de triangle sélectionné");
 			}
 			else
 				MessageBox.Show("Veuillez sélectionner des données de zoom valide");
@@ -886,19 +876,6 @@ namespace TriangulArt {
 			SetImageProjet();
 		}
 
-		private void pictureBox_Paint(object sender, PaintEventArgs e) {
-			e.Graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
-			e.Graphics.DrawImage(
-				bmpLock.Bitmap,
-				new Rectangle(0, 0, pictureBox.Width, pictureBox.Height),
-				// destination rectangle 
-				0,
-				0,           // upper-left corner of source rectangle
-				 bmpLock.Bitmap.Width,       // width of source rectangle
-				 bmpLock.Bitmap.Height,      // height of source rectangle
-				GraphicsUnit.Pixel);
-		}
-
 		private void bpGenereProjetAsm_Click(object sender, EventArgs e) {
 			SaveFileDialog dlg = new SaveFileDialog();
 			dlg.Filter = "Fichiers assembleur (*.asm)|*.asm";
@@ -916,5 +893,47 @@ namespace TriangulArt {
 			}
 		}
 		#endregion
+
+		private void SetNewMode() {
+			if (bmpLock != null)
+				bmpLock.Dispose();
+
+			int nbCols = 1 << (4 >> projet.mode);
+			for (int i = 0; i < 16; i++)
+				colors[i].Visible = i < nbCols;
+
+			switch (projet.mode) {
+				case 0:
+					maxWidth = 128;
+					coefX = 6;
+					bmpLock = new DirectBitmap(maxWidth, 256);
+					break;
+
+				case 1:
+					maxWidth = 256;
+					coefX = 3;
+					bmpLock = new DirectBitmap(maxWidth, 256);
+					break;
+			}
+			foreach (Datas d in projet.lstData)
+				d.ChangeMode(projet.mode);
+
+			DisplayList();
+			FillTriangles();
+		}
+
+		private void rbMode0_CheckedChanged(object sender, EventArgs e) {
+			if (rbMode0.Checked) {
+				projet.mode = 0;
+				SetNewMode();
+			}
+		}
+
+		private void rbMode1_CheckedChanged(object sender, EventArgs e) {
+			if (rbMode1.Checked) {
+				projet.mode = 1;
+				SetNewMode();
+			}
+		}
 	}
 }

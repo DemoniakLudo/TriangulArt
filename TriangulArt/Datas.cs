@@ -7,7 +7,7 @@ namespace TriangulArt {
 	public class Datas {
 		public int modeRendu = 0;
 		public List<Triangle> lstTriangle = new List<Triangle>();
-		public int[] palette = new int[4];
+		public int[] palette = new int[16];
 		public bool cpcPlus = false;
 		public int tpsAttente = 16;
 		public string nomImage;
@@ -15,7 +15,7 @@ namespace TriangulArt {
 		private int selLigne = -1;
 
 		public Datas() {
-			for (int i = 0; i < 4; i++)
+			for (int i = 0; i < 16; i++)
 				palette[i] = PaletteCpc.Palette[i];
 		}
 
@@ -79,7 +79,7 @@ namespace TriangulArt {
 				FillTriangle(bmpLock, maxWidth - 1 - x1, y1, maxWidth - 1 - x2, y2, maxWidth - 1 - x3, y3, trueCol != 0 ? trueCol : GetPalCPC(PaletteCpc.Palette[c]), false);
 			else
 				if (modeRendu == 2)
-				FillTriangle(bmpLock, x3, 255 - y3, x2, 255 - y2, x1, 255 - y1, trueCol != 0 ? trueCol : GetPalCPC(PaletteCpc.Palette[c]), false);
+					FillTriangle(bmpLock, x3, 255 - y3, x2, 255 - y2, x1, 255 - y1, trueCol != 0 ? trueCol : GetPalCPC(PaletteCpc.Palette[c]), false);
 		}
 
 		public void FillTriangles(DirectBitmap bmpLock, int maxWidth) {
@@ -98,7 +98,7 @@ namespace TriangulArt {
 		}
 
 		public int SelTriangle(int xReel, int yReel) {
-			for (int i = lstTriangle.Count; i-- > 0;) {
+			for (int i = lstTriangle.Count; i-- > 0; ) {
 				Triangle t = lstTriangle[i];
 				if (IsInTriancle(t, xReel, yReel)) {
 					return i;
@@ -372,7 +372,7 @@ namespace TriangulArt {
 			}
 		}
 
-		public void GenereSourceAsm(string fileName, bool withCode, bool modePolice) {
+		public void GenereSourceAsm(string fileName, int mode, bool withCode, bool modePolice) {
 			bool polyMode = false;
 			//
 			// Rapprocher les triangles ayant des coordonnées comparables
@@ -403,13 +403,37 @@ namespace TriangulArt {
 				nom = nom.Substring(0, p);
 
 			if (withCode)
-				GenereAsm.GenereDrawTriangleCode(sw, nom, cpcPlus);
+				GenereAsm.GenereDrawTriangleCode(sw, nom, mode, cpcPlus);
 
-			GenereAsm.GenereDatas(sw, this, nom, cpcPlus, modePolice);
+			GenereAsm.GenereDatas(sw, this, nom, mode, cpcPlus, modePolice);
 			if (withCode)
-				GenereAsm.GenereDrawTriangleData(sw, cpcPlus);
+				GenereAsm.GenereDrawTriangleData(sw, mode, cpcPlus);
 
 			GenereAsm.CloseAsm(sw);
+		}
+
+		public void ChangeMode(int newMode) {
+			if (palette.Length == 4) {
+				int[] tmp = new int[4];
+				for (int i = 0; i < 4; i++)
+					tmp[i] = palette[i];
+
+				palette = new int[16];
+				for (int j = 0; j < 16; j++)
+					palette[j] = j < 4 ? tmp[j] : PaletteCpc.Palette[j];
+			}
+			for (int i = 0; i < lstTriangle.Count; i++) {
+				if (newMode == 0) {
+					lstTriangle[i].x1 >>= 1;
+					lstTriangle[i].x2 >>= 1;
+					lstTriangle[i].x3 >>= 1;
+				}
+				else {
+					lstTriangle[i].x1 <<= 1;
+					lstTriangle[i].x2 <<= 1;
+					lstTriangle[i].x3 <<= 1;
+				}
+			}
 		}
 	}
 }

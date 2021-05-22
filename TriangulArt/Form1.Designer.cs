@@ -29,10 +29,6 @@
 			this.listInfo = new System.Windows.Forms.ListBox();
 			this.bpLoad = new System.Windows.Forms.Button();
 			this.bpSave = new System.Windows.Forms.Button();
-			this.Color0 = new System.Windows.Forms.Label();
-			this.Color1 = new System.Windows.Forms.Label();
-			this.Color2 = new System.Windows.Forms.Label();
-			this.Color3 = new System.Windows.Forms.Label();
 			this.ColorSel = new System.Windows.Forms.Label();
 			this.bpGenereAsm = new System.Windows.Forms.Button();
 			this.bpAddCoord = new System.Windows.Forms.Button();
@@ -106,6 +102,8 @@
 			this.bpAjoutCercle = new System.Windows.Forms.Button();
 			this.txbNbRayons = new System.Windows.Forms.TextBox();
 			this.label15 = new System.Windows.Forms.Label();
+			this.rbMode0 = new System.Windows.Forms.RadioButton();
+			this.rbMode1 = new System.Windows.Forms.RadioButton();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -156,7 +154,7 @@
 			// 
 			// bpLoad
 			// 
-			this.bpLoad.Location = new System.Drawing.Point(866, 90);
+			this.bpLoad.Location = new System.Drawing.Point(866, 113);
 			this.bpLoad.Name = "bpLoad";
 			this.bpLoad.Size = new System.Drawing.Size(116, 22);
 			this.bpLoad.TabIndex = 4;
@@ -166,53 +164,13 @@
 			// 
 			// bpSave
 			// 
-			this.bpSave.Location = new System.Drawing.Point(866, 118);
+			this.bpSave.Location = new System.Drawing.Point(866, 141);
 			this.bpSave.Name = "bpSave";
 			this.bpSave.Size = new System.Drawing.Size(116, 22);
 			this.bpSave.TabIndex = 4;
 			this.bpSave.Text = "Sauver";
 			this.bpSave.UseVisualStyleBackColor = true;
 			this.bpSave.Click += new System.EventHandler(this.bpSave_Click);
-			// 
-			// Color0
-			// 
-			this.Color0.BackColor = System.Drawing.Color.Transparent;
-			this.Color0.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.Color0.Location = new System.Drawing.Point(774, 1);
-			this.Color0.Name = "Color0";
-			this.Color0.Size = new System.Drawing.Size(82, 56);
-			this.Color0.TabIndex = 5;
-			this.Color0.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Color0_MouseClick);
-			// 
-			// Color1
-			// 
-			this.Color1.BackColor = System.Drawing.Color.Transparent;
-			this.Color1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.Color1.Location = new System.Drawing.Point(774, 97);
-			this.Color1.Name = "Color1";
-			this.Color1.Size = new System.Drawing.Size(82, 56);
-			this.Color1.TabIndex = 5;
-			this.Color1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Color1_MouseClick);
-			// 
-			// Color2
-			// 
-			this.Color2.BackColor = System.Drawing.Color.Transparent;
-			this.Color2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.Color2.Location = new System.Drawing.Point(774, 193);
-			this.Color2.Name = "Color2";
-			this.Color2.Size = new System.Drawing.Size(82, 56);
-			this.Color2.TabIndex = 5;
-			this.Color2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Color2_MouseClick);
-			// 
-			// Color3
-			// 
-			this.Color3.BackColor = System.Drawing.Color.Transparent;
-			this.Color3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.Color3.Location = new System.Drawing.Point(774, 289);
-			this.Color3.Name = "Color3";
-			this.Color3.Size = new System.Drawing.Size(82, 56);
-			this.Color3.TabIndex = 5;
-			this.Color3.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Color3_MouseClick);
 			// 
 			// ColorSel
 			// 
@@ -225,7 +183,7 @@
 			// 
 			// bpGenereAsm
 			// 
-			this.bpGenereAsm.Location = new System.Drawing.Point(866, 159);
+			this.bpGenereAsm.Location = new System.Drawing.Point(866, 174);
 			this.bpGenereAsm.Name = "bpGenereAsm";
 			this.bpGenereAsm.Size = new System.Drawing.Size(116, 23);
 			this.bpGenereAsm.TabIndex = 6;
@@ -381,7 +339,7 @@
 			// chkPlus
 			// 
 			this.chkPlus.AutoSize = true;
-			this.chkPlus.Location = new System.Drawing.Point(1398, 607);
+			this.chkPlus.Location = new System.Drawing.Point(9, 76);
 			this.chkPlus.Name = "chkPlus";
 			this.chkPlus.Size = new System.Drawing.Size(89, 17);
 			this.chkPlus.TabIndex = 24;
@@ -392,7 +350,7 @@
 			// chkCodeAsm
 			// 
 			this.chkCodeAsm.AutoSize = true;
-			this.chkCodeAsm.Location = new System.Drawing.Point(988, 150);
+			this.chkCodeAsm.Location = new System.Drawing.Point(988, 166);
 			this.chkCodeAsm.Name = "chkCodeAsm";
 			this.chkCodeAsm.Size = new System.Drawing.Size(181, 17);
 			this.chkCodeAsm.TabIndex = 25;
@@ -401,7 +359,7 @@
 			// 
 			// bpImport
 			// 
-			this.bpImport.Location = new System.Drawing.Point(1060, 90);
+			this.bpImport.Location = new System.Drawing.Point(1060, 113);
 			this.bpImport.Name = "bpImport";
 			this.bpImport.Size = new System.Drawing.Size(139, 22);
 			this.bpImport.TabIndex = 26;
@@ -411,7 +369,7 @@
 			// 
 			// bpImportImage
 			// 
-			this.bpImportImage.Location = new System.Drawing.Point(1060, 118);
+			this.bpImportImage.Location = new System.Drawing.Point(1060, 141);
 			this.bpImportImage.Name = "bpImportImage";
 			this.bpImportImage.Size = new System.Drawing.Size(139, 22);
 			this.bpImportImage.TabIndex = 27;
@@ -613,7 +571,7 @@
 			// chkClearData
 			// 
 			this.chkClearData.AutoSize = true;
-			this.chkClearData.Location = new System.Drawing.Point(1213, 94);
+			this.chkClearData.Location = new System.Drawing.Point(1213, 117);
 			this.chkClearData.Name = "chkClearData";
 			this.chkClearData.Size = new System.Drawing.Size(165, 17);
 			this.chkClearData.TabIndex = 37;
@@ -750,14 +708,17 @@
 			// 
 			// grpProjet
 			// 
+			this.grpProjet.Controls.Add(this.rbMode1);
+			this.grpProjet.Controls.Add(this.rbMode0);
 			this.grpProjet.Controls.Add(this.bpNewProjet);
 			this.grpProjet.Controls.Add(this.bpGenereProjetAsm);
 			this.grpProjet.Controls.Add(this.grpImage);
 			this.grpProjet.Controls.Add(this.bpSaveProj);
 			this.grpProjet.Controls.Add(this.bpReadProj);
+			this.grpProjet.Controls.Add(this.chkPlus);
 			this.grpProjet.Location = new System.Drawing.Point(866, 9);
 			this.grpProjet.Name = "grpProjet";
-			this.grpProjet.Size = new System.Drawing.Size(651, 75);
+			this.grpProjet.Size = new System.Drawing.Size(651, 98);
 			this.grpProjet.TabIndex = 50;
 			this.grpProjet.TabStop = false;
 			this.grpProjet.Text = "Projet";
@@ -885,7 +846,7 @@
 			// chkModePolice
 			// 
 			this.chkModePolice.AutoSize = true;
-			this.chkModePolice.Location = new System.Drawing.Point(988, 173);
+			this.chkModePolice.Location = new System.Drawing.Point(988, 188);
 			this.chkModePolice.Name = "chkModePolice";
 			this.chkModePolice.Size = new System.Drawing.Size(157, 17);
 			this.chkModePolice.TabIndex = 53;
@@ -929,6 +890,30 @@
 			this.label15.TabIndex = 56;
 			this.label15.Text = "rayons";
 			// 
+			// rbMode0
+			// 
+			this.rbMode0.AutoSize = true;
+			this.rbMode0.Location = new System.Drawing.Point(207, 76);
+			this.rbMode0.Name = "rbMode0";
+			this.rbMode0.Size = new System.Drawing.Size(61, 17);
+			this.rbMode0.TabIndex = 25;
+			this.rbMode0.Text = "Mode 0";
+			this.rbMode0.UseVisualStyleBackColor = true;
+			this.rbMode0.CheckedChanged += new System.EventHandler(this.rbMode0_CheckedChanged);
+			// 
+			// rbMode1
+			// 
+			this.rbMode1.AutoSize = true;
+			this.rbMode1.Checked = true;
+			this.rbMode1.Location = new System.Drawing.Point(279, 76);
+			this.rbMode1.Name = "rbMode1";
+			this.rbMode1.Size = new System.Drawing.Size(61, 17);
+			this.rbMode1.TabIndex = 25;
+			this.rbMode1.TabStop = true;
+			this.rbMode1.Text = "Mode 1";
+			this.rbMode1.UseVisualStyleBackColor = true;
+			this.rbMode1.CheckedChanged += new System.EventHandler(this.rbMode1_CheckedChanged);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -964,7 +949,6 @@
 			this.Controls.Add(this.bpImportImage);
 			this.Controls.Add(this.bpImport);
 			this.Controls.Add(this.chkCodeAsm);
-			this.Controls.Add(this.chkPlus);
 			this.Controls.Add(this.label7);
 			this.Controls.Add(this.bpDelete);
 			this.Controls.Add(this.txbY3);
@@ -984,11 +968,7 @@
 			this.Controls.Add(this.bpEdit);
 			this.Controls.Add(this.bpAddCoord);
 			this.Controls.Add(this.bpGenereAsm);
-			this.Controls.Add(this.Color3);
-			this.Controls.Add(this.Color2);
-			this.Controls.Add(this.Color1);
 			this.Controls.Add(this.ColorSel);
-			this.Controls.Add(this.Color0);
 			this.Controls.Add(this.bpSave);
 			this.Controls.Add(this.bpLoad);
 			this.Controls.Add(this.listInfo);
@@ -1006,6 +986,7 @@
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
 			this.grpProjet.ResumeLayout(false);
+			this.grpProjet.PerformLayout();
 			this.grpImage.ResumeLayout(false);
 			this.grpImage.PerformLayout();
 			this.ResumeLayout(false);
@@ -1021,10 +1002,6 @@
 		private System.Windows.Forms.ListBox listInfo;
 		private System.Windows.Forms.Button bpLoad;
 		private System.Windows.Forms.Button bpSave;
-		private System.Windows.Forms.Label Color0;
-		private System.Windows.Forms.Label Color1;
-		private System.Windows.Forms.Label Color2;
-		private System.Windows.Forms.Label Color3;
 		private System.Windows.Forms.Label ColorSel;
 		private System.Windows.Forms.Button bpGenereAsm;
 		private System.Windows.Forms.Button bpAddCoord;
@@ -1098,6 +1075,8 @@
 		private System.Windows.Forms.Button bpAjoutCercle;
 		private System.Windows.Forms.TextBox txbNbRayons;
 		private System.Windows.Forms.Label label15;
+		private System.Windows.Forms.RadioButton rbMode1;
+		private System.Windows.Forms.RadioButton rbMode0;
 	}
 }
 

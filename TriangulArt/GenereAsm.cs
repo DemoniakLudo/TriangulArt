@@ -9,26 +9,25 @@ namespace TriangulArt {
 			return sw;
 		}
 
-		static public void GenereDatas(StreamWriter sw, Datas data, string nom, bool cpcPlus, bool modePolice) {
+		static public void GenereDatas(StreamWriter sw, Datas data, string nom, int mode, bool cpcPlus, bool modePolice) {
 			int nbOctets = 0;
 			string s = "";
 
-			sw.WriteLine(";" + nom);
+			sw.WriteLine(nom);
 			if (!modePolice) {
+				int nbCols = 1 << (4 >> mode);
 				if (cpcPlus) {
 					string line = "";
-					for (int i = 0; i < 4; i++) {
+					for (int i = 0; i < nbCols; i++) {
 						int c = PaletteCpc.Palette[i];
 						line += (line != "" ? "," : "") + "#" + ((byte)(((c >> 4) & 0x0F) | (c << 4))).ToString("X2") + ",#" + ((byte)(c >> 8)).ToString("X2");
 					}
-					//sw.WriteLine("; 8 octets (4 mots) de palette");
 					sw.WriteLine("	DB	" + line);
 				}
 				else {
-					for (int i = 0; i < 4; i++)
+					for (int i = 0; i < nbCols; i++)
 						s += PaletteCpc.CpcVGA[data.palette[i]];
 
-					//sw.WriteLine("; 4 octets de palette");
 					sw.WriteLine("	DB	\"" + s + "\"");
 				}
 				int tps = (int)Math.Max(Math.Min(255, data.tpsAttente / 3.333333), 1);
@@ -60,13 +59,13 @@ namespace TriangulArt {
 			sw.WriteLine("; Taille " + nbOctets.ToString() + " octets");
 		}
 
-		static public void GenereDrawTriangleCode(StreamWriter sw, string nom, bool cpcPlus) {
-			GenereInitCode(sw, cpcPlus);
-			GenereInitPalette(sw, nom, cpcPlus);
-			GenereDrawTriangle(sw);
+		static public void GenereDrawTriangleCode(StreamWriter sw, string nom, int mode, bool cpcPlus) {
+			GenereInitCode(sw, mode, cpcPlus);
+			GenereInitPalette(sw, nom, mode, cpcPlus);
+			GenereDrawTriangle(sw, mode);
 		}
 
-		static private void GenereInitCode(StreamWriter sw, bool cpcPlus) {
+		static private void GenereInitCode(StreamWriter sw, int mode, bool cpcPlus) {
 			sw.WriteLine("	ORG	#8000");
 			sw.WriteLine("	RUN	$");
 			sw.WriteLine("	DI");
@@ -123,30 +122,38 @@ namespace TriangulArt {
 			sw.WriteLine("	POP	BC");
 			sw.WriteLine("CalcSuite:");
 			sw.WriteLine("	DJNZ	CalcAdr");
-			sw.WriteLine("; calculer points a afficher en fonction de la couleur");
-			sw.WriteLine("	LD	DE,pen1");
-			sw.WriteLine("	LD	HL,PtMode1C1");
-			sw.WriteLine("	LD	B,32					; Tableau structure {Point} (32 valeurs)");
-			sw.WriteLine("InitPen:");
-			sw.WriteLine("	CALL	Set3Pen					; Ecriture Masque + premier octet a ecrire");
-			sw.WriteLine("	LD	A,(DE)					; Octet suivant = nbre de pixels a soustraire");
-			sw.WriteLine("	LD	(HL),A");
-			sw.WriteLine("	INC	H");
-			sw.WriteLine("	LD	(HL),A");
-			sw.WriteLine("	INC	H");
-			sw.WriteLine("	LD	(HL),A");
-			sw.WriteLine("	INC	H");
-			sw.WriteLine("	LD	(HL),A");
-			sw.WriteLine("	DEC	H");
-			sw.WriteLine("	DEC	H");
-			sw.WriteLine("	DEC	H");
-			sw.WriteLine("	INC	L");
-			sw.WriteLine("	INC	DE");
-			sw.WriteLine("	CALL	Set3Pen					; Ecriture Masque + dernier octet a ecrire");
-			sw.WriteLine("	INC	L");
-			sw.WriteLine("	INC	L");
-			sw.WriteLine("	INC	L					; 3 valeurs a zeros pour aligner sur 8 octets");
-			sw.WriteLine("	DJNZ	InitPen");
+			if (mode == 1) {
+				sw.WriteLine("; calculer points a afficher en fonction de la couleur");
+				sw.WriteLine("	LD	DE,pen1");
+				sw.WriteLine("	LD	HL,PtMode");
+				sw.WriteLine("	LD	B,32					; Tableau structure {Point} (32 valeurs)");
+				sw.WriteLine("InitPen:");
+				sw.WriteLine("	CALL	Set3Pen					; Ecriture Masque + premier octet a ecrire");
+				sw.WriteLine("	LD	A,(DE)					; Octet suivant = nbre de pixels a soustraire");
+				sw.WriteLine("	LD	(HL),A");
+				sw.WriteLine("	INC	H");
+				sw.WriteLine("	LD	(HL),A");
+				sw.WriteLine("	INC	H");
+				sw.WriteLine("	LD	(HL),A");
+				sw.WriteLine("	INC	H");
+				sw.WriteLine("	LD	(HL),A");
+				sw.WriteLine("	DEC	H");
+				sw.WriteLine("	DEC	H");
+				sw.WriteLine("	DEC	H");
+				sw.WriteLine("	INC	L");
+				sw.WriteLine("	INC	DE");
+				sw.WriteLine("	CALL	Set3Pen					; Ecriture Masque + dernier octet a ecrire");
+				sw.WriteLine("	INC	L");
+				sw.WriteLine("	INC	L");
+				sw.WriteLine("	INC	L					; 3 valeurs a zeros pour aligner sur 8 octets");
+				sw.WriteLine("	DJNZ	InitPen");
+			}
+			else {
+				sw.WriteLine("	LD	HL,penMode0");
+				sw.WriteLine("	LD	DE,PtMode");
+				sw.WriteLine("	LD	BC,64");
+				sw.WriteLine("	LDIR");
+			}
 			if (cpcPlus) {
 				sw.WriteLine("	LD	BC,#BC11");
 				sw.WriteLine("	LD	HL,UnlockAsic");
@@ -157,7 +164,11 @@ namespace TriangulArt {
 				sw.WriteLine("	DEC	C");
 				sw.WriteLine("	JR	NZ,Unlock");
 			}
-			sw.WriteLine("	LD	BC,#7F8D			; Mode 1");
+			if (mode == 1)
+				sw.WriteLine("	LD	BC,#7F8D			; Mode 1");
+			else
+				sw.WriteLine("	LD	BC,#7F8C			; Mode 0");
+
 			sw.WriteLine("	OUT	(C),C");
 			if (cpcPlus) {
 				sw.WriteLine("	LD	A,#A0");
@@ -168,10 +179,11 @@ namespace TriangulArt {
 			sw.WriteLine("	EI");
 		}
 
-		static private void GenereInitPalette(StreamWriter sw, string nom, bool cpcPlus) {
+		static private void GenereInitPalette(StreamWriter sw, string nom, int mode, bool cpcPlus) {
 			sw.WriteLine("	LD	IX," + nom + "			; Donnees triangle");
 			sw.WriteLine("	PUSH	IX");
 			sw.WriteLine("	POP	HL");
+			int nbCols = 1 << (4 >> mode);
 			if (cpcPlus) {
 				sw.WriteLine("	LD	BC,#7FB8");
 				sw.WriteLine("	OUT	(C),C");
@@ -181,7 +193,7 @@ namespace TriangulArt {
 				sw.WriteLine("	DEC	HL");
 				sw.WriteLine("	DEC	HL");
 				sw.WriteLine("	LD	E,0");
-				sw.WriteLine("	LD	BC,8");
+				sw.WriteLine("	LD	BC," + (nbCols << 1).ToString());
 				sw.WriteLine("	LDIR");
 				sw.WriteLine("	LD	BC,#7FA0");
 				sw.WriteLine("	OUT	(C),C");
@@ -197,12 +209,12 @@ namespace TriangulArt {
 				sw.WriteLine("	INC	B");
 				sw.WriteLine("	OUTI");
 				sw.WriteLine("	INC	A");
-				sw.WriteLine("	CP	4");
+				sw.WriteLine("	CP	" + nbCols.ToString());
 				sw.WriteLine("	JR	NZ,BclPalette");
 			}
 		}
 
-		static private void GenereDrawTriangle(StreamWriter sw) {
+		static private void GenereDrawTriangle(StreamWriter sw, int mode) {
 			sw.WriteLine("	LD	A,(HL)");
 			sw.WriteLine("	INC	HL");
 			sw.WriteLine("	LD	(TpsWaitTriangle+1),A");
@@ -215,14 +227,22 @@ namespace TriangulArt {
 			sw.WriteLine("	XOR	A");
 			sw.WriteLine("	LD	(CntIrq+1),A");
 			sw.WriteLine("	LD	A,(IX+6)				; Couleur");
-			sw.WriteLine("	AND	3");
-			sw.WriteLine("	ADD	A,PtMode1C1/256");
-			sw.WriteLine("	LD	(DrawLigneCoul+1),A");
-			sw.WriteLine("	LD	(DrawLigneCoul3+1),A");
-			sw.WriteLine("	LD	H,A");
-			sw.WriteLine("	LD	L,#61");
-			sw.WriteLine("	LD	A,(HL)");
-			sw.WriteLine("	LD	(DrawLigneCoul2+1),A");
+			if (mode == 1) {
+				sw.WriteLine("	AND	3");
+				sw.WriteLine("	ADD	A,PtMode/256");
+				sw.WriteLine("	LD	(DrawLigneCoul+1),A");
+				sw.WriteLine("	LD	(DrawLigneCoul3+1),A");
+				sw.WriteLine("	LD	H,A");
+				sw.WriteLine("	LD	L,#61");
+				sw.WriteLine("	LD	A,(HL)");
+				sw.WriteLine("	LD	(DrawLigneCoul2+1),A");
+			}
+			else {
+				sw.WriteLine("	AND	15");
+				sw.WriteLine("	RLA	");
+				sw.WriteLine("	RLA							; * 4 (4 octets par couleurs)");
+				sw.WriteLine("	LD	(DrawLigneCoul+1),A");
+			}
 			sw.WriteLine("	LD	B,(IX+0)				; X1");
 			sw.WriteLine("	LD	C,(IX+1)				; Y1");
 			sw.WriteLine("	LD	D,(IX+2)				; X2");
@@ -340,72 +360,103 @@ namespace TriangulArt {
 			sw.WriteLine("DrawLigneCoordOk:");
 			sw.WriteLine("	LD	H,TabAdr/256				; Adresse des poids faibles");
 			sw.WriteLine("	AND	A");
-			sw.WriteLine("	RRA");
-			sw.WriteLine("	AND	A");
-			sw.WriteLine("	RRA						; x/4");
+			sw.WriteLine("	RRA						; x/2");
+			if (mode == 1) {
+				sw.WriteLine("	AND	A");
+				sw.WriteLine("	RRA						; x/4");
+			}
 			sw.WriteLine("	ADD	A,(HL)");
 			sw.WriteLine("	LD	E,A");
 			sw.WriteLine("	INC	H					; Adresse des poids forts");
 			sw.WriteLine("	LD	D,(HL)					; Reg.DE = adresse memoire ecran (0,y)");
+
+
 			sw.WriteLine("");
-			sw.WriteLine("	LD	A,B					; x");
-			sw.WriteLine("	AND	3");
-			sw.WriteLine("	LD	L,A					; Reg.L = position fine x (0 a 3)");
-			sw.WriteLine("	LD	A,C					; xfin");
-			sw.WriteLine("	SUB	B");
-			sw.WriteLine("	LD	B,A					; Reg.B = nbre de points en x");
-			sw.WriteLine("	DEC	A");
-			sw.WriteLine("	CP	7");
-			sw.WriteLine("	JR	C,DrawLigneOk");
-			sw.WriteLine("	OR	4");
-			sw.WriteLine("	AND	7");
-			sw.WriteLine("DrawLigneOk:");
-			sw.WriteLine("	RLCA");
-			sw.WriteLine("	RLCA");
-			sw.WriteLine("	OR	L");
-			sw.WriteLine("	RLCA");
-			sw.WriteLine("	RLCA");
-			sw.WriteLine("	RLCA						; 8 octets par structure");
-			sw.WriteLine("	LD	L,A");
-			sw.WriteLine("DrawLigneCoul:");
-			sw.WriteLine("	LD	H,PtMode1C1/256");
-			sw.WriteLine("	LD	A,(DE)					; Octet memoire ecran");
-			sw.WriteLine("	AND	(HL)					; Masque");
-			sw.WriteLine("	INC	L");
-			sw.WriteLine("	OR	(HL)					; Premier octet");
-			sw.WriteLine("	LD	(DE),A");
-			sw.WriteLine("	INC	L");
-			sw.WriteLine("	INC	DE");
-			sw.WriteLine("	LD	A,B					; Nbre de points");
-			sw.WriteLine("	SUB	(HL)					; Nbre de points a soustraire");
-			sw.WriteLine("	JR	C,DrawLigneFin");
-			sw.WriteLine("	INC	A");
-			sw.WriteLine("	RRA");
-			sw.WriteLine("	AND	A");
-			sw.WriteLine("	RRA");
-			sw.WriteLine("	LD	C,A");
-			sw.WriteLine("DrawLigneCoul2:");
-			sw.WriteLine("	LD	A,#3E					; Octet du milieu (4 pixels allumes)");
-			sw.WriteLine("	LD	(DE),A");
-			sw.WriteLine("	LD	H,D");
-			sw.WriteLine("	LD	A,L");
-			sw.WriteLine("	LD	L,E");
-			sw.WriteLine("	INC	DE");
-			sw.WriteLine("	DEC	C");
-			sw.WriteLine("	JR	Z,DrawLigneCoul3");
-			sw.WriteLine("	LD	B,0");
-			sw.WriteLine("	LDIR");
-			sw.WriteLine("DrawLigneCoul3:");
-			sw.WriteLine("	LD	H,PtMode1C1/256");
-			sw.WriteLine("	LD	L,A");
-			sw.WriteLine("");
-			sw.WriteLine("DrawLigneFin:");
-			sw.WriteLine("	INC	L");
-			sw.WriteLine("	LD	A,(DE)					; Octet memoire ecran");
-			sw.WriteLine("	AND	(HL)					; Masque");
-			sw.WriteLine("	INC	L");
-			sw.WriteLine("	OR	(HL)					; Dernier octet");
-			sw.WriteLine("	LD	(DE),A");
+			if (mode == 1) {
+				sw.WriteLine("	LD	A,B					; x");
+				sw.WriteLine("	AND	3");
+				sw.WriteLine("	LD	L,A					; Reg.L = position fine x (0 a 3)");
+				sw.WriteLine("	LD	A,C					; xfin");
+				sw.WriteLine("	SUB	B");
+				sw.WriteLine("	LD	B,A					; Reg.B = nbre de points en x");
+				sw.WriteLine("	DEC	A");
+				sw.WriteLine("	CP	7");
+				sw.WriteLine("	JR	C,DrawLigneOk");
+				sw.WriteLine("	OR	4");
+				sw.WriteLine("	AND	7");
+				sw.WriteLine("DrawLigneOk:");
+				sw.WriteLine("	RLCA");
+				sw.WriteLine("	RLCA");
+				sw.WriteLine("	OR	L");
+				sw.WriteLine("	RLCA");
+				sw.WriteLine("	RLCA");
+				sw.WriteLine("	RLCA						; 8 octets par structure");
+				sw.WriteLine("	LD	L,A");
+				sw.WriteLine("DrawLigneCoul:");
+				sw.WriteLine("	LD	H,PtMode/256");
+				sw.WriteLine("	LD	A,(DE)					; Octet memoire ecran");
+				sw.WriteLine("	AND	(HL)					; Masque");
+				sw.WriteLine("	INC	L");
+				sw.WriteLine("	OR	(HL)					; Premier octet");
+				sw.WriteLine("	LD	(DE),A");
+				sw.WriteLine("	INC	L");
+				sw.WriteLine("	INC	DE");
+				sw.WriteLine("	LD	A,B					; Nbre de points");
+				sw.WriteLine("	SUB	(HL)					; Nbre de points a soustraire");
+				sw.WriteLine("	JR	C,DrawLigneFin");
+				sw.WriteLine("	INC	A");
+				sw.WriteLine("	RRA");
+				sw.WriteLine("	AND	A");
+				sw.WriteLine("	RRA");
+				sw.WriteLine("	LD	C,A");
+				sw.WriteLine("DrawLigneCoul2:");
+				sw.WriteLine("	LD	A,#3E					; Octet du milieu (4 pixels allumes)");
+				sw.WriteLine("	LD	(DE),A");
+				sw.WriteLine("	LD	H,D");
+				sw.WriteLine("	LD	A,L");
+				sw.WriteLine("	LD	L,E");
+				sw.WriteLine("	INC	DE");
+				sw.WriteLine("	DEC	C");
+				sw.WriteLine("	JR	Z,DrawLigneCoul3");
+				sw.WriteLine("	LD	B,0");
+				sw.WriteLine("	LDIR");
+				sw.WriteLine("DrawLigneCoul3:");
+				sw.WriteLine("	LD	H,PtMode/256");
+				sw.WriteLine("	LD	L,A");
+				sw.WriteLine("");
+				sw.WriteLine("DrawLigneFin:");
+				sw.WriteLine("	INC	L");
+				sw.WriteLine("	LD	A,(DE)					; Octet memoire ecran");
+				sw.WriteLine("	AND	(HL)					; Masque");
+				sw.WriteLine("	INC	L");
+				sw.WriteLine("	OR	(HL)					; Dernier octet");
+				sw.WriteLine("	LD	(DE),A");
+			}
+			else {
+				sw.WriteLine("DrawLigneCoordOk2");
+				sw.WriteLine("	LD	H,PtMode/256");
+				sw.WriteLine("DrawLigneCoul:");
+				sw.WriteLine("	LD	L,00					; Couleur * 4");
+				sw.WriteLine("	LD	A,B					; x");
+				sw.WriteLine("	AND	1					; pixel gauche ou droite");
+				sw.WriteLine("	RLCA						; * 2");
+				sw.WriteLine("	ADD	A,L");
+				sw.WriteLine("	LD	L,A					; 2 octets utilises - masque, pixel");
+				sw.WriteLine("	LD	A,(DE)					; Octet memoire ecran");
+				sw.WriteLine("	AND	(HL)					; Masque");
+				sw.WriteLine("	INC	L");
+				sw.WriteLine("	OR	(HL)					; Pixel");
+				sw.WriteLine("	LD	(DE),A");
+				sw.WriteLine("	INC	B");
+				sw.WriteLine("	LD	A,B");
+				sw.WriteLine("	RRCA");
+				sw.WriteLine("	JR	C,DrawLigneCoul2");
+				sw.WriteLine("	INC	E");
+				sw.WriteLine("DrawLigneCoul2:");
+				sw.WriteLine("	RLCA");
+				sw.WriteLine("	CP	C");
+				sw.WriteLine("	JR	C,DrawLigneCoul");
+			}
 			sw.WriteLine("LigneVide:");
 			sw.WriteLine("	EXX");
 			sw.WriteLine(";");
@@ -523,56 +574,78 @@ namespace TriangulArt {
 			sw.WriteLine("	RET");
 		}
 
-		static public void GenereDrawTriangleData(StreamWriter sw, bool cpcPlus) {
+		static public void GenereDrawTriangleData(StreamWriter sw, int mode, bool cpcPlus) {
 			if (cpcPlus) {
 				sw.WriteLine("UnlockAsic:");
 				sw.WriteLine("	DB	#FF,#00,#FF,#77,#B3,#51,#A8,#D4,#62,#39,#9C,#46,#2B,#15,#8A,#CD,#EE");
 				sw.WriteLine(";");
 			}
-			sw.WriteLine("pen1:");
-			sw.WriteLine(";");
-			sw.WriteLine("; Structure");
-			sw.WriteLine("; octet 0 = premier octet de la ligne");
-			sw.WriteLine("; octet 1 = nbre d'octets a soustraire+1 du nombre de pixels");
-			sw.WriteLine("; octet 2 = dernier octet de la ligne");
-			sw.WriteLine(";");
-			sw.WriteLine("	DB	#80,#02,#00");
-			sw.WriteLine("	DB	#40,#02,#00");
-			sw.WriteLine("	DB	#20,#02,#00");
-			sw.WriteLine("	DB	#10,#02,#00");
-			sw.WriteLine("	DB	#C0,#03,#00");
-			sw.WriteLine("	DB	#60,#03,#00");
-			sw.WriteLine("	DB	#30,#03,#00");
-			sw.WriteLine("	DB	#10,#03,#80");
-			sw.WriteLine("	DB	#E0,#04,#00");
-			sw.WriteLine("	DB	#70,#04,#00");
-			sw.WriteLine("	DB	#30,#04,#80");
-			sw.WriteLine("	DB	#10,#04,#C0");
-			sw.WriteLine("	DB	#F0,#05,#00");
-			sw.WriteLine("	DB	#70,#05,#80");
-			sw.WriteLine("	DB	#30,#05,#C0");
-			sw.WriteLine("	DB	#10,#05,#E0");
-			sw.WriteLine("	DB	#F0,#06,#80");
-			sw.WriteLine("	DB	#70,#06,#C0");
-			sw.WriteLine("	DB	#30,#06,#E0");
-			sw.WriteLine("	DB	#10,#06,#F0");
-			sw.WriteLine("	DB	#F0,#07,#C0");
-			sw.WriteLine("	DB	#70,#07,#E0");
-			sw.WriteLine("	DB	#30,#07,#F0");
-			sw.WriteLine("	DB	#10,#03,#80");
-			sw.WriteLine("	DB	#F0,#08,#E0");
-			sw.WriteLine("	DB	#70,#08,#F0");
-			sw.WriteLine("	DB	#30,#04,#80");
-			sw.WriteLine("	DB	#10,#04,#C0");
-			sw.WriteLine("	DB	#F0,#09,#F0");
-			sw.WriteLine("	DB	#70,#05,#80");
-			sw.WriteLine("	DB	#30,#05,#C0");
-			sw.WriteLine("	DB	#10,#05,#E0");
+			if (mode == 1) {
+				sw.WriteLine("pen1:");
+				sw.WriteLine(";");
+				sw.WriteLine("; Structure");
+				sw.WriteLine("; octet 0 = premier octet de la ligne");
+				sw.WriteLine("; octet 1 = nbre d'octets a soustraire+1 du nombre de pixels");
+				sw.WriteLine("; octet 2 = dernier octet de la ligne");
+				sw.WriteLine(";");
+				sw.WriteLine("	DB	#80,#02,#00");
+				sw.WriteLine("	DB	#40,#02,#00");
+				sw.WriteLine("	DB	#20,#02,#00");
+				sw.WriteLine("	DB	#10,#02,#00");
+				sw.WriteLine("	DB	#C0,#03,#00");
+				sw.WriteLine("	DB	#60,#03,#00");
+				sw.WriteLine("	DB	#30,#03,#00");
+				sw.WriteLine("	DB	#10,#03,#80");
+				sw.WriteLine("	DB	#E0,#04,#00");
+				sw.WriteLine("	DB	#70,#04,#00");
+				sw.WriteLine("	DB	#30,#04,#80");
+				sw.WriteLine("	DB	#10,#04,#C0");
+				sw.WriteLine("	DB	#F0,#05,#00");
+				sw.WriteLine("	DB	#70,#05,#80");
+				sw.WriteLine("	DB	#30,#05,#C0");
+				sw.WriteLine("	DB	#10,#05,#E0");
+				sw.WriteLine("	DB	#F0,#06,#80");
+				sw.WriteLine("	DB	#70,#06,#C0");
+				sw.WriteLine("	DB	#30,#06,#E0");
+				sw.WriteLine("	DB	#10,#06,#F0");
+				sw.WriteLine("	DB	#F0,#07,#C0");
+				sw.WriteLine("	DB	#70,#07,#E0");
+				sw.WriteLine("	DB	#30,#07,#F0");
+				sw.WriteLine("	DB	#10,#03,#80");
+				sw.WriteLine("	DB	#F0,#08,#E0");
+				sw.WriteLine("	DB	#70,#08,#F0");
+				sw.WriteLine("	DB	#30,#04,#80");
+				sw.WriteLine("	DB	#10,#04,#C0");
+				sw.WriteLine("	DB	#F0,#09,#F0");
+				sw.WriteLine("	DB	#70,#05,#80");
+				sw.WriteLine("	DB	#30,#05,#C0");
+				sw.WriteLine("	DB	#10,#05,#E0");
+			}
+			else {
+				sw.WriteLine("; octet1 = masque pixel gauche, octet2=valeur pixel gauche, octet3=masque pixel droite, octet4 = valeur pixel droite");
+				sw.WriteLine("penMode0:");
+				sw.WriteLine("	DB	#55,#00,#AA,#00");
+				sw.WriteLine("	DB	#55,#80,#AA,#40");
+				sw.WriteLine("	DB	#55,#08,#AA,#04");
+				sw.WriteLine("	DB	#55,#88,#AA,#44");
+				sw.WriteLine("	DB	#55,#20,#AA,#10");
+				sw.WriteLine("	DB	#55,#A0,#AA,#50");
+				sw.WriteLine("	DB	#55,#28,#AA,#14");
+				sw.WriteLine("	DB	#55,#A8,#AA,#54");
+				sw.WriteLine("	DB	#55,#02,#AA,#01");
+				sw.WriteLine("	DB	#55,#82,#AA,#41");
+				sw.WriteLine("	DB	#55,#0A,#AA,#05");
+				sw.WriteLine("	DB	#55,#8A,#AA,#45");
+				sw.WriteLine("	DB	#55,#22,#AA,#11");
+				sw.WriteLine("	DB	#55,#A2,#AA,#51");
+				sw.WriteLine("	DB	#55,#2A,#AA,#15");
+				sw.WriteLine("	DB	#55,#AA,#AA,#55");
+			}
 			sw.WriteLine(";");
 			sw.WriteLine("	align	256");
 			sw.WriteLine("TabAdr");
 			sw.WriteLine("	DS	512");
-			sw.WriteLine("PtMode1C1");
+			sw.WriteLine("PtMode");
 		}
 
 		static public void CloseAsm(StreamWriter sw) {

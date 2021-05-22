@@ -7,6 +7,7 @@ namespace TriangulArt {
 	public class Projet {
 		public List<Datas> lstData = new List<Datas>();
 		public int selData = 0;
+		public int mode = 1;
 
 		public Datas AddData() {
 			selData = lstData.Count;
@@ -33,7 +34,7 @@ namespace TriangulArt {
 
 		public void RemoveImage() {
 			lstData.RemoveAt(selData);
-			if (selData >=lstData.Count)
+			if (selData >= lstData.Count)
 				selData--;
 		}
 
@@ -46,7 +47,7 @@ namespace TriangulArt {
 		public void GenereSourceAsm(string fileName, bool modePolice) {
 			StreamWriter sw = GenereAsm.OpenAsm(fileName);
 			foreach (Datas d in lstData) {
-				GenereAsm.GenereDatas(sw, d, d.nomImage, d.cpcPlus, modePolice);
+				GenereAsm.GenereDatas(sw, d, d.nomImage, mode, d.cpcPlus, modePolice);
 			}
 			GenereAsm.CloseAsm(sw);
 		}
