@@ -823,6 +823,11 @@ namespace TriangulArt {
 				try {
 					projet = (Projet)new XmlSerializer(typeof(Projet)).Deserialize(fileParam);
 					SetInfo("Lecture projet ok");
+					if (projet.mode == 0)
+						rbMode0.Checked = true;
+					else
+						rbMode1.Checked = true;
+
 					projet.SelectImage(0);
 					SetImageProjet();
 				}
@@ -923,14 +928,14 @@ namespace TriangulArt {
 		}
 
 		private void rbMode0_CheckedChanged(object sender, EventArgs e) {
-			if (rbMode0.Checked) {
+			if (rbMode0.Checked && projet.mode != 0) {
 				projet.mode = 0;
 				SetNewMode();
 			}
 		}
 
 		private void rbMode1_CheckedChanged(object sender, EventArgs e) {
-			if (rbMode1.Checked) {
+			if (rbMode1.Checked && projet.mode != 1) {
 				projet.mode = 1;
 				SetNewMode();
 			}
