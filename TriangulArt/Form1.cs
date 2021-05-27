@@ -38,7 +38,7 @@ namespace TriangulArt {
 			}
 			lblInfoVersion.Text = "V " + version.ToString() + " - " + new DateTime(2000, 1, 1).AddDays(version.Build).ToShortDateString();
 			projet.AddData();
-			SetNewMode();
+			SetNewMode(true);
 			Reset();
 			SetImageProjet();
 		}
@@ -715,13 +715,13 @@ namespace TriangulArt {
 				}
 				else
 					if (triSel != null) {
-						int memoSel = projet.SelImage().GetSelTriangle();
-						projet.SelImage().DeplaceTriangle(deplX, deplY, maxWidth);
-						DisplayList();
-						listTriangles.SelectedIndex = memoSel;
-					}
-					else
-						MessageBox.Show("Pas de triangle sélectionné");
+					int memoSel = projet.SelImage().GetSelTriangle();
+					projet.SelImage().DeplaceTriangle(deplX, deplY, maxWidth);
+					DisplayList();
+					listTriangles.SelectedIndex = memoSel;
+				}
+				else
+					MessageBox.Show("Pas de triangle sélectionné");
 			}
 			else
 				MessageBox.Show("Veuillez sélectionner des données de déplacement valide");
@@ -778,13 +778,13 @@ namespace TriangulArt {
 				}
 				else
 					if (triSel != null) {
-						int memoSel = projet.SelImage().GetSelTriangle();
-						projet.SelImage().CoefZoom(triSel, zoomX, zoomY, chkCenterZoom.Checked, maxWidth);
-						DisplayList();
-						listTriangles.SelectedIndex = memoSel;
-					}
-					else
-						MessageBox.Show("Pas de triangle sélectionné");
+					int memoSel = projet.SelImage().GetSelTriangle();
+					projet.SelImage().CoefZoom(triSel, zoomX, zoomY, chkCenterZoom.Checked, maxWidth);
+					DisplayList();
+					listTriangles.SelectedIndex = memoSel;
+				}
+				else
+					MessageBox.Show("Pas de triangle sélectionné");
 			}
 			else
 				MessageBox.Show("Veuillez sélectionner des données de zoom valide");
@@ -828,6 +828,7 @@ namespace TriangulArt {
 					else
 						rbMode1.Checked = true;
 
+					SetNewMode(false);
 					projet.SelectImage(0);
 					SetImageProjet();
 				}
@@ -899,7 +900,7 @@ namespace TriangulArt {
 		}
 		#endregion
 
-		private void SetNewMode() {
+		private void SetNewMode(bool withResize) {
 			if (bmpLock != null)
 				bmpLock.Dispose();
 
@@ -920,8 +921,9 @@ namespace TriangulArt {
 					bmpLock = new DirectBitmap(maxWidth, 256);
 					break;
 			}
-			foreach (Datas d in projet.lstData)
-				d.ChangeMode(projet.mode);
+			if (withResize)
+				foreach (Datas d in projet.lstData)
+					d.ChangeMode(projet.mode);
 
 			DisplayList();
 			FillTriangles();
@@ -930,14 +932,14 @@ namespace TriangulArt {
 		private void rbMode0_CheckedChanged(object sender, EventArgs e) {
 			if (rbMode0.Checked && projet.mode != 0) {
 				projet.mode = 0;
-				SetNewMode();
+				SetNewMode(true);
 			}
 		}
 
 		private void rbMode1_CheckedChanged(object sender, EventArgs e) {
 			if (rbMode1.Checked && projet.mode != 1) {
 				projet.mode = 1;
-				SetNewMode();
+				SetNewMode(true);
 			}
 		}
 	}
