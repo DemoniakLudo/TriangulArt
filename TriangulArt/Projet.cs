@@ -44,12 +44,59 @@ namespace TriangulArt {
 			selData = 0;
 		}
 
-		public void GenereSourceAsm(string fileName, bool modePolice) {
+		public void GenereSourceAsm(string fileName, bool modePolice, bool mode3D, bool zx0) {
 			StreamWriter sw = GenereAsm.OpenAsm(fileName);
-			foreach (Datas d in lstData) {
-				GenereAsm.GenereDatas(sw, d, d.nomImage, mode, d.cpcPlus, modePolice);
+			if (zx0) {
+				byte[] datas = new byte[0x10000];
+				byte[] dataPack = new byte[0x10000];
+				int posData = 0;
+				foreach (Datas d in lstData) {
+					for (int i = 0; i < d.lstTriangle.Count; i++) {
+						Triangle t = d.lstTriangle[i];
+						int color = i < d.lstTriangle.Count - 1 ? t.color : t.color + 0x80;
+						datas[posData++] = (byte)t.x1;
+						datas[posData++] = (byte)t.y1;
+						datas[posData++] = (byte)t.x2;
+						datas[posData++] = (byte)t.y2;
+						datas[posData++] = (byte)t.x3;
+						datas[posData++] = (byte)t.y3;
+						datas[posData++] = (byte)(i < d.lstTriangle.Count - 1 ? t.color : t.color + 0x80);
+					}
+				}
+				datas[posData++] = 0xFF;
+				PackModule pk = new PackModule();
+				int lpack = pk.PackZX0(datas, posData, dataPack, dataPack.Length);
+				GenereAsm.GenereDatas(sw, dataPack, lpack, 16);
 			}
+			else
+				foreach (Datas d in lstData) {
+					GenereAsm.GenereDatas(sw, d, d.nomImage, mode, d.cpcPlus, modePolice, mode3D);
+				}
 			GenereAsm.CloseAsm(sw);
+		}
+
+		public void Import(string fileName) {
+			Clear();
+			int frame = 1;
+			SelImage().nomImage = "Frame_" + frame.ToString();
+
+			StreamReader rw = new StreamReader(fileName);
+			string l;
+			do {
+				l = rw.ReadLine();
+				if (l != null) {
+					bool ret = SelImage().AnalyseLigne(l);
+					if (ret) {
+						AddData();
+						SelImage().nomImage = "Frame_" + (++frame).ToString();
+					}
+				}
+			}
+			while (l != null);
+			if (SelImage().lstTriangle.Count == 0)
+				RemoveImage();
+
+			rw.Close();
 		}
 	}
 }

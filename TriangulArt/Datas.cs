@@ -350,7 +350,7 @@ namespace TriangulArt {
 			rw.Close();
 		}
 
-		private void AnalyseLigne(string line) {
+		public bool AnalyseLigne(string line) {
 			string ltrait = line.Trim();
 			if (ltrait.Length > 6) {
 				if (ltrait.Substring(0, 2) == "DB") {
@@ -365,14 +365,22 @@ namespace TriangulArt {
 						int x3 = int.Parse(param[9], System.Globalization.NumberStyles.HexNumber);
 						int y3 = int.Parse(param[11], System.Globalization.NumberStyles.HexNumber);
 						int c = int.Parse(param[13], System.Globalization.NumberStyles.HexNumber);
-						if (x1 >= 0 && y1 >= 0 && x2 >= 0 && y2 >= 0 && x3 >= 0 && y3 >= 0)
+						if (x1 >= 0 && y1 >= 0 && x2 >= 0 && y2 >= 0 && x3 >= 0 && y3 >= 0) {
 							lstTriangle.Add(new Triangle(x1, y1, x2, y2, x3, y3, c & 0x0F));
+							return (c & 0x80) != 0;
+						}
 					}
+					else
+						if (param.Length == 2) {
+							if (int.Parse(param[1], System.Globalization.NumberStyles.HexNumber) == 255)
+								return true;
+						}
 				}
 			}
+			return false;
 		}
 
-		public void GenereSourceAsm(string fileName, int mode, bool withCode, bool modePolice) {
+		public void GenereSourceAsm(string fileName, int mode, bool withCode, bool modePolice, bool mode3D) {
 			bool polyMode = false;
 			//
 			// Rapprocher les triangles ayant des coordonnées comparables
@@ -405,7 +413,7 @@ namespace TriangulArt {
 			if (withCode)
 				GenereAsm.GenereDrawTriangleCode(sw, nom, mode, cpcPlus);
 
-			GenereAsm.GenereDatas(sw, this, nom, mode, cpcPlus, modePolice);
+			GenereAsm.GenereDatas(sw, this, nom, mode, cpcPlus, modePolice, mode3D);
 			if (withCode)
 				GenereAsm.GenereDrawTriangleData(sw, mode, cpcPlus);
 

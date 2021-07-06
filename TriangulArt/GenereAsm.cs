@@ -9,12 +9,12 @@ namespace TriangulArt {
 			return sw;
 		}
 
-		static public void GenereDatas(StreamWriter sw, Datas data, string nom, int mode, bool cpcPlus, bool modePolice) {
+		static public void GenereDatas(StreamWriter sw, Datas data, string nom, int mode, bool cpcPlus, bool modePolice, bool mode3D) {
 			int nbOctets = 0;
 			string s = "";
 
 			sw.WriteLine(nom);
-			if (!modePolice) {
+			if (!modePolice && !mode3D) {
 				int nbCols = 1 << (4 >> mode);
 				if (cpcPlus) {
 					string line = "";
@@ -59,6 +59,36 @@ namespace TriangulArt {
 			sw.WriteLine("; Taille " + nbOctets.ToString() + " octets");
 		}
 
+		static public void GenereDatas(StreamWriter sw, byte[] tabByte, int length, int nbOctetsLigne, int ligneSepa = 0, string labelSepa = null) {
+			string line = "\tDB\t";
+			int nbOctets = 0, nbLigne = 0, indiceLabel = 0;
+			if (labelSepa != null) {
+				sw.WriteLine(labelSepa + indiceLabel.ToString("00"));
+				indiceLabel++;
+			}
+			for (int i = 0; i < length; i++) {
+				line += "#" + tabByte[i].ToString("X2") + ",";
+				if (++nbOctets >= Math.Min(nbOctetsLigne, 64)) {
+					sw.WriteLine(line.Substring(0, line.Length - 1));
+					line = "\tDB\t";
+					nbOctets = 0;
+					if (i < length - 1 && ++nbLigne >= ligneSepa && ligneSepa > 0) {
+						nbLigne = 0;
+						if (labelSepa != null) {
+							sw.WriteLine(labelSepa + indiceLabel.ToString("00"));
+							indiceLabel++;
+						}
+						else
+							line += "\r\n";
+					}
+				}
+			}
+			if (nbOctets > 0)
+				sw.WriteLine(line.Substring(0, line.Length - 1));
+
+			sw.WriteLine("; Taille totale " + length.ToString() + " octets");
+		}
+		
 		static public void GenereDrawTriangleCode(StreamWriter sw, string nom, int mode, bool cpcPlus) {
 			GenereInitCode(sw, mode, cpcPlus);
 			GenereInitPalette(sw, nom, mode, cpcPlus);

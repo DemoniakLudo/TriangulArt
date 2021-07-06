@@ -85,6 +85,10 @@
 			this.txbPos = new System.Windows.Forms.TextBox();
 			this.label13 = new System.Windows.Forms.Label();
 			this.grpProjet = new System.Windows.Forms.GroupBox();
+			this.chkAnim3D = new System.Windows.Forms.CheckBox();
+			this.bpProjImport = new System.Windows.Forms.Button();
+			this.rbMode1 = new System.Windows.Forms.RadioButton();
+			this.rbMode0 = new System.Windows.Forms.RadioButton();
 			this.bpNewProjet = new System.Windows.Forms.Button();
 			this.bpGenereProjetAsm = new System.Windows.Forms.Button();
 			this.grpImage = new System.Windows.Forms.GroupBox();
@@ -102,8 +106,7 @@
 			this.bpAjoutCercle = new System.Windows.Forms.Button();
 			this.txbNbRayons = new System.Windows.Forms.TextBox();
 			this.label15 = new System.Windows.Forms.Label();
-			this.rbMode0 = new System.Windows.Forms.RadioButton();
-			this.rbMode1 = new System.Windows.Forms.RadioButton();
+			this.chkZX0 = new System.Windows.Forms.CheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -708,6 +711,9 @@
 			// 
 			// grpProjet
 			// 
+			this.grpProjet.Controls.Add(this.chkZX0);
+			this.grpProjet.Controls.Add(this.chkAnim3D);
+			this.grpProjet.Controls.Add(this.bpProjImport);
 			this.grpProjet.Controls.Add(this.rbMode1);
 			this.grpProjet.Controls.Add(this.rbMode0);
 			this.grpProjet.Controls.Add(this.bpNewProjet);
@@ -722,6 +728,52 @@
 			this.grpProjet.TabIndex = 50;
 			this.grpProjet.TabStop = false;
 			this.grpProjet.Text = "Projet";
+			// 
+			// chkAnim3D
+			// 
+			this.chkAnim3D.AutoSize = true;
+			this.chkAnim3D.Location = new System.Drawing.Point(326, 76);
+			this.chkAnim3D.Name = "chkAnim3D";
+			this.chkAnim3D.Size = new System.Drawing.Size(118, 17);
+			this.chkAnim3D.TabIndex = 27;
+			this.chkAnim3D.Text = "Mode animation 3D";
+			this.chkAnim3D.UseVisualStyleBackColor = true;
+			this.chkAnim3D.CheckedChanged += new System.EventHandler(this.chkAnim3D_CheckedChanged);
+			// 
+			// bpProjImport
+			// 
+			this.bpProjImport.Location = new System.Drawing.Point(486, 73);
+			this.bpProjImport.Name = "bpProjImport";
+			this.bpProjImport.Size = new System.Drawing.Size(154, 23);
+			this.bpProjImport.TabIndex = 26;
+			this.bpProjImport.Text = "Import data assembleur";
+			this.bpProjImport.UseVisualStyleBackColor = true;
+			this.bpProjImport.Visible = false;
+			this.bpProjImport.Click += new System.EventHandler(this.bpProjImport_Click);
+			// 
+			// rbMode1
+			// 
+			this.rbMode1.AutoSize = true;
+			this.rbMode1.Checked = true;
+			this.rbMode1.Location = new System.Drawing.Point(221, 76);
+			this.rbMode1.Name = "rbMode1";
+			this.rbMode1.Size = new System.Drawing.Size(61, 17);
+			this.rbMode1.TabIndex = 25;
+			this.rbMode1.TabStop = true;
+			this.rbMode1.Text = "Mode 1";
+			this.rbMode1.UseVisualStyleBackColor = true;
+			this.rbMode1.CheckedChanged += new System.EventHandler(this.rbMode1_CheckedChanged);
+			// 
+			// rbMode0
+			// 
+			this.rbMode0.AutoSize = true;
+			this.rbMode0.Location = new System.Drawing.Point(149, 76);
+			this.rbMode0.Name = "rbMode0";
+			this.rbMode0.Size = new System.Drawing.Size(61, 17);
+			this.rbMode0.TabIndex = 25;
+			this.rbMode0.Text = "Mode 0";
+			this.rbMode0.UseVisualStyleBackColor = true;
+			this.rbMode0.CheckedChanged += new System.EventHandler(this.rbMode0_CheckedChanged);
 			// 
 			// bpNewProjet
 			// 
@@ -753,7 +805,7 @@
 			this.grpImage.Location = new System.Drawing.Point(9, 12);
 			this.grpImage.Name = "grpImage";
 			this.grpImage.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-			this.grpImage.Size = new System.Drawing.Size(431, 59);
+			this.grpImage.Size = new System.Drawing.Size(381, 59);
 			this.grpImage.TabIndex = 1;
 			this.grpImage.TabStop = false;
 			this.grpImage.Text = "Images";
@@ -761,7 +813,7 @@
 			// lblInfoImage
 			// 
 			this.lblInfoImage.AutoSize = true;
-			this.lblInfoImage.Location = new System.Drawing.Point(289, 26);
+			this.lblInfoImage.Location = new System.Drawing.Point(239, 26);
 			this.lblInfoImage.Name = "lblInfoImage";
 			this.lblInfoImage.Size = new System.Drawing.Size(41, 13);
 			this.lblInfoImage.TabIndex = 1;
@@ -769,7 +821,7 @@
 			// 
 			// bpImageSuiv
 			// 
-			this.bpImageSuiv.Location = new System.Drawing.Point(348, 21);
+			this.bpImageSuiv.Location = new System.Drawing.Point(298, 21);
 			this.bpImageSuiv.Name = "bpImageSuiv";
 			this.bpImageSuiv.Size = new System.Drawing.Size(75, 23);
 			this.bpImageSuiv.TabIndex = 0;
@@ -779,7 +831,7 @@
 			// 
 			// bpImagePrec
 			// 
-			this.bpImagePrec.Location = new System.Drawing.Point(208, 21);
+			this.bpImagePrec.Location = new System.Drawing.Point(158, 21);
 			this.bpImagePrec.Name = "bpImagePrec";
 			this.bpImagePrec.Size = new System.Drawing.Size(75, 23);
 			this.bpImagePrec.TabIndex = 0;
@@ -789,9 +841,9 @@
 			// 
 			// bpSupImage
 			// 
-			this.bpSupImage.Location = new System.Drawing.Point(106, 21);
+			this.bpSupImage.Location = new System.Drawing.Point(76, 21);
 			this.bpSupImage.Name = "bpSupImage";
-			this.bpSupImage.Size = new System.Drawing.Size(75, 23);
+			this.bpSupImage.Size = new System.Drawing.Size(63, 23);
 			this.bpSupImage.TabIndex = 0;
 			this.bpSupImage.Text = "Supprimer";
 			this.bpSupImage.UseVisualStyleBackColor = true;
@@ -801,7 +853,7 @@
 			// 
 			this.bpNewImage.Location = new System.Drawing.Point(8, 21);
 			this.bpNewImage.Name = "bpNewImage";
-			this.bpNewImage.Size = new System.Drawing.Size(82, 23);
+			this.bpNewImage.Size = new System.Drawing.Size(62, 23);
 			this.bpNewImage.TabIndex = 0;
 			this.bpNewImage.Text = "Nouvelle";
 			this.bpNewImage.UseVisualStyleBackColor = true;
@@ -809,7 +861,7 @@
 			// 
 			// bpSaveProj
 			// 
-			this.bpSaveProj.Location = new System.Drawing.Point(446, 48);
+			this.bpSaveProj.Location = new System.Drawing.Point(397, 48);
 			this.bpSaveProj.Name = "bpSaveProj";
 			this.bpSaveProj.Size = new System.Drawing.Size(75, 23);
 			this.bpSaveProj.TabIndex = 0;
@@ -819,7 +871,7 @@
 			// 
 			// bpReadProj
 			// 
-			this.bpReadProj.Location = new System.Drawing.Point(446, 19);
+			this.bpReadProj.Location = new System.Drawing.Point(397, 19);
 			this.bpReadProj.Name = "bpReadProj";
 			this.bpReadProj.Size = new System.Drawing.Size(75, 23);
 			this.bpReadProj.TabIndex = 0;
@@ -890,29 +942,16 @@
 			this.label15.TabIndex = 56;
 			this.label15.Text = "rayons";
 			// 
-			// rbMode0
+			// chkZX0
 			// 
-			this.rbMode0.AutoSize = true;
-			this.rbMode0.Location = new System.Drawing.Point(207, 76);
-			this.rbMode0.Name = "rbMode0";
-			this.rbMode0.Size = new System.Drawing.Size(61, 17);
-			this.rbMode0.TabIndex = 25;
-			this.rbMode0.Text = "Mode 0";
-			this.rbMode0.UseVisualStyleBackColor = true;
-			this.rbMode0.CheckedChanged += new System.EventHandler(this.rbMode0_CheckedChanged);
-			// 
-			// rbMode1
-			// 
-			this.rbMode1.AutoSize = true;
-			this.rbMode1.Checked = true;
-			this.rbMode1.Location = new System.Drawing.Point(279, 76);
-			this.rbMode1.Name = "rbMode1";
-			this.rbMode1.Size = new System.Drawing.Size(61, 17);
-			this.rbMode1.TabIndex = 25;
-			this.rbMode1.TabStop = true;
-			this.rbMode1.Text = "Mode 1";
-			this.rbMode1.UseVisualStyleBackColor = true;
-			this.rbMode1.CheckedChanged += new System.EventHandler(this.rbMode1_CheckedChanged);
+			this.chkZX0.AutoSize = true;
+			this.chkZX0.Location = new System.Drawing.Point(485, 23);
+			this.chkZX0.Name = "chkZX0";
+			this.chkZX0.Size = new System.Drawing.Size(46, 17);
+			this.chkZX0.TabIndex = 28;
+			this.chkZX0.Text = "ZX0";
+			this.chkZX0.UseVisualStyleBackColor = true;
+			this.chkZX0.Visible = false;
 			// 
 			// Form1
 			// 
@@ -1077,6 +1116,9 @@
 		private System.Windows.Forms.Label label15;
 		private System.Windows.Forms.RadioButton rbMode1;
 		private System.Windows.Forms.RadioButton rbMode0;
+		private System.Windows.Forms.Button bpProjImport;
+		private System.Windows.Forms.CheckBox chkAnim3D;
+		private System.Windows.Forms.CheckBox chkZX0;
 	}
 }
 

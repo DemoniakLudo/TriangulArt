@@ -543,7 +543,7 @@ namespace TriangulArt {
 			if (result == DialogResult.OK) {
 				int.TryParse(txbTpsAttente.Text, out projet.SelImage().tpsAttente);
 				projet.SelImage().tpsAttente = Math.Min(850, Math.Max(1, projet.SelImage().tpsAttente));
-				projet.SelImage().GenereSourceAsm(dlg.FileName, projet.mode, chkCodeAsm.Checked, chkModePolice.Checked);
+				projet.SelImage().GenereSourceAsm(dlg.FileName, projet.mode, chkCodeAsm.Checked, chkModePolice.Checked, chkAnim3D.Checked);
 				SetInfo("Génération assembleur ok.");
 			}
 		}
@@ -715,13 +715,13 @@ namespace TriangulArt {
 				}
 				else
 					if (triSel != null) {
-					int memoSel = projet.SelImage().GetSelTriangle();
-					projet.SelImage().DeplaceTriangle(deplX, deplY, maxWidth);
-					DisplayList();
-					listTriangles.SelectedIndex = memoSel;
-				}
-				else
-					MessageBox.Show("Pas de triangle sélectionné");
+						int memoSel = projet.SelImage().GetSelTriangle();
+						projet.SelImage().DeplaceTriangle(deplX, deplY, maxWidth);
+						DisplayList();
+						listTriangles.SelectedIndex = memoSel;
+					}
+					else
+						MessageBox.Show("Pas de triangle sélectionné");
 			}
 			else
 				MessageBox.Show("Veuillez sélectionner des données de déplacement valide");
@@ -778,13 +778,13 @@ namespace TriangulArt {
 				}
 				else
 					if (triSel != null) {
-					int memoSel = projet.SelImage().GetSelTriangle();
-					projet.SelImage().CoefZoom(triSel, zoomX, zoomY, chkCenterZoom.Checked, maxWidth);
-					DisplayList();
-					listTriangles.SelectedIndex = memoSel;
-				}
-				else
-					MessageBox.Show("Pas de triangle sélectionné");
+						int memoSel = projet.SelImage().GetSelTriangle();
+						projet.SelImage().CoefZoom(triSel, zoomX, zoomY, chkCenterZoom.Checked, maxWidth);
+						DisplayList();
+						listTriangles.SelectedIndex = memoSel;
+					}
+					else
+						MessageBox.Show("Pas de triangle sélectionné");
 			}
 			else
 				MessageBox.Show("Veuillez sélectionner des données de zoom valide");
@@ -887,7 +887,7 @@ namespace TriangulArt {
 			dlg.Filter = "Fichiers assembleur (*.asm)|*.asm";
 			DialogResult result = dlg.ShowDialog();
 			if (result == DialogResult.OK) {
-				projet.GenereSourceAsm(dlg.FileName, chkModePolice.Checked);
+				projet.GenereSourceAsm(dlg.FileName, chkModePolice.Checked, chkAnim3D.Checked, chkZX0.Checked);
 				SetInfo("Génération assembleur ok.");
 			}
 		}
@@ -940,6 +940,27 @@ namespace TriangulArt {
 			if (rbMode1.Checked && projet.mode != 1) {
 				projet.mode = 1;
 				SetNewMode(true);
+			}
+		}
+
+		private void chkAnim3D_CheckedChanged(object sender, EventArgs e) {
+			bpProjImport.Visible = chkZX0.Visible = chkAnim3D.Checked;
+		}
+
+		private void bpProjImport_Click(object sender, EventArgs e) {
+			OpenFileDialog dlg = new OpenFileDialog();
+			dlg.Filter = "Fichiers assembleur (*.asm)|*.asm";
+			DialogResult result = dlg.ShowDialog();
+			if (result == DialogResult.OK) {
+				try {
+					projet.Import(dlg.FileName);
+					SetInfo("Import triangles ok");
+					projet.SelectImage(0);
+					SetImageProjet();
+				}
+				catch {
+					MessageBox.Show("Erreur lors de l'importation des données...");
+				}
 			}
 		}
 	}
