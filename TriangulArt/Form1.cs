@@ -44,9 +44,22 @@ namespace TriangulArt {
 		}
 
 		protected override bool ProcessCmdKey(ref Message msg, Keys keyData) {
-			if (keyData == Keys.Delete) {
-				DeleteSelTriangle();
-				return true;
+			switch (keyData) {
+				case Keys.Left:
+					if (projet.selData > 0)
+						bpImagePrec_Click(null, null);
+
+					return true;
+
+				case Keys.Right:
+					if (projet.selData < projet.lstData.Count - 1)
+						bpImageSuiv_Click(null, null);
+
+					return true;
+
+				case Keys.Delete:
+					DeleteSelTriangle();
+					return true;
 			}
 			return base.ProcessCmdKey(ref msg, keyData);
 		}
@@ -469,7 +482,10 @@ namespace TriangulArt {
 					rbVertical.Checked = true;
 					break;
 			}
-			DisplayMemory();
+			if (chkAnim3D.Checked)
+				DisplayMemoryProjet();
+			else
+				DisplayMemory();
 		}
 
 		private void MemImage() {
@@ -715,13 +731,13 @@ namespace TriangulArt {
 				}
 				else
 					if (triSel != null) {
-						int memoSel = projet.SelImage().GetSelTriangle();
-						projet.SelImage().DeplaceTriangle(deplX, deplY, maxWidth);
-						DisplayList();
-						listTriangles.SelectedIndex = memoSel;
-					}
-					else
-						MessageBox.Show("Pas de triangle sélectionné");
+					int memoSel = projet.SelImage().GetSelTriangle();
+					projet.SelImage().DeplaceTriangle(deplX, deplY, maxWidth);
+					DisplayList();
+					listTriangles.SelectedIndex = memoSel;
+				}
+				else
+					MessageBox.Show("Pas de triangle sélectionné");
 			}
 			else
 				MessageBox.Show("Veuillez sélectionner des données de déplacement valide");
@@ -778,13 +794,13 @@ namespace TriangulArt {
 				}
 				else
 					if (triSel != null) {
-						int memoSel = projet.SelImage().GetSelTriangle();
-						projet.SelImage().CoefZoom(triSel, zoomX, zoomY, chkCenterZoom.Checked, maxWidth);
-						DisplayList();
-						listTriangles.SelectedIndex = memoSel;
-					}
-					else
-						MessageBox.Show("Pas de triangle sélectionné");
+					int memoSel = projet.SelImage().GetSelTriangle();
+					projet.SelImage().CoefZoom(triSel, zoomX, zoomY, chkCenterZoom.Checked, maxWidth);
+					DisplayList();
+					listTriangles.SelectedIndex = memoSel;
+				}
+				else
+					MessageBox.Show("Pas de triangle sélectionné");
 			}
 			else
 				MessageBox.Show("Veuillez sélectionner des données de zoom valide");
@@ -941,6 +957,22 @@ namespace TriangulArt {
 				projet.mode = 1;
 				SetNewMode(true);
 			}
+		}
+
+		private void bpCleanProj_Click(object sender, EventArgs e) {
+			int nbAvant = 0, nbApres = 0;
+			foreach (Datas d in projet.lstData) {
+				nbAvant += d.lstTriangle.Count;
+				d.CleanUp(maxWidth);
+				nbApres += d.lstTriangle.Count;
+			}
+			if (nbApres != nbAvant)
+				SetInfo("Nbre de triangles optimisés : " + (nbAvant - nbApres).ToString());
+			else
+				SetInfo("Pas d'optimisation possible.");
+
+			projet.SelectImage(0);
+			SetImageProjet();
 		}
 
 		private void chkAnim3D_CheckedChanged(object sender, EventArgs e) {

@@ -85,6 +85,7 @@
 			this.txbPos = new System.Windows.Forms.TextBox();
 			this.label13 = new System.Windows.Forms.Label();
 			this.grpProjet = new System.Windows.Forms.GroupBox();
+			this.chkZX0 = new System.Windows.Forms.CheckBox();
 			this.chkAnim3D = new System.Windows.Forms.CheckBox();
 			this.bpProjImport = new System.Windows.Forms.Button();
 			this.rbMode1 = new System.Windows.Forms.RadioButton();
@@ -106,7 +107,7 @@
 			this.bpAjoutCercle = new System.Windows.Forms.Button();
 			this.txbNbRayons = new System.Windows.Forms.TextBox();
 			this.label15 = new System.Windows.Forms.Label();
-			this.chkZX0 = new System.Windows.Forms.CheckBox();
+			this.bpCleanProj = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -711,6 +712,7 @@
 			// 
 			// grpProjet
 			// 
+			this.grpProjet.Controls.Add(this.bpCleanProj);
 			this.grpProjet.Controls.Add(this.chkZX0);
 			this.grpProjet.Controls.Add(this.chkAnim3D);
 			this.grpProjet.Controls.Add(this.bpProjImport);
@@ -728,6 +730,17 @@
 			this.grpProjet.TabIndex = 50;
 			this.grpProjet.TabStop = false;
 			this.grpProjet.Text = "Projet";
+			// 
+			// chkZX0
+			// 
+			this.chkZX0.AutoSize = true;
+			this.chkZX0.Location = new System.Drawing.Point(485, 23);
+			this.chkZX0.Name = "chkZX0";
+			this.chkZX0.Size = new System.Drawing.Size(46, 17);
+			this.chkZX0.TabIndex = 28;
+			this.chkZX0.Text = "ZX0";
+			this.chkZX0.UseVisualStyleBackColor = true;
+			this.chkZX0.Visible = false;
 			// 
 			// chkAnim3D
 			// 
@@ -802,10 +815,10 @@
 			this.grpImage.Controls.Add(this.bpImagePrec);
 			this.grpImage.Controls.Add(this.bpSupImage);
 			this.grpImage.Controls.Add(this.bpNewImage);
-			this.grpImage.Location = new System.Drawing.Point(9, 12);
+			this.grpImage.Location = new System.Drawing.Point(8, 12);
 			this.grpImage.Name = "grpImage";
 			this.grpImage.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-			this.grpImage.Size = new System.Drawing.Size(381, 59);
+			this.grpImage.Size = new System.Drawing.Size(359, 59);
 			this.grpImage.TabIndex = 1;
 			this.grpImage.TabStop = false;
 			this.grpImage.Text = "Images";
@@ -813,7 +826,7 @@
 			// lblInfoImage
 			// 
 			this.lblInfoImage.AutoSize = true;
-			this.lblInfoImage.Location = new System.Drawing.Point(239, 26);
+			this.lblInfoImage.Location = new System.Drawing.Point(229, 26);
 			this.lblInfoImage.Name = "lblInfoImage";
 			this.lblInfoImage.Size = new System.Drawing.Size(41, 13);
 			this.lblInfoImage.TabIndex = 1;
@@ -821,7 +834,7 @@
 			// 
 			// bpImageSuiv
 			// 
-			this.bpImageSuiv.Location = new System.Drawing.Point(298, 21);
+			this.bpImageSuiv.Location = new System.Drawing.Point(278, 21);
 			this.bpImageSuiv.Name = "bpImageSuiv";
 			this.bpImageSuiv.Size = new System.Drawing.Size(75, 23);
 			this.bpImageSuiv.TabIndex = 0;
@@ -831,7 +844,7 @@
 			// 
 			// bpImagePrec
 			// 
-			this.bpImagePrec.Location = new System.Drawing.Point(158, 21);
+			this.bpImagePrec.Location = new System.Drawing.Point(150, 21);
 			this.bpImagePrec.Name = "bpImagePrec";
 			this.bpImagePrec.Size = new System.Drawing.Size(75, 23);
 			this.bpImagePrec.TabIndex = 0;
@@ -841,7 +854,7 @@
 			// 
 			// bpSupImage
 			// 
-			this.bpSupImage.Location = new System.Drawing.Point(76, 21);
+			this.bpSupImage.Location = new System.Drawing.Point(72, 21);
 			this.bpSupImage.Name = "bpSupImage";
 			this.bpSupImage.Size = new System.Drawing.Size(63, 23);
 			this.bpSupImage.TabIndex = 0;
@@ -851,7 +864,7 @@
 			// 
 			// bpNewImage
 			// 
-			this.bpNewImage.Location = new System.Drawing.Point(8, 21);
+			this.bpNewImage.Location = new System.Drawing.Point(6, 21);
 			this.bpNewImage.Name = "bpNewImage";
 			this.bpNewImage.Size = new System.Drawing.Size(62, 23);
 			this.bpNewImage.TabIndex = 0;
@@ -861,9 +874,9 @@
 			// 
 			// bpSaveProj
 			// 
-			this.bpSaveProj.Location = new System.Drawing.Point(397, 48);
+			this.bpSaveProj.Location = new System.Drawing.Point(377, 48);
 			this.bpSaveProj.Name = "bpSaveProj";
-			this.bpSaveProj.Size = new System.Drawing.Size(75, 23);
+			this.bpSaveProj.Size = new System.Drawing.Size(75, 22);
 			this.bpSaveProj.TabIndex = 0;
 			this.bpSaveProj.Text = "Sauver";
 			this.bpSaveProj.UseVisualStyleBackColor = true;
@@ -871,9 +884,9 @@
 			// 
 			// bpReadProj
 			// 
-			this.bpReadProj.Location = new System.Drawing.Point(397, 19);
+			this.bpReadProj.Location = new System.Drawing.Point(377, 19);
 			this.bpReadProj.Name = "bpReadProj";
-			this.bpReadProj.Size = new System.Drawing.Size(75, 23);
+			this.bpReadProj.Size = new System.Drawing.Size(75, 22);
 			this.bpReadProj.TabIndex = 0;
 			this.bpReadProj.Text = "Lire";
 			this.bpReadProj.UseVisualStyleBackColor = true;
@@ -942,16 +955,15 @@
 			this.label15.TabIndex = 56;
 			this.label15.Text = "rayons";
 			// 
-			// chkZX0
+			// bpCleanProj
 			// 
-			this.chkZX0.AutoSize = true;
-			this.chkZX0.Location = new System.Drawing.Point(485, 23);
-			this.chkZX0.Name = "chkZX0";
-			this.chkZX0.Size = new System.Drawing.Size(46, 17);
-			this.chkZX0.TabIndex = 28;
-			this.chkZX0.Text = "ZX0";
-			this.chkZX0.UseVisualStyleBackColor = true;
-			this.chkZX0.Visible = false;
+			this.bpCleanProj.Location = new System.Drawing.Point(464, 46);
+			this.bpCleanProj.Name = "bpCleanProj";
+			this.bpCleanProj.Size = new System.Drawing.Size(63, 23);
+			this.bpCleanProj.TabIndex = 29;
+			this.bpCleanProj.Text = "Clean";
+			this.bpCleanProj.UseVisualStyleBackColor = true;
+			this.bpCleanProj.Click += new System.EventHandler(this.bpCleanProj_Click);
 			// 
 			// Form1
 			// 
@@ -1119,6 +1131,7 @@
 		private System.Windows.Forms.Button bpProjImport;
 		private System.Windows.Forms.CheckBox chkAnim3D;
 		private System.Windows.Forms.CheckBox chkZX0;
+		private System.Windows.Forms.Button bpCleanProj;
 	}
 }
 
