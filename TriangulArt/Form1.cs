@@ -971,8 +971,9 @@ namespace TriangulArt {
 			else
 				SetInfo("Pas d'optimisation possible.");
 
-			projet.SelectImage(0);
-			SetImageProjet();
+			DisplayList();
+			FillTriangles();
+			DisplayMemory();
 		}
 
 		private void chkAnim3D_CheckedChanged(object sender, EventArgs e) {
