@@ -568,9 +568,19 @@ namespace TriangulArt {
 			EditColor ed = new EditColor(pen, PaletteCpc.Palette[pen], PaletteCpc.GetColorPal(pen).GetColorArgb, PaletteCpc.cpcPlus);
 			ed.ShowDialog(this);
 			if (ed.isValide) {
-				PaletteCpc.Palette[pen] = projet.SelImage().palette[pen] = ed.ValColor;
-				UpdatePalette();
-				FillTriangles();
+				if (chkAnim3D.Checked) {
+					foreach (Datas d in projet.lstData)
+						PaletteCpc.Palette[pen] = d.palette[pen] = ed.ValColor;
+
+					DisplayList();
+					FillTriangles();
+					DisplayMemory();
+				}
+				else {
+					PaletteCpc.Palette[pen] = projet.SelImage().palette[pen] = ed.ValColor;
+					UpdatePalette();
+					FillTriangles();
+				}
 			}
 		}
 
@@ -725,22 +735,64 @@ namespace TriangulArt {
 			int deplX = 0, deplY = 0;
 			if (int.TryParse(txbTrX.Text, out deplX) && int.TryParse(txbTrY.Text, out deplY)) {
 				if (rbDepImage.Checked) {
-					projet.SelImage().DeplaceImage(deplX, deplY, maxWidth);
-					DisplayList();
-					FillTriangles();
+					if (chkAnim3D.Checked) {
+						foreach (Datas d in projet.lstData) {
+							d.DeplaceImage(deplX, deplY, maxWidth);
+						}
+						DisplayList();
+						FillTriangles();
+						DisplayMemory();
+					}
+					else {
+						projet.SelImage().DeplaceImage(deplX, deplY, maxWidth);
+						DisplayList();
+						FillTriangles();
+					}
 				}
 				else
 					if (triSel != null) {
-					int memoSel = projet.SelImage().GetSelTriangle();
-					projet.SelImage().DeplaceTriangle(deplX, deplY, maxWidth);
-					DisplayList();
-					listTriangles.SelectedIndex = memoSel;
-				}
-				else
-					MessageBox.Show("Pas de triangle sélectionné");
+						int memoSel = projet.SelImage().GetSelTriangle();
+						projet.SelImage().DeplaceTriangle(deplX, deplY, maxWidth);
+						DisplayList();
+						listTriangles.SelectedIndex = memoSel;
+					}
+					else
+						MessageBox.Show("Pas de triangle sélectionné");
 			}
 			else
 				MessageBox.Show("Veuillez sélectionner des données de déplacement valide");
+		}
+
+		private void bpZoom_Click(object sender, EventArgs e) {
+			double zoomX = 0, zoomY = 0;
+			if (double.TryParse(txbTrX.Text.Replace('.', ','), out zoomX) && double.TryParse(txbTrY.Text.Replace('.', ','), out zoomY)) {
+				if (rbDepImage.Checked) {
+					if (chkAnim3D.Checked) {
+						foreach (Datas d in projet.lstData) {
+							d.CoefZoom(zoomX, zoomY, chkCenterZoom.Checked, maxWidth);
+						}
+						DisplayList();
+						FillTriangles();
+						DisplayMemory();
+					}
+					else {
+						projet.SelImage().CoefZoom(zoomX, zoomY, chkCenterZoom.Checked, maxWidth);
+						DisplayList();
+						FillTriangles();
+					}
+				}
+				else
+					if (triSel != null) {
+						int memoSel = projet.SelImage().GetSelTriangle();
+						projet.SelImage().CoefZoom(triSel, zoomX, zoomY, chkCenterZoom.Checked, maxWidth);
+						DisplayList();
+						listTriangles.SelectedIndex = memoSel;
+					}
+					else
+						MessageBox.Show("Pas de triangle sélectionné");
+			}
+			else
+				MessageBox.Show("Veuillez sélectionner des données de zoom valide");
 		}
 
 		private void bpRapproche_Click(object sender, EventArgs e) {
@@ -782,29 +834,6 @@ namespace TriangulArt {
 			}
 			else
 				MessageBox.Show("Le nombre de rayons doit être compris entre 4 et " + MAX_RAYONS.ToString());
-		}
-
-		private void bpZoom_Click(object sender, EventArgs e) {
-			double zoomX = 0, zoomY = 0;
-			if (double.TryParse(txbTrX.Text.Replace('.', ','), out zoomX) && double.TryParse(txbTrY.Text.Replace('.', ','), out zoomY)) {
-				if (rbDepImage.Checked) {
-					projet.SelImage().CoefZoom(zoomX, zoomY, chkCenterZoom.Checked, maxWidth);
-					DisplayList();
-					FillTriangles();
-				}
-				else
-					if (triSel != null) {
-					int memoSel = projet.SelImage().GetSelTriangle();
-					projet.SelImage().CoefZoom(triSel, zoomX, zoomY, chkCenterZoom.Checked, maxWidth);
-					DisplayList();
-					listTriangles.SelectedIndex = memoSel;
-				}
-				else
-					MessageBox.Show("Pas de triangle sélectionné");
-			}
-			else
-				MessageBox.Show("Veuillez sélectionner des données de zoom valide");
-
 		}
 
 		private void bpClean_Click(object sender, EventArgs e) {
