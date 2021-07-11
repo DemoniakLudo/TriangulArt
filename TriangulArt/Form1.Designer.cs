@@ -85,6 +85,7 @@
 			this.txbPos = new System.Windows.Forms.TextBox();
 			this.label13 = new System.Windows.Forms.Label();
 			this.grpProjet = new System.Windows.Forms.GroupBox();
+			this.bpCleanProj = new System.Windows.Forms.Button();
 			this.chkZX0 = new System.Windows.Forms.CheckBox();
 			this.chkAnim3D = new System.Windows.Forms.CheckBox();
 			this.bpProjImport = new System.Windows.Forms.Button();
@@ -107,7 +108,6 @@
 			this.bpAjoutCercle = new System.Windows.Forms.Button();
 			this.txbNbRayons = new System.Windows.Forms.TextBox();
 			this.label15 = new System.Windows.Forms.Label();
-			this.bpCleanProj = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -731,6 +731,16 @@
 			this.grpProjet.TabStop = false;
 			this.grpProjet.Text = "Projet";
 			// 
+			// bpCleanProj
+			// 
+			this.bpCleanProj.Location = new System.Drawing.Point(464, 46);
+			this.bpCleanProj.Name = "bpCleanProj";
+			this.bpCleanProj.Size = new System.Drawing.Size(63, 23);
+			this.bpCleanProj.TabIndex = 29;
+			this.bpCleanProj.Text = "Clean";
+			this.bpCleanProj.UseVisualStyleBackColor = true;
+			this.bpCleanProj.Click += new System.EventHandler(this.bpCleanProj_Click);
+			// 
 			// chkZX0
 			// 
 			this.chkZX0.AutoSize = true;
@@ -818,7 +828,7 @@
 			this.grpImage.Location = new System.Drawing.Point(8, 12);
 			this.grpImage.Name = "grpImage";
 			this.grpImage.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-			this.grpImage.Size = new System.Drawing.Size(359, 59);
+			this.grpImage.Size = new System.Drawing.Size(280, 59);
 			this.grpImage.TabIndex = 1;
 			this.grpImage.TabStop = false;
 			this.grpImage.Text = "Images";
@@ -826,7 +836,7 @@
 			// lblInfoImage
 			// 
 			this.lblInfoImage.AutoSize = true;
-			this.lblInfoImage.Location = new System.Drawing.Point(229, 26);
+			this.lblInfoImage.Location = new System.Drawing.Point(189, 26);
 			this.lblInfoImage.Name = "lblInfoImage";
 			this.lblInfoImage.Size = new System.Drawing.Size(41, 13);
 			this.lblInfoImage.TabIndex = 1;
@@ -834,11 +844,11 @@
 			// 
 			// bpImageSuiv
 			// 
-			this.bpImageSuiv.Location = new System.Drawing.Point(278, 21);
+			this.bpImageSuiv.Location = new System.Drawing.Point(238, 21);
 			this.bpImageSuiv.Name = "bpImageSuiv";
-			this.bpImageSuiv.Size = new System.Drawing.Size(75, 23);
+			this.bpImageSuiv.Size = new System.Drawing.Size(35, 23);
 			this.bpImageSuiv.TabIndex = 0;
-			this.bpImageSuiv.Text = "Suivante";
+			this.bpImageSuiv.Text = "<<";
 			this.bpImageSuiv.UseVisualStyleBackColor = true;
 			this.bpImageSuiv.Click += new System.EventHandler(this.bpImageSuiv_Click);
 			// 
@@ -846,9 +856,9 @@
 			// 
 			this.bpImagePrec.Location = new System.Drawing.Point(150, 21);
 			this.bpImagePrec.Name = "bpImagePrec";
-			this.bpImagePrec.Size = new System.Drawing.Size(75, 23);
+			this.bpImagePrec.Size = new System.Drawing.Size(35, 23);
 			this.bpImagePrec.TabIndex = 0;
-			this.bpImagePrec.Text = "Précédente";
+			this.bpImagePrec.Text = ">>";
 			this.bpImagePrec.UseVisualStyleBackColor = true;
 			this.bpImagePrec.Click += new System.EventHandler(this.bpImagePrec_Click);
 			// 
@@ -955,21 +965,11 @@
 			this.label15.TabIndex = 56;
 			this.label15.Text = "rayons";
 			// 
-			// bpCleanProj
-			// 
-			this.bpCleanProj.Location = new System.Drawing.Point(464, 46);
-			this.bpCleanProj.Name = "bpCleanProj";
-			this.bpCleanProj.Size = new System.Drawing.Size(63, 23);
-			this.bpCleanProj.TabIndex = 29;
-			this.bpCleanProj.Text = "Clean";
-			this.bpCleanProj.UseVisualStyleBackColor = true;
-			this.bpCleanProj.Click += new System.EventHandler(this.bpCleanProj_Click);
-			// 
 			// Form1
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1519, 770);
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+			this.AutoSize = true;
+			this.ClientSize = new System.Drawing.Size(1286, 770);
 			this.Controls.Add(this.label15);
 			this.Controls.Add(this.txbNbRayons);
 			this.Controls.Add(this.bpAjoutCercle);
