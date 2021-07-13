@@ -82,7 +82,8 @@ namespace TriangulArt {
 			if (y1 == y2)
 				xr = x2;
 
-			int nbFound = 0, nbPt = 0; ;
+			int nbFound = 0, nbPt = 0;
+			;
 			for (int y = y1; y < y3; y++) {
 				if (xr > xl) {
 					for (int x = 0; x <= xr - xl; x++) {
@@ -138,13 +139,19 @@ namespace TriangulArt {
 				FillTriangle(bmpLock, maxWidth - 1 - x1, y1, maxWidth - 1 - x2, y2, maxWidth - 1 - x3, y3, trueCol != 0 ? trueCol : GetPalCPC(PaletteCpc.Palette[c]), false);
 			else
 				if (modeRendu == 2)
-					FillTriangle(bmpLock, x3, 255 - y3, x2, 255 - y2, x1, 255 - y1, trueCol != 0 ? trueCol : GetPalCPC(PaletteCpc.Palette[c]), false);
+				FillTriangle(bmpLock, x3, 255 - y3, x2, 255 - y2, x1, 255 - y1, trueCol != 0 ? trueCol : GetPalCPC(PaletteCpc.Palette[c]), false);
 		}
 
-		public void FillTriangles(DirectBitmap bmpLock, int maxWidth) {
+		public void FillTriangles(DirectBitmap bmpLock, int maxWidth, bool withNoSelect = false) {
 			for (int i = 0; i < lstTriangle.Count; i++) {
 				Triangle t = lstTriangle[i];
-				FillTriangle(bmpLock, t, maxWidth, i == selLigne);
+				FillTriangle(bmpLock, t, maxWidth, withNoSelect ? false : i == selLigne);
+			}
+			if (withNoSelect) {
+				for (int i = 0; i < lstTriangle.Count; i++) {
+					Triangle t = lstTriangle[i];
+					lstTriangle[i].SetPctFill(CountPctFillTriangle(bmpLock, t.x1, t.y1, t.x2, t.y2, t.x3, t.y3, t.color));
+				}
 			}
 		}
 
@@ -157,7 +164,7 @@ namespace TriangulArt {
 		}
 
 		public int SelTriangle(int xReel, int yReel) {
-			for (int i = lstTriangle.Count; i-- > 0; ) {
+			for (int i = lstTriangle.Count; i-- > 0;) {
 				Triangle t = lstTriangle[i];
 				if (IsInTriancle(t, xReel, yReel)) {
 					return i;
@@ -274,14 +281,7 @@ namespace TriangulArt {
 			}
 
 			// Troisième passe: calcule le pourcentage de visibilité de chaque triangle
-
-			for (int i = 0; i < nbTri; i++)
-				FillTriangle(bmpLock, lstTriangle[i], maxWidth);
-
-			for (int i = 0; i < nbTri; i++) {
-				Triangle t = lstTriangle[i];
-				lstTriangle[i].SetPctFill(CountPctFillTriangle(bmpLock, t.x1, t.y1, t.x2, t.y2, t.x3, t.y3, t.color));
-			}
+			FillTriangles(bmpLock, maxWidth, true);
 			bmpLock.Dispose();
 		}
 
@@ -441,9 +441,9 @@ namespace TriangulArt {
 					}
 					else
 						if (param.Length == 2) {
-							if (int.Parse(param[1], System.Globalization.NumberStyles.HexNumber) == 255)
-								return true;
-						}
+						if (int.Parse(param[1], System.Globalization.NumberStyles.HexNumber) == 255)
+							return true;
+					}
 				}
 			}
 			return false;

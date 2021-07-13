@@ -125,9 +125,9 @@ namespace TriangulArt {
 			return null;
 		}
 
-		private void FillTriangles() {
+		private void FillTriangles(bool withNoSelect = false) {
 			Reset();
-			projet.SelImage().FillTriangles(bmpLock, maxWidth);
+			projet.SelImage().FillTriangles(bmpLock, maxWidth, withNoSelect);
 			Render();
 			bpAjoutTriangle.Enabled = bpAjoutQuadri.Enabled = bpAjoutRect.Enabled = bpAjoutCercle.Enabled = txbNbRayons.Enabled = true;
 			mouseOpt = DrawMd.NONE;
@@ -470,7 +470,7 @@ namespace TriangulArt {
 			txbNomImage.Text = projet.SelImage().nomImage;
 			txbTpsAttente.Text = projet.SelImage().tpsAttente.ToString();
 			UpdatePalette();
-			FillTriangles();
+			FillTriangles(true);
 			DisplayList();
 			//Text = "TriangulArt - " + dlg.FileName;
 			switch (projet.SelImage().modeRendu) {
@@ -611,8 +611,8 @@ namespace TriangulArt {
 		}
 
 		private void bpRedraw_Click(object sender, EventArgs e) {
+			FillTriangles(true);
 			DisplayList();
-			FillTriangles();
 		}
 
 		private void DeleteSelTriangle() {
@@ -755,13 +755,13 @@ namespace TriangulArt {
 				}
 				else
 					if (triSel != null) {
-						int memoSel = projet.SelImage().GetSelTriangle();
-						projet.SelImage().DeplaceTriangle(deplX, deplY, maxWidth);
-						DisplayList();
-						listTriangles.SelectedIndex = memoSel;
-					}
-					else
-						MessageBox.Show("Pas de triangle sélectionné");
+					int memoSel = projet.SelImage().GetSelTriangle();
+					projet.SelImage().DeplaceTriangle(deplX, deplY, maxWidth);
+					DisplayList();
+					listTriangles.SelectedIndex = memoSel;
+				}
+				else
+					MessageBox.Show("Pas de triangle sélectionné");
 			}
 			else
 				MessageBox.Show("Veuillez sélectionner des données de déplacement valide");
@@ -787,13 +787,13 @@ namespace TriangulArt {
 				}
 				else
 					if (triSel != null) {
-						int memoSel = projet.SelImage().GetSelTriangle();
-						projet.SelImage().CoefZoom(triSel, zoomX, zoomY, chkCenterZoom.Checked, maxWidth);
-						DisplayList();
-						listTriangles.SelectedIndex = memoSel;
-					}
-					else
-						MessageBox.Show("Pas de triangle sélectionné");
+					int memoSel = projet.SelImage().GetSelTriangle();
+					projet.SelImage().CoefZoom(triSel, zoomX, zoomY, chkCenterZoom.Checked, maxWidth);
+					DisplayList();
+					listTriangles.SelectedIndex = memoSel;
+				}
+				else
+					MessageBox.Show("Pas de triangle sélectionné");
 			}
 			else
 				MessageBox.Show("Veuillez sélectionner des données de zoom valide");
