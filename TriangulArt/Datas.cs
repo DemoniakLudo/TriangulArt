@@ -126,7 +126,7 @@ namespace TriangulArt {
 			return nbPt > 0 ? nbFound * 100 / nbPt : -1;
 		}
 
-		public void FillTriangle(DirectBitmap bmpLock, Triangle t, int maxWidth, bool selected = false, int trueCol = 0) {
+		public void FillTriangle(DirectBitmap bmpLock, Triangle t, int maxWidth, bool modeLines, bool selected = false, int trueCol = 0) {
 			int x1 = t.x1;
 			int y1 = t.y1;
 			int x2 = t.x2;
@@ -134,18 +134,25 @@ namespace TriangulArt {
 			int x3 = t.x3;
 			int y3 = t.y3;
 			int c = t.color;
-			FillTriangle(bmpLock, x1, y1, x2, y2, x3, y3, trueCol != 0 ? trueCol : GetPalCPC(PaletteCpc.Palette[c]), selected);
-			if (modeRendu == 1)
-				FillTriangle(bmpLock, maxWidth - 1 - x1, y1, maxWidth - 1 - x2, y2, maxWidth - 1 - x3, y3, trueCol != 0 ? trueCol : GetPalCPC(PaletteCpc.Palette[c]), false);
-			else
-				if (modeRendu == 2)
-					FillTriangle(bmpLock, x3, 255 - y3, x2, 255 - y2, x1, 255 - y1, trueCol != 0 ? trueCol : GetPalCPC(PaletteCpc.Palette[c]), false);
+			if (modeLines) {
+				bmpLock.DrawLine(x1, y1, x2, y2, trueCol != 0 ? trueCol : GetPalCPC(PaletteCpc.Palette[c]));
+				bmpLock.DrawLine(x2, y2, x3, y3, trueCol != 0 ? trueCol : GetPalCPC(PaletteCpc.Palette[c]));
+				bmpLock.DrawLine(x3, y3, x1, y1, trueCol != 0 ? trueCol : GetPalCPC(PaletteCpc.Palette[c]));
+			}
+			else {
+				FillTriangle(bmpLock, x1, y1, x2, y2, x3, y3, trueCol != 0 ? trueCol : GetPalCPC(PaletteCpc.Palette[c]), selected);
+				if (modeRendu == 1)
+					FillTriangle(bmpLock, maxWidth - 1 - x1, y1, maxWidth - 1 - x2, y2, maxWidth - 1 - x3, y3, trueCol != 0 ? trueCol : GetPalCPC(PaletteCpc.Palette[c]), false);
+				else
+					if (modeRendu == 2)
+						FillTriangle(bmpLock, x3, 255 - y3, x2, 255 - y2, x1, 255 - y1, trueCol != 0 ? trueCol : GetPalCPC(PaletteCpc.Palette[c]), false);
+			}
 		}
 
-		public void FillTriangles(DirectBitmap bmpLock, int maxWidth) {
+		public void FillTriangles(DirectBitmap bmpLock, int maxWidth, bool modeLines) {
 			for (int i = 0; i < lstTriangle.Count; i++) {
 				Triangle t = lstTriangle[i];
-				FillTriangle(bmpLock, t, maxWidth, i == selLigne);
+				FillTriangle(bmpLock, t, maxWidth, modeLines, i == selLigne);
 			}
 		}
 
@@ -242,11 +249,11 @@ namespace TriangulArt {
 				MoveTriangle(t, deplX, deplY, maxWidth);
 		}
 
-		public void CleanUp(int maxWidth, bool onlyCalc = false) {
+		public void CleanUp(int maxWidth, bool modeLines, bool onlyCalc = false) {
 			int nbTri = lstTriangle.Count;
 			DirectBitmap bmpLock = new DirectBitmap(maxWidth, 256); // Bitmap temporaire pour tracé des triangles
 			for (int i = 0; i < nbTri; i++)
-				FillTriangle(bmpLock, lstTriangle[i], maxWidth, false, i + 1); // tracé triangle dans la couleur i+1
+				FillTriangle(bmpLock, lstTriangle[i], maxWidth, modeLines, false, i + 1); // tracé triangle dans la couleur i+1
 
 			if (!onlyCalc) {
 				// Premiere passe : vérifier triangle complètement recouvert
