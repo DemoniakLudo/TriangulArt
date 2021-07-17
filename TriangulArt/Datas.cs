@@ -89,7 +89,7 @@ namespace TriangulArt {
 					for (int x = 0; x <= xr - xl; x++) {
 						nbPt++;
 						int tcol = bmpLock.GetPixel(xl + x, y);
-						if (tcol == GetPalCPC(PaletteCpc.Palette[c]))
+						if (tcol == c)
 							nbFound++;
 						else
 							tcol = 0;
@@ -99,7 +99,7 @@ namespace TriangulArt {
 					for (int x = 0; x <= xl - xr; x++) {
 						nbPt++;
 						int tcol = bmpLock.GetPixel(xr + x, y);
-						if (tcol == GetPalCPC(PaletteCpc.Palette[c]))
+						if (tcol == c)
 							nbFound++;
 						else
 							tcol = 0;
@@ -139,19 +139,13 @@ namespace TriangulArt {
 				FillTriangle(bmpLock, maxWidth - 1 - x1, y1, maxWidth - 1 - x2, y2, maxWidth - 1 - x3, y3, trueCol != 0 ? trueCol : GetPalCPC(PaletteCpc.Palette[c]), false);
 			else
 				if (modeRendu == 2)
-				FillTriangle(bmpLock, x3, 255 - y3, x2, 255 - y2, x1, 255 - y1, trueCol != 0 ? trueCol : GetPalCPC(PaletteCpc.Palette[c]), false);
+					FillTriangle(bmpLock, x3, 255 - y3, x2, 255 - y2, x1, 255 - y1, trueCol != 0 ? trueCol : GetPalCPC(PaletteCpc.Palette[c]), false);
 		}
 
-		public void FillTriangles(DirectBitmap bmpLock, int maxWidth, bool withNoSelect = false) {
+		public void FillTriangles(DirectBitmap bmpLock, int maxWidth) {
 			for (int i = 0; i < lstTriangle.Count; i++) {
 				Triangle t = lstTriangle[i];
-				FillTriangle(bmpLock, t, maxWidth, withNoSelect ? false : i == selLigne);
-			}
-			if (withNoSelect) {
-				for (int i = 0; i < lstTriangle.Count; i++) {
-					Triangle t = lstTriangle[i];
-					lstTriangle[i].SetPctFill(CountPctFillTriangle(bmpLock, t.x1, t.y1, t.x2, t.y2, t.x3, t.y3, t.color));
-				}
+				FillTriangle(bmpLock, t, maxWidth, i == selLigne);
 			}
 		}
 
@@ -164,7 +158,7 @@ namespace TriangulArt {
 		}
 
 		public int SelTriangle(int xReel, int yReel) {
-			for (int i = lstTriangle.Count; i-- > 0;) {
+			for (int i = lstTriangle.Count; i-- > 0; ) {
 				Triangle t = lstTriangle[i];
 				if (IsInTriancle(t, xReel, yReel)) {
 					return i;
@@ -248,40 +242,44 @@ namespace TriangulArt {
 				MoveTriangle(t, deplX, deplY, maxWidth);
 		}
 
-		public void CleanUp(int maxWidth) {
+		public void CleanUp(int maxWidth, bool onlyCalc = false) {
 			int nbTri = lstTriangle.Count;
-
-			// Premiere passe : vérifier triangle complètement recouvert
 			DirectBitmap bmpLock = new DirectBitmap(maxWidth, 256); // Bitmap temporaire pour tracé des triangles
 			for (int i = 0; i < nbTri; i++)
 				FillTriangle(bmpLock, lstTriangle[i], maxWidth, false, i + 1); // tracé triangle dans la couleur i+1
 
-			for (int i = 0; i < nbTri; i++) {
-				bool found = false;
-				for (int x = 0; x < maxWidth; x++)
-					for (int y = 0; y < 256; y++)
-						if (bmpLock.GetPixel(x, y) == i + 1) { // Vérifier image contient au moins un pixel de la couleur i+1
-							found = true;
-							x = y = 256;
-						}
-				if (!found)
-					lstTriangle[i].x1 = lstTriangle[i].y1 = lstTriangle[i].x2 = lstTriangle[i].y2 = 0;
-			}
+			if (!onlyCalc) {
+				// Premiere passe : vérifier triangle complètement recouvert
+				for (int i = 0; i < nbTri; i++) {
+					bool found = false;
+					for (int x = 0; x < maxWidth; x++)
+						for (int y = 0; y < 256; y++)
+							if (bmpLock.GetPixel(x, y) == i + 1) { // Vérifier image contient au moins un pixel de la couleur i+1
+								found = true;
+								x = y = 256;
+							}
+					if (!found)
+						lstTriangle[i].x1 = lstTriangle[i].y1 = lstTriangle[i].x2 = lstTriangle[i].y2 = 0;
+				}
 
-			// Seconde passe : supprimer les triangles ayant des coordonnées identiques
-			for (int i = 0; i < nbTri; i++) {
-				Triangle t = lstTriangle[i];
-				if ((t.x1 == t.x2 && t.y1 == t.y2)
-					|| (t.x1 == t.x3 && t.y1 == t.y3)
-					|| (t.x2 == t.x3 && t.y2 == t.y3)) {
-					lstTriangle.RemoveAt(i);
-					i--;
-					nbTri--;
+				// Seconde passe : supprimer les triangles ayant des coordonnées identiques
+				for (int i = 0; i < nbTri; i++) {
+					Triangle t = lstTriangle[i];
+					if ((t.x1 == t.x2 && t.y1 == t.y2)
+						|| (t.x1 == t.x3 && t.y1 == t.y3)
+						|| (t.x2 == t.x3 && t.y2 == t.y3)) {
+						lstTriangle.RemoveAt(i);
+						i--;
+						nbTri--;
+					}
 				}
 			}
 
 			// Troisième passe: calcule le pourcentage de visibilité de chaque triangle
-			FillTriangles(bmpLock, maxWidth, true);
+			for (int i = 0; i < lstTriangle.Count; i++) {
+				Triangle t = lstTriangle[i];
+				lstTriangle[i].SetPctFill(CountPctFillTriangle(bmpLock, t.x1, t.y1, t.x2, t.y2, t.x3, t.y3, i + 1));
+			}
 			bmpLock.Dispose();
 		}
 
@@ -441,9 +439,9 @@ namespace TriangulArt {
 					}
 					else
 						if (param.Length == 2) {
-						if (int.Parse(param[1], System.Globalization.NumberStyles.HexNumber) == 255)
-							return true;
-					}
+							if (int.Parse(param[1], System.Globalization.NumberStyles.HexNumber) == 255)
+								return true;
+						}
 				}
 			}
 			return false;
