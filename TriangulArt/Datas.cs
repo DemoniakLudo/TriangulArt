@@ -135,9 +135,9 @@ namespace TriangulArt {
 			int y3 = t.y3;
 			int c = t.color;
 			if (modeLines) {
-				bmpLock.DrawLine(x1, y1, x2, y2, trueCol != 0 ? trueCol : GetPalCPC(PaletteCpc.Palette[c]));
-				bmpLock.DrawLine(x2, y2, x3, y3, trueCol != 0 ? trueCol : GetPalCPC(PaletteCpc.Palette[c]));
-				bmpLock.DrawLine(x3, y3, x1, y1, trueCol != 0 ? trueCol : GetPalCPC(PaletteCpc.Palette[c]));
+				bmpLock.DrawLine(x1, y1, x2, y2, trueCol != 0 ? trueCol : GetPalCPC(PaletteCpc.Palette[c]), selected);
+				bmpLock.DrawLine(x2, y2, x3, y3, trueCol != 0 ? trueCol : GetPalCPC(PaletteCpc.Palette[c]), selected);
+				bmpLock.DrawLine(x3, y3, x1, y1, trueCol != 0 ? trueCol : GetPalCPC(PaletteCpc.Palette[c]), selected);
 			}
 			else {
 				FillTriangle(bmpLock, x1, y1, x2, y2, x3, y3, trueCol != 0 ? trueCol : GetPalCPC(PaletteCpc.Palette[c]), selected);

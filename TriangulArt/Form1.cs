@@ -23,7 +23,6 @@ namespace TriangulArt {
 		private int maxWidth;
 		private int coefX;
 		private Label[] colors = new Label[16];
-		private bool modeLine = true;
 
 		public Form1() {
 			InitializeComponent();
@@ -128,7 +127,7 @@ namespace TriangulArt {
 
 		private void FillTriangles() {
 			Reset();
-			projet.SelImage().FillTriangles(bmpLock, maxWidth, modeLine);
+			projet.SelImage().FillTriangles(bmpLock, maxWidth, chkLine.Checked);
 			Render();
 			bpAjoutTriangle.Enabled = bpAjoutQuadri.Enabled = bpAjoutRect.Enabled = bpAjoutCercle.Enabled = txbNbRayons.Enabled = true;
 			mouseOpt = DrawMd.NONE;
@@ -164,7 +163,7 @@ namespace TriangulArt {
 
 		private void AddTriangle(Triangle t) {
 			projet.SelImage().lstTriangle.Add(t);
-			projet.SelImage().FillTriangle(bmpLock, t, maxWidth, modeLine);
+			projet.SelImage().FillTriangle(bmpLock, t, maxWidth, chkLine.Checked);
 			DisplayList();
 		}
 
@@ -624,7 +623,7 @@ namespace TriangulArt {
 		}
 
 		private void bpRedraw_Click(object sender, EventArgs e) {
-			projet.SelImage().CleanUp(maxWidth, true);
+			projet.SelImage().CleanUp(maxWidth, chkLine.Checked, true);
 			DisplayList();
 			FillTriangles();
 		}
@@ -815,7 +814,7 @@ namespace TriangulArt {
 
 		private void bpRapproche_Click(object sender, EventArgs e) {
 			projet.SelImage().Rapproche(4);
-			projet.SelImage().CleanUp(maxWidth, modeLine);
+			projet.SelImage().CleanUp(maxWidth, chkLine.Checked);
 			DisplayList();
 			FillTriangles();
 		}
@@ -856,7 +855,7 @@ namespace TriangulArt {
 
 		private void bpClean_Click(object sender, EventArgs e) {
 			int nbAvant = projet.SelImage().lstTriangle.Count;
-			projet.SelImage().CleanUp(maxWidth, modeLine);
+			projet.SelImage().CleanUp(maxWidth, chkLine.Checked);
 			int nbApres = projet.SelImage().lstTriangle.Count;
 			if (nbApres != nbAvant)
 				SetInfo("Nbre de triangles optimisés : " + (nbAvant - nbApres).ToString());
@@ -894,6 +893,7 @@ namespace TriangulArt {
 					SetNewMode(false);
 					projet.SelectImage(0);
 					SetImageProjet();
+					this.Text = Path.GetFileName(dlg.FileName);
 				}
 				catch {
 					MessageBox.Show("Erreur lecture projet...");
@@ -1010,7 +1010,7 @@ namespace TriangulArt {
 			int nbAvant = 0, nbApres = 0;
 			foreach (Datas d in projet.lstData) {
 				nbAvant += d.lstTriangle.Count;
-				d.CleanUp(maxWidth, modeLine);
+				d.CleanUp(maxWidth, chkLine.Checked);
 				nbApres += d.lstTriangle.Count;
 			}
 			if (nbApres != nbAvant)
@@ -1042,6 +1042,10 @@ namespace TriangulArt {
 					MessageBox.Show("Erreur lors de l'importation des données...");
 				}
 			}
+		}
+
+		private void chkLine_CheckedChanged(object sender, EventArgs e) {
+			bpRedraw_Click(null, null);
 		}
 	}
 }

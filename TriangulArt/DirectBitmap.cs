@@ -51,7 +51,7 @@ public class DirectBitmap : IDisposable {
 	public void SetHorLine(int pixelX, int pixelY, int lineLength, int c, bool increment = false) {
 		uint color = (uint)c | 0xFF000000;
 		int index = pixelX + (pixelY * Width);
-		for (; lineLength-- > 0;) {
+		for (; lineLength-- > 0; ) {
 			if (index < Length)
 				tabBits[index] = color;
 
@@ -61,7 +61,7 @@ public class DirectBitmap : IDisposable {
 		}
 	}
 
-	public void DrawLine(int x1, int y1, int x2, int y2, int c) {
+	public void DrawLine(int x1, int y1, int x2, int y2, int c, bool selected) {
 		if (x2 < x1) {
 			int a = x2;
 			x2 = x1;
@@ -86,7 +86,7 @@ public class DirectBitmap : IDisposable {
 						dx <<= 1;
 						dy <<= 1;
 						while (x1 != x2) {
-							SetPixel(x1, y1, c);
+							SetPixel(x1, y1, selected ? (y1 << 13) + (y1 << 4) + (y1 << 22) + (x1 << 5) : c);
 							x1++;
 							e = e - dy;
 							if (e < 0) {
@@ -100,7 +100,7 @@ public class DirectBitmap : IDisposable {
 						dy <<= 1;
 						dx <<= 1;
 						while (y1 != y2) {
-							SetPixel(x1, y1, c);
+							SetPixel(x1, y1, selected ? (y1 << 13) + (y1 << 4) + (y1 << 22) + (x1 <<5) : c);
 							y1++;
 							e = e - dx;
 							if (e < 0) {
@@ -116,7 +116,7 @@ public class DirectBitmap : IDisposable {
 						dy <<= 1;
 						dx <<= 1;
 						while (x1 != x2) {
-							SetPixel(x1, y1, c);
+							SetPixel(x1, y1, selected ? (y1 << 13) + (y1 << 4) + (y1 << 22) + (x1 <<5) : c);
 							x1++;
 							e = e + dy;
 							if (e < 0) {
@@ -130,7 +130,7 @@ public class DirectBitmap : IDisposable {
 						dy <<= 1;
 						dx <<= 1;
 						while (y1 != y2) {
-							SetPixel(x1, y1, c);
+							SetPixel(x1, y1, selected ? (y1 << 13) + (y1 << 4) + (y1 << 22) + (x1 << 5) : c);
 							y1--;
 							e = e + dx;
 							if (e > 0) {
@@ -143,7 +143,7 @@ public class DirectBitmap : IDisposable {
 			}
 			else {  // dy = 0 (et dx > 0)
 				do {
-					SetPixel(x1, y1, c);
+					SetPixel(x1, y1, selected ? (y1 << 13) + (y1 << 4) + (y1 << 22) + (x1 << 5) : c);
 					x1++;
 				}
 				while (x1 != x2);
@@ -152,7 +152,7 @@ public class DirectBitmap : IDisposable {
 		else {  // dx = 0
 			if (dy != 0) {
 				do {
-					SetPixel(x1, y1, c);
+					SetPixel(x1, y1, selected ? (y1 << 13) + (y1 << 4) + (y1 << 22) + (x1 << 5) : c);
 					y1++;
 				} while (y1 != y2);
 			}

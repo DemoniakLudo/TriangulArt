@@ -85,6 +85,7 @@
 			this.txbPos = new System.Windows.Forms.TextBox();
 			this.label13 = new System.Windows.Forms.Label();
 			this.grpProjet = new System.Windows.Forms.GroupBox();
+			this.chkLine = new System.Windows.Forms.CheckBox();
 			this.bpCleanProj = new System.Windows.Forms.Button();
 			this.chkZX0 = new System.Windows.Forms.CheckBox();
 			this.chkAnim3D = new System.Windows.Forms.CheckBox();
@@ -712,6 +713,7 @@
 			// 
 			// grpProjet
 			// 
+			this.grpProjet.Controls.Add(this.chkLine);
 			this.grpProjet.Controls.Add(this.bpCleanProj);
 			this.grpProjet.Controls.Add(this.chkZX0);
 			this.grpProjet.Controls.Add(this.chkAnim3D);
@@ -730,6 +732,17 @@
 			this.grpProjet.TabIndex = 50;
 			this.grpProjet.TabStop = false;
 			this.grpProjet.Text = "Projet";
+			// 
+			// chkLine
+			// 
+			this.chkLine.AutoSize = true;
+			this.chkLine.Location = new System.Drawing.Point(292, 34);
+			this.chkLine.Name = "chkLine";
+			this.chkLine.Size = new System.Drawing.Size(83, 17);
+			this.chkLine.TabIndex = 30;
+			this.chkLine.Text = "Mode lignes";
+			this.chkLine.UseVisualStyleBackColor = true;
+			this.chkLine.CheckedChanged += new System.EventHandler(this.chkLine_CheckedChanged);
 			// 
 			// bpCleanProj
 			// 
@@ -1132,6 +1145,7 @@
 		private System.Windows.Forms.CheckBox chkAnim3D;
 		private System.Windows.Forms.CheckBox chkZX0;
 		private System.Windows.Forms.Button bpCleanProj;
+		private System.Windows.Forms.CheckBox chkLine;
 	}
 }
 
