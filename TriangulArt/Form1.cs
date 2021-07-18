@@ -623,7 +623,7 @@ namespace TriangulArt {
 		}
 
 		private void bpRedraw_Click(object sender, EventArgs e) {
-			projet.SelImage().CleanUp(maxWidth, chkLine.Checked, true);
+			projet.SelImage().CleanUp(maxWidth, true);
 			DisplayList();
 			FillTriangles();
 		}
@@ -814,7 +814,7 @@ namespace TriangulArt {
 
 		private void bpRapproche_Click(object sender, EventArgs e) {
 			projet.SelImage().Rapproche(4);
-			projet.SelImage().CleanUp(maxWidth, chkLine.Checked);
+			projet.SelImage().CleanUp(maxWidth);
 			DisplayList();
 			FillTriangles();
 		}
@@ -855,7 +855,7 @@ namespace TriangulArt {
 
 		private void bpClean_Click(object sender, EventArgs e) {
 			int nbAvant = projet.SelImage().lstTriangle.Count;
-			projet.SelImage().CleanUp(maxWidth, chkLine.Checked);
+			projet.SelImage().CleanUp(maxWidth);
 			int nbApres = projet.SelImage().lstTriangle.Count;
 			if (nbApres != nbAvant)
 				SetInfo("Nbre de triangles optimisés : " + (nbAvant - nbApres).ToString());
@@ -1010,7 +1010,7 @@ namespace TriangulArt {
 			int nbAvant = 0, nbApres = 0;
 			foreach (Datas d in projet.lstData) {
 				nbAvant += d.lstTriangle.Count;
-				d.CleanUp(maxWidth, chkLine.Checked);
+				d.CleanUp(maxWidth);
 				nbApres += d.lstTriangle.Count;
 			}
 			if (nbApres != nbAvant)

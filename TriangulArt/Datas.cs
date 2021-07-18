@@ -83,7 +83,6 @@ namespace TriangulArt {
 				xr = x2;
 
 			int nbFound = 0, nbPt = 0;
-			;
 			for (int y = y1; y < y3; y++) {
 				if (xr > xl) {
 					for (int x = 0; x <= xr - xl; x++) {
@@ -249,11 +248,11 @@ namespace TriangulArt {
 				MoveTriangle(t, deplX, deplY, maxWidth);
 		}
 
-		public void CleanUp(int maxWidth, bool modeLines, bool onlyCalc = false) {
+		public void CleanUp(int maxWidth, bool onlyCalc = false) {
 			int nbTri = lstTriangle.Count;
 			DirectBitmap bmpLock = new DirectBitmap(maxWidth, 256); // Bitmap temporaire pour tracé des triangles
 			for (int i = 0; i < nbTri; i++)
-				FillTriangle(bmpLock, lstTriangle[i], maxWidth, modeLines, false, i + 1); // tracé triangle dans la couleur i+1
+				FillTriangle(bmpLock, lstTriangle[i], maxWidth, false, false, i + 1); // tracé triangle dans la couleur i+1
 
 			if (!onlyCalc) {
 				// Premiere passe : vérifier triangle complètement recouvert
