@@ -77,6 +77,17 @@ namespace TriangulArt {
 			Render();
 		}
 
+		public void ResetNoRender(bool force = false) {
+			if (bmpFond != null) {
+				for (int y = 0; y < 256; y++)
+					for (int x = 0; x < maxWidth; x++)
+						bmpLock.SetPixel(x, y, bmpFond.GetPixel(x, y).ToArgb());
+			}
+			else
+				for (int y = 0; y < bmpLock.Height; y++)
+					bmpLock.SetHorLine(0, y, maxWidth, projet.SelImage().GetPalCPC(PaletteCpc.Palette[0]));
+		}
+
 		// Changement de la palette
 		private void ClickColor(object sender, MouseEventArgs e) {
 			Label colorClick = sender as Label;
@@ -126,7 +137,7 @@ namespace TriangulArt {
 		}
 
 		private void FillTriangles() {
-			Reset();
+			ResetNoRender();
 			projet.SelImage().FillTriangles(bmpLock, maxWidth, chkLine.Checked);
 			Render();
 			bpAjoutTriangle.Enabled = bpAjoutQuadri.Enabled = bpAjoutRect.Enabled = bpAjoutCercle.Enabled = txbNbRayons.Enabled = true;
