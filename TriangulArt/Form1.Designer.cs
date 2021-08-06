@@ -982,7 +982,7 @@
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			this.AutoSize = true;
-			this.ClientSize = new System.Drawing.Size(1286, 770);
+			this.ClientSize = new System.Drawing.Size(1520, 770);
 			this.Controls.Add(this.label15);
 			this.Controls.Add(this.txbNbRayons);
 			this.Controls.Add(this.bpAjoutCercle);

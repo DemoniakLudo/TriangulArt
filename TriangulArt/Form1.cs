@@ -629,7 +629,7 @@ namespace TriangulArt {
 		}
 
 		private void DeleteSelTriangle() {
-			if (triSel != null) {
+			if (triSel != null && MessageBox.Show("Etes vous sur(e) de vouloir supprimer ce triangle ?", "Confirmation suppression", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes) {
 				projet.SelImage().DeleteSelTriangle();
 				DisplayList();
 				FillTriangles();
@@ -637,8 +637,7 @@ namespace TriangulArt {
 		}
 
 		private void bpDelete_Click(object sender, EventArgs e) {
-			if (MessageBox.Show("Etes vous sur(e) de vouloir supprimer ce triangle ?", "Confirmation suppression", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
-				DeleteSelTriangle();
+			DeleteSelTriangle();
 		}
 
 		private void bpEdit_Click(object sender, EventArgs e) {
