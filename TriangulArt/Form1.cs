@@ -1017,6 +1017,7 @@ namespace TriangulArt {
 		}
 
 		private void bpCleanProj_Click(object sender, EventArgs e) {
+			Enabled = false;
 			int nbAvant = 0, nbApres = 0;
 			foreach (Datas d in projet.lstData) {
 				nbAvant += d.lstTriangle.Count;
@@ -1031,6 +1032,7 @@ namespace TriangulArt {
 			DisplayList();
 			FillTriangles();
 			DisplayMemory();
+			Enabled = true;
 		}
 
 		private void chkAnim3D_CheckedChanged(object sender, EventArgs e) {

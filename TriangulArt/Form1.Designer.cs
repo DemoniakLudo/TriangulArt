@@ -133,7 +133,7 @@
 			// lblInfoPos
 			// 
 			this.lblInfoPos.AutoSize = true;
-			this.lblInfoPos.Location = new System.Drawing.Point(815, 590);
+			this.lblInfoPos.Location = new System.Drawing.Point(815, 598);
 			this.lblInfoPos.Name = "lblInfoPos";
 			this.lblInfoPos.Size = new System.Drawing.Size(43, 13);
 			this.lblInfoPos.TabIndex = 1;
@@ -152,9 +152,9 @@
 			// listInfo
 			// 
 			this.listInfo.FormattingEnabled = true;
-			this.listInfo.Location = new System.Drawing.Point(807, 632);
+			this.listInfo.Location = new System.Drawing.Point(818, 634);
 			this.listInfo.Name = "listInfo";
-			this.listInfo.Size = new System.Drawing.Size(663, 108);
+			this.listInfo.Size = new System.Drawing.Size(652, 108);
 			this.listInfo.TabIndex = 3;
 			// 
 			// bpLoad
@@ -181,7 +181,7 @@
 			// 
 			this.ColorSel.BackColor = System.Drawing.Color.Transparent;
 			this.ColorSel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.ColorSel.Location = new System.Drawing.Point(998, 568);
+			this.ColorSel.Location = new System.Drawing.Point(998, 576);
 			this.ColorSel.Name = "ColorSel";
 			this.ColorSel.Size = new System.Drawing.Size(82, 56);
 			this.ColorSel.TabIndex = 5;
@@ -198,7 +198,7 @@
 			// 
 			// bpAddCoord
 			// 
-			this.bpAddCoord.Location = new System.Drawing.Point(1350, 574);
+			this.bpAddCoord.Location = new System.Drawing.Point(1358, 553);
 			this.bpAddCoord.Name = "bpAddCoord";
 			this.bpAddCoord.Size = new System.Drawing.Size(108, 22);
 			this.bpAddCoord.TabIndex = 7;
@@ -208,7 +208,7 @@
 			// 
 			// txbY1
 			// 
-			this.txbY1.Location = new System.Drawing.Point(978, 527);
+			this.txbY1.Location = new System.Drawing.Point(978, 555);
 			this.txbY1.MaxLength = 3;
 			this.txbY1.Name = "txbY1";
 			this.txbY1.Size = new System.Drawing.Size(25, 20);
@@ -216,7 +216,7 @@
 			// 
 			// txbX2
 			// 
-			this.txbX2.Location = new System.Drawing.Point(1035, 527);
+			this.txbX2.Location = new System.Drawing.Point(1035, 555);
 			this.txbX2.MaxLength = 3;
 			this.txbX2.Name = "txbX2";
 			this.txbX2.Size = new System.Drawing.Size(25, 20);
@@ -224,7 +224,7 @@
 			// 
 			// txbY2
 			// 
-			this.txbY2.Location = new System.Drawing.Point(1092, 527);
+			this.txbY2.Location = new System.Drawing.Point(1092, 555);
 			this.txbY2.MaxLength = 3;
 			this.txbY2.Name = "txbY2";
 			this.txbY2.Size = new System.Drawing.Size(25, 20);
@@ -232,7 +232,7 @@
 			// 
 			// txbX3
 			// 
-			this.txbX3.Location = new System.Drawing.Point(1149, 527);
+			this.txbX3.Location = new System.Drawing.Point(1149, 555);
 			this.txbX3.MaxLength = 3;
 			this.txbX3.Name = "txbX3";
 			this.txbX3.Size = new System.Drawing.Size(25, 20);
@@ -240,7 +240,7 @@
 			// 
 			// txbY3
 			// 
-			this.txbY3.Location = new System.Drawing.Point(1206, 527);
+			this.txbY3.Location = new System.Drawing.Point(1206, 555);
 			this.txbY3.MaxLength = 3;
 			this.txbY3.Name = "txbY3";
 			this.txbY3.Size = new System.Drawing.Size(25, 20);
@@ -249,7 +249,7 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(959, 530);
+			this.label2.Location = new System.Drawing.Point(959, 558);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(21, 13);
 			this.label2.TabIndex = 15;
@@ -258,7 +258,7 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(1016, 530);
+			this.label3.Location = new System.Drawing.Point(1016, 558);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(21, 13);
 			this.label3.TabIndex = 16;
@@ -267,7 +267,7 @@
 			// label4
 			// 
 			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(1073, 530);
+			this.label4.Location = new System.Drawing.Point(1073, 558);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(21, 13);
 			this.label4.TabIndex = 17;
@@ -276,7 +276,7 @@
 			// label5
 			// 
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(1130, 530);
+			this.label5.Location = new System.Drawing.Point(1130, 558);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(21, 13);
 			this.label5.TabIndex = 18;
@@ -285,7 +285,7 @@
 			// label6
 			// 
 			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(1187, 530);
+			this.label6.Location = new System.Drawing.Point(1187, 558);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(21, 13);
 			this.label6.TabIndex = 19;
@@ -296,14 +296,14 @@
 			this.listTriangles.FormattingEnabled = true;
 			this.listTriangles.Location = new System.Drawing.Point(818, 327);
 			this.listTriangles.Name = "listTriangles";
-			this.listTriangles.Size = new System.Drawing.Size(584, 186);
+			this.listTriangles.Size = new System.Drawing.Size(587, 225);
 			this.listTriangles.TabIndex = 20;
 			this.listTriangles.SelectedIndexChanged += new System.EventHandler(this.listTriangles_SelectedIndexChanged);
 			// 
 			// bpEdit
 			// 
 			this.bpEdit.Enabled = false;
-			this.bpEdit.Location = new System.Drawing.Point(1350, 549);
+			this.bpEdit.Location = new System.Drawing.Point(1358, 577);
 			this.bpEdit.Name = "bpEdit";
 			this.bpEdit.Size = new System.Drawing.Size(108, 22);
 			this.bpEdit.TabIndex = 7;
@@ -313,7 +313,7 @@
 			// 
 			// bpRedraw
 			// 
-			this.bpRedraw.Location = new System.Drawing.Point(1097, 573);
+			this.bpRedraw.Location = new System.Drawing.Point(1097, 579);
 			this.bpRedraw.Name = "bpRedraw";
 			this.bpRedraw.Size = new System.Drawing.Size(113, 25);
 			this.bpRedraw.TabIndex = 21;
@@ -324,7 +324,7 @@
 			// bpDelete
 			// 
 			this.bpDelete.Enabled = false;
-			this.bpDelete.Location = new System.Drawing.Point(1350, 525);
+			this.bpDelete.Location = new System.Drawing.Point(1358, 602);
 			this.bpDelete.Name = "bpDelete";
 			this.bpDelete.Size = new System.Drawing.Size(108, 22);
 			this.bpDelete.TabIndex = 22;
@@ -335,7 +335,7 @@
 			// label7
 			// 
 			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(903, 590);
+			this.label7.Location = new System.Drawing.Point(903, 598);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(94, 13);
 			this.label7.TabIndex = 23;
@@ -384,7 +384,7 @@
 			// 
 			// bpClear
 			// 
-			this.bpClear.Location = new System.Drawing.Point(1223, 574);
+			this.bpClear.Location = new System.Drawing.Point(1223, 580);
 			this.bpClear.Name = "bpClear";
 			this.bpClear.Size = new System.Drawing.Size(116, 22);
 			this.bpClear.TabIndex = 28;
@@ -567,7 +567,7 @@
 			// lblInfoVersion
 			// 
 			this.lblInfoVersion.AutoSize = true;
-			this.lblInfoVersion.Location = new System.Drawing.Point(804, 745);
+			this.lblInfoVersion.Location = new System.Drawing.Point(816, 746);
 			this.lblInfoVersion.Name = "lblInfoVersion";
 			this.lblInfoVersion.Size = new System.Drawing.Size(42, 13);
 			this.lblInfoVersion.TabIndex = 36;
@@ -625,25 +625,25 @@
 			// 
 			// txbY4
 			// 
-			this.txbY4.Location = new System.Drawing.Point(1320, 527);
+			this.txbY4.Location = new System.Drawing.Point(1320, 555);
 			this.txbY4.MaxLength = 3;
 			this.txbY4.Name = "txbY4";
 			this.txbY4.Size = new System.Drawing.Size(25, 20);
-			this.txbY4.TabIndex = 43;
+			this.txbY4.TabIndex = 15;
 			// 
 			// txbX4
 			// 
-			this.txbX4.Location = new System.Drawing.Point(1263, 527);
+			this.txbX4.Location = new System.Drawing.Point(1263, 555);
 			this.txbX4.MaxLength = 3;
 			this.txbX4.Name = "txbX4";
 			this.txbX4.Size = new System.Drawing.Size(25, 20);
-			this.txbX4.TabIndex = 42;
+			this.txbX4.TabIndex = 14;
 			// 
 			// label10
 			// 
 			this.label10.AutoSize = true;
 			this.label10.ForeColor = System.Drawing.SystemColors.WindowFrame;
-			this.label10.Location = new System.Drawing.Point(1297, 530);
+			this.label10.Location = new System.Drawing.Point(1297, 558);
 			this.label10.Name = "label10";
 			this.label10.Size = new System.Drawing.Size(27, 13);
 			this.label10.TabIndex = 45;
@@ -653,7 +653,7 @@
 			// 
 			this.label11.AutoSize = true;
 			this.label11.ForeColor = System.Drawing.SystemColors.WindowFrame;
-			this.label11.Location = new System.Drawing.Point(1240, 530);
+			this.label11.Location = new System.Drawing.Point(1240, 558);
 			this.label11.Name = "label11";
 			this.label11.Size = new System.Drawing.Size(27, 13);
 			this.label11.TabIndex = 44;
@@ -679,7 +679,7 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(902, 530);
+			this.label1.Location = new System.Drawing.Point(902, 558);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(21, 13);
 			this.label1.TabIndex = 14;
@@ -687,7 +687,7 @@
 			// 
 			// txbX1
 			// 
-			this.txbX1.Location = new System.Drawing.Point(921, 527);
+			this.txbX1.Location = new System.Drawing.Point(921, 555);
 			this.txbX1.MaxLength = 3;
 			this.txbX1.Name = "txbX1";
 			this.txbX1.Size = new System.Drawing.Size(25, 20);
@@ -695,7 +695,7 @@
 			// 
 			// txbPos
 			// 
-			this.txbPos.Location = new System.Drawing.Point(847, 527);
+			this.txbPos.Location = new System.Drawing.Point(847, 555);
 			this.txbPos.MaxLength = 3;
 			this.txbPos.Name = "txbPos";
 			this.txbPos.Size = new System.Drawing.Size(40, 20);
@@ -705,7 +705,7 @@
 			// 
 			this.label13.AutoSize = true;
 			this.label13.ForeColor = System.Drawing.SystemColors.WindowFrame;
-			this.label13.Location = new System.Drawing.Point(818, 531);
+			this.label13.Location = new System.Drawing.Point(818, 559);
 			this.label13.Name = "label13";
 			this.label13.Size = new System.Drawing.Size(32, 13);
 			this.label13.TabIndex = 49;
@@ -746,9 +746,9 @@
 			// 
 			// bpCleanProj
 			// 
-			this.bpCleanProj.Location = new System.Drawing.Point(464, 46);
+			this.bpCleanProj.Location = new System.Drawing.Point(565, 41);
 			this.bpCleanProj.Name = "bpCleanProj";
-			this.bpCleanProj.Size = new System.Drawing.Size(63, 23);
+			this.bpCleanProj.Size = new System.Drawing.Size(75, 23);
 			this.bpCleanProj.TabIndex = 29;
 			this.bpCleanProj.Text = "Clean";
 			this.bpCleanProj.UseVisualStyleBackColor = true;
@@ -757,7 +757,7 @@
 			// chkZX0
 			// 
 			this.chkZX0.AutoSize = true;
-			this.chkZX0.Location = new System.Drawing.Point(485, 23);
+			this.chkZX0.Location = new System.Drawing.Point(485, 18);
 			this.chkZX0.Name = "chkZX0";
 			this.chkZX0.Size = new System.Drawing.Size(46, 17);
 			this.chkZX0.TabIndex = 28;
@@ -768,7 +768,7 @@
 			// chkAnim3D
 			// 
 			this.chkAnim3D.AutoSize = true;
-			this.chkAnim3D.Location = new System.Drawing.Point(326, 76);
+			this.chkAnim3D.Location = new System.Drawing.Point(257, 76);
 			this.chkAnim3D.Name = "chkAnim3D";
 			this.chkAnim3D.Size = new System.Drawing.Size(118, 17);
 			this.chkAnim3D.TabIndex = 27;
@@ -778,11 +778,11 @@
 			// 
 			// bpProjImport
 			// 
-			this.bpProjImport.Location = new System.Drawing.Point(486, 73);
+			this.bpProjImport.Location = new System.Drawing.Point(532, 68);
 			this.bpProjImport.Name = "bpProjImport";
-			this.bpProjImport.Size = new System.Drawing.Size(154, 23);
+			this.bpProjImport.Size = new System.Drawing.Size(108, 23);
 			this.bpProjImport.TabIndex = 26;
-			this.bpProjImport.Text = "Import data assembleur";
+			this.bpProjImport.Text = "Import assembleur";
 			this.bpProjImport.UseVisualStyleBackColor = true;
 			this.bpProjImport.Visible = false;
 			this.bpProjImport.Click += new System.EventHandler(this.bpProjImport_Click);
@@ -791,7 +791,7 @@
 			// 
 			this.rbMode1.AutoSize = true;
 			this.rbMode1.Checked = true;
-			this.rbMode1.Location = new System.Drawing.Point(221, 76);
+			this.rbMode1.Location = new System.Drawing.Point(178, 76);
 			this.rbMode1.Name = "rbMode1";
 			this.rbMode1.Size = new System.Drawing.Size(61, 17);
 			this.rbMode1.TabIndex = 25;
@@ -803,7 +803,7 @@
 			// rbMode0
 			// 
 			this.rbMode0.AutoSize = true;
-			this.rbMode0.Location = new System.Drawing.Point(149, 76);
+			this.rbMode0.Location = new System.Drawing.Point(106, 76);
 			this.rbMode0.Name = "rbMode0";
 			this.rbMode0.Size = new System.Drawing.Size(61, 17);
 			this.rbMode0.TabIndex = 25;
@@ -813,17 +813,17 @@
 			// 
 			// bpNewProjet
 			// 
-			this.bpNewProjet.Location = new System.Drawing.Point(532, 46);
+			this.bpNewProjet.Location = new System.Drawing.Point(377, 68);
 			this.bpNewProjet.Name = "bpNewProjet";
-			this.bpNewProjet.Size = new System.Drawing.Size(108, 23);
+			this.bpNewProjet.Size = new System.Drawing.Size(75, 23);
 			this.bpNewProjet.TabIndex = 3;
-			this.bpNewProjet.Text = "Nouveau Projet";
+			this.bpNewProjet.Text = "Nouveau";
 			this.bpNewProjet.UseVisualStyleBackColor = true;
 			this.bpNewProjet.Click += new System.EventHandler(this.bpNewProjet_Click);
 			// 
 			// bpGenereProjetAsm
 			// 
-			this.bpGenereProjetAsm.Location = new System.Drawing.Point(532, 19);
+			this.bpGenereProjetAsm.Location = new System.Drawing.Point(532, 14);
 			this.bpGenereProjetAsm.Name = "bpGenereProjetAsm";
 			this.bpGenereProjetAsm.Size = new System.Drawing.Size(109, 23);
 			this.bpGenereProjetAsm.TabIndex = 2;
@@ -897,7 +897,7 @@
 			// 
 			// bpSaveProj
 			// 
-			this.bpSaveProj.Location = new System.Drawing.Point(377, 48);
+			this.bpSaveProj.Location = new System.Drawing.Point(377, 41);
 			this.bpSaveProj.Name = "bpSaveProj";
 			this.bpSaveProj.Size = new System.Drawing.Size(75, 22);
 			this.bpSaveProj.TabIndex = 0;
@@ -907,7 +907,7 @@
 			// 
 			// bpReadProj
 			// 
-			this.bpReadProj.Location = new System.Drawing.Point(377, 19);
+			this.bpReadProj.Location = new System.Drawing.Point(377, 14);
 			this.bpReadProj.Name = "bpReadProj";
 			this.bpReadProj.Size = new System.Drawing.Size(75, 22);
 			this.bpReadProj.TabIndex = 0;
@@ -982,7 +982,7 @@
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			this.AutoSize = true;
-			this.ClientSize = new System.Drawing.Size(1472, 786);
+			this.ClientSize = new System.Drawing.Size(1469, 768);
 			this.Controls.Add(this.label15);
 			this.Controls.Add(this.txbNbRayons);
 			this.Controls.Add(this.bpAjoutCercle);
