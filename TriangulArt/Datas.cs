@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 
 namespace TriangulArt {
@@ -431,13 +432,13 @@ namespace TriangulArt {
 					char[] delimiters = new char[] { ',', '#' };
 					string[] param = ltrait.Split(delimiters);
 					if (param.Length == 14) {
-						int x1 = int.Parse(param[1], System.Globalization.NumberStyles.HexNumber);
-						int y1 = int.Parse(param[3], System.Globalization.NumberStyles.HexNumber);
-						int x2 = int.Parse(param[5], System.Globalization.NumberStyles.HexNumber);
-						int y2 = int.Parse(param[7], System.Globalization.NumberStyles.HexNumber);
-						int x3 = int.Parse(param[9], System.Globalization.NumberStyles.HexNumber);
-						int y3 = int.Parse(param[11], System.Globalization.NumberStyles.HexNumber);
-						int c = int.Parse(param[13], System.Globalization.NumberStyles.HexNumber);
+						int x1 = int.Parse(param[1], NumberStyles.HexNumber);
+						int y1 = int.Parse(param[3], NumberStyles.HexNumber);
+						int x2 = int.Parse(param[5], NumberStyles.HexNumber);
+						int y2 = int.Parse(param[7], NumberStyles.HexNumber);
+						int x3 = int.Parse(param[9], NumberStyles.HexNumber);
+						int y3 = int.Parse(param[11], NumberStyles.HexNumber);
+						int c = int.Parse(param[13], NumberStyles.HexNumber);
 						if (x1 >= 0 && y1 >= 0 && x2 >= 0 && y2 >= 0 && x3 >= 0 && y3 >= 0) {
 							lstTriangle.Add(new Triangle(x1, y1, x2, y2, x3, y3, c & 0x0F));
 							return (c & 0x80) != 0;
@@ -445,7 +446,7 @@ namespace TriangulArt {
 					}
 					else
 						if (param.Length == 2) {
-							if (int.Parse(param[1], System.Globalization.NumberStyles.HexNumber) == 255)
+							if (int.Parse(param[1], NumberStyles.HexNumber) == 255)
 								return true;
 						}
 				}
