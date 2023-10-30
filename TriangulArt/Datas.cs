@@ -9,7 +9,6 @@ namespace TriangulArt {
 		public int modeRendu = 0;
 		public List<Triangle> lstTriangle = new List<Triangle>();
 		public int[] palette = new int[16];
-		public bool cpcPlus = false;
 		public int tpsAttente = 16;
 		public string nomImage;
 
@@ -229,6 +228,22 @@ namespace TriangulArt {
 			Triangle t = lstTriangle[selLigne];
 			lstTriangle[selLigne] = lstTriangle[selLigne + 1];
 			lstTriangle[selLigne + 1] = t;
+		}
+
+		public void SetFirstTriangle() {
+			for (int i = selLigne; i > 0; i--) {
+				Triangle t = lstTriangle[i];
+				lstTriangle[i] = lstTriangle[i - 1];
+				lstTriangle[i - 1] = t;
+			}
+		}
+
+		public void SetLastTriangle(int nb) {
+			for (int i = selLigne; i < nb; i++) {
+				Triangle t = lstTriangle[i];
+				lstTriangle[i] = lstTriangle[i + 1];
+				lstTriangle[i + 1] = t;
+			}
 		}
 
 		private void MoveTriangle(Triangle t, int deplX, int deplY, int maxWidth) {
@@ -454,7 +469,7 @@ namespace TriangulArt {
 			return false;
 		}
 
-		public void GenereSourceAsm(string fileName, int mode, bool withCode, bool modePolice, bool mode3D) {
+		public void GenereSourceAsm(string fileName, int mode, bool cpcPlus, bool withCode, bool modePolice, bool mode3D) {
 			bool polyMode = false;
 			//
 			// Rapprocher les triangles ayant des coordonnées comparables

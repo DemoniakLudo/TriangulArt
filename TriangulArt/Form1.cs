@@ -10,7 +10,7 @@ namespace TriangulArt {
 	public partial class Form1 : Form {
 		private PaletteCpc bitmapCpc = new PaletteCpc();
 		private DirectBitmap bmpLock;
-		private enum DrawMd { NONE = 0, MOVETRIANGLE, ADDTRIANGLE, ADDQUADRI, ADDRECTANGLE, ADDCERCLE };
+		private enum DrawMd { NONE = 0, MOVETRIANGLE, ADDTRIANGLE, ADDQUADRI, ADDRECTANGLE, ADDCERCLE, ADDLINE };
 		private DrawMd mouseOpt = DrawMd.NONE;
 		private int numPt, nbr;
 		private Triangle triSel;
@@ -140,7 +140,7 @@ namespace TriangulArt {
 			ResetNoRender();
 			projet.SelImage().FillTriangles(bmpLock, maxWidth, chkLine.Checked);
 			Render();
-			bpAjoutTriangle.Enabled = bpAjoutQuadri.Enabled = bpAjoutRect.Enabled = bpAjoutCercle.Enabled = txbNbRayons.Enabled = true;
+			bpAjoutLigne.Enabled=			bpAjoutTriangle.Enabled = bpAjoutQuadri.Enabled = bpAjoutRect.Enabled = bpAjoutCercle.Enabled = txbNbRayons.Enabled = true;
 			mouseOpt = DrawMd.NONE;
 		}
 
@@ -167,7 +167,7 @@ namespace TriangulArt {
 				listTriangles.Items.Add(inf);
 			}
 			txbX1.Text = txbX2.Text = txbX3.Text = txbY1.Text = txbY2.Text = txbY3.Text = txbX4.Text = txbY4.Text = txbPos.Text = "";
-			bpUp.Enabled = bpDown.Enabled = false;
+			bpUp.Enabled = bpDown.Enabled = bpFirst.Enabled = bpLast.Enabled = false;
 			triSel = projet.SelImage().SelectTriangle(-1);
 			bpEdit.Enabled = bpDelete.Enabled = false;
 		}
@@ -186,7 +186,7 @@ namespace TriangulArt {
 			int yReel = (e.Y + 2) / 3;
 			int xReel = (e.X + 2) / coefX;
 			lblInfoPos.Text = "x:" + xReel.ToString("000") + " y:" + yReel.ToString("000");
-			if ((mouseOpt == DrawMd.ADDTRIANGLE || mouseOpt == DrawMd.ADDQUADRI) && triSel != null) {
+			if ((mouseOpt == DrawMd.ADDTRIANGLE || mouseOpt == DrawMd.ADDQUADRI || mouseOpt==DrawMd.ADDLINE) && triSel != null) {
 				Graphics g = Graphics.FromImage(pictureBox.Image);
 				if (numPt == 2) {
 					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1, triSel.y1, oldx1, oldy1);
@@ -430,6 +430,40 @@ namespace TriangulArt {
 			}
 		}
 
+		// Mémorisation des points pour tracé ligne
+		private void MemoPtLine(Graphics g, int xReel, int yReel) {
+			switch (numPt) {
+				case 1:
+					triSel = new Triangle();
+					triSel.x1 = xReel;
+					triSel.y1 = yReel;
+					triSel.color = selColor;
+					numPt = 2;
+					triSel.x2 = xReel;
+					triSel.y2 = yReel<255?yReel+1:yReel-1;
+					triSel.TriSommets();
+					numPt = 2;
+					SetInfo("Attente positionnement second point ligne");
+					oldx1 = xReel;
+					oldy1 = yReel;
+					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1, triSel.y1, triSel.x2, triSel.y2);
+					break;
+
+				case 2:
+					if (triSel != null) {
+						XorDrawing.DrawXorTriangle(g, (Bitmap)pictureBox.Image, triSel.x1, triSel.y1, triSel.x2, triSel.y2, oldx1, oldy1);
+						triSel.x3 = xReel;
+						triSel.y3 = yReel;
+						numPt = 1;
+						triSel.TriSommets3();
+						SetInfo("Triangle enregistré : (" + triSel.x1 + "," + triSel.y1 + "),(" + triSel.x2 + "," + triSel.y2 + "),(" + triSel.x3 + "," + triSel.y3 + ")");
+						AddTriangle(triSel);
+						Render();
+					}
+					break;
+			}
+		}
+
 		private void pictureBox_MouseUp(object sender, MouseEventArgs e) {
 			int yReel = (e.Y + 2) / 3;
 			int xReel = (e.X + 2) / coefX;
@@ -456,6 +490,10 @@ namespace TriangulArt {
 
 					case DrawMd.ADDCERCLE:
 						MemoPtCercle(g, xReel, yReel);
+						break;
+
+					case DrawMd.ADDLINE:
+						MemoPtLine(g, xReel, yReel);
 						break;
 				}
 			}
@@ -486,10 +524,10 @@ namespace TriangulArt {
 		}
 
 		private void InitImage() {
-			for (int i = 0; i < 4; i++)
+			for (int i = 0; i < 16; i++)
 				PaletteCpc.Palette[i] = projet.SelImage().palette[i];
 
-			PaletteCpc.cpcPlus = chkPlus.Checked = projet.SelImage().cpcPlus;
+			PaletteCpc.cpcPlus = chkPlus.Checked = projet.cpcPlus;
 			txbNomImage.Text = projet.SelImage().nomImage;
 			txbTpsAttente.Text = projet.SelImage().tpsAttente.ToString();
 			UpdatePalette();
@@ -586,7 +624,7 @@ namespace TriangulArt {
 			if (result == DialogResult.OK) {
 				int.TryParse(txbTpsAttente.Text, out projet.SelImage().tpsAttente);
 				projet.SelImage().tpsAttente = Math.Min(850, Math.Max(1, projet.SelImage().tpsAttente));
-				projet.SelImage().GenereSourceAsm(dlg.FileName, projet.mode, chkCodeAsm.Checked, chkModePolice.Checked, chkAnim3D.Checked);
+				projet.SelImage().GenereSourceAsm(dlg.FileName, projet.mode, projet.cpcPlus, chkCodeAsm.Checked, chkModePolice.Checked, chkAnim3D.Checked);
 				SetInfo("Génération assembleur ok.");
 			}
 		}
@@ -626,8 +664,8 @@ namespace TriangulArt {
 				FillTriangles();
 				UpdatePalette();
 				bpEdit.Enabled = bpDelete.Enabled = true;
-				bpUp.Enabled = listTriangles.SelectedIndex > 0;
-				bpDown.Enabled = listTriangles.SelectedIndex < projet.SelImage().lstTriangle.Count - 1;
+				bpFirst.Enabled = bpUp.Enabled = listTriangles.SelectedIndex > 0;
+				bpLast.Enabled = bpDown.Enabled = listTriangles.SelectedIndex < projet.SelImage().lstTriangle.Count - 1;
 			}
 			else
 				DisplayList();
@@ -690,7 +728,7 @@ namespace TriangulArt {
 		}
 
 		private void chkPlus_CheckedChanged(object sender, EventArgs e) {
-			projet.SelImage().cpcPlus = PaletteCpc.cpcPlus = chkPlus.Checked;
+			projet.cpcPlus = PaletteCpc.cpcPlus = chkPlus.Checked;
 			FillTriangles();
 		}
 
@@ -727,13 +765,25 @@ namespace TriangulArt {
 			int memoSel = listTriangles.SelectedIndex;
 			projet.SelImage().UpTriangle();
 			listTriangles.SelectedIndex = memoSel - 1;
-
 		}
 
 		private void bpDown_Click(object sender, EventArgs e) {
 			int memoSel = listTriangles.SelectedIndex;
 			projet.SelImage().DownTriangle();
 			listTriangles.SelectedIndex = memoSel + 1;
+		}
+
+		private void bpFirst_Click(object sender, EventArgs e) {
+			projet.SelImage().SetFirstTriangle();
+			DisplayList();
+			listTriangles.SelectedIndex = 0;
+		}
+
+		private void bpLast_Click(object sender, EventArgs e) {
+			int nbTriangles = projet.SelImage().lstTriangle.Count - 1;
+			projet.SelImage().SetLastTriangle(nbTriangles);
+			DisplayList();
+			listTriangles.SelectedIndex = nbTriangles;
 		}
 
 		private void rbStandard_CheckedChanged(object sender, EventArgs e) {
@@ -829,25 +879,32 @@ namespace TriangulArt {
 			FillTriangles();
 		}
 
+		private void bpAjoutLigne_Click(object sender, EventArgs e) {
+			numPt = 1;
+			mouseOpt = DrawMd.ADDLINE;
+			SetInfo("Attente positionnement premier point ligne");
+			bpAjoutLigne.Enabled=bpAjoutTriangle.Enabled = bpAjoutQuadri.Enabled = bpAjoutRect.Enabled = bpAjoutCercle.Enabled = txbNbRayons.Enabled = false;
+		}
+
 		private void bpAddTriangle_Click(object sender, EventArgs e) {
 			numPt = 1;
 			mouseOpt = DrawMd.ADDTRIANGLE;
 			SetInfo("Attente positionnement premier point triangle");
-			bpAjoutTriangle.Enabled = bpAjoutQuadri.Enabled = bpAjoutRect.Enabled = bpAjoutCercle.Enabled = txbNbRayons.Enabled = false;
+			bpAjoutLigne.Enabled=bpAjoutTriangle.Enabled = bpAjoutQuadri.Enabled = bpAjoutRect.Enabled = bpAjoutCercle.Enabled = txbNbRayons.Enabled = false;
 		}
 
 		private void bpAjoutQuadri_Click(object sender, EventArgs e) {
 			numPt = 1;
 			mouseOpt = DrawMd.ADDQUADRI;
 			SetInfo("Attente positionnement premier point quadrilatère");
-			bpAjoutTriangle.Enabled = bpAjoutQuadri.Enabled = bpAjoutRect.Enabled = bpAjoutCercle.Enabled = txbNbRayons.Enabled = false;
+			bpAjoutLigne.Enabled=bpAjoutTriangle.Enabled = bpAjoutQuadri.Enabled = bpAjoutRect.Enabled = bpAjoutCercle.Enabled = txbNbRayons.Enabled = false;
 		}
 
 		private void bpAjoutRect_Click(object sender, EventArgs e) {
 			numPt = 1;
 			mouseOpt = DrawMd.ADDRECTANGLE;
 			SetInfo("Attente positionnement premier point rectangle");
-			bpAjoutTriangle.Enabled = bpAjoutQuadri.Enabled = bpAjoutRect.Enabled = bpAjoutCercle.Enabled = txbNbRayons.Enabled = false;
+			bpAjoutLigne.Enabled=bpAjoutTriangle.Enabled = bpAjoutQuadri.Enabled = bpAjoutRect.Enabled = bpAjoutCercle.Enabled = txbNbRayons.Enabled = false;
 		}
 
 		private void bpAjoutCercle_Click(object sender, EventArgs e) {
@@ -857,7 +914,7 @@ namespace TriangulArt {
 				numPt = 1;
 				mouseOpt = DrawMd.ADDCERCLE;
 				SetInfo("Attente positionnement centre cercle");
-				bpAjoutTriangle.Enabled = bpAjoutQuadri.Enabled = bpAjoutRect.Enabled = bpAjoutCercle.Enabled = txbNbRayons.Enabled = false;
+				bpAjoutLigne.Enabled = bpAjoutTriangle.Enabled = bpAjoutQuadri.Enabled = bpAjoutRect.Enabled = bpAjoutCercle.Enabled = txbNbRayons.Enabled = false;
 			}
 			else
 				MessageBox.Show("Le nombre de rayons doit être compris entre 4 et " + MAX_RAYONS.ToString());

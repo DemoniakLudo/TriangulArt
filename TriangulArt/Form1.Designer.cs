@@ -109,6 +109,9 @@
 			this.bpAjoutCercle = new System.Windows.Forms.Button();
 			this.txbNbRayons = new System.Windows.Forms.TextBox();
 			this.label15 = new System.Windows.Forms.Label();
+			this.bpAjoutLigne = new System.Windows.Forms.Button();
+			this.bpFirst = new System.Windows.Forms.Button();
+			this.bpLast = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -141,7 +144,7 @@
 			// 
 			// bpAjoutTriangle
 			// 
-			this.bpAjoutTriangle.Location = new System.Drawing.Point(818, 211);
+			this.bpAjoutTriangle.Location = new System.Drawing.Point(818, 231);
 			this.bpAjoutTriangle.Name = "bpAjoutTriangle";
 			this.bpAjoutTriangle.Size = new System.Drawing.Size(113, 23);
 			this.bpAjoutTriangle.TabIndex = 2;
@@ -394,7 +397,7 @@
 			// 
 			// bpUp
 			// 
-			this.bpUp.Location = new System.Drawing.Point(1408, 327);
+			this.bpUp.Location = new System.Drawing.Point(1408, 357);
 			this.bpUp.Name = "bpUp";
 			this.bpUp.Size = new System.Drawing.Size(61, 27);
 			this.bpUp.TabIndex = 31;
@@ -595,7 +598,7 @@
 			// 
 			// bpClean
 			// 
-			this.bpClean.Location = new System.Drawing.Point(1408, 394);
+			this.bpClean.Location = new System.Drawing.Point(1408, 402);
 			this.bpClean.Name = "bpClean";
 			this.bpClean.Size = new System.Drawing.Size(61, 25);
 			this.bpClean.TabIndex = 39;
@@ -605,7 +608,7 @@
 			// 
 			// bpRapproche
 			// 
-			this.bpRapproche.Location = new System.Drawing.Point(1408, 431);
+			this.bpRapproche.Location = new System.Drawing.Point(1408, 439);
 			this.bpRapproche.Name = "bpRapproche";
 			this.bpRapproche.Size = new System.Drawing.Size(62, 23);
 			this.bpRapproche.TabIndex = 40;
@@ -615,7 +618,7 @@
 			// 
 			// bpAjoutQuadri
 			// 
-			this.bpAjoutQuadri.Location = new System.Drawing.Point(818, 239);
+			this.bpAjoutQuadri.Location = new System.Drawing.Point(818, 253);
 			this.bpAjoutQuadri.Name = "bpAjoutQuadri";
 			this.bpAjoutQuadri.Size = new System.Drawing.Size(113, 23);
 			this.bpAjoutQuadri.TabIndex = 41;
@@ -943,7 +946,7 @@
 			// 
 			// bpAjoutRect
 			// 
-			this.bpAjoutRect.Location = new System.Drawing.Point(818, 268);
+			this.bpAjoutRect.Location = new System.Drawing.Point(818, 275);
 			this.bpAjoutRect.Name = "bpAjoutRect";
 			this.bpAjoutRect.Size = new System.Drawing.Size(113, 23);
 			this.bpAjoutRect.TabIndex = 54;
@@ -978,11 +981,44 @@
 			this.label15.TabIndex = 56;
 			this.label15.Text = "rayons";
 			// 
+			// bpAjoutLigne
+			// 
+			this.bpAjoutLigne.Location = new System.Drawing.Point(818, 209);
+			this.bpAjoutLigne.Name = "bpAjoutLigne";
+			this.bpAjoutLigne.Size = new System.Drawing.Size(113, 23);
+			this.bpAjoutLigne.TabIndex = 57;
+			this.bpAjoutLigne.Text = "Ajouter ligne";
+			this.bpAjoutLigne.UseVisualStyleBackColor = true;
+			this.bpAjoutLigne.Click += new System.EventHandler(this.bpAjoutLigne_Click);
+			// 
+			// bpFirst
+			// 
+			this.bpFirst.Location = new System.Drawing.Point(1408, 328);
+			this.bpFirst.Name = "bpFirst";
+			this.bpFirst.Size = new System.Drawing.Size(61, 23);
+			this.bpFirst.TabIndex = 58;
+			this.bpFirst.Text = "First";
+			this.bpFirst.UseVisualStyleBackColor = true;
+			this.bpFirst.Click += new System.EventHandler(this.bpFirst_Click);
+			// 
+			// bpLast
+			// 
+			this.bpLast.Location = new System.Drawing.Point(1408, 529);
+			this.bpLast.Name = "bpLast";
+			this.bpLast.Size = new System.Drawing.Size(61, 23);
+			this.bpLast.TabIndex = 59;
+			this.bpLast.Text = "Last";
+			this.bpLast.UseVisualStyleBackColor = true;
+			this.bpLast.Click += new System.EventHandler(this.bpLast_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			this.AutoSize = true;
 			this.ClientSize = new System.Drawing.Size(1469, 768);
+			this.Controls.Add(this.bpLast);
+			this.Controls.Add(this.bpFirst);
+			this.Controls.Add(this.bpAjoutLigne);
 			this.Controls.Add(this.label15);
 			this.Controls.Add(this.txbNbRayons);
 			this.Controls.Add(this.bpAjoutCercle);
@@ -1146,6 +1182,9 @@
 		private System.Windows.Forms.CheckBox chkZX0;
 		private System.Windows.Forms.Button bpCleanProj;
 		private System.Windows.Forms.CheckBox chkLine;
+		private System.Windows.Forms.Button bpAjoutLigne;
+		private System.Windows.Forms.Button bpFirst;
+		private System.Windows.Forms.Button bpLast;
 	}
 }
 

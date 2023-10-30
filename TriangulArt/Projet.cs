@@ -8,6 +8,7 @@ namespace TriangulArt {
 		public List<Datas> lstData = new List<Datas>();
 		public int selData = 0;
 		public int mode = 1;
+		public bool cpcPlus = false;
 
 		public Datas AddData() {
 			selData = lstData.Count;
@@ -70,7 +71,7 @@ namespace TriangulArt {
 			}
 			else
 				foreach (Datas d in lstData) {
-					GenereAsm.GenereDatas(sw, d, d.nomImage, mode, d.cpcPlus, modePolice, mode3D);
+					GenereAsm.GenereDatas(sw, d, d.nomImage, mode, cpcPlus, modePolice, mode3D);
 				}
 			GenereAsm.CloseAsm(sw);
 		}
