@@ -31,12 +31,12 @@ namespace TriangulArt {
 		}
 
 		public void Normalise() {
-			x1 = Math.Max(Math.Min(x1, 255), 0);
-			y1 = Math.Max(Math.Min(y1, 255), 0);
-			x2 = Math.Max(Math.Min(x2, 255), 0);
-			y2 = Math.Max(Math.Min(y2, 255), 0);
-			x3 = Math.Max(Math.Min(x3, 255), 0);
-			y3 = Math.Max(Math.Min(y3, 255), 0);
+			x1 = Math.Max(Math.Min(x1, 383), 0);
+			y1 = Math.Max(Math.Min(y1, 383), 0);
+			x2 = Math.Max(Math.Min(x2, 383), 0);
+			y2 = Math.Max(Math.Min(y2, 383), 0);
+			x3 = Math.Max(Math.Min(x3, 383), 0);
+			y3 = Math.Max(Math.Min(y3, 383), 0);
 		}
 
 		public void TriSommets() {

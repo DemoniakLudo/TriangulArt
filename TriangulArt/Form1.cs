@@ -30,7 +30,7 @@ namespace TriangulArt {
 				// Générer les contrôles de "couleurs"
 				colors[i] = new Label();
 				colors[i].BorderStyle = BorderStyle.FixedSingle;
-				colors[i].Location = new Point(774, i * 48);
+				colors[i].Location = new Point(1158, 4 + i * 48);
 				colors[i].Size = new Size(40, 32);
 				colors[i].Tag = i;
 				colors[i].MouseClick += ClickColor;
@@ -988,6 +988,36 @@ namespace TriangulArt {
 			}
 		}
 
+		private void bpFusion_Click(object sender, EventArgs e) {
+			OpenFileDialog dlg = new OpenFileDialog();
+			dlg.Filter = "Fichiers xml (*.xml)|*.xml";
+			DialogResult result = dlg.ShowDialog();
+			if (result == DialogResult.OK) {
+				FileStream fileParam = File.Open(dlg.FileName, FileMode.Open);
+				try {
+					Projet projetTmp = (Projet)new XmlSerializer(typeof(Projet)).Deserialize(fileParam);
+					if (projetTmp.lstData.Count == projet.lstData.Count) {
+						for (int i = 0; i <projet.lstData.Count; i++) {
+							Datas d1 =projet.lstData[i];
+							Datas d2 = projetTmp.lstData[i];
+							for( int j = 0; j < d2.lstTriangle.Count; j++)
+								d1.lstTriangle.Add(d2.lstTriangle[j]);
+						}
+						SetInfo("Lecture projet ok");
+						SetNewMode(false);
+						projet.SelectImage(0);
+						SetImageProjet();
+					}
+					else
+						MessageBox.Show("Les projets n'ont pas le même nombre d'images...");
+				}
+				catch {
+					MessageBox.Show("Erreur lecture projet...");
+				}
+				fileParam.Close();
+			}
+		}
+
 		private void bpNewImage_Click(object sender, EventArgs e) {
 			projet.AddData();
 			SetImageProjet();
@@ -1040,13 +1070,13 @@ namespace TriangulArt {
 
 			switch (projet.mode) {
 				case 0:
-					maxWidth = 128;
+					maxWidth = 192;
 					coefX = 6;
 					bmpLock = new DirectBitmap(maxWidth, 256);
 					break;
 
 				case 1:
-					maxWidth = 256;
+					maxWidth = 384;
 					coefX = 3;
 					bmpLock = new DirectBitmap(maxWidth, 256);
 					break;

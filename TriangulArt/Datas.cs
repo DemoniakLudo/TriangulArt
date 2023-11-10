@@ -441,7 +441,7 @@ namespace TriangulArt {
 
 		public bool AnalyseLigne(string line) {
 			string ltrait = line.Trim();
-			if (ltrait.Length > 6) {
+			if (ltrait.Length >= 6) {
 				if (ltrait.Substring(0, 2) == "DB") {
 					ltrait = ltrait.Substring(3).Trim();
 					char[] delimiters = new char[] { ',', '#' };
