@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 
 namespace TriangulArt {
-	public partial class Form1 : Form {
+	public partial class TriangulArt : Form {
 		private PaletteCpc bitmapCpc = new PaletteCpc();
 		private DirectBitmap bmpLock;
 		private enum DrawMd { NONE = 0, MOVETRIANGLE, ADDTRIANGLE, ADDQUADRI, ADDRECTANGLE, ADDCERCLE, ADDLINE };
@@ -24,13 +24,13 @@ namespace TriangulArt {
 		private int coefX;
 		private Label[] colors = new Label[16];
 
-		public Form1() {
+		public TriangulArt() {
 			InitializeComponent();
 			for (int i = 0; i < 16; i++) {
 				// Générer les contrôles de "couleurs"
 				colors[i] = new Label();
 				colors[i].BorderStyle = BorderStyle.FixedSingle;
-				colors[i].Location = new Point(1158, 4 + i * 48);
+				colors[i].Location = new Point(966, 4 + i * 48);
 				colors[i].Size = new Size(40, 32);
 				colors[i].Tag = i;
 				colors[i].MouseClick += ClickColor;
@@ -1000,7 +1000,7 @@ namespace TriangulArt {
 						for (int i = 0; i <projet.lstData.Count; i++) {
 							Datas d1 =projet.lstData[i];
 							Datas d2 = projetTmp.lstData[i];
-							for( int j = 0; j < d2.lstTriangle.Count; j++)
+							for (int j = 0; j < d2.lstTriangle.Count; j++)
 								d1.lstTriangle.Add(d2.lstTriangle[j]);
 						}
 						SetInfo("Lecture projet ok");
@@ -1070,13 +1070,13 @@ namespace TriangulArt {
 
 			switch (projet.mode) {
 				case 0:
-					maxWidth = 192;
+					maxWidth = chkOverscan.Checked ? 192 : 160;
 					coefX = 6;
 					bmpLock = new DirectBitmap(maxWidth, 256);
 					break;
 
 				case 1:
-					maxWidth = 384;
+					maxWidth = chkOverscan.Checked ? 384 : 320;
 					coefX = 3;
 					bmpLock = new DirectBitmap(maxWidth, 256);
 					break;
@@ -1153,6 +1153,22 @@ namespace TriangulArt {
 			projet.SelectImage(0);
 			SetImageProjet();
 			Enabled = true;
+		}
+
+		private void chkOverscan_CheckedChanged(object sender, EventArgs e) {
+			if (chkOverscan.Checked) {
+				pictureBox.Width = 1152;
+				panel1.Left = 1202;
+				for (int i = 0; i < 16; i++)
+					colors[i].Left = 1158;
+			}
+			else {
+				pictureBox.Width = 960;
+				panel1.Left = 1010;
+				for (int i = 0; i < 16; i++)
+					colors[i].Left = 966;
+			}
+			SetNewMode(true);
 		}
 	}
 }
