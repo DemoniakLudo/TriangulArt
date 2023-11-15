@@ -1123,7 +1123,7 @@ namespace TriangulArt {
 		}
 
 		private void chkAnim3D_CheckedChanged(object sender, EventArgs e) {
-			bpProjImport.Visible = chkZX0.Visible = chkAnim3D.Checked;
+			bpMakeAnim3D.Visible = chkZX0.Visible = chkAnim3D.Checked;
 		}
 
 		private void bpProjImport_Click(object sender, EventArgs e) {
@@ -1145,6 +1145,14 @@ namespace TriangulArt {
 
 		private void chkLine_CheckedChanged(object sender, EventArgs e) {
 			bpRedraw_Click(null, null);
+		}
+
+		private void bpMakeAnim3D_Click(object sender, EventArgs e) {
+			Enabled = false;
+			new MakeAnim(projet).ShowDialog();
+			projet.SelectImage(0);
+			SetImageProjet();
+			Enabled = true;
 		}
 	}
 }

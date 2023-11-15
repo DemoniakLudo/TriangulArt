@@ -1,4 +1,6 @@
-﻿public class PaletteCpc {
+﻿using System;
+
+public class PaletteCpc {
 	static public int[] Palette = { 1, 24, 20, 6, 26, 0, 2, 7, 10, 12, 14, 16, 18, 22, 1, 14, 1 };
 	public const int Lum0 = 0x00;
 	public const int Lum1 = 0x66;
@@ -40,6 +42,16 @@
 	static public RvbColor GetColorPal(int palEntry) {
 		int col = Palette[palEntry];
 		return cpcPlus ? new RvbColor((byte)((col & 0x0F) * 17), (byte)(((col & 0xF00) >> 8) * 17), (byte)(((col & 0xF0) >> 4) * 17)) : RgbCPC[col < 27 ? col : 0];
+	}
+
+	static public int GetNumPen(int color) {
+		RvbColor c = new RvbColor(color);
+		for (int i = 0; i < 16; i++) {
+			RvbColor p = RgbCPC[Palette[i]];
+			if (Math.Abs(c.r - p.r) < 15 && Math.Abs(c.b - p.b) < 15 && Math.Abs(c.v - p.v) < 15)
+				return i;
+		}
+		return -1;
 	}
 }
 

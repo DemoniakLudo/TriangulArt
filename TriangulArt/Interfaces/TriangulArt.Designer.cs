@@ -85,12 +85,12 @@
 			this.txbPos = new System.Windows.Forms.TextBox();
 			this.label13 = new System.Windows.Forms.Label();
 			this.grpProjet = new System.Windows.Forms.GroupBox();
+			this.bpMakeAnim3D = new System.Windows.Forms.Button();
 			this.bpFusion = new System.Windows.Forms.Button();
 			this.chkLine = new System.Windows.Forms.CheckBox();
 			this.bpCleanProj = new System.Windows.Forms.Button();
 			this.chkZX0 = new System.Windows.Forms.CheckBox();
 			this.chkAnim3D = new System.Windows.Forms.CheckBox();
-			this.bpProjImport = new System.Windows.Forms.Button();
 			this.rbMode1 = new System.Windows.Forms.RadioButton();
 			this.rbMode0 = new System.Windows.Forms.RadioButton();
 			this.bpNewProjet = new System.Windows.Forms.Button();
@@ -717,12 +717,12 @@
 			// 
 			// grpProjet
 			// 
+			this.grpProjet.Controls.Add(this.bpMakeAnim3D);
 			this.grpProjet.Controls.Add(this.bpFusion);
 			this.grpProjet.Controls.Add(this.chkLine);
 			this.grpProjet.Controls.Add(this.bpCleanProj);
 			this.grpProjet.Controls.Add(this.chkZX0);
 			this.grpProjet.Controls.Add(this.chkAnim3D);
-			this.grpProjet.Controls.Add(this.bpProjImport);
 			this.grpProjet.Controls.Add(this.rbMode1);
 			this.grpProjet.Controls.Add(this.rbMode0);
 			this.grpProjet.Controls.Add(this.bpNewProjet);
@@ -737,6 +737,17 @@
 			this.grpProjet.TabIndex = 50;
 			this.grpProjet.TabStop = false;
 			this.grpProjet.Text = "Projet";
+			// 
+			// bpMakeAnim3D
+			// 
+			this.bpMakeAnim3D.Location = new System.Drawing.Point(502, 68);
+			this.bpMakeAnim3D.Name = "bpMakeAnim3D";
+			this.bpMakeAnim3D.Size = new System.Drawing.Size(138, 23);
+			this.bpMakeAnim3D.TabIndex = 32;
+			this.bpMakeAnim3D.Text = "Editeur d\'animations 3D";
+			this.bpMakeAnim3D.UseVisualStyleBackColor = true;
+			this.bpMakeAnim3D.Visible = false;
+			this.bpMakeAnim3D.Click += new System.EventHandler(this.bpMakeAnim3D_Click);
 			// 
 			// bpFusion
 			// 
@@ -790,17 +801,6 @@
 			this.chkAnim3D.Text = "Mode animation 3D";
 			this.chkAnim3D.UseVisualStyleBackColor = true;
 			this.chkAnim3D.CheckedChanged += new System.EventHandler(this.chkAnim3D_CheckedChanged);
-			// 
-			// bpProjImport
-			// 
-			this.bpProjImport.Location = new System.Drawing.Point(532, 68);
-			this.bpProjImport.Name = "bpProjImport";
-			this.bpProjImport.Size = new System.Drawing.Size(108, 23);
-			this.bpProjImport.TabIndex = 26;
-			this.bpProjImport.Text = "Import assembleur";
-			this.bpProjImport.UseVisualStyleBackColor = true;
-			this.bpProjImport.Visible = false;
-			this.bpProjImport.Click += new System.EventHandler(this.bpProjImport_Click);
 			// 
 			// rbMode1
 			// 
@@ -1189,7 +1189,6 @@
 		private System.Windows.Forms.Label label15;
 		private System.Windows.Forms.RadioButton rbMode1;
 		private System.Windows.Forms.RadioButton rbMode0;
-		private System.Windows.Forms.Button bpProjImport;
 		private System.Windows.Forms.CheckBox chkAnim3D;
 		private System.Windows.Forms.CheckBox chkZX0;
 		private System.Windows.Forms.Button bpCleanProj;
@@ -1198,6 +1197,7 @@
 		private System.Windows.Forms.Button bpFirst;
 		private System.Windows.Forms.Button bpLast;
 		private System.Windows.Forms.Button bpFusion;
+		private System.Windows.Forms.Button bpMakeAnim3D;
 	}
 }
 

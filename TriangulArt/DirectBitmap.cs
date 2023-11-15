@@ -30,6 +30,11 @@ public class DirectBitmap : IDisposable {
 		Bitmap = new Bitmap(width, height, width * 4, PixelFormat.Format32bppRgb, BitsHandle.AddrOfPinnedObject());
 	}
 
+	public void Fill(int c) {
+		for (int i = 0; i < tabBits.Length; i++)
+			tabBits[i] = (uint)c;
+	}
+
 	public void SetPixel(int x, int y, int c) {
 		if (y < Height)
 			tabBits[x + (y * Width)] = (uint)c | 0xFF000000;
