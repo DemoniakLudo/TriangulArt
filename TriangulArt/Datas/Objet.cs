@@ -100,7 +100,7 @@ namespace TriangulArt {
 			// Affiche les triangles
 			for (int i = 0; i < lstDraw.Count; i++) {
 				Face f = lstDraw[i];
-				Triangle t = new Triangle(f.GetA.Px, f.GetA.Py, f.GetB.Px, f.GetB.Py, f.GetC.Px, f.GetC.Py, f.Color.GetColorArgb, bm);
+				Triangle t = new Triangle(f.GetA.Px, f.GetA.Py, f.GetB.Px, f.GetB.Py, f.GetC.Px, f.GetC.Py, f.color.GetColorArgb, bm);
 				t.FillTriangle(bm, false, bmCalc, i);
 				if (lstTri != null)
 					lstTri.Add(t);      // Ajoute dans la liste des triangles si passée en paramètre
@@ -146,10 +146,10 @@ namespace TriangulArt {
 									end = l.Substring(pg + 2).Trim().IndexOfAny(new char[] { ' ', '\t' });
 									int v = Utils.ConvertToInt(l.Substring(pg + 1, end + 1));
 									int b = Utils.ConvertToInt(l.Substring(pb + 1));
-									lstFace[lstFace.Count - 1].Color = new RvbColor((byte)r, (byte)v, (byte)b);
+									lstFace[lstFace.Count - 1].color = new RvbColor((byte)r, (byte)v, (byte)b);
 								}
 								else
-									lstFace[lstFace.Count - 1].Color = new RvbColor(0);
+									lstFace[lstFace.Count - 1].color = new RvbColor(0);
 							}
 						}
 
@@ -217,7 +217,7 @@ namespace TriangulArt {
 				for (int i = 0; i < lstFace.Count; i++) {
 					Face f = lstFace[i];
 					wr.WriteLine("Face {0}:	A:{1}	B:{2}	C:{3}", i, lstVertex.IndexOf(f.GetA), lstVertex.IndexOf(f.GetB), lstVertex.IndexOf(f.GetC));
-					wr.WriteLine("Material:	r {0}	g {1}	b {1}", f.Color.r, f.Color.v, f.Color.b);
+					wr.WriteLine("Material:	r {0}	g {1}	b {1}", f.color.r, f.color.v, f.color.b);
 				}
 				wr.Close();
 			}

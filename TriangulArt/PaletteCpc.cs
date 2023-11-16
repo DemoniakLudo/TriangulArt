@@ -36,7 +36,7 @@ public class PaletteCpc {
 							};
 
 	static public string CpcVGA = "TDU\\X]LEMVFW^@_NGORBSZY[JCK";
-	
+
 	static public bool cpcPlus = false;
 
 	static public RvbColor GetColorPal(int palEntry) {
@@ -47,7 +47,8 @@ public class PaletteCpc {
 	static public int GetNumPen(int color) {
 		RvbColor c = new RvbColor(color);
 		for (int i = 0; i < 16; i++) {
-			RvbColor p = RgbCPC[Palette[i]];
+			int col = Palette[i];
+			RvbColor p = cpcPlus ? new RvbColor((byte)((col & 0x0F) * 17), (byte)(((col & 0xF00) >> 8) * 17), (byte)(((col & 0xF0) >> 4) * 17)): RgbCPC[col];
 			if (Math.Abs(c.r - p.r) < 15 && Math.Abs(c.b - p.b) < 15 && Math.Abs(c.v - p.v) < 15)
 				return i;
 		}

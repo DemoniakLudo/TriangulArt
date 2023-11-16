@@ -8,11 +8,13 @@
 		public Vertex GetC { get { return c; } }
 
 		public int Num { get { return num; } }
-		public RvbColor Color = new RvbColor(0);
+		public RvbColor color = new RvbColor(0);
 
-		public Face(int num, Vertex a, Vertex b, Vertex c) {
+		public Face(int num, Vertex a, Vertex b, Vertex c, RvbColor col = null) {
 			this.num = num;
 			SetNewVertex(a, b, c);
+			if (col != null)
+				color = col;
 		}
 
 		public void SetNewVertex(Vertex a, Vertex b, Vertex c) {

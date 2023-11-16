@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace TriangulArt {
@@ -10,6 +11,7 @@ namespace TriangulArt {
 		public EditObjet() {
 			InitializeComponent();
 			DisplayObj();
+			lblFaceColor.BackColor = Color.FromArgb(PaletteCpc.GetColorPal(0).GetColorArgb);
 		}
 
 		private void DisplayBoutons() {
@@ -74,6 +76,7 @@ namespace TriangulArt {
 			txbFaceA.Text = objet.lstVertex.IndexOf(f.GetA).ToString();
 			txbFaceB.Text = objet.lstVertex.IndexOf(f.GetB).ToString();
 			txbFaceC.Text = objet.lstVertex.IndexOf(f.GetC).ToString();
+			lblFaceColor.BackColor = Color.FromArgb(f.color.r, f.color.v, f.color.b);
 			DisplayObj();
 		}
 
@@ -190,10 +193,19 @@ namespace TriangulArt {
 			if (a >= 0 && b >= 0 && c >= 0 && a < objet.lstVertex.Count && b < objet.lstVertex.Count && c < objet.lstVertex.Count) {
 				Face f = objet.lstFace[numFace];
 				f.SetNewVertex(objet.lstVertex[a], objet.lstVertex[b], objet.lstVertex[c]);
+				f.color = new RvbColor(lblFaceColor.BackColor.ToArgb());
 				RedrawAll();
 			}
 			else
 				MessageBox.Show("Certains points n'existent pas.");
+		}
+
+		private void lblFaceColor_Click(object sender, EventArgs e) {
+			EditColor ed = new EditColor(0, 0, lblFaceColor.BackColor.ToArgb(), PaletteCpc.cpcPlus);
+			ed.ShowDialog(this);
+			if (ed.isValide)
+				lblFaceColor.BackColor = ed.SysColor;
+
 		}
 
 		private void bpSupFace_Click(object sender, EventArgs e) {

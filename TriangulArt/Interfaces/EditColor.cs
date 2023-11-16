@@ -10,6 +10,7 @@ namespace TriangulArt {
 		private Label[] tabLabel = new Label[3];
 		private int valColor;
 		public int ValColor { get { return valColor; } }
+		public Color SysColor { get { return selColor.BackColor; } }
 		public bool isValide;
 
 		public EditColor(int numColor, int val, int rgbColor, bool cpcPlus) {
@@ -73,14 +74,11 @@ namespace TriangulArt {
 		}
 
 		private void NewColor() {
-			try {
-				int r = int.Parse(tabVal[0].Text);
-				int v = int.Parse(tabVal[1].Text);
-				int b = int.Parse(tabVal[2].Text);
-				valColor = (v << 8) + (b << 4) + r;
-				selColor.BackColor = Color.FromArgb(r * 17, v * 17, b * 17);
-			}
-			catch { }
+			int r = tabVal[0] != null ? Utils.ConvertToInt(tabVal[0].Text) : 0;
+			int v = tabVal[1] != null ? Utils.ConvertToInt(tabVal[1].Text) : 0;
+			int b = tabVal[2] != null ? Utils.ConvertToInt(tabVal[2].Text) : 0;
+			valColor = (v << 8) + (b << 4) + r;
+			selColor.BackColor = Color.FromArgb(r * 17, v * 17, b * 17);
 		}
 
 		private void track_Scroll(object sender, System.EventArgs e) {

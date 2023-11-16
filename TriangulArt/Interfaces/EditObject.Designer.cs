@@ -61,6 +61,7 @@
 			this.bpSupFace = new System.Windows.Forms.Button();
 			this.bpEditFace = new System.Windows.Forms.Button();
 			this.bpRedraw = new System.Windows.Forms.Button();
+			this.lblFaceColor = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxObj)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.trackX)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.trackY)).BeginInit();
@@ -270,7 +271,7 @@
 			// 
 			// txbFaceB
 			// 
-			this.txbFaceB.Location = new System.Drawing.Point(779, 716);
+			this.txbFaceB.Location = new System.Drawing.Point(739, 716);
 			this.txbFaceB.Name = "txbFaceB";
 			this.txbFaceB.Size = new System.Drawing.Size(51, 20);
 			this.txbFaceB.TabIndex = 10;
@@ -278,7 +279,7 @@
 			// 
 			// txbFaceC
 			// 
-			this.txbFaceC.Location = new System.Drawing.Point(890, 716);
+			this.txbFaceC.Location = new System.Drawing.Point(818, 716);
 			this.txbFaceC.Name = "txbFaceC";
 			this.txbFaceC.Size = new System.Drawing.Size(51, 20);
 			this.txbFaceC.TabIndex = 10;
@@ -296,7 +297,7 @@
 			// label6
 			// 
 			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(759, 719);
+			this.label6.Location = new System.Drawing.Point(719, 719);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(14, 13);
 			this.label6.TabIndex = 11;
@@ -305,7 +306,7 @@
 			// label7
 			// 
 			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(870, 719);
+			this.label7.Location = new System.Drawing.Point(798, 719);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(14, 13);
 			this.label7.TabIndex = 11;
@@ -436,11 +437,21 @@
 			this.bpRedraw.UseVisualStyleBackColor = true;
 			this.bpRedraw.Click += new System.EventHandler(this.bpRedraw_Click);
 			// 
+			// lblFaceColor
+			// 
+			this.lblFaceColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.lblFaceColor.Location = new System.Drawing.Point(893, 716);
+			this.lblFaceColor.Name = "lblFaceColor";
+			this.lblFaceColor.Size = new System.Drawing.Size(48, 32);
+			this.lblFaceColor.TabIndex = 14;
+			this.lblFaceColor.Click += new System.EventHandler(this.lblFaceColor_Click);
+			// 
 			// EditObjet
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(956, 759);
+			this.Controls.Add(this.lblFaceColor);
 			this.Controls.Add(this.bpRedraw);
 			this.Controls.Add(this.bpEditFace);
 			this.Controls.Add(this.bpEditVertex);
@@ -534,6 +545,7 @@
 		private System.Windows.Forms.Button bpSupFace;
 		private System.Windows.Forms.Button bpEditFace;
 		private System.Windows.Forms.Button bpRedraw;
+		private System.Windows.Forms.Label lblFaceColor;
 	}
 }
 
