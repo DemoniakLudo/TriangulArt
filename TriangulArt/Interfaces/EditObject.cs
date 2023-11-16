@@ -12,7 +12,13 @@ namespace TriangulArt {
 			DisplayObj();
 		}
 
+		private void DisplayBoutons() {
+			bpEditVertex.Enabled = bpSupVertex.Enabled = objet.lstVertex.Count > 0;
+			bpEditFace.Enabled = bpSupFace.Enabled = bpSaveObject.Enabled = objet.lstFace.Count > 0;
+		}
+
 		private void DisplayVertex(int selVertex) {
+			DisplayBoutons();
 			listVertex.Items.Clear();
 			int i = 0;
 			foreach (Vertex v in objet.lstVertex) {
@@ -26,6 +32,7 @@ namespace TriangulArt {
 		}
 
 		private void DisplayFace(int selFace) {
+			DisplayBoutons();
 			listFace.Items.Clear();
 			for (int i = 0; i < objet.lstFace.Count; i++) {
 				Face f = objet.lstFace[i];
@@ -41,6 +48,7 @@ namespace TriangulArt {
 		}
 
 		private void DisplayObj() {
+			DisplayBoutons();
 			bmpLock.Fill(0x808080);
 			int zoom = Utils.ConvertToInt(txbZoom.Text);
 			int angx = Utils.ConvertToInt(txbValX.Text);
@@ -58,7 +66,6 @@ namespace TriangulArt {
 			txbVertexY.Text = v.Y.ToString();
 			txbVertexZ.Text = v.Z.ToString();
 			DisplayObj();
-			bpEditVertex.Enabled = bpSupVertex.Enabled = true;
 		}
 
 		private void listFace_SelectedIndexChanged(object sender, EventArgs e) {
@@ -68,7 +75,6 @@ namespace TriangulArt {
 			txbFaceB.Text = objet.lstVertex.IndexOf(f.GetB).ToString();
 			txbFaceC.Text = objet.lstVertex.IndexOf(f.GetC).ToString();
 			DisplayObj();
-			bpEditFace.Enabled = bpSupFace.Enabled = true;
 		}
 
 		#region gestion trackbars
@@ -99,7 +105,7 @@ namespace TriangulArt {
 
 		private void bpReadObject_Click(object sender, EventArgs e) {
 			OpenFileDialog of = new OpenFileDialog { Filter = "Fichiers objets ascii (*.asc)|*.asc|Tous les fichiers (*.*)|*.*\"'" };
-			if (of.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
+			if (of.ShowDialog() == DialogResult.OK) {
 				objet.ReadObject(of.FileName);
 			}
 			DisplayVertex(-1);
@@ -111,6 +117,16 @@ namespace TriangulArt {
 		}
 
 		private void bpSaveObject_Click(object sender, EventArgs e) {
+			SaveFileDialog sd = new SaveFileDialog { Filter = "Fichiers objets ascii (*.asc)|*.asc|Tous les fichiers (*.*)|*.*\"'" };
+			if (sd.ShowDialog() == DialogResult.OK) {
+				objet.SaveObject(sd.FileName);
+			}
+		}
+
+		private void RedrawAll() {
+			DisplayVertex(listVertex.SelectedIndex);
+			DisplayFace(listFace.SelectedIndex);
+			DisplayObj();
 		}
 
 		private void bpRedraw_Click(object sender, EventArgs e) {
@@ -121,11 +137,20 @@ namespace TriangulArt {
 		}
 
 		private void bpAddVertex_Click(object sender, EventArgs e) {
-			double x = Convert.ToDouble(txbVertexX.Text);
-			double y = Convert.ToDouble(txbVertexY.Text);
-			double z = Convert.ToDouble(txbVertexZ.Text);
+			double x = Utils.ConvertToDouble(txbVertexX.Text);
+			double y = Utils.ConvertToDouble(txbVertexY.Text);
+			double z = Utils.ConvertToDouble(txbVertexZ.Text);
 			objet.lstVertex.Add(new Vertex(x, y, z));
 			DisplayVertex(objet.lstVertex.Count - 1);
+		}
+
+		private void bpEditVertex_Click(object sender, EventArgs e) {
+			Vertex v = objet.lstVertex[numVertex];
+			double x = Utils.ConvertToDouble(txbVertexX.Text);
+			double y = Utils.ConvertToDouble(txbVertexY.Text);
+			double z = Utils.ConvertToDouble(txbVertexZ.Text);
+			v.SetNewCoord(x, y, z);
+			RedrawAll();
 		}
 
 		private void bpSupVertex_Click(object sender, EventArgs e) {
@@ -145,16 +170,35 @@ namespace TriangulArt {
 				MessageBox.Show("Erreur: ce point est utilisé dans au moins une face.");
 		}
 
-		private void bpEditVertex_Click(object sender, EventArgs e) {
-		}
-
 		private void bpAddFace_Click(object sender, EventArgs e) {
-		}
-
-		private void bpSupFace_Click(object sender, EventArgs e) {
+			int a = Utils.ConvertToInt(txbFaceA.Text);
+			int b = Utils.ConvertToInt(txbFaceB.Text);
+			int c = Utils.ConvertToInt(txbFaceC.Text);
+			if (a >= 0 && b >= 0 && c >= 0 && a < objet.lstVertex.Count && b < objet.lstVertex.Count && c < objet.lstVertex.Count) {
+				Face f = new Face(numFace++, objet.lstVertex[a], objet.lstVertex[b], objet.lstVertex[c]);
+				objet.lstFace.Add(f);
+				DisplayFace(objet.lstFace.Count - 1);
+			}
+			else
+				MessageBox.Show("Certains points n'existent pas.");
 		}
 
 		private void bpEditFace_Click(object sender, EventArgs e) {
+			int a = Utils.ConvertToInt(txbFaceA.Text);
+			int b = Utils.ConvertToInt(txbFaceB.Text);
+			int c = Utils.ConvertToInt(txbFaceC.Text);
+			if (a >= 0 && b >= 0 && c >= 0 && a < objet.lstVertex.Count && b < objet.lstVertex.Count && c < objet.lstVertex.Count) {
+				Face f = objet.lstFace[numFace];
+				f.SetNewVertex(objet.lstVertex[a], objet.lstVertex[b], objet.lstVertex[c]);
+				RedrawAll();
+			}
+			else
+				MessageBox.Show("Certains points n'existent pas.");
+		}
+
+		private void bpSupFace_Click(object sender, EventArgs e) {
+			objet.lstFace.RemoveAt(numFace);
+			bpRedraw_Click(sender, e);
 		}
 		#endregion
 	}

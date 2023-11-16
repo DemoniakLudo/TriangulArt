@@ -140,10 +140,10 @@ namespace TriangulArt {
 							int pg = l.LastIndexOf('G');
 							int pb = l.LastIndexOf('B');
 							if (pr > 0 && pg > 0 && pb > 0) {
-								int end = l.Substring(pr + 1).Trim().IndexOf(' ');
+								int end = l.Substring(pr + 1).Trim().IndexOfAny(new char[] { ' ', '\t' });
 								if (end > -1) {
 									int r = Utils.ConvertToInt(l.Substring(pr + 1, end + 1));
-									end = l.Substring(pg + 2).Trim().IndexOf(' ');
+									end = l.Substring(pg + 2).Trim().IndexOfAny(new char[] { ' ', '\t' });
 									int v = Utils.ConvertToInt(l.Substring(pg + 1, end + 1));
 									int b = Utils.ConvertToInt(l.Substring(pb + 1));
 									lstFace[lstFace.Count - 1].Color = new RvbColor((byte)r, (byte)v, (byte)b);
@@ -160,13 +160,13 @@ namespace TriangulArt {
 							int pz = l.IndexOf("Z:");
 							if (px > 0 && py > 0 && pz > 0) {
 								string newl = l.Substring(px + 2).Trim();
-								int end = newl.IndexOf(' ');
+								int end = newl.IndexOfAny(new char[] { ' ', '\t' });
 								double x = Convert.ToDouble(newl.Substring(0, end).Replace('.', ','));
 								newl = l.Substring(py + 2).Trim();
-								end = newl.IndexOf(' ');
+								end = newl.IndexOfAny(new char[] { ' ', '\t' });
 								double y = Convert.ToDouble(newl.Substring(0, end).Replace('.', ','));
 								newl = l.Substring(pz + 2).Trim();
-								end = newl.IndexOf(' ');
+								end = newl.IndexOfAny(new char[] { ' ', '\t' });
 								double z = Convert.ToDouble(newl.Substring(0, end > -1 ? end + 1 : newl.Length).Replace('.', ','));
 								lstVertex.Add(new Vertex(x, y, z));
 							}
@@ -178,13 +178,13 @@ namespace TriangulArt {
 							int pc = l.IndexOf("C:");
 							if (pa > 0 && pb > 0 && pc > 0) {
 								string newl = l.Substring(pa + 2).Trim();
-								int end = newl.IndexOf(' ');
+								int end = newl.IndexOfAny(new char[] { ' ', '\t' });
 								int a = Utils.ConvertToInt(newl.Substring(0, end + 1));
 								newl = l.Substring(pb + 2).Trim();
-								end = newl.IndexOf(' ');
+								end = newl.IndexOfAny(new char[] { ' ', '\t' });
 								int b = Utils.ConvertToInt(newl.Substring(0, end + 1));
 								newl = l.Substring(pc + 2).Trim();
-								end = newl.IndexOf(' ');
+								end = newl.IndexOfAny(new char[] { ' ', '\t' });
 								int c = Utils.ConvertToInt(newl.Substring(0, end > -1 ? end + 1 : newl.Length));
 								if (a < lstVertex.Count && b < lstVertex.Count && c < lstVertex.Count) {
 									Face f = new Face(numFace++, lstVertex[a], lstVertex[b], lstVertex[c]);
@@ -199,6 +199,30 @@ namespace TriangulArt {
 			}
 			catch (Exception ex) {
 				MessageBox.Show(ex.Message, "Erreur lecture objet.");
+			}
+		}
+
+		public void SaveObject(string fileName) {
+			try {
+				StreamWriter wr = new StreamWriter(fileName);
+				wr.WriteLine("Named object : \"Objet généré avec TriangulArt\"");
+				wr.WriteLine("Tri - mesh, Vertices: {0}	Faces: {1}", lstVertex.Count, lstFace.Count);
+				wr.WriteLine("");
+				wr.WriteLine("Vertex list:");
+				for (int i = 0; i < lstVertex.Count; i++)
+					wr.WriteLine("Vertex {0}:	X:{1}	Y:{2}	Z:{3}", i, lstVertex[i].X, lstVertex[i].Y, lstVertex[i].Z);
+
+				wr.WriteLine("");
+				wr.WriteLine("Face list:");
+				for (int i = 0; i < lstFace.Count; i++) {
+					Face f = lstFace[i];
+					wr.WriteLine("Face {0}:	A:{1}	B:{2}	C:{3}", i, lstVertex.IndexOf(f.GetA), lstVertex.IndexOf(f.GetB), lstVertex.IndexOf(f.GetC));
+					wr.WriteLine("Material:	r {0}	g {1}	b {1}", f.Color.r, f.Color.v, f.Color.b);
+				}
+				wr.Close();
+			}
+			catch (Exception ex) {
+				MessageBox.Show(ex.Message, "Erreur sauvegarde objet.");
 			}
 		}
 	}

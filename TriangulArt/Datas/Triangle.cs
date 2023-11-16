@@ -31,38 +31,12 @@ namespace TriangulArt {
 			y3 = Math.Max(Math.Min(y3, 383), 0);
 		}
 
-		public void DoubleCoord() {
-			x1 <<= 1;
-			y1 <<= 1;
-			x2 <<= 1;
-			y2 <<= 1;
-			x3 <<= 1;
-			y3 <<= 1;
-		}
-
-		public void Move(int inc) {
-			x1 += inc;
-			y1 += inc;
-			x2 += inc;
-			y2 += inc;
-			x3 += inc;
-			y3 += inc;
-		}
-
 		public bool EquPoly(Triangle t) {
 			return color == t.color && ((x2 == t.x1 && y2 == t.x1 && x3 == t.x2 && y3 == t.y2)
 									|| (x1 == t.x1 && y1 == t.y1 && x3 == t.x2 && y3 == t.y2)
 									|| (x1 == t.x1 && y1 == t.y1 && x3 == t.x3 && y3 == t.y3)
 									|| (x1 == t.x2 && y1 == t.y2 && x2 == t.x3 && y2 == t.y3)
 									);
-		}
-
-		public int Xdif(Triangle t) {
-			return x1 != t.x1 ? t.x1 : x2 != t.x2 ? t.x2 : t.x3;
-		}
-
-		public int Ydif(Triangle t) {
-			return y1 != t.y1 ? t.y1 : y2 != t.y2 ? t.y2 : t.y3;
 		}
 
 		public int GetPctFill() {

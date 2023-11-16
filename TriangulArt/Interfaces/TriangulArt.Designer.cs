@@ -1107,7 +1107,7 @@
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			this.AutoSize = true;
-			this.ClientSize = new System.Drawing.Size(1860, 768);
+			this.ClientSize = new System.Drawing.Size(1668, 768);
 			this.Controls.Add(this.panel1);
 			this.Controls.Add(this.pictureBox);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;

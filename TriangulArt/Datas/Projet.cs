@@ -75,29 +75,5 @@ namespace TriangulArt {
 				}
 			GenereAsm.CloseAsm(sw);
 		}
-
-		public void Import(string fileName) {
-			Clear();
-			int frame = 1;
-			SelImage().nomImage = "Frame_" + frame.ToString();
-
-			StreamReader rw = new StreamReader(fileName);
-			string l;
-			do {
-				l = rw.ReadLine();
-				if (l != null) {
-					bool ret = SelImage().AnalyseLigne(l);
-					if (ret) {
-						AddData();
-						SelImage().nomImage = "Frame_" + (++frame).ToString();
-					}
-				}
-			}
-			while (l != null);
-			if (SelImage().lstTriangle.Count == 0)
-				RemoveImage();
-
-			rw.Close();
-		}
 	}
 }

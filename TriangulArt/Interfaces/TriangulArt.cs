@@ -1126,23 +1126,6 @@ namespace TriangulArt {
 			bpMakeAnim3D.Visible = chkZX0.Visible = chkAnim3D.Checked;
 		}
 
-		private void bpProjImport_Click(object sender, EventArgs e) {
-			OpenFileDialog dlg = new OpenFileDialog();
-			dlg.Filter = "Fichiers assembleur (*.asm)|*.asm";
-			DialogResult result = dlg.ShowDialog();
-			if (result == DialogResult.OK) {
-				try {
-					projet.Import(dlg.FileName);
-					SetInfo("Import triangles ok");
-					projet.SelectImage(0);
-					SetImageProjet();
-				}
-				catch {
-					MessageBox.Show("Erreur lors de l'importation des données...");
-				}
-			}
-		}
-
 		private void chkLine_CheckedChanged(object sender, EventArgs e) {
 			bpRedraw_Click(null, null);
 		}
@@ -1159,12 +1142,14 @@ namespace TriangulArt {
 			if (chkOverscan.Checked) {
 				pictureBox.Width = 1152;
 				panel1.Left = 1202;
+				this.Width = 1876;
 				for (int i = 0; i < 16; i++)
 					colors[i].Left = 1158;
 			}
 			else {
 				pictureBox.Width = 960;
 				panel1.Left = 1010;
+				this.Width = 1684;
 				for (int i = 0; i < 16; i++)
 					colors[i].Left = 966;
 			}
