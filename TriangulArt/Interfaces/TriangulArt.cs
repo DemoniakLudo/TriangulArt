@@ -1149,7 +1149,7 @@ namespace TriangulArt {
 				for (int i = 0; i < 16; i++)
 					colors[i].Left = 966;
 			}
-			SetNewMode(true);
+			SetNewMode(false);
 		}
 	}
 }
