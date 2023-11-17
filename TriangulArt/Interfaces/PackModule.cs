@@ -16,7 +16,7 @@ namespace TriangulArt {
 			InitializeComponent();
 		}
 
-		private Block allocate(int bits, int index, int offset, int length, Block chain) {
+		private Block Allocate(int bits, int index, int offset, int length, Block chain) {
 			Block ptr;
 			if (ghost_root != null) {
 				ptr = ghost_root;
@@ -50,7 +50,7 @@ namespace TriangulArt {
 			return ptr;
 		}
 
-		private void assign(ref Block ptr, Block chain) {
+		private void Assign(ref Block ptr, Block chain) {
 			chain.references++;
 			if (ptr != null) {
 				if (--ptr.references == 0) {
@@ -61,7 +61,7 @@ namespace TriangulArt {
 			ptr = chain;
 		}
 
-		private int elias_gamma_bits(int value) {
+		private int Elias_gamma_bits(int value) {
 			int bits = 1;
 			while (value > 1) {
 				bits += 2;
@@ -70,7 +70,7 @@ namespace TriangulArt {
 			return bits;
 		}
 
-		private void write_bit(int value, byte[] output_data) {
+		private void Write_bit(int value, byte[] output_data) {
 			if (backtrack) {
 				if (value != 0)
 					output_data[output_index - 1] |= 1;
@@ -90,28 +90,16 @@ namespace TriangulArt {
 			}
 		}
 
-		private void write_interlaced_elias_gammaZX0(int value, byte[] output_data) {
+		private void Write_interlaced_elias_gammaZX0(int value, byte[] output_data) {
 			int i;
 			for (i = 2; i <= value; i <<= 1)
 				;
 			i >>= 1;
 			while ((i >>= 1) > 0) {
-				write_bit(0, output_data);
-				write_bit(value & i, output_data);
+				Write_bit(0, output_data);
+				Write_bit(value & i, output_data);
 			}
-			write_bit(1, output_data);
-		}
-
-		private void write_interlaced_elias_gammaZX1(int value, byte[] output_data) {
-			int i;
-			for (i = 2; i <= value; i <<= 1)
-				;
-			i >>= 1;
-			while ((i >>= 1) > 0) {
-				write_bit(1, output_data);
-				write_bit(value & i, output_data);
-			}
-			write_bit(0, output_data);
+			Write_bit(1, output_data);
 		}
 
 		public int PackZX0(byte[] input_data, int input_size, byte[] output_data, int output_size) {
@@ -126,7 +114,7 @@ namespace TriangulArt {
 			int[] match_length = new int[max_offset + 1];
 			int[] best_length = new int[input_size + 2];
 			best_length[2] = 2;
-			assign(ref last_match[1], allocate(-1, -1, 1, 0, null));
+			Assign(ref last_match[1], Allocate(-1, -1, 1, 0, null));
 			for (int index = 0; index < input_size; index++) {
 				int best_length_size = 2;
 				max_offset = index > MAX_OFFSET_ZX0 ? MAX_OFFSET_ZX0 : index < 1 ? 1 : index;
@@ -134,17 +122,17 @@ namespace TriangulArt {
 					if (index != 0 && index >= offset && input_data[index] == input_data[index - offset]) {
 						if (last_literal[offset] != null) {
 							length = index - last_literal[offset].index;
-							bits = last_literal[offset].bits + 1 + elias_gamma_bits(length);
-							assign(ref last_match[offset], allocate(bits, index, offset, length, last_literal[offset]));
+							bits = last_literal[offset].bits + 1 + Elias_gamma_bits(length);
+							Assign(ref last_match[offset], Allocate(bits, index, offset, length, last_literal[offset]));
 							if (tabOptimal[index] == null || tabOptimal[index].bits > bits)
-								assign(ref tabOptimal[index], last_match[offset]);
+								Assign(ref tabOptimal[index], last_match[offset]);
 						}
 						if (++match_length[offset] > 1) {
 							if (best_length_size < match_length[offset]) {
-								bits = tabOptimal[index - best_length[best_length_size]].bits + elias_gamma_bits(best_length[best_length_size] - 1);
+								bits = tabOptimal[index - best_length[best_length_size]].bits + Elias_gamma_bits(best_length[best_length_size] - 1);
 								do {
 									best_length_size++;
-									int bits2 = tabOptimal[index - best_length_size].bits + elias_gamma_bits(best_length_size - 1);
+									int bits2 = tabOptimal[index - best_length_size].bits + Elias_gamma_bits(best_length_size - 1);
 									if (bits2 <= bits) {
 										best_length[best_length_size] = best_length_size;
 										bits = bits2;
@@ -155,11 +143,11 @@ namespace TriangulArt {
 								while (best_length_size < match_length[offset]);
 							}
 							length = best_length[match_length[offset]];
-							bits = tabOptimal[index - length].bits + 8 + elias_gamma_bits((offset - 1) / 128 + 1) + elias_gamma_bits(length - 1);
+							bits = tabOptimal[index - length].bits + 8 + Elias_gamma_bits((offset - 1) / 128 + 1) + Elias_gamma_bits(length - 1);
 							if (last_match[offset] == null || last_match[offset].index != index || last_match[offset].bits > bits) {
-								assign(ref last_match[offset], allocate(bits, index, offset, length, tabOptimal[index - length]));
+								Assign(ref last_match[offset], Allocate(bits, index, offset, length, tabOptimal[index - length]));
 								if (tabOptimal[index] == null || tabOptimal[index].bits > bits)
-									assign(ref tabOptimal[index], last_match[offset]);
+									Assign(ref tabOptimal[index], last_match[offset]);
 							}
 						}
 					}
@@ -167,10 +155,10 @@ namespace TriangulArt {
 						match_length[offset] = 0;
 						if (last_match[offset] != null) {
 							length = index - last_match[offset].index;
-							bits = last_match[offset].bits + 1 + elias_gamma_bits(length) + length * 8;
-							assign(ref last_literal[offset], allocate(bits, index, 0, length, last_match[offset]));
+							bits = last_match[offset].bits + 1 + Elias_gamma_bits(length) + length * 8;
+							Assign(ref last_literal[offset], Allocate(bits, index, 0, length, last_match[offset]));
 							if (tabOptimal[index] == null || tabOptimal[index].bits > bits)
-								assign(ref tabOptimal[index], last_literal[offset]);
+								Assign(ref tabOptimal[index], last_literal[offset]);
 						}
 					}
 				}
@@ -197,30 +185,30 @@ namespace TriangulArt {
 					if (first)
 						first = false;
 					else
-						write_bit(0, output_data);
+						Write_bit(0, output_data);
 
-					write_interlaced_elias_gammaZX0(optimal.length, output_data);
+					Write_interlaced_elias_gammaZX0(optimal.length, output_data);
 					for (int i = 0; i < optimal.length; i++)
 						output_data[output_index++] = input_data[input_index++];
 				}
 				else
 					if (optimal.offset == last_offset) {
-						write_bit(0, output_data);
-						write_interlaced_elias_gammaZX0(optimal.length, output_data);
-						input_index += optimal.length;
-					}
-					else {
-						write_bit(1, output_data);
-						write_interlaced_elias_gammaZX0((optimal.offset - 1) / 128 + 1, output_data);
-						output_data[output_index++] = (byte)((255 - ((optimal.offset - 1) % 128)) << 1);
-						backtrack = true;
-						write_interlaced_elias_gammaZX0(optimal.length - 1, output_data);
-						input_index += optimal.length;
-						last_offset = optimal.offset;
-					}
+					Write_bit(0, output_data);
+					Write_interlaced_elias_gammaZX0(optimal.length, output_data);
+					input_index += optimal.length;
+				}
+				else {
+					Write_bit(1, output_data);
+					Write_interlaced_elias_gammaZX0((optimal.offset - 1) / 128 + 1, output_data);
+					output_data[output_index++] = (byte)((255 - ((optimal.offset - 1) % 128)) << 1);
+					backtrack = true;
+					Write_interlaced_elias_gammaZX0(optimal.length - 1, output_data);
+					input_index += optimal.length;
+					last_offset = optimal.offset;
+				}
 			}
-			write_bit(1, output_data);
-			write_interlaced_elias_gammaZX0(256, output_data);
+			Write_bit(1, output_data);
+			Write_interlaced_elias_gammaZX0(256, output_data);
 			Hide();
 			return output_size;
 		}

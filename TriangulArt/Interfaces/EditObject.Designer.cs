@@ -86,7 +86,7 @@
 			this.bpNewObject.TabIndex = 1;
 			this.bpNewObject.Text = "Nouvel objet";
 			this.bpNewObject.UseVisualStyleBackColor = true;
-			this.bpNewObject.Click += new System.EventHandler(this.bpNewObject_Click);
+			this.bpNewObject.Click += new System.EventHandler(this.BpNewObject_Click);
 			// 
 			// bpReadObject
 			// 
@@ -96,7 +96,7 @@
 			this.bpReadObject.TabIndex = 1;
 			this.bpReadObject.Text = "Lire objet";
 			this.bpReadObject.UseVisualStyleBackColor = true;
-			this.bpReadObject.Click += new System.EventHandler(this.bpReadObject_Click);
+			this.bpReadObject.Click += new System.EventHandler(this.BpReadObject_Click);
 			// 
 			// bpFusionObject
 			// 
@@ -107,7 +107,7 @@
 			this.bpFusionObject.TabIndex = 1;
 			this.bpFusionObject.Text = "Fusionner objet";
 			this.bpFusionObject.UseVisualStyleBackColor = true;
-			this.bpFusionObject.Click += new System.EventHandler(this.bpFusionObject_Click);
+			this.bpFusionObject.Click += new System.EventHandler(this.BpFusionObject_Click);
 			// 
 			// bpSaveObject
 			// 
@@ -118,7 +118,7 @@
 			this.bpSaveObject.TabIndex = 1;
 			this.bpSaveObject.Text = "Sauver objet";
 			this.bpSaveObject.UseVisualStyleBackColor = true;
-			this.bpSaveObject.Click += new System.EventHandler(this.bpSaveObject_Click);
+			this.bpSaveObject.Click += new System.EventHandler(this.BpSaveObject_Click);
 			// 
 			// trackX
 			// 
@@ -131,7 +131,7 @@
 			this.trackX.Size = new System.Drawing.Size(45, 246);
 			this.trackX.TabIndex = 2;
 			this.trackX.TickStyle = System.Windows.Forms.TickStyle.None;
-			this.trackX.Scroll += new System.EventHandler(this.trackX_Scroll);
+			this.trackX.Scroll += new System.EventHandler(this.TrackX_Scroll);
 			// 
 			// trackY
 			// 
@@ -144,7 +144,7 @@
 			this.trackY.Size = new System.Drawing.Size(45, 246);
 			this.trackY.TabIndex = 2;
 			this.trackY.TickStyle = System.Windows.Forms.TickStyle.None;
-			this.trackY.Scroll += new System.EventHandler(this.trackY_Scroll);
+			this.trackY.Scroll += new System.EventHandler(this.TrackY_Scroll);
 			// 
 			// trackZ
 			// 
@@ -157,7 +157,7 @@
 			this.trackZ.Size = new System.Drawing.Size(45, 246);
 			this.trackZ.TabIndex = 2;
 			this.trackZ.TickStyle = System.Windows.Forms.TickStyle.None;
-			this.trackZ.Scroll += new System.EventHandler(this.trackZ_Scroll);
+			this.trackZ.Scroll += new System.EventHandler(this.TrackZ_Scroll);
 			// 
 			// txbValX
 			// 
@@ -232,7 +232,7 @@
 			this.trackZoom.TabIndex = 8;
 			this.trackZoom.TickStyle = System.Windows.Forms.TickStyle.None;
 			this.trackZoom.Value = 1;
-			this.trackZoom.Scroll += new System.EventHandler(this.trackZoom_Scroll);
+			this.trackZoom.Scroll += new System.EventHandler(this.TrackZoom_Scroll);
 			// 
 			// txbZoom
 			// 
@@ -250,7 +250,7 @@
 			this.listVertex.Name = "listVertex";
 			this.listVertex.Size = new System.Drawing.Size(308, 264);
 			this.listVertex.TabIndex = 9;
-			this.listVertex.SelectedIndexChanged += new System.EventHandler(this.listVertex_SelectedIndexChanged);
+			this.listVertex.SelectedIndexChanged += new System.EventHandler(this.ListVertex_SelectedIndexChanged);
 			// 
 			// listFace
 			// 
@@ -259,7 +259,7 @@
 			this.listFace.Name = "listFace";
 			this.listFace.Size = new System.Drawing.Size(299, 264);
 			this.listFace.TabIndex = 9;
-			this.listFace.SelectedIndexChanged += new System.EventHandler(this.listFace_SelectedIndexChanged);
+			this.listFace.SelectedIndexChanged += new System.EventHandler(this.ListFace_SelectedIndexChanged);
 			// 
 			// txbFaceA
 			// 
@@ -371,7 +371,7 @@
 			this.bpAddVertex.TabIndex = 12;
 			this.bpAddVertex.Text = "Ajouter";
 			this.bpAddVertex.UseVisualStyleBackColor = true;
-			this.bpAddVertex.Click += new System.EventHandler(this.bpAddVertex_Click);
+			this.bpAddVertex.Click += new System.EventHandler(this.BpAddVertex_Click);
 			// 
 			// bpSupVertex
 			// 
@@ -382,7 +382,7 @@
 			this.bpSupVertex.TabIndex = 12;
 			this.bpSupVertex.Text = "Supprimer";
 			this.bpSupVertex.UseVisualStyleBackColor = true;
-			this.bpSupVertex.Click += new System.EventHandler(this.bpSupVertex_Click);
+			this.bpSupVertex.Click += new System.EventHandler(this.BpSupVertex_Click);
 			// 
 			// bpEditVertex
 			// 
@@ -393,7 +393,7 @@
 			this.bpEditVertex.TabIndex = 12;
 			this.bpEditVertex.Text = "Modifier";
 			this.bpEditVertex.UseVisualStyleBackColor = true;
-			this.bpEditVertex.Click += new System.EventHandler(this.bpEditVertex_Click);
+			this.bpEditVertex.Click += new System.EventHandler(this.BpEditVertex_Click);
 			// 
 			// bpAddFace
 			// 
@@ -403,7 +403,7 @@
 			this.bpAddFace.TabIndex = 12;
 			this.bpAddFace.Text = "Ajouter";
 			this.bpAddFace.UseVisualStyleBackColor = true;
-			this.bpAddFace.Click += new System.EventHandler(this.bpAddFace_Click);
+			this.bpAddFace.Click += new System.EventHandler(this.BpAddFace_Click);
 			// 
 			// bpSupFace
 			// 
@@ -414,7 +414,7 @@
 			this.bpSupFace.TabIndex = 12;
 			this.bpSupFace.Text = "Supprimer";
 			this.bpSupFace.UseVisualStyleBackColor = true;
-			this.bpSupFace.Click += new System.EventHandler(this.bpSupFace_Click);
+			this.bpSupFace.Click += new System.EventHandler(this.BpSupFace_Click);
 			// 
 			// bpEditFace
 			// 
@@ -425,7 +425,7 @@
 			this.bpEditFace.TabIndex = 12;
 			this.bpEditFace.Text = "Modifier";
 			this.bpEditFace.UseVisualStyleBackColor = true;
-			this.bpEditFace.Click += new System.EventHandler(this.bpEditFace_Click);
+			this.bpEditFace.Click += new System.EventHandler(this.BpEditFace_Click);
 			// 
 			// bpRedraw
 			// 
@@ -435,7 +435,7 @@
 			this.bpRedraw.TabIndex = 13;
 			this.bpRedraw.Text = "Redessiner";
 			this.bpRedraw.UseVisualStyleBackColor = true;
-			this.bpRedraw.Click += new System.EventHandler(this.bpRedraw_Click);
+			this.bpRedraw.Click += new System.EventHandler(this.BpRedraw_Click);
 			// 
 			// lblFaceColor
 			// 

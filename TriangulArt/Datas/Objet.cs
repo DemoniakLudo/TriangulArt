@@ -134,25 +134,6 @@ namespace TriangulArt {
 					l = rd.ReadLine();
 					if (l != null) {
 						l = l.ToUpper();
-						if (l.Contains("MATERIAL:") && lstFace.Count > 0) {
-							// Lecture couleurs R,V,B de la face
-							int pr = l.LastIndexOf('R');
-							int pg = l.LastIndexOf('G');
-							int pb = l.LastIndexOf('B');
-							if (pr > 0 && pg > 0 && pb > 0) {
-								int end = l.Substring(pr + 1).Trim().IndexOfAny(new char[] { ' ', '\t' });
-								if (end > -1) {
-									int r = Utils.ConvertToInt(l.Substring(pr + 1, end + 1));
-									end = l.Substring(pg + 2).Trim().IndexOfAny(new char[] { ' ', '\t' });
-									int v = Utils.ConvertToInt(l.Substring(pg + 1, end + 1));
-									int b = Utils.ConvertToInt(l.Substring(pb + 1));
-									lstFace[lstFace.Count - 1].pen = PaletteCpc.GetNumPen(new RvbColor((byte)r, (byte)v, (byte)b));
-								}
-								else
-									lstFace[lstFace.Count - 1].pen = 1;
-							}
-						}
-
 						if (l.Contains("VERTEX ")) {
 							// Ajout Vertex
 							int px = l.IndexOf("X:");
@@ -190,6 +171,25 @@ namespace TriangulArt {
 									Face f = new Face(numFace++, lstVertex[a], lstVertex[b], lstVertex[c]);
 									lstFace.Add(f);
 								}
+							}
+						}
+
+						if (l.Contains("MATERIAL:") && lstFace.Count > 0) {
+							// Lecture couleurs R,V,B de la face
+							int pr = l.LastIndexOf('R');
+							int pg = l.LastIndexOf('G');
+							int pb = l.LastIndexOf('B');
+							if (pr > 0 && pg > 0 && pb > 0) {
+								int end = l.Substring(pr + 1).Trim().IndexOfAny(new char[] { ' ', '\t' });
+								if (end > -1) {
+									int r = Utils.ConvertToInt(l.Substring(pr + 1, end + 1));
+									end = l.Substring(pg + 2).Trim().IndexOfAny(new char[] { ' ', '\t' });
+									int v = Utils.ConvertToInt(l.Substring(pg + 1, end + 1));
+									int b = Utils.ConvertToInt(l.Substring(pb + 1));
+									lstFace[lstFace.Count - 1].pen = PaletteCpc.GetNumPen(new RvbColor((byte)r, (byte)v, (byte)b));
+								}
+								else
+									lstFace[lstFace.Count - 1].pen = 1;
 							}
 						}
 					}

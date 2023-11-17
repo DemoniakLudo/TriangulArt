@@ -13,11 +13,12 @@ namespace TriangulArt {
 		public EditObjet() {
 			InitializeComponent();
 			for (int i = 0; i < 16; i++) {
-				colors[i] = new Label();
-				colors[i].BorderStyle = BorderStyle.FixedSingle;
-				colors[i].Location = new Point(966, 4 + i * 48);
-				colors[i].Size = new Size(40, 32);
-				colors[i].Tag = i;
+				colors[i] = new Label {
+					BorderStyle = BorderStyle.FixedSingle,
+					Location = new Point(966, 4 + i * 48),
+					Size = new Size(40, 32),
+					Tag = i
+				};
 				colors[i].MouseClick += ClickColor;
 				Controls.Add(colors[i]);
 			}
@@ -35,9 +36,8 @@ namespace TriangulArt {
 			listVertex.Items.Clear();
 			int i = 0;
 			foreach (Vertex v in objet.lstVertex) {
-				string item = "V." + i.ToString("000") + "\t" + v.X.ToString("0.0000") + "\t" + v.Y.ToString("0.0000") + "\t" + v.Z.ToString("0.0000");
+				string item = "V." + i++.ToString("000") + "\t" + v.X.ToString("0.0000") + "\t" + v.Y.ToString("0.0000") + "\t" + v.Z.ToString("0.0000");
 				listVertex.Items.Add(item);
-				i++;
 			}
 			numVertex = selVertex;
 			if (selVertex != -1)
@@ -72,7 +72,7 @@ namespace TriangulArt {
 			pictureBoxObj.Refresh();
 		}
 
-		private void listVertex_SelectedIndexChanged(object sender, EventArgs e) {
+		private void ListVertex_SelectedIndexChanged(object sender, EventArgs e) {
 			numVertex = listVertex.SelectedIndex;
 			if (numVertex!=-1) {
 				Vertex v = objet.lstVertex[numVertex];
@@ -90,7 +90,7 @@ namespace TriangulArt {
 			lblFaceColor.BackColor = Color.FromArgb(PaletteCpc.GetColorPal(selColor).GetColorArgb);
 		}
 
-		private void listFace_SelectedIndexChanged(object sender, EventArgs e) {
+		private void ListFace_SelectedIndexChanged(object sender, EventArgs e) {
 			numFace = listFace.SelectedIndex;
 			if (numFace!=-1) {
 				Face f = objet.lstFace[numFace];
@@ -103,32 +103,32 @@ namespace TriangulArt {
 		}
 
 		#region gestion trackbars
-		private void trackX_Scroll(object sender, EventArgs e) {
+		private void TrackX_Scroll(object sender, EventArgs e) {
 			txbValX.Text = trackX.Value.ToString();
 			DisplayObj();
 		}
 
-		private void trackY_Scroll(object sender, EventArgs e) {
+		private void TrackY_Scroll(object sender, EventArgs e) {
 			txbValY.Text = trackY.Value.ToString();
 			DisplayObj();
 		}
 
-		private void trackZ_Scroll(object sender, EventArgs e) {
+		private void TrackZ_Scroll(object sender, EventArgs e) {
 			txbValZ.Text = trackZ.Value.ToString();
 			DisplayObj();
 		}
 
-		private void trackZoom_Scroll(object sender, EventArgs e) {
+		private void TrackZoom_Scroll(object sender, EventArgs e) {
 			txbZoom.Text = trackZoom.Value.ToString();
 			DisplayObj();
 		}
 		#endregion
 
 		#region gestion boutons
-		private void bpNewObject_Click(object sender, EventArgs e) {
+		private void BpNewObject_Click(object sender, EventArgs e) {
 		}
 
-		private void bpReadObject_Click(object sender, EventArgs e) {
+		private void BpReadObject_Click(object sender, EventArgs e) {
 			OpenFileDialog of = new OpenFileDialog { Filter = "Fichiers objets ascii (*.asc)|*.asc|Tous les fichiers (*.*)|*.*\"'" };
 			if (of.ShowDialog() == DialogResult.OK) {
 				objet.ReadObject(of.FileName);
@@ -138,10 +138,10 @@ namespace TriangulArt {
 			DisplayObj();
 		}
 
-		private void bpFusionObject_Click(object sender, EventArgs e) {
+		private void BpFusionObject_Click(object sender, EventArgs e) {
 		}
 
-		private void bpSaveObject_Click(object sender, EventArgs e) {
+		private void BpSaveObject_Click(object sender, EventArgs e) {
 			SaveFileDialog sd = new SaveFileDialog { Filter = "Fichiers objets ascii (*.asc)|*.asc|Tous les fichiers (*.*)|*.*\"'" };
 			if (sd.ShowDialog() == DialogResult.OK) {
 				objet.SaveObject(sd.FileName);
@@ -154,14 +154,14 @@ namespace TriangulArt {
 			DisplayObj();
 		}
 
-		private void bpRedraw_Click(object sender, EventArgs e) {
+		private void BpRedraw_Click(object sender, EventArgs e) {
 			DisplayVertex(-1);
 			DisplayFace(-1);
 			DisplayObj();
 			bpEditVertex.Enabled = bpSupVertex.Enabled = bpEditFace.Enabled = bpSupFace.Enabled = false;
 		}
 
-		private void bpAddVertex_Click(object sender, EventArgs e) {
+		private void BpAddVertex_Click(object sender, EventArgs e) {
 			double x = Utils.ConvertToDouble(txbVertexX.Text);
 			double y = Utils.ConvertToDouble(txbVertexY.Text);
 			double z = Utils.ConvertToDouble(txbVertexZ.Text);
@@ -169,7 +169,7 @@ namespace TriangulArt {
 			DisplayVertex(objet.lstVertex.Count - 1);
 		}
 
-		private void bpEditVertex_Click(object sender, EventArgs e) {
+		private void BpEditVertex_Click(object sender, EventArgs e) {
 			Vertex v = objet.lstVertex[numVertex];
 			double x = Utils.ConvertToDouble(txbVertexX.Text);
 			double y = Utils.ConvertToDouble(txbVertexY.Text);
@@ -178,7 +178,7 @@ namespace TriangulArt {
 			RedrawAll();
 		}
 
-		private void bpSupVertex_Click(object sender, EventArgs e) {
+		private void BpSupVertex_Click(object sender, EventArgs e) {
 			bool err = false;
 			Vertex v = objet.lstVertex[numVertex];
 			for (int i = 0; i < objet.lstFace.Count; i++) {
@@ -189,13 +189,13 @@ namespace TriangulArt {
 			}
 			if (!err) {
 				objet.lstVertex.RemoveAt(numVertex);
-				bpRedraw_Click(sender, e);
+				BpRedraw_Click(sender, e);
 			}
 			else
 				MessageBox.Show("Erreur: ce point est utilisé dans au moins une face.");
 		}
 
-		private void bpAddFace_Click(object sender, EventArgs e) {
+		private void BpAddFace_Click(object sender, EventArgs e) {
 			int a = Utils.ConvertToInt(txbFaceA.Text);
 			int b = Utils.ConvertToInt(txbFaceB.Text);
 			int c = Utils.ConvertToInt(txbFaceC.Text);
@@ -209,7 +209,7 @@ namespace TriangulArt {
 				MessageBox.Show("Certains points n'existent pas.");
 		}
 
-		private void bpEditFace_Click(object sender, EventArgs e) {
+		private void BpEditFace_Click(object sender, EventArgs e) {
 			int a = Utils.ConvertToInt(txbFaceA.Text);
 			int b = Utils.ConvertToInt(txbFaceB.Text);
 			int c = Utils.ConvertToInt(txbFaceC.Text);
@@ -223,9 +223,9 @@ namespace TriangulArt {
 				MessageBox.Show("Certains points n'existent pas.");
 		}
 
-		private void bpSupFace_Click(object sender, EventArgs e) {
+		private void BpSupFace_Click(object sender, EventArgs e) {
 			objet.lstFace.RemoveAt(numFace);
-			bpRedraw_Click(sender, e);
+			BpRedraw_Click(sender, e);
 		}
 
 		private void ClickColor(object sender, MouseEventArgs e) {
@@ -234,7 +234,6 @@ namespace TriangulArt {
 			selColor = pen;
 			UpdatePalette();
 		}
-
 		#endregion
 	}
 }

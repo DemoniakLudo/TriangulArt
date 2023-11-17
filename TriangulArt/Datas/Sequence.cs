@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TriangulArt {
+﻿namespace TriangulArt {
 	public class Sequence {
 		private double posx, posy, zoomx, zoomy, angx, angy, angz;
 		public int PosX {

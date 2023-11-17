@@ -10,7 +10,6 @@ namespace TriangulArt {
 		private Label[] tabLabel = new Label[3];
 		private int valColor;
 		public int ValColor { get { return valColor; } }
-		public Color SysColor { get { return selColor.BackColor; } }
 		public bool isValide;
 
 		public EditColor(int numColor, int val, int rgbColor, bool cpcPlus) {
@@ -28,8 +27,8 @@ namespace TriangulArt {
 					tabLabel[i].AutoSize = true;
 					tabVal[i].Size = new Size(27, 20);
 					tabTrack[i].Size = new Size(104, 42);
-					tabVal[i].TextChanged += val_TextChanged;
-					tabTrack[i].Scroll += track_Scroll;
+					tabVal[i].TextChanged += Val_TextChanged;
+					tabTrack[i].Scroll += Track_Scroll;
 					tabTrack[i].Maximum = 15;
 					tabVal[i].Tag = tabTrack[i].Tag = i;
 					tabLabel[i].Text = "RVB".Substring(i, 1);
@@ -70,7 +69,7 @@ namespace TriangulArt {
 
 		private void DblClickColor(object sender, System.EventArgs e) {
 			ClickColor(sender, e);
-			bpValide_Click(sender, e);
+			BpValide_Click(sender, e);
 		}
 
 		private void NewColor() {
@@ -81,12 +80,12 @@ namespace TriangulArt {
 			selColor.BackColor = Color.FromArgb(r * 17, v * 17, b * 17);
 		}
 
-		private void track_Scroll(object sender, System.EventArgs e) {
+		private void Track_Scroll(object sender, System.EventArgs e) {
 			int i = (int)((TrackBar)sender).Tag;
 			tabVal[i].Text = tabTrack[i].Value.ToString();
 		}
 
-		private void val_TextChanged(object sender, System.EventArgs e) {
+		private void Val_TextChanged(object sender, System.EventArgs e) {
 			try {
 				int i = (int)((TextBox)sender).Tag;
 				tabTrack[i].Value = int.Parse(tabVal[i].Text);
@@ -95,12 +94,12 @@ namespace TriangulArt {
 			catch { }
 		}
 
-		private void bpValide_Click(object sender, System.EventArgs e) {
+		private void BpValide_Click(object sender, System.EventArgs e) {
 			isValide = true;
 			Close();
 		}
 
-		private void bpAnnule_Click(object sender, System.EventArgs e) {
+		private void BpAnnule_Click(object sender, System.EventArgs e) {
 			Close();
 		}
 	}

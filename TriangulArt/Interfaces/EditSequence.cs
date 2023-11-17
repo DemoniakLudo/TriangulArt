@@ -15,12 +15,11 @@ namespace TriangulArt {
 		private void DisplaySequence() {
 			dataGridViewSeq.Rows.Clear();
 			int i = 0;
-			foreach (Sequence s in lstSeq) {
+			foreach (Sequence s in lstSeq)
 				dataGridViewSeq.Rows.Add(i++, s.PosX, s.PosY, s.ZoomX, s.ZoomY, s.AngX, s.AngY, s.AngZ);
-			}
 		}
 
-		private void bpImportSequence_Click(object sender, EventArgs e) {
+		private void BpImportSequence_Click(object sender, EventArgs e) {
 			if (MessageBox.Show("Etes vous sur de vouloir importer une nouvelle séquence ?") == DialogResult.OK) {
 				OpenFileDialog of = new OpenFileDialog { Filter = "Fichiers CSV (*.csv)|*.csv" };
 				if (of.ShowDialog() == DialogResult.OK) {
@@ -55,7 +54,7 @@ namespace TriangulArt {
 			}
 		}
 
-		private void bpExportSequence_Click(object sender, EventArgs e) {
+		private void BpExportSequence_Click(object sender, EventArgs e) {
 			SaveFileDialog dlg = new SaveFileDialog { Filter = "Fichiers CSV (*.csv)|*.csv" };
 			DialogResult result = dlg.ShowDialog();
 			if (result == DialogResult.OK) {
@@ -75,7 +74,7 @@ namespace TriangulArt {
 			}
 		}
 
-		private void dataGridViewSeq_CellEndEdit(object sender, DataGridViewCellEventArgs e) {
+		private void DataGridViewSeq_CellEndEdit(object sender, DataGridViewCellEventArgs e) {
 			int v = Utils.ConvertToInt(dataGridViewSeq.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
 			Sequence s = lstSeq[e.RowIndex];
 			switch (e.ColumnIndex) {

@@ -131,9 +131,9 @@
 			this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
 			this.pictureBox.TabIndex = 0;
 			this.pictureBox.TabStop = false;
-			this.pictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox_Paint);
-			this.pictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseDown);
-			this.pictureBox.MouseLeave += new System.EventHandler(this.pictureBox_MouseLeave);
+			this.pictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.PictureBox_Paint);
+			this.pictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureBox_MouseDown);
+			this.pictureBox.MouseLeave += new System.EventHandler(this.PictureBox_MouseLeave);
 			this.pictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TrtMouseMove);
 			this.pictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseUp);
 			// 
@@ -154,7 +154,7 @@
 			this.bpAjoutTriangle.TabIndex = 2;
 			this.bpAjoutTriangle.Text = "Ajouter triangle";
 			this.bpAjoutTriangle.UseVisualStyleBackColor = true;
-			this.bpAjoutTriangle.Click += new System.EventHandler(this.bpAddTriangle_Click);
+			this.bpAjoutTriangle.Click += new System.EventHandler(this.BpAddTriangle_Click);
 			// 
 			// listInfo
 			// 
@@ -172,7 +172,7 @@
 			this.bpLoad.TabIndex = 4;
 			this.bpLoad.Text = "Lire";
 			this.bpLoad.UseVisualStyleBackColor = true;
-			this.bpLoad.Click += new System.EventHandler(this.bpLoad_Click);
+			this.bpLoad.Click += new System.EventHandler(this.BpLoad_Click);
 			// 
 			// bpSave
 			// 
@@ -182,7 +182,7 @@
 			this.bpSave.TabIndex = 4;
 			this.bpSave.Text = "Sauver";
 			this.bpSave.UseVisualStyleBackColor = true;
-			this.bpSave.Click += new System.EventHandler(this.bpSave_Click);
+			this.bpSave.Click += new System.EventHandler(this.BpSave_Click);
 			// 
 			// ColorSel
 			// 
@@ -201,7 +201,7 @@
 			this.bpGenereAsm.TabIndex = 6;
 			this.bpGenereAsm.Text = "Générer assembleur";
 			this.bpGenereAsm.UseVisualStyleBackColor = true;
-			this.bpGenereAsm.Click += new System.EventHandler(this.bpGenereAsm_Click);
+			this.bpGenereAsm.Click += new System.EventHandler(this.BpGenereAsm_Click);
 			// 
 			// bpAddCoord
 			// 
@@ -211,7 +211,7 @@
 			this.bpAddCoord.TabIndex = 7;
 			this.bpAddCoord.Text = "Ajout direct";
 			this.bpAddCoord.UseVisualStyleBackColor = true;
-			this.bpAddCoord.Click += new System.EventHandler(this.bpAddCoord_Click);
+			this.bpAddCoord.Click += new System.EventHandler(this.BpAddCoord_Click);
 			// 
 			// txbY1
 			// 
@@ -305,7 +305,7 @@
 			this.listTriangles.Name = "listTriangles";
 			this.listTriangles.Size = new System.Drawing.Size(480, 225);
 			this.listTriangles.TabIndex = 20;
-			this.listTriangles.SelectedIndexChanged += new System.EventHandler(this.listTriangles_SelectedIndexChanged);
+			this.listTriangles.SelectedIndexChanged += new System.EventHandler(this.ListTriangles_SelectedIndexChanged);
 			// 
 			// bpEdit
 			// 
@@ -316,7 +316,7 @@
 			this.bpEdit.TabIndex = 7;
 			this.bpEdit.Text = "Modifier";
 			this.bpEdit.UseVisualStyleBackColor = true;
-			this.bpEdit.Click += new System.EventHandler(this.bpEdit_Click);
+			this.bpEdit.Click += new System.EventHandler(this.BpEdit_Click);
 			// 
 			// bpRedraw
 			// 
@@ -326,7 +326,7 @@
 			this.bpRedraw.TabIndex = 21;
 			this.bpRedraw.Text = "Redessiner";
 			this.bpRedraw.UseVisualStyleBackColor = true;
-			this.bpRedraw.Click += new System.EventHandler(this.bpRedraw_Click);
+			this.bpRedraw.Click += new System.EventHandler(this.BpRedraw_Click);
 			// 
 			// bpDelete
 			// 
@@ -337,7 +337,7 @@
 			this.bpDelete.TabIndex = 22;
 			this.bpDelete.Text = "Supprimer";
 			this.bpDelete.UseVisualStyleBackColor = true;
-			this.bpDelete.Click += new System.EventHandler(this.bpDelete_Click);
+			this.bpDelete.Click += new System.EventHandler(this.BpDelete_Click);
 			// 
 			// label7
 			// 
@@ -357,7 +357,7 @@
 			this.chkPlus.TabIndex = 24;
 			this.chkPlus.Text = "Palette CPC+";
 			this.chkPlus.UseVisualStyleBackColor = true;
-			this.chkPlus.CheckedChanged += new System.EventHandler(this.chkPlus_CheckedChanged);
+			this.chkPlus.CheckedChanged += new System.EventHandler(this.ChkPlus_CheckedChanged);
 			// 
 			// chkCodeAsm
 			// 
@@ -377,7 +377,7 @@
 			this.bpImport.TabIndex = 26;
 			this.bpImport.Text = "Import data assembleur";
 			this.bpImport.UseVisualStyleBackColor = true;
-			this.bpImport.Click += new System.EventHandler(this.bpImport_Click);
+			this.bpImport.Click += new System.EventHandler(this.BpImport_Click);
 			// 
 			// bpImportImage
 			// 
@@ -387,7 +387,7 @@
 			this.bpImportImage.TabIndex = 27;
 			this.bpImportImage.Text = "Import image fond";
 			this.bpImportImage.UseVisualStyleBackColor = true;
-			this.bpImportImage.Click += new System.EventHandler(this.bpImportImage_Click);
+			this.bpImportImage.Click += new System.EventHandler(this.BpImportImage_Click);
 			// 
 			// bpClear
 			// 
@@ -397,7 +397,7 @@
 			this.bpClear.TabIndex = 28;
 			this.bpClear.Text = "Tout effacer";
 			this.bpClear.UseVisualStyleBackColor = true;
-			this.bpClear.Click += new System.EventHandler(this.bpClear_Click);
+			this.bpClear.Click += new System.EventHandler(this.BpClear_Click);
 			// 
 			// bpUp
 			// 
@@ -407,7 +407,7 @@
 			this.bpUp.TabIndex = 31;
 			this.bpUp.Text = "Up";
 			this.bpUp.UseVisualStyleBackColor = true;
-			this.bpUp.Click += new System.EventHandler(this.bpUp_Click);
+			this.bpUp.Click += new System.EventHandler(this.BpUp_Click);
 			// 
 			// bpDown
 			// 
@@ -417,7 +417,7 @@
 			this.bpDown.TabIndex = 32;
 			this.bpDown.Text = "Down";
 			this.bpDown.UseVisualStyleBackColor = true;
-			this.bpDown.Click += new System.EventHandler(this.bpDown_Click);
+			this.bpDown.Click += new System.EventHandler(this.BpDown_Click);
 			// 
 			// groupBox1
 			// 
@@ -442,7 +442,7 @@
 			this.rbVertical.TabStop = true;
 			this.rbVertical.Text = "Miroir vertical";
 			this.rbVertical.UseVisualStyleBackColor = true;
-			this.rbVertical.CheckedChanged += new System.EventHandler(this.rbVertical_CheckedChanged);
+			this.rbVertical.CheckedChanged += new System.EventHandler(this.RbVertical_CheckedChanged);
 			// 
 			// rbHorizontal
 			// 
@@ -454,7 +454,7 @@
 			this.rbHorizontal.TabStop = true;
 			this.rbHorizontal.Text = "Miroir horizontal";
 			this.rbHorizontal.UseVisualStyleBackColor = true;
-			this.rbHorizontal.CheckedChanged += new System.EventHandler(this.rbHorizontal_CheckedChanged);
+			this.rbHorizontal.CheckedChanged += new System.EventHandler(this.RbHorizontal_CheckedChanged);
 			// 
 			// rbStandard
 			// 
@@ -467,7 +467,7 @@
 			this.rbStandard.TabStop = true;
 			this.rbStandard.Text = "Standard";
 			this.rbStandard.UseVisualStyleBackColor = true;
-			this.rbStandard.CheckedChanged += new System.EventHandler(this.rbStandard_CheckedChanged);
+			this.rbStandard.CheckedChanged += new System.EventHandler(this.RbStandard_CheckedChanged);
 			// 
 			// groupBox2
 			// 
@@ -505,7 +505,7 @@
 			this.bpDeplace.TabIndex = 18;
 			this.bpDeplace.Text = "Déplacement relatif";
 			this.bpDeplace.UseVisualStyleBackColor = true;
-			this.bpDeplace.Click += new System.EventHandler(this.bpDeplace_Click);
+			this.bpDeplace.Click += new System.EventHandler(this.BpDeplace_Click);
 			// 
 			// txbTrY
 			// 
@@ -531,7 +531,7 @@
 			this.bpZoom.TabIndex = 35;
 			this.bpZoom.Text = "Zoom";
 			this.bpZoom.UseVisualStyleBackColor = true;
-			this.bpZoom.Click += new System.EventHandler(this.bpZoom_Click);
+			this.bpZoom.Click += new System.EventHandler(this.BpZoom_Click);
 			// 
 			// txbTrX
 			// 
@@ -598,7 +598,7 @@
 			this.bpClearList.TabIndex = 38;
 			this.bpClearList.Text = "Effacer la liste";
 			this.bpClearList.UseVisualStyleBackColor = true;
-			this.bpClearList.Click += new System.EventHandler(this.bpClearList_Click);
+			this.bpClearList.Click += new System.EventHandler(this.BpClearList_Click);
 			// 
 			// bpClean
 			// 
@@ -608,7 +608,7 @@
 			this.bpClean.TabIndex = 39;
 			this.bpClean.Text = "Clean";
 			this.bpClean.UseVisualStyleBackColor = true;
-			this.bpClean.Click += new System.EventHandler(this.bpClean_Click);
+			this.bpClean.Click += new System.EventHandler(this.BpClean_Click);
 			// 
 			// bpRapproche
 			// 
@@ -618,7 +618,7 @@
 			this.bpRapproche.TabIndex = 40;
 			this.bpRapproche.Text = "Rapproche";
 			this.bpRapproche.UseVisualStyleBackColor = true;
-			this.bpRapproche.Click += new System.EventHandler(this.bpRapproche_Click);
+			this.bpRapproche.Click += new System.EventHandler(this.BpRapproche_Click);
 			// 
 			// bpAjoutQuadri
 			// 
@@ -628,7 +628,7 @@
 			this.bpAjoutQuadri.TabIndex = 41;
 			this.bpAjoutQuadri.Text = "Ajouter quadrilatère";
 			this.bpAjoutQuadri.UseVisualStyleBackColor = true;
-			this.bpAjoutQuadri.Click += new System.EventHandler(this.bpAjoutQuadri_Click);
+			this.bpAjoutQuadri.Click += new System.EventHandler(this.BpAjoutQuadri_Click);
 			// 
 			// txbY4
 			// 
@@ -751,7 +751,7 @@
 			this.chkOverscan.TabIndex = 33;
 			this.chkOverscan.Text = "Overscan";
 			this.chkOverscan.UseVisualStyleBackColor = true;
-			this.chkOverscan.CheckedChanged += new System.EventHandler(this.chkOverscan_CheckedChanged);
+			this.chkOverscan.CheckedChanged += new System.EventHandler(this.ChkOverscan_CheckedChanged);
 			// 
 			// bpMakeAnim3D
 			// 
@@ -762,7 +762,7 @@
 			this.bpMakeAnim3D.Text = "Editeur d\'animations 3D";
 			this.bpMakeAnim3D.UseVisualStyleBackColor = true;
 			this.bpMakeAnim3D.Visible = false;
-			this.bpMakeAnim3D.Click += new System.EventHandler(this.bpMakeAnim3D_Click);
+			this.bpMakeAnim3D.Click += new System.EventHandler(this.BpMakeAnim3D_Click);
 			// 
 			// bpFusion
 			// 
@@ -772,7 +772,7 @@
 			this.bpFusion.TabIndex = 31;
 			this.bpFusion.Text = "Fusion";
 			this.bpFusion.UseVisualStyleBackColor = true;
-			this.bpFusion.Click += new System.EventHandler(this.bpFusion_Click);
+			this.bpFusion.Click += new System.EventHandler(this.BpFusion_Click);
 			// 
 			// chkLine
 			// 
@@ -783,7 +783,7 @@
 			this.chkLine.TabIndex = 30;
 			this.chkLine.Text = "Mode lignes";
 			this.chkLine.UseVisualStyleBackColor = true;
-			this.chkLine.CheckedChanged += new System.EventHandler(this.chkLine_CheckedChanged);
+			this.chkLine.CheckedChanged += new System.EventHandler(this.ChkLine_CheckedChanged);
 			// 
 			// bpCleanProj
 			// 
@@ -793,7 +793,7 @@
 			this.bpCleanProj.TabIndex = 29;
 			this.bpCleanProj.Text = "Clean";
 			this.bpCleanProj.UseVisualStyleBackColor = true;
-			this.bpCleanProj.Click += new System.EventHandler(this.bpCleanProj_Click);
+			this.bpCleanProj.Click += new System.EventHandler(this.BpCleanProj_Click);
 			// 
 			// chkZX0
 			// 
@@ -815,7 +815,7 @@
 			this.chkAnim3D.TabIndex = 27;
 			this.chkAnim3D.Text = "Mode animation 3D";
 			this.chkAnim3D.UseVisualStyleBackColor = true;
-			this.chkAnim3D.CheckedChanged += new System.EventHandler(this.chkAnim3D_CheckedChanged);
+			this.chkAnim3D.CheckedChanged += new System.EventHandler(this.ChkAnim3D_CheckedChanged);
 			// 
 			// rbMode1
 			// 
@@ -828,7 +828,7 @@
 			this.rbMode1.TabStop = true;
 			this.rbMode1.Text = "Mode 1";
 			this.rbMode1.UseVisualStyleBackColor = true;
-			this.rbMode1.CheckedChanged += new System.EventHandler(this.rbMode1_CheckedChanged);
+			this.rbMode1.CheckedChanged += new System.EventHandler(this.RbMode1_CheckedChanged);
 			// 
 			// rbMode0
 			// 
@@ -839,7 +839,7 @@
 			this.rbMode0.TabIndex = 25;
 			this.rbMode0.Text = "Mode 0";
 			this.rbMode0.UseVisualStyleBackColor = true;
-			this.rbMode0.CheckedChanged += new System.EventHandler(this.rbMode0_CheckedChanged);
+			this.rbMode0.CheckedChanged += new System.EventHandler(this.RbMode0_CheckedChanged);
 			// 
 			// bpNewProjet
 			// 
@@ -849,7 +849,7 @@
 			this.bpNewProjet.TabIndex = 3;
 			this.bpNewProjet.Text = "Nouveau";
 			this.bpNewProjet.UseVisualStyleBackColor = true;
-			this.bpNewProjet.Click += new System.EventHandler(this.bpNewProjet_Click);
+			this.bpNewProjet.Click += new System.EventHandler(this.BpNewProjet_Click);
 			// 
 			// bpGenereProjetAsm
 			// 
@@ -859,7 +859,7 @@
 			this.bpGenereProjetAsm.TabIndex = 2;
 			this.bpGenereProjetAsm.Text = "Générér assembleur";
 			this.bpGenereProjetAsm.UseVisualStyleBackColor = true;
-			this.bpGenereProjetAsm.Click += new System.EventHandler(this.bpGenereProjetAsm_Click);
+			this.bpGenereProjetAsm.Click += new System.EventHandler(this.BpGenereProjetAsm_Click);
 			// 
 			// grpImage
 			// 
@@ -893,7 +893,7 @@
 			this.bpImageSuiv.TabIndex = 0;
 			this.bpImageSuiv.Text = "<<";
 			this.bpImageSuiv.UseVisualStyleBackColor = true;
-			this.bpImageSuiv.Click += new System.EventHandler(this.bpImageSuiv_Click);
+			this.bpImageSuiv.Click += new System.EventHandler(this.BpImageSuiv_Click);
 			// 
 			// bpImagePrec
 			// 
@@ -903,7 +903,7 @@
 			this.bpImagePrec.TabIndex = 0;
 			this.bpImagePrec.Text = ">>";
 			this.bpImagePrec.UseVisualStyleBackColor = true;
-			this.bpImagePrec.Click += new System.EventHandler(this.bpImagePrec_Click);
+			this.bpImagePrec.Click += new System.EventHandler(this.BpImagePrec_Click);
 			// 
 			// bpSupImage
 			// 
@@ -913,7 +913,7 @@
 			this.bpSupImage.TabIndex = 0;
 			this.bpSupImage.Text = "Supprimer";
 			this.bpSupImage.UseVisualStyleBackColor = true;
-			this.bpSupImage.Click += new System.EventHandler(this.bpSupImage_Click);
+			this.bpSupImage.Click += new System.EventHandler(this.BpSupImage_Click);
 			// 
 			// bpNewImage
 			// 
@@ -923,7 +923,7 @@
 			this.bpNewImage.TabIndex = 0;
 			this.bpNewImage.Text = "Nouvelle";
 			this.bpNewImage.UseVisualStyleBackColor = true;
-			this.bpNewImage.Click += new System.EventHandler(this.bpNewImage_Click);
+			this.bpNewImage.Click += new System.EventHandler(this.BpNewImage_Click);
 			// 
 			// bpSaveProj
 			// 
@@ -933,7 +933,7 @@
 			this.bpSaveProj.TabIndex = 0;
 			this.bpSaveProj.Text = "Sauver";
 			this.bpSaveProj.UseVisualStyleBackColor = true;
-			this.bpSaveProj.Click += new System.EventHandler(this.bpSaveProj_Click);
+			this.bpSaveProj.Click += new System.EventHandler(this.BpSaveProj_Click);
 			// 
 			// bpReadProj
 			// 
@@ -943,7 +943,7 @@
 			this.bpReadProj.TabIndex = 0;
 			this.bpReadProj.Text = "Lire";
 			this.bpReadProj.UseVisualStyleBackColor = true;
-			this.bpReadProj.Click += new System.EventHandler(this.bpReadProj_Click);
+			this.bpReadProj.Click += new System.EventHandler(this.BpReadProj_Click);
 			// 
 			// label14
 			// 
@@ -979,7 +979,7 @@
 			this.bpAjoutRect.TabIndex = 54;
 			this.bpAjoutRect.Text = "Ajouter rectangle";
 			this.bpAjoutRect.UseVisualStyleBackColor = true;
-			this.bpAjoutRect.Click += new System.EventHandler(this.bpAjoutRect_Click);
+			this.bpAjoutRect.Click += new System.EventHandler(this.BpAjoutRect_Click);
 			// 
 			// bpAjoutCercle
 			// 
@@ -989,7 +989,7 @@
 			this.bpAjoutCercle.TabIndex = 54;
 			this.bpAjoutCercle.Text = "Ajouter cercle";
 			this.bpAjoutCercle.UseVisualStyleBackColor = true;
-			this.bpAjoutCercle.Click += new System.EventHandler(this.bpAjoutCercle_Click);
+			this.bpAjoutCercle.Click += new System.EventHandler(this.BpAjoutCercle_Click);
 			// 
 			// txbNbRayons
 			// 
@@ -1016,7 +1016,7 @@
 			this.bpAjoutLigne.TabIndex = 57;
 			this.bpAjoutLigne.Text = "Ajouter ligne";
 			this.bpAjoutLigne.UseVisualStyleBackColor = true;
-			this.bpAjoutLigne.Click += new System.EventHandler(this.bpAjoutLigne_Click);
+			this.bpAjoutLigne.Click += new System.EventHandler(this.BpAjoutLigne_Click);
 			// 
 			// bpFirst
 			// 
@@ -1026,7 +1026,7 @@
 			this.bpFirst.TabIndex = 58;
 			this.bpFirst.Text = "First";
 			this.bpFirst.UseVisualStyleBackColor = true;
-			this.bpFirst.Click += new System.EventHandler(this.bpFirst_Click);
+			this.bpFirst.Click += new System.EventHandler(this.BpFirst_Click);
 			// 
 			// bpLast
 			// 
@@ -1036,7 +1036,7 @@
 			this.bpLast.TabIndex = 59;
 			this.bpLast.Text = "Last";
 			this.bpLast.UseVisualStyleBackColor = true;
-			this.bpLast.Click += new System.EventHandler(this.bpLast_Click);
+			this.bpLast.Click += new System.EventHandler(this.BpLast_Click);
 			// 
 			// panel1
 			// 

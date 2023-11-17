@@ -11,7 +11,6 @@ namespace TriangulArt {
 		public int[] palette = new int[16];
 		public int tpsAttente = 16;
 		public string nomImage;
-
 		private int selLigne = -1;
 
 		public Datas() {
@@ -87,21 +86,15 @@ namespace TriangulArt {
 				if (xr > xl) {
 					for (int x = 0; x <= xr - xl; x++) {
 						nbPt++;
-						int tcol = bmpLock.GetPixel(xl + x, y);
-						if (tcol == c)
+						if (bmpLock.GetPixel(xl + x, y) == c)
 							nbFound++;
-						else
-							tcol = 0;
 					}
 				}
 				else {
 					for (int x = 0; x <= xl - xr; x++) {
 						nbPt++;
-						int tcol = bmpLock.GetPixel(xr + x, y);
-						if (tcol == c)
+						if (bmpLock.GetPixel(xr + x, y) == c)
 							nbFound++;
-						else
-							tcol = 0;
 					}
 				}
 				err1 += dx1;
@@ -134,17 +127,17 @@ namespace TriangulArt {
 			int y3 = t.y3;
 			int c = t.color;
 			if (modeLines) {
-				bmpLock.DrawLine(x1, y1, x2, y2, trueCol != 0 ? trueCol : GetPalCPC(PaletteCpc.Palette[c]), selected);
-				bmpLock.DrawLine(x2, y2, x3, y3, trueCol != 0 ? trueCol : GetPalCPC(PaletteCpc.Palette[c]), selected);
-				bmpLock.DrawLine(x3, y3, x1, y1, trueCol != 0 ? trueCol : GetPalCPC(PaletteCpc.Palette[c]), selected);
+				bmpLock.DrawLine(x1, y1, x2, y2, trueCol != 0 ? trueCol : PaletteCpc.GetColorPal(c).GetColorArgb, selected);
+				bmpLock.DrawLine(x2, y2, x3, y3, trueCol != 0 ? trueCol : PaletteCpc.GetColorPal(c).GetColorArgb, selected);
+				bmpLock.DrawLine(x3, y3, x1, y1, trueCol != 0 ? trueCol : PaletteCpc.GetColorPal(c).GetColorArgb, selected);
 			}
 			else {
-				FillTriangle(bmpLock, x1, y1, x2, y2, x3, y3, trueCol != 0 ? trueCol : GetPalCPC(PaletteCpc.Palette[c]), selected);
+				FillTriangle(bmpLock, x1, y1, x2, y2, x3, y3, trueCol != 0 ? trueCol : PaletteCpc.GetColorPal(c).GetColorArgb, selected);
 				if (modeRendu == 1)
-					FillTriangle(bmpLock, maxWidth - 1 - x1, y1, maxWidth - 1 - x2, y2, maxWidth - 1 - x3, y3, trueCol != 0 ? trueCol : GetPalCPC(PaletteCpc.Palette[c]), false);
+					FillTriangle(bmpLock, maxWidth - 1 - x1, y1, maxWidth - 1 - x2, y2, maxWidth - 1 - x3, y3, trueCol != 0 ? trueCol : PaletteCpc.GetColorPal(c).GetColorArgb, false);
 				else
 					if (modeRendu == 2)
-						FillTriangle(bmpLock, x3, 255 - y3, x2, 255 - y2, x1, 255 - y1, trueCol != 0 ? trueCol : GetPalCPC(PaletteCpc.Palette[c]), false);
+						FillTriangle(bmpLock, x3, 255 - y3, x2, 255 - y2, x1, 255 - y1, trueCol != 0 ? trueCol : PaletteCpc.GetColorPal(c).GetColorArgb, false);
 			}
 		}
 
@@ -164,7 +157,7 @@ namespace TriangulArt {
 		}
 
 		public int SelTriangle(int xReel, int yReel) {
-			for (int i = lstTriangle.Count; i-- > 0; ) {
+			for (int i = lstTriangle.Count; i-- > 0;) {
 				Triangle t = lstTriangle[i];
 				if (IsInTriancle(t, xReel, yReel)) {
 					return i;
@@ -455,15 +448,15 @@ namespace TriangulArt {
 						int y3 = int.Parse(param[11], NumberStyles.HexNumber);
 						int c = int.Parse(param[13], NumberStyles.HexNumber);
 						if (x1 >= 0 && y1 >= 0 && x2 >= 0 && y2 >= 0 && x3 >= 0 && y3 >= 0) {
-							lstTriangle.Add(new Triangle(x1, y1, x2, y2, x3, y3, (byte)(c & 0x0F )));
+							lstTriangle.Add(new Triangle(x1, y1, x2, y2, x3, y3, (byte)(c & 0x0F)));
 							return (c & 0x80) != 0;
 						}
 					}
 					else
 						if (param.Length == 2) {
-							if (int.Parse(param[1], NumberStyles.HexNumber) == 255)
-								return true;
-						}
+						if (int.Parse(param[1], NumberStyles.HexNumber) == 255)
+							return true;
+					}
 				}
 			}
 			return false;

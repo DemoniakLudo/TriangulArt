@@ -70,9 +70,9 @@ namespace TriangulArt {
 				GenereAsm.GenereDatas(sw, dataPack, lpack, 16);
 			}
 			else
-				foreach (Datas d in lstData) {
+				foreach (Datas d in lstData)
 					GenereAsm.GenereDatas(sw, d, d.nomImage, mode, cpcPlus, modePolice, mode3D);
-				}
+
 			GenereAsm.CloseAsm(sw);
 		}
 	}

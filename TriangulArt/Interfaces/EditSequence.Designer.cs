@@ -46,7 +46,7 @@
 			this.bpImportSequence.TabIndex = 0;
 			this.bpImportSequence.Text = "Importer séquence";
 			this.bpImportSequence.UseVisualStyleBackColor = true;
-			this.bpImportSequence.Click += new System.EventHandler(this.bpImportSequence_Click);
+			this.bpImportSequence.Click += new System.EventHandler(this.BpImportSequence_Click);
 			// 
 			// bpExportSequence
 			// 
@@ -56,7 +56,7 @@
 			this.bpExportSequence.TabIndex = 0;
 			this.bpExportSequence.Text = "Exporter séquence";
 			this.bpExportSequence.UseVisualStyleBackColor = true;
-			this.bpExportSequence.Click += new System.EventHandler(this.bpExportSequence_Click);
+			this.bpExportSequence.Click += new System.EventHandler(this.BpExportSequence_Click);
 			// 
 			// dataGridViewSeq
 			// 
@@ -87,7 +87,7 @@
 			this.dataGridViewSeq.Name = "dataGridViewSeq";
 			this.dataGridViewSeq.Size = new System.Drawing.Size(1151, 756);
 			this.dataGridViewSeq.TabIndex = 1;
-			this.dataGridViewSeq.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewSeq_CellEndEdit);
+			this.dataGridViewSeq.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridViewSeq_CellEndEdit);
 			// 
 			// FrameNumber
 			// 

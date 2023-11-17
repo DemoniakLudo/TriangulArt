@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Windows.Forms;
 
 namespace TriangulArt {
@@ -24,18 +23,11 @@ namespace TriangulArt {
 		}
 
 		private void DisplayFrame(Sequence s, List<Triangle> lstTriangle = null) {
-			int px = s.PosX;
-			int py = s.PosY;
-			int zx = s.ZoomX;
-			int zy = s.ZoomY;
-			int ax = s.AngX;
-			int ay = s.AngY;
-			int az = s.AngZ;
 			bmpLock.Fill(PaletteCpc.GetColorPal(0).GetColorArgb);
 			if (lstTriangle != null)
 				bmpCalc.Fill(0xFFFFFF);
 
-			objet.DrawObj(bmpLock, px, py, zx, zy, ax, ay, az, -1, -1, lstTriangle, bmpCalc);
+			objet.DrawObj(bmpLock, s.PosX, s.PosY, s.ZoomX, s.ZoomY, s.AngX, s.AngY, s.AngZ, -1, -1, lstTriangle, bmpCalc);
 			pictureBoxScr.Image = bmpLock.Bitmap;
 			pictureBoxScr.Refresh();
 		}
@@ -83,18 +75,18 @@ namespace TriangulArt {
 			Enabled = true;
 		}
 
-		private void chkUseSeq_CheckedChanged(object sender, EventArgs e) {
+		private void ChkUseSeq_CheckedChanged(object sender, EventArgs e) {
 			txbPx.Enabled = txbPy.Enabled = txbZx.Enabled = txbZy.Enabled = txbAx.Enabled = txbAy.Enabled = txbAz.Enabled =
 			txbIncPx.Enabled = txbIncPy.Enabled = txbIncZx.Enabled = txbIncZy.Enabled = txbIncAx.Enabled = txbIncAy.Enabled = txbIncAz.Enabled = !chkUseSeq.Checked;
 		}
 
-		private void bpEditSequence_Click(object sender, EventArgs e) {
+		private void BpEditSequence_Click(object sender, EventArgs e) {
 			Enabled = false;
 			new EditSequence(lstSeq).ShowDialog();
 			Enabled = true;
 		}
 
-		private void bpReadObject_Click(object sender, EventArgs e) {
+		private void BpReadObject_Click(object sender, EventArgs e) {
 			OpenFileDialog of = new OpenFileDialog { Filter = "Fichiers objets ascii (*.asc)|*.asc|Tous les fichiers (*.*)|*.*\"'" };
 			if (of.ShowDialog() == DialogResult.OK) {
 				objet.ReadObject(of.FileName);
@@ -105,24 +97,24 @@ namespace TriangulArt {
 				CreateSequence();
 		}
 
-		private void bpEditObject_Click(object sender, EventArgs e) {
+		private void BpEditObject_Click(object sender, EventArgs e) {
 			Enabled = false;
 			new EditObjet().ShowDialog();
 			Enabled = true;
 		}
 
-		private void bpRedraw_Click(object sender, EventArgs e) {
+		private void BpRedraw_Click(object sender, EventArgs e) {
 			if (!chkUseSeq.Checked)
 				CreateSequence();
 
 			DisplayFrame(lstSeq[0]);
 		}
 
-		private void bpAnimate_Click(object sender, EventArgs e) {
+		private void BpAnimate_Click(object sender, EventArgs e) {
 			Animate();
 		}
 
-		private void bpWriteTriangle_Click(object sender, EventArgs e) {
+		private void BpWriteTriangle_Click(object sender, EventArgs e) {
 			Animate(true);
 		}
 	}

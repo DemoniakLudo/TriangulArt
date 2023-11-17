@@ -335,7 +335,7 @@
 			this.bpReadObject.TabIndex = 4;
 			this.bpReadObject.Text = "Fichier objet";
 			this.bpReadObject.UseVisualStyleBackColor = true;
-			this.bpReadObject.Click += new System.EventHandler(this.bpReadObject_Click);
+			this.bpReadObject.Click += new System.EventHandler(this.BpReadObject_Click);
 			// 
 			// bpRedraw
 			// 
@@ -345,7 +345,7 @@
 			this.bpRedraw.TabIndex = 5;
 			this.bpRedraw.Text = "Redraw";
 			this.bpRedraw.UseVisualStyleBackColor = true;
-			this.bpRedraw.Click += new System.EventHandler(this.bpRedraw_Click);
+			this.bpRedraw.Click += new System.EventHandler(this.BpRedraw_Click);
 			// 
 			// bpAnimate
 			// 
@@ -355,7 +355,7 @@
 			this.bpAnimate.TabIndex = 6;
 			this.bpAnimate.Text = "Animer";
 			this.bpAnimate.UseVisualStyleBackColor = true;
-			this.bpAnimate.Click += new System.EventHandler(this.bpAnimate_Click);
+			this.bpAnimate.Click += new System.EventHandler(this.BpAnimate_Click);
 			// 
 			// bpWriteTriangle
 			// 
@@ -365,7 +365,7 @@
 			this.bpWriteTriangle.TabIndex = 7;
 			this.bpWriteTriangle.Text = "Générer projet";
 			this.bpWriteTriangle.UseVisualStyleBackColor = true;
-			this.bpWriteTriangle.Click += new System.EventHandler(this.bpWriteTriangle_Click);
+			this.bpWriteTriangle.Click += new System.EventHandler(this.BpWriteTriangle_Click);
 			// 
 			// rbMode0
 			// 
@@ -414,7 +414,7 @@
 			this.bpEditObject.TabIndex = 11;
 			this.bpEditObject.Text = "Editeur d\'objet";
 			this.bpEditObject.UseVisualStyleBackColor = true;
-			this.bpEditObject.Click += new System.EventHandler(this.bpEditObject_Click);
+			this.bpEditObject.Click += new System.EventHandler(this.BpEditObject_Click);
 			// 
 			// bpEditSequence
 			// 
@@ -424,7 +424,7 @@
 			this.bpEditSequence.TabIndex = 12;
 			this.bpEditSequence.Text = "Editeur de séquence";
 			this.bpEditSequence.UseVisualStyleBackColor = true;
-			this.bpEditSequence.Click += new System.EventHandler(this.bpEditSequence_Click);
+			this.bpEditSequence.Click += new System.EventHandler(this.BpEditSequence_Click);
 			// 
 			// chkUseSeq
 			// 
@@ -435,7 +435,7 @@
 			this.chkUseSeq.TabIndex = 13;
 			this.chkUseSeq.Text = "Utiliser séquence";
 			this.chkUseSeq.UseVisualStyleBackColor = true;
-			this.chkUseSeq.CheckedChanged += new System.EventHandler(this.chkUseSeq_CheckedChanged);
+			this.chkUseSeq.CheckedChanged += new System.EventHandler(this.ChkUseSeq_CheckedChanged);
 			// 
 			// MakeAnim
 			// 

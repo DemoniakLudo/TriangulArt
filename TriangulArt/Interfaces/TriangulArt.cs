@@ -8,7 +8,6 @@ using System.Xml.Serialization;
 
 namespace TriangulArt {
 	public partial class TriangulArt : Form {
-		private PaletteCpc bitmapCpc = new PaletteCpc();
 		private DirectBitmap bmpLock;
 		private enum DrawMd { NONE = 0, MOVETRIANGLE, ADDTRIANGLE, ADDQUADRI, ADDRECTANGLE, ADDCERCLE, ADDLINE };
 		private DrawMd mouseOpt = DrawMd.NONE;
@@ -28,11 +27,12 @@ namespace TriangulArt {
 			InitializeComponent();
 			for (int i = 0; i < 16; i++) {
 				// Générer les contrôles de "couleurs"
-				colors[i] = new Label();
-				colors[i].BorderStyle = BorderStyle.FixedSingle;
-				colors[i].Location = new Point(966, 4 + i * 48);
-				colors[i].Size = new Size(40, 32);
-				colors[i].Tag = i;
+				colors[i] = new Label {
+					BorderStyle = BorderStyle.FixedSingle,
+					Location = new Point(966, 4 + i * 48),
+					Size = new Size(40, 32),
+					Tag = i
+				};
 				colors[i].MouseClick += ClickColor;
 				Controls.Add(colors[i]);
 			}
@@ -47,13 +47,13 @@ namespace TriangulArt {
 			switch (keyData) {
 				case Keys.Left:
 					if (projet.selData > 0)
-						bpImagePrec_Click(null, null);
+						BpImagePrec_Click(null, null);
 
 					return true;
 
 				case Keys.Right:
 					if (projet.selData < projet.lstData.Count - 1)
-						bpImageSuiv_Click(null, null);
+						BpImageSuiv_Click(null, null);
 
 					return true;
 
@@ -64,28 +64,26 @@ namespace TriangulArt {
 			return base.ProcessCmdKey(ref msg, keyData);
 		}
 
-		public void Reset(bool force = false) {
+		public void Reset() {
 			if (bmpFond != null) {
 				for (int y = 0; y < 256; y++)
 					for (int x = 0; x < maxWidth; x++)
 						bmpLock.SetPixel(x, y, bmpFond.GetPixel(x, y).ToArgb());
 			}
 			else
-				for (int y = 0; y < bmpLock.Height; y++)
-					bmpLock.SetHorLine(0, y, maxWidth, projet.SelImage().GetPalCPC(PaletteCpc.Palette[0]));
+				bmpLock.Fill(PaletteCpc.GetColorPal(0).GetColorArgb);
 
 			Render();
 		}
 
-		public void ResetNoRender(bool force = false) {
+		public void ResetNoRender() {
 			if (bmpFond != null) {
 				for (int y = 0; y < 256; y++)
 					for (int x = 0; x < maxWidth; x++)
 						bmpLock.SetPixel(x, y, bmpFond.GetPixel(x, y).ToArgb());
 			}
 			else
-				for (int y = 0; y < bmpLock.Height; y++)
-					bmpLock.SetHorLine(0, y, maxWidth, projet.SelImage().GetPalCPC(PaletteCpc.Palette[0]));
+				bmpLock.Fill(PaletteCpc.GetColorPal(0).GetColorArgb);
 		}
 
 		// Changement de la palette
@@ -107,12 +105,12 @@ namespace TriangulArt {
 			ColorSel.BackColor = Color.FromArgb(PaletteCpc.GetColorPal(selColor).GetColorArgb);
 		}
 
-		private void pictureBox_Paint(object sender, PaintEventArgs e) {
+		private void PictureBox_Paint(object sender, PaintEventArgs e) {
 			e.Graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
 			e.Graphics.DrawImage(bmpLock.Bitmap, new Rectangle(0, 0, pictureBox.Width, pictureBox.Height), 0, 0, bmpLock.Bitmap.Width, bmpLock.Bitmap.Height, GraphicsUnit.Pixel);
 		}
 
-		private void Render(bool forceDrawZoom = false) {
+		private void Render() {
 			UpdatePalette();
 			pictureBox.Image = bmpLock.Bitmap;
 			pictureBox.Refresh();
@@ -140,7 +138,7 @@ namespace TriangulArt {
 			ResetNoRender();
 			projet.SelImage().FillTriangles(bmpLock, maxWidth, chkLine.Checked);
 			Render();
-			bpAjoutLigne.Enabled=			bpAjoutTriangle.Enabled = bpAjoutQuadri.Enabled = bpAjoutRect.Enabled = bpAjoutCercle.Enabled = txbNbRayons.Enabled = true;
+			bpAjoutLigne.Enabled = bpAjoutTriangle.Enabled = bpAjoutQuadri.Enabled = bpAjoutRect.Enabled = bpAjoutCercle.Enabled = txbNbRayons.Enabled = true;
 			mouseOpt = DrawMd.NONE;
 		}
 
@@ -186,7 +184,7 @@ namespace TriangulArt {
 			int yReel = (e.Y + 2) / 3;
 			int xReel = (e.X + 2) / coefX;
 			lblInfoPos.Text = "x:" + xReel.ToString("000") + " y:" + yReel.ToString("000");
-			if ((mouseOpt == DrawMd.ADDTRIANGLE || mouseOpt == DrawMd.ADDQUADRI || mouseOpt==DrawMd.ADDLINE) && triSel != null) {
+			if ((mouseOpt == DrawMd.ADDTRIANGLE || mouseOpt == DrawMd.ADDQUADRI || mouseOpt == DrawMd.ADDLINE) && triSel != null) {
 				Graphics g = Graphics.FromImage(pictureBox.Image);
 				if (numPt == 2) {
 					XorDrawing.DrawXorLine(g, (Bitmap)pictureBox.Image, triSel.x1, triSel.y1, oldx1, oldy1);
@@ -245,7 +243,7 @@ namespace TriangulArt {
 			}
 		}
 
-		private void pictureBox_MouseDown(object sender, MouseEventArgs e) {
+		private void PictureBox_MouseDown(object sender, MouseEventArgs e) {
 			int yReel = (e.Y + 2) / 3;
 			int xReel = (e.X + 2) / coefX;
 			if (e.Button == MouseButtons.Right)
@@ -253,7 +251,6 @@ namespace TriangulArt {
 					listTriangles.SelectedIndex = projet.SelImage().SelTriangle(xReel, yReel);
 				else
 					FillTriangles();
-
 
 			if (e.Button == MouseButtons.Left && triSel != null && mouseOpt == DrawMd.NONE) {
 				Graphics g = Graphics.FromImage(pictureBox.Image);
@@ -269,10 +266,11 @@ namespace TriangulArt {
 		private void MemoPtTriangle(Graphics g, int xReel, int yReel) {
 			switch (numPt) {
 				case 1:
-					triSel = new Triangle();
-					triSel.x1 = xReel;
-					triSel.y1 = yReel;
-					triSel.color = selColor;
+					triSel = new Triangle {
+						x1 = xReel,
+						y1 = yReel,
+						color = selColor
+					};
 					numPt = 2;
 					SetInfo("Attente positionnement second point triangle");
 					oldx1 = xReel;
@@ -311,10 +309,11 @@ namespace TriangulArt {
 		private void MemoPtQuadri(Graphics g, int xReel, int yReel) {
 			switch (numPt) {
 				case 1:
-					triSel = new Triangle();
-					triSel.x1 = xReel;
-					triSel.y1 = yReel;
-					triSel.color = selColor;
+					triSel = new Triangle {
+						x1 = xReel,
+						y1 = yReel,
+						color = selColor
+					};
 					numPt = 2;
 					SetInfo("Attente positionnement second point quadrilatère");
 					oldx1 = xReel;
@@ -366,10 +365,11 @@ namespace TriangulArt {
 		private void MemoPtRectangle(Graphics g, int xReel, int yReel) {
 			switch (numPt) {
 				case 1:
-					triSel = new Triangle();
-					triSel.x1 = xReel;
-					triSel.y1 = yReel;
-					triSel.color = selColor;
+					triSel = new Triangle {
+						x1 = xReel,
+						y1 = yReel,
+						color = selColor
+					};
 					numPt = 2;
 					SetInfo("Attente positionnement second point rectangle");
 					oldx1 = xReel;
@@ -399,10 +399,11 @@ namespace TriangulArt {
 		private void MemoPtCercle(Graphics g, int xReel, int yReel) {
 			switch (numPt) {
 				case 1:
-					triSel = new Triangle();
-					triSel.x1 = xReel;
-					triSel.y1 = yReel;
-					triSel.color = selColor;
+					triSel = new Triangle {
+						x1 = xReel,
+						y1 = yReel,
+						color = selColor
+					};
 					numPt = 2;
 					SetInfo("Attente définition rayon cercle");
 					oldx1 = xReel;
@@ -434,13 +435,14 @@ namespace TriangulArt {
 		private void MemoPtLine(Graphics g, int xReel, int yReel) {
 			switch (numPt) {
 				case 1:
-					triSel = new Triangle();
-					triSel.x1 = xReel;
-					triSel.y1 = yReel;
-					triSel.color = selColor;
+					triSel = new Triangle {
+						x1 = xReel,
+						y1 = yReel,
+						color = selColor
+					};
 					numPt = 2;
 					triSel.x2 = xReel;
-					triSel.y2 = yReel<255?yReel+1:yReel-1;
+					triSel.y2 = yReel < 255 ? yReel + 1 : yReel - 1;
 					triSel.TriSommets();
 					numPt = 2;
 					SetInfo("Attente positionnement second point ligne");
@@ -499,7 +501,7 @@ namespace TriangulArt {
 			}
 		}
 
-		private void pictureBox_MouseLeave(object sender, EventArgs e) {
+		private void PictureBox_MouseLeave(object sender, EventArgs e) {
 			lblInfoPos.Text = "";
 		}
 
@@ -559,9 +561,8 @@ namespace TriangulArt {
 			projet.SelImage().nomImage = txbNomImage.Text;
 		}
 
-		private void bpLoad_Click(object sender, EventArgs e) {
-			OpenFileDialog dlg = new OpenFileDialog();
-			dlg.Filter = "Fichiers xml (*.xml)|*.xml";
+		private void BpLoad_Click(object sender, EventArgs e) {
+			OpenFileDialog dlg = new OpenFileDialog { Filter = "Fichiers xml (*.xml)|*.xml" };
 			DialogResult result = dlg.ShowDialog();
 			if (result == DialogResult.OK) {
 				FileStream fileParam = File.Open(dlg.FileName, FileMode.Open);
@@ -581,9 +582,8 @@ namespace TriangulArt {
 			}
 		}
 
-		private void bpSave_Click(object sender, EventArgs e) {
-			SaveFileDialog dlg = new SaveFileDialog();
-			dlg.Filter = "Fichiers xml (*.xml)|*.xml";
+		private void BpSave_Click(object sender, EventArgs e) {
+			SaveFileDialog dlg = new SaveFileDialog { Filter = "Fichiers xml (*.xml)|*.xml" };
 			DialogResult result = dlg.ShowDialog();
 			if (result == DialogResult.OK) {
 				MemImage();
@@ -600,9 +600,8 @@ namespace TriangulArt {
 			}
 		}
 
-		private void bpImport_Click(object sender, EventArgs e) {
-			OpenFileDialog dlg = new OpenFileDialog();
-			dlg.Filter = "Fichiers assembleur (*.asm)|*.asm";
+		private void BpImport_Click(object sender, EventArgs e) {
+			OpenFileDialog dlg = new OpenFileDialog { Filter = "Fichiers assembleur (*.asm)|*.asm" };
 			DialogResult result = dlg.ShowDialog();
 			if (result == DialogResult.OK) {
 				try {
@@ -617,9 +616,8 @@ namespace TriangulArt {
 			}
 		}
 
-		private void bpGenereAsm_Click(object sender, EventArgs e) {
-			SaveFileDialog dlg = new SaveFileDialog();
-			dlg.Filter = "Fichiers assembleur (*.asm)|*.asm";
+		private void BpGenereAsm_Click(object sender, EventArgs e) {
+			SaveFileDialog dlg = new SaveFileDialog { Filter = "Fichiers assembleur (*.asm)|*.asm" };
 			DialogResult result = dlg.ShowDialog();
 			if (result == DialogResult.OK) {
 				int.TryParse(txbTpsAttente.Text, out projet.SelImage().tpsAttente);
@@ -649,7 +647,7 @@ namespace TriangulArt {
 			}
 		}
 
-		private void listTriangles_SelectedIndexChanged(object sender, EventArgs e) {
+		private void ListTriangles_SelectedIndexChanged(object sender, EventArgs e) {
 			triSel = projet.SelImage().SelectTriangle(listTriangles.SelectedIndex);
 			if (triSel != null) {
 				txbPos.Text = listTriangles.SelectedIndex.ToString();
@@ -671,25 +669,25 @@ namespace TriangulArt {
 				DisplayList();
 		}
 
-		private void bpRedraw_Click(object sender, EventArgs e) {
+		private void BpRedraw_Click(object sender, EventArgs e) {
 			projet.SelImage().CleanUp(maxWidth, true);
 			DisplayList();
 			FillTriangles();
 		}
 
 		private void DeleteSelTriangle() {
-			if (triSel != null && MessageBox.Show("Etes vous sur(e) de vouloir supprimer ce triangle ?", "Confirmation suppression", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes) {
+			if (triSel != null && MessageBox.Show("Etes vous sur(e) de vouloir supprimer ce triangle ?", "Confirmation suppression", MessageBoxButtons.YesNo) == DialogResult.Yes) {
 				projet.SelImage().DeleteSelTriangle();
 				DisplayList();
 				FillTriangles();
 			}
 		}
 
-		private void bpDelete_Click(object sender, EventArgs e) {
+		private void BpDelete_Click(object sender, EventArgs e) {
 			DeleteSelTriangle();
 		}
 
-		private void bpEdit_Click(object sender, EventArgs e) {
+		private void BpEdit_Click(object sender, EventArgs e) {
 			Triangle t = CheckDatas();
 			if (t != null) {
 				int newIndex = -1;
@@ -701,7 +699,7 @@ namespace TriangulArt {
 			}
 		}
 
-		private void bpAddCoord_Click(object sender, EventArgs e) {
+		private void BpAddCoord_Click(object sender, EventArgs e) {
 			Triangle t = CheckDatas();
 			if (t != null) {
 				Triangle tnew = null;
@@ -727,14 +725,13 @@ namespace TriangulArt {
 			}
 		}
 
-		private void chkPlus_CheckedChanged(object sender, EventArgs e) {
+		private void ChkPlus_CheckedChanged(object sender, EventArgs e) {
 			projet.cpcPlus = PaletteCpc.cpcPlus = chkPlus.Checked;
 			FillTriangles();
 		}
 
-		private void bpImportImage_Click(object sender, EventArgs e) {
-			OpenFileDialog dlg = new OpenFileDialog();
-			dlg.Filter = "Fichier image (*.bmp, *.gif, *.png, *.jpg,*.jpeg)|*.bmp;*.gif;*.png;*.jpg;*.jpeg;";
+		private void BpImportImage_Click(object sender, EventArgs e) {
+			OpenFileDialog dlg = new OpenFileDialog { Filter = "Fichier image (*.bmp, *.gif, *.png, *.jpg,*.jpeg)|*.bmp;*.gif;*.png;*.jpg;*.jpeg;" };
 			DialogResult result = dlg.ShowDialog();
 			if (result == DialogResult.OK) {
 				using (Bitmap b = new Bitmap(dlg.FileName)) {
@@ -749,7 +746,7 @@ namespace TriangulArt {
 			}
 		}
 
-		private void bpClear_Click(object sender, EventArgs e) {
+		private void BpClear_Click(object sender, EventArgs e) {
 			if (MessageBox.Show("Etes vous certain de vouloir tout effacer ?", "Confirmation d'effacement", MessageBoxButtons.YesNo) == DialogResult.Yes) {
 				if (bmpFond != null) {
 					bmpFond.Dispose();
@@ -761,54 +758,54 @@ namespace TriangulArt {
 			}
 		}
 
-		private void bpUp_Click(object sender, EventArgs e) {
+		private void BpUp_Click(object sender, EventArgs e) {
 			int memoSel = listTriangles.SelectedIndex;
 			projet.SelImage().UpTriangle();
 			listTriangles.SelectedIndex = memoSel - 1;
 		}
 
-		private void bpDown_Click(object sender, EventArgs e) {
+		private void BpDown_Click(object sender, EventArgs e) {
 			int memoSel = listTriangles.SelectedIndex;
 			projet.SelImage().DownTriangle();
 			listTriangles.SelectedIndex = memoSel + 1;
 		}
 
-		private void bpFirst_Click(object sender, EventArgs e) {
+		private void BpFirst_Click(object sender, EventArgs e) {
 			projet.SelImage().SetFirstTriangle();
 			DisplayList();
 			listTriangles.SelectedIndex = 0;
 		}
 
-		private void bpLast_Click(object sender, EventArgs e) {
+		private void BpLast_Click(object sender, EventArgs e) {
 			int nbTriangles = projet.SelImage().lstTriangle.Count - 1;
 			projet.SelImage().SetLastTriangle(nbTriangles);
 			DisplayList();
 			listTriangles.SelectedIndex = nbTriangles;
 		}
 
-		private void rbStandard_CheckedChanged(object sender, EventArgs e) {
+		private void RbStandard_CheckedChanged(object sender, EventArgs e) {
 			projet.SelImage().modeRendu = 0;
 			DisplayList();
 			FillTriangles();
 		}
 
-		private void rbHorizontal_CheckedChanged(object sender, EventArgs e) {
+		private void RbHorizontal_CheckedChanged(object sender, EventArgs e) {
 			projet.SelImage().modeRendu = 1;
 			DisplayList();
 			FillTriangles();
 		}
 
-		private void rbVertical_CheckedChanged(object sender, EventArgs e) {
+		private void RbVertical_CheckedChanged(object sender, EventArgs e) {
 			projet.SelImage().modeRendu = 2;
 			DisplayList();
 			FillTriangles();
 		}
 
-		private void bpClearList_Click(object sender, EventArgs e) {
+		private void BpClearList_Click(object sender, EventArgs e) {
 			listInfo.Items.Clear();
 		}
 
-		private void bpDeplace_Click(object sender, EventArgs e) {
+		private void BpDeplace_Click(object sender, EventArgs e) {
 			int deplX = 0, deplY = 0;
 			if (int.TryParse(txbTrX.Text, out deplX) && int.TryParse(txbTrY.Text, out deplY)) {
 				if (rbDepImage.Checked) {
@@ -828,19 +825,19 @@ namespace TriangulArt {
 				}
 				else
 					if (triSel != null) {
-						int memoSel = projet.SelImage().GetSelTriangle();
-						projet.SelImage().DeplaceTriangle(deplX, deplY, maxWidth);
-						DisplayList();
-						listTriangles.SelectedIndex = memoSel;
-					}
-					else
-						MessageBox.Show("Pas de triangle sélectionné");
+					int memoSel = projet.SelImage().GetSelTriangle();
+					projet.SelImage().DeplaceTriangle(deplX, deplY, maxWidth);
+					DisplayList();
+					listTriangles.SelectedIndex = memoSel;
+				}
+				else
+					MessageBox.Show("Pas de triangle sélectionné");
 			}
 			else
 				MessageBox.Show("Veuillez sélectionner des données de déplacement valide");
 		}
 
-		private void bpZoom_Click(object sender, EventArgs e) {
+		private void BpZoom_Click(object sender, EventArgs e) {
 			double zoomX = 0, zoomY = 0;
 			if (double.TryParse(txbTrX.Text.Replace('.', ','), out zoomX) && double.TryParse(txbTrY.Text.Replace('.', ','), out zoomY)) {
 				if (rbDepImage.Checked) {
@@ -860,54 +857,54 @@ namespace TriangulArt {
 				}
 				else
 					if (triSel != null) {
-						int memoSel = projet.SelImage().GetSelTriangle();
-						projet.SelImage().CoefZoom(triSel, zoomX, zoomY, chkCenterZoom.Checked, maxWidth);
-						DisplayList();
-						listTriangles.SelectedIndex = memoSel;
-					}
-					else
-						MessageBox.Show("Pas de triangle sélectionné");
+					int memoSel = projet.SelImage().GetSelTriangle();
+					projet.SelImage().CoefZoom(triSel, zoomX, zoomY, chkCenterZoom.Checked, maxWidth);
+					DisplayList();
+					listTriangles.SelectedIndex = memoSel;
+				}
+				else
+					MessageBox.Show("Pas de triangle sélectionné");
 			}
 			else
 				MessageBox.Show("Veuillez sélectionner des données de zoom valide");
 		}
 
-		private void bpRapproche_Click(object sender, EventArgs e) {
+		private void BpRapproche_Click(object sender, EventArgs e) {
 			projet.SelImage().Rapproche(4);
 			projet.SelImage().CleanUp(maxWidth);
 			DisplayList();
 			FillTriangles();
 		}
 
-		private void bpAjoutLigne_Click(object sender, EventArgs e) {
+		private void BpAjoutLigne_Click(object sender, EventArgs e) {
 			numPt = 1;
 			mouseOpt = DrawMd.ADDLINE;
 			SetInfo("Attente positionnement premier point ligne");
-			bpAjoutLigne.Enabled=bpAjoutTriangle.Enabled = bpAjoutQuadri.Enabled = bpAjoutRect.Enabled = bpAjoutCercle.Enabled = txbNbRayons.Enabled = false;
+			bpAjoutLigne.Enabled = bpAjoutTriangle.Enabled = bpAjoutQuadri.Enabled = bpAjoutRect.Enabled = bpAjoutCercle.Enabled = txbNbRayons.Enabled = false;
 		}
 
-		private void bpAddTriangle_Click(object sender, EventArgs e) {
+		private void BpAddTriangle_Click(object sender, EventArgs e) {
 			numPt = 1;
 			mouseOpt = DrawMd.ADDTRIANGLE;
 			SetInfo("Attente positionnement premier point triangle");
-			bpAjoutLigne.Enabled=bpAjoutTriangle.Enabled = bpAjoutQuadri.Enabled = bpAjoutRect.Enabled = bpAjoutCercle.Enabled = txbNbRayons.Enabled = false;
+			bpAjoutLigne.Enabled = bpAjoutTriangle.Enabled = bpAjoutQuadri.Enabled = bpAjoutRect.Enabled = bpAjoutCercle.Enabled = txbNbRayons.Enabled = false;
 		}
 
-		private void bpAjoutQuadri_Click(object sender, EventArgs e) {
+		private void BpAjoutQuadri_Click(object sender, EventArgs e) {
 			numPt = 1;
 			mouseOpt = DrawMd.ADDQUADRI;
 			SetInfo("Attente positionnement premier point quadrilatère");
-			bpAjoutLigne.Enabled=bpAjoutTriangle.Enabled = bpAjoutQuadri.Enabled = bpAjoutRect.Enabled = bpAjoutCercle.Enabled = txbNbRayons.Enabled = false;
+			bpAjoutLigne.Enabled = bpAjoutTriangle.Enabled = bpAjoutQuadri.Enabled = bpAjoutRect.Enabled = bpAjoutCercle.Enabled = txbNbRayons.Enabled = false;
 		}
 
-		private void bpAjoutRect_Click(object sender, EventArgs e) {
+		private void BpAjoutRect_Click(object sender, EventArgs e) {
 			numPt = 1;
 			mouseOpt = DrawMd.ADDRECTANGLE;
 			SetInfo("Attente positionnement premier point rectangle");
-			bpAjoutLigne.Enabled=bpAjoutTriangle.Enabled = bpAjoutQuadri.Enabled = bpAjoutRect.Enabled = bpAjoutCercle.Enabled = txbNbRayons.Enabled = false;
+			bpAjoutLigne.Enabled = bpAjoutTriangle.Enabled = bpAjoutQuadri.Enabled = bpAjoutRect.Enabled = bpAjoutCercle.Enabled = txbNbRayons.Enabled = false;
 		}
 
-		private void bpAjoutCercle_Click(object sender, EventArgs e) {
+		private void BpAjoutCercle_Click(object sender, EventArgs e) {
 			nbr = 0;
 			int.TryParse(txbNbRayons.Text, out nbr);
 			if (nbr > 3 && nbr <= MAX_RAYONS) {
@@ -920,7 +917,7 @@ namespace TriangulArt {
 				MessageBox.Show("Le nombre de rayons doit être compris entre 4 et " + MAX_RAYONS.ToString());
 		}
 
-		private void bpClean_Click(object sender, EventArgs e) {
+		private void BpClean_Click(object sender, EventArgs e) {
 			int nbAvant = projet.SelImage().lstTriangle.Count;
 			projet.SelImage().CleanUp(maxWidth);
 			int nbApres = projet.SelImage().lstTriangle.Count;
@@ -943,7 +940,7 @@ namespace TriangulArt {
 			InitImage();
 		}
 
-		private void bpReadProj_Click(object sender, EventArgs e) {
+		private void BpReadProj_Click(object sender, EventArgs e) {
 			OpenFileDialog dlg = new OpenFileDialog();
 			dlg.Filter = "Fichiers xml (*.xml)|*.xml";
 			DialogResult result = dlg.ShowDialog();
@@ -969,7 +966,7 @@ namespace TriangulArt {
 			}
 		}
 
-		private void bpSaveProj_Click(object sender, EventArgs e) {
+		private void BpSaveProj_Click(object sender, EventArgs e) {
 			SaveFileDialog dlg = new SaveFileDialog();
 			dlg.Filter = "Fichiers xml (*.xml)|*.xml";
 			DialogResult result = dlg.ShowDialog();
@@ -988,7 +985,7 @@ namespace TriangulArt {
 			}
 		}
 
-		private void bpFusion_Click(object sender, EventArgs e) {
+		private void BpFusion_Click(object sender, EventArgs e) {
 			OpenFileDialog dlg = new OpenFileDialog();
 			dlg.Filter = "Fichiers xml (*.xml)|*.xml";
 			DialogResult result = dlg.ShowDialog();
@@ -997,8 +994,8 @@ namespace TriangulArt {
 				try {
 					Projet projetTmp = (Projet)new XmlSerializer(typeof(Projet)).Deserialize(fileParam);
 					if (projetTmp.lstData.Count == projet.lstData.Count) {
-						for (int i = 0; i <projet.lstData.Count; i++) {
-							Datas d1 =projet.lstData[i];
+						for (int i = 0; i < projet.lstData.Count; i++) {
+							Datas d1 = projet.lstData[i];
 							Datas d2 = projetTmp.lstData[i];
 							for (int j = 0; j < d2.lstTriangle.Count; j++)
 								d1.lstTriangle.Add(d2.lstTriangle[j]);
@@ -1018,33 +1015,32 @@ namespace TriangulArt {
 			}
 		}
 
-		private void bpNewImage_Click(object sender, EventArgs e) {
+		private void BpNewImage_Click(object sender, EventArgs e) {
 			projet.AddData();
 			SetImageProjet();
 		}
 
-		private void bpSupImage_Click(object sender, EventArgs e) {
+		private void BpSupImage_Click(object sender, EventArgs e) {
 			if (MessageBox.Show("Etes vous sur(e) de vouloir supprimer cette image ?", "Confirmation suppression", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes) {
 				projet.RemoveImage();
 				SetImageProjet();
 			}
 		}
 
-		private void bpImagePrec_Click(object sender, EventArgs e) {
+		private void BpImagePrec_Click(object sender, EventArgs e) {
 			MemImage();
 			projet.SelectImage(projet.selData - 1);
 			SetImageProjet();
 		}
 
-		private void bpImageSuiv_Click(object sender, EventArgs e) {
+		private void BpImageSuiv_Click(object sender, EventArgs e) {
 			MemImage();
 			projet.SelectImage(projet.selData + 1);
 			SetImageProjet();
 		}
 
-		private void bpGenereProjetAsm_Click(object sender, EventArgs e) {
-			SaveFileDialog dlg = new SaveFileDialog();
-			dlg.Filter = "Fichiers assembleur (*.asm)|*.asm";
+		private void BpGenereProjetAsm_Click(object sender, EventArgs e) {
+			SaveFileDialog dlg = new SaveFileDialog { Filter = "Fichiers assembleur (*.asm)|*.asm" };
 			DialogResult result = dlg.ShowDialog();
 			if (result == DialogResult.OK) {
 				projet.GenereSourceAsm(dlg.FileName, chkModePolice.Checked, chkAnim3D.Checked, chkZX0.Checked);
@@ -1052,7 +1048,7 @@ namespace TriangulArt {
 			}
 		}
 
-		private void bpNewProjet_Click(object sender, EventArgs e) {
+		private void BpNewProjet_Click(object sender, EventArgs e) {
 			if (MessageBox.Show("Etes vous sur(e) de vouloir créer un nouveau projet ? Ceci effacera le projet en cours.", "Confirmation création nouveau projet", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes) {
 				projet.Clear();
 				SetImageProjet();
@@ -1089,21 +1085,21 @@ namespace TriangulArt {
 			FillTriangles();
 		}
 
-		private void rbMode0_CheckedChanged(object sender, EventArgs e) {
+		private void RbMode0_CheckedChanged(object sender, EventArgs e) {
 			if (rbMode0.Checked && projet.mode != 0) {
 				projet.mode = 0;
 				SetNewMode(true);
 			}
 		}
 
-		private void rbMode1_CheckedChanged(object sender, EventArgs e) {
+		private void RbMode1_CheckedChanged(object sender, EventArgs e) {
 			if (rbMode1.Checked && projet.mode != 1) {
 				projet.mode = 1;
 				SetNewMode(true);
 			}
 		}
 
-		private void bpCleanProj_Click(object sender, EventArgs e) {
+		private void BpCleanProj_Click(object sender, EventArgs e) {
 			Enabled = false;
 			int nbAvant = 0, nbApres = 0;
 			foreach (Datas d in projet.lstData) {
@@ -1122,15 +1118,15 @@ namespace TriangulArt {
 			Enabled = true;
 		}
 
-		private void chkAnim3D_CheckedChanged(object sender, EventArgs e) {
+		private void ChkAnim3D_CheckedChanged(object sender, EventArgs e) {
 			bpMakeAnim3D.Visible = chkZX0.Visible = chkAnim3D.Checked;
 		}
 
-		private void chkLine_CheckedChanged(object sender, EventArgs e) {
-			bpRedraw_Click(null, null);
+		private void ChkLine_CheckedChanged(object sender, EventArgs e) {
+			BpRedraw_Click(null, null);
 		}
 
-		private void bpMakeAnim3D_Click(object sender, EventArgs e) {
+		private void BpMakeAnim3D_Click(object sender, EventArgs e) {
 			Enabled = false;
 			new MakeAnim(projet).ShowDialog();
 			projet.SelectImage(0);
@@ -1138,18 +1134,18 @@ namespace TriangulArt {
 			Enabled = true;
 		}
 
-		private void chkOverscan_CheckedChanged(object sender, EventArgs e) {
+		private void ChkOverscan_CheckedChanged(object sender, EventArgs e) {
 			if (chkOverscan.Checked) {
 				pictureBox.Width = 1152;
 				panel1.Left = 1202;
-				this.Width = 1770;
+				Width = 1770;
 				for (int i = 0; i < 16; i++)
 					colors[i].Left = 1158;
 			}
 			else {
 				pictureBox.Width = 960;
 				panel1.Left = 1010;
-				this.Width = 1578;
+				Width = 1578;
 				for (int i = 0; i < 16; i++)
 					colors[i].Left = 966;
 			}

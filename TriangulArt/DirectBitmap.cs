@@ -49,10 +49,6 @@ public class DirectBitmap : IDisposable {
 		return (int)(tabBits[y < Height ? (x + (y * Width)) : 0] & 0xFFFFFF);
 	}
 
-	public RvbColor GetPixelColor(int x, int y) {
-		return new RvbColor((int)tabBits[y < Height ? (x + (y * Width)) : 0]);
-	}
-
 	public void SetHorLine(int pixelX, int pixelY, int lineLength, int c, bool increment = false) {
 		uint color = (uint)c | 0xFF000000;
 		int index = pixelX + (pixelY * Width);
@@ -93,10 +89,10 @@ public class DirectBitmap : IDisposable {
 						while (x1 != x2) {
 							SetPixel(x1, y1, selected ? (y1 << 13) + (y1 << 4) + (y1 << 22) + (x1 << 5) : c);
 							x1++;
-							e = e - dy;
+							e -= dy;
 							if (e < 0) {
 								y1++;
-								e = e + dx;
+								e += dx;
 							};
 						}
 					}
@@ -107,10 +103,10 @@ public class DirectBitmap : IDisposable {
 						while (y1 != y2) {
 							SetPixel(x1, y1, selected ? (y1 << 13) + (y1 << 4) + (y1 << 22) + (x1 <<5) : c);
 							y1++;
-							e = e - dx;
+							e -= dx;
 							if (e < 0) {
 								x1++;
-								e = e + dy;
+								e += dy;
 							}
 						}
 					}
@@ -123,10 +119,10 @@ public class DirectBitmap : IDisposable {
 						while (x1 != x2) {
 							SetPixel(x1, y1, selected ? (y1 << 13) + (y1 << 4) + (y1 << 22) + (x1 <<5) : c);
 							x1++;
-							e = e + dy;
+							e += dy;
 							if (e < 0) {
 								y1--;
-								e = e + dx;
+								e += dx;
 							}
 						}
 					}
@@ -137,10 +133,10 @@ public class DirectBitmap : IDisposable {
 						while (y1 != y2) {
 							SetPixel(x1, y1, selected ? (y1 << 13) + (y1 << 4) + (y1 << 22) + (x1 << 5) : c);
 							y1--;
-							e = e + dx;
+							e += dx;
 							if (e > 0) {
 								x1++;
-								e = e + dy;
+								e += dy;
 							}
 						}
 					}
