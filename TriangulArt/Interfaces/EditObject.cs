@@ -230,8 +230,7 @@ namespace TriangulArt {
 
 		private void ClickColor(object sender, MouseEventArgs e) {
 			Label colorClick = sender as Label;
-			byte pen = colorClick.Tag != null ? (byte)colorClick.Tag :(byte)0;
-			selColor = pen;
+			selColor = (byte)(colorClick.Tag != null ? (int)colorClick.Tag : 0);
 			UpdatePalette();
 		}
 		#endregion
