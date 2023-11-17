@@ -3,13 +3,13 @@
 namespace TriangulArt {
 	public partial class Triangle {
 		public int x1, y1, x2, y2, x3, y3;
-		public int color;
+		public byte color;
 		private int pctFill = -1;
 
 		public Triangle() {
 		}
 
-		public Triangle(int x1, int y1, int x2, int y2, int x3, int y3, int color) {
+		public Triangle(int x1, int y1, int x2, int y2, int x3, int y3, byte color) {
 			this.x1 = x1;
 			this.y1 = y1;
 			this.x2 = x2;
@@ -47,7 +47,7 @@ namespace TriangulArt {
 			pctFill = pct;
 		}
 
-		public Triangle(int x1, int y1, int x2, int y2, int x3, int y3, int color, DirectBitmap bm) {
+		public Triangle(int x1, int y1, int x2, int y2, int x3, int y3, byte color, DirectBitmap bm) {
 			this.x1 = x1;
 			this.y1 = y1;
 			this.x2 = x2;
@@ -156,7 +156,7 @@ namespace TriangulArt {
 				xr = x2;
 
 			for (int y = y1; y < y3; y++) {
-				int color = selected ? (y << 13) + (y << 4) + (y << 22) : this.color;
+				int color = selected ? (y << 13) + (y << 4) + (y << 22) : PaletteCpc.GetColorPal(this.color).GetColorArgb;
 				if (xr > xl) {
 					bmpLock.SetHorLine(xl, y, (xr - xl), color, selected);
 					if (bmCalc != null)

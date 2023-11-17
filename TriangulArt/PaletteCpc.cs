@@ -44,15 +44,15 @@ public class PaletteCpc {
 		return cpcPlus ? new RvbColor((byte)((col & 0x0F) * 17), (byte)(((col & 0xF00) >> 8) * 17), (byte)(((col & 0xF0) >> 4) * 17)) : RgbCPC[col < 27 ? col : 0];
 	}
 
-	static public int GetNumPen(int color) {
-		RvbColor c = new RvbColor(color);
-		for (int i = 0; i < 16; i++) {
-			int col = Palette[i];
-			RvbColor p = cpcPlus ? new RvbColor((byte)((col & 0x0F) * 17), (byte)(((col & 0xF00) >> 8) * 17), (byte)(((col & 0xF0) >> 4) * 17)): RgbCPC[col];
-			if (Math.Abs(c.r - p.r) < 15 && Math.Abs(c.b - p.b) < 15 && Math.Abs(c.v - p.v) < 15)
-				return i;
+	static public byte GetNumPen(RvbColor c) {
+		for (int k = 16; k <= 64; k+=16) {
+			for (int i = 15; i >= 0; i--) {
+				RvbColor p = GetColorPal(i);
+				if (Math.Abs(c.r - p.r) < k && Math.Abs(c.b - p.b) < k && Math.Abs(c.v - p.v) < k)
+					return (byte)i;
+			}
 		}
-		return -1;
+		return 0;
 	}
 }
 

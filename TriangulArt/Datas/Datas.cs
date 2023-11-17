@@ -185,7 +185,7 @@ namespace TriangulArt {
 			return IsLeft(t.x3, t.y3, t.x1, t.y1, posx, posy) * IsLeft(t.x3, t.y3, t.x1, t.y1, t.x2, t.y2) > 0 && IsLeft(t.x1, t.y1, t.x2, t.y2, posx, posy) * IsLeft(t.x1, t.y1, t.x2, t.y2, t.x3, t.y3) > 0 && IsLeft(t.x3, t.y3, t.x2, t.y2, posx, posy) * IsLeft(t.x3, t.y3, t.x2, t.y2, t.x1, t.y1) > 0;
 		}
 
-		public void EditSelTriangle(Triangle t, int c, int newIndex) {
+		public void EditSelTriangle(Triangle t, byte c, int newIndex) {
 			if (newIndex != selLigne && newIndex >= 0 && newIndex < lstTriangle.Count) {
 				lstTriangle[selLigne].x1 = lstTriangle[newIndex].x1;
 				lstTriangle[selLigne].y1 = lstTriangle[newIndex].y1;
@@ -278,7 +278,7 @@ namespace TriangulArt {
 						for (int y = 0; y < 256; y++)
 							if (bmpLock.GetPixel(x, y) == i + 1) { // Vérifier image contient au moins un pixel de la couleur i+1
 								found = true;
-								x = y = 256;
+								break;
 							}
 					if (!found)
 						lstTriangle[i].x1 = lstTriangle[i].y1 = lstTriangle[i].x2 = lstTriangle[i].y2 = 0;
@@ -455,7 +455,7 @@ namespace TriangulArt {
 						int y3 = int.Parse(param[11], NumberStyles.HexNumber);
 						int c = int.Parse(param[13], NumberStyles.HexNumber);
 						if (x1 >= 0 && y1 >= 0 && x2 >= 0 && y2 >= 0 && x3 >= 0 && y3 >= 0) {
-							lstTriangle.Add(new Triangle(x1, y1, x2, y2, x3, y3, c & 0x0F));
+							lstTriangle.Add(new Triangle(x1, y1, x2, y2, x3, y3, (byte)(c & 0x0F )));
 							return (c & 0x80) != 0;
 						}
 					}

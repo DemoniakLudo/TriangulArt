@@ -15,7 +15,7 @@ namespace TriangulArt {
 		private int numPt, nbr;
 		private Triangle triSel;
 		private int oldx1, oldy1;
-		private int selColor = 1;
+		private byte selColor = 1;
 		private Bitmap bmpFond = null;
 		private Projet projet = new Projet();
 		private Version version = Assembly.GetExecutingAssembly().GetName().Version;
@@ -93,7 +93,7 @@ namespace TriangulArt {
 			Label colorClick = sender as Label;
 			int pen = colorClick.Tag != null ? (int)colorClick.Tag : 0;
 			if (e.Button == MouseButtons.Left) {
-				selColor = pen;
+				selColor = (byte)pen;
 				UpdatePalette();
 			}
 			else
@@ -148,10 +148,10 @@ namespace TriangulArt {
 			listTriangles.Items.Clear();
 			for (int i = 0; i < projet.SelImage().lstTriangle.Count; i++) {
 				Triangle t = projet.SelImage().lstTriangle[i];
-				string inf = "Tr." + i.ToString("000") + "\t\t(" + t.x1 + "," + t.y1 + ")\t\t(" + t.x2 + "," + t.y2 + ")\t\t(" + t.x3 + "," + t.y3 + ")\t\tcouleur:" + t.color;
+				string inf = "Tr." + i.ToString("000") + "\t(" + t.x1 + "," + t.y1 + ")\t\t(" + t.x2 + "," + t.y2 + ")\t\t(" + t.x3 + "," + t.y3 + ")\t\tcouleur:" + t.color;
 				if (t.GetPctFill() != -1) {
 					int f = t.GetPctFill();
-					inf += "\t\t" + f + "%";
+					inf += "\t" + f + "%";
 					if (f < 10)
 						inf += "====";
 
@@ -1142,14 +1142,14 @@ namespace TriangulArt {
 			if (chkOverscan.Checked) {
 				pictureBox.Width = 1152;
 				panel1.Left = 1202;
-				this.Width = 1876;
+				this.Width = 1770;
 				for (int i = 0; i < 16; i++)
 					colors[i].Left = 1158;
 			}
 			else {
 				pictureBox.Width = 960;
 				panel1.Left = 1010;
-				this.Width = 1684;
+				this.Width = 1578;
 				for (int i = 0; i < 16; i++)
 					colors[i].Left = 966;
 			}

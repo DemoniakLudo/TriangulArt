@@ -246,7 +246,7 @@
 			// listVertex
 			// 
 			this.listVertex.FormattingEnabled = true;
-			this.listVertex.Location = new System.Drawing.Point(76, 446);
+			this.listVertex.Location = new System.Drawing.Point(76, 455);
 			this.listVertex.Name = "listVertex";
 			this.listVertex.Size = new System.Drawing.Size(308, 264);
 			this.listVertex.TabIndex = 9;
@@ -255,7 +255,7 @@
 			// listFace
 			// 
 			this.listFace.FormattingEnabled = true;
-			this.listFace.Location = new System.Drawing.Point(642, 446);
+			this.listFace.Location = new System.Drawing.Point(642, 455);
 			this.listFace.Name = "listFace";
 			this.listFace.Size = new System.Drawing.Size(299, 264);
 			this.listFace.TabIndex = 9;
@@ -263,7 +263,7 @@
 			// 
 			// txbFaceA
 			// 
-			this.txbFaceA.Location = new System.Drawing.Point(661, 716);
+			this.txbFaceA.Location = new System.Drawing.Point(661, 725);
 			this.txbFaceA.Name = "txbFaceA";
 			this.txbFaceA.Size = new System.Drawing.Size(51, 20);
 			this.txbFaceA.TabIndex = 10;
@@ -271,7 +271,7 @@
 			// 
 			// txbFaceB
 			// 
-			this.txbFaceB.Location = new System.Drawing.Point(739, 716);
+			this.txbFaceB.Location = new System.Drawing.Point(739, 725);
 			this.txbFaceB.Name = "txbFaceB";
 			this.txbFaceB.Size = new System.Drawing.Size(51, 20);
 			this.txbFaceB.TabIndex = 10;
@@ -279,7 +279,7 @@
 			// 
 			// txbFaceC
 			// 
-			this.txbFaceC.Location = new System.Drawing.Point(818, 716);
+			this.txbFaceC.Location = new System.Drawing.Point(818, 725);
 			this.txbFaceC.Name = "txbFaceC";
 			this.txbFaceC.Size = new System.Drawing.Size(51, 20);
 			this.txbFaceC.TabIndex = 10;
@@ -288,7 +288,7 @@
 			// label5
 			// 
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(643, 719);
+			this.label5.Location = new System.Drawing.Point(643, 728);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(14, 13);
 			this.label5.TabIndex = 11;
@@ -297,7 +297,7 @@
 			// label6
 			// 
 			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(719, 719);
+			this.label6.Location = new System.Drawing.Point(719, 728);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(14, 13);
 			this.label6.TabIndex = 11;
@@ -306,7 +306,7 @@
 			// label7
 			// 
 			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(798, 719);
+			this.label7.Location = new System.Drawing.Point(798, 728);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(14, 13);
 			this.label7.TabIndex = 11;
@@ -314,7 +314,7 @@
 			// 
 			// txbVertexX
 			// 
-			this.txbVertexX.Location = new System.Drawing.Point(105, 716);
+			this.txbVertexX.Location = new System.Drawing.Point(105, 725);
 			this.txbVertexX.Name = "txbVertexX";
 			this.txbVertexX.Size = new System.Drawing.Size(51, 20);
 			this.txbVertexX.TabIndex = 10;
@@ -322,7 +322,7 @@
 			// 
 			// txbVertexY
 			// 
-			this.txbVertexY.Location = new System.Drawing.Point(223, 716);
+			this.txbVertexY.Location = new System.Drawing.Point(223, 725);
 			this.txbVertexY.Name = "txbVertexY";
 			this.txbVertexY.Size = new System.Drawing.Size(51, 20);
 			this.txbVertexY.TabIndex = 10;
@@ -330,7 +330,7 @@
 			// 
 			// txbVertexZ
 			// 
-			this.txbVertexZ.Location = new System.Drawing.Point(334, 716);
+			this.txbVertexZ.Location = new System.Drawing.Point(334, 725);
 			this.txbVertexZ.Name = "txbVertexZ";
 			this.txbVertexZ.Size = new System.Drawing.Size(51, 20);
 			this.txbVertexZ.TabIndex = 10;
@@ -339,7 +339,7 @@
 			// label8
 			// 
 			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point(87, 719);
+			this.label8.Location = new System.Drawing.Point(87, 728);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(14, 13);
 			this.label8.TabIndex = 11;
@@ -348,7 +348,7 @@
 			// label9
 			// 
 			this.label9.AutoSize = true;
-			this.label9.Location = new System.Drawing.Point(203, 719);
+			this.label9.Location = new System.Drawing.Point(203, 728);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(14, 13);
 			this.label9.TabIndex = 11;
@@ -357,7 +357,7 @@
 			// label10
 			// 
 			this.label10.AutoSize = true;
-			this.label10.Location = new System.Drawing.Point(314, 719);
+			this.label10.Location = new System.Drawing.Point(314, 728);
 			this.label10.Name = "label10";
 			this.label10.Size = new System.Drawing.Size(14, 13);
 			this.label10.TabIndex = 11;
@@ -365,7 +365,7 @@
 			// 
 			// bpAddVertex
 			// 
-			this.bpAddVertex.Location = new System.Drawing.Point(0, 658);
+			this.bpAddVertex.Location = new System.Drawing.Point(0, 667);
 			this.bpAddVertex.Name = "bpAddVertex";
 			this.bpAddVertex.Size = new System.Drawing.Size(75, 23);
 			this.bpAddVertex.TabIndex = 12;
@@ -376,7 +376,7 @@
 			// bpSupVertex
 			// 
 			this.bpSupVertex.Enabled = false;
-			this.bpSupVertex.Location = new System.Drawing.Point(0, 687);
+			this.bpSupVertex.Location = new System.Drawing.Point(0, 696);
 			this.bpSupVertex.Name = "bpSupVertex";
 			this.bpSupVertex.Size = new System.Drawing.Size(75, 23);
 			this.bpSupVertex.TabIndex = 12;
@@ -387,7 +387,7 @@
 			// bpEditVertex
 			// 
 			this.bpEditVertex.Enabled = false;
-			this.bpEditVertex.Location = new System.Drawing.Point(0, 716);
+			this.bpEditVertex.Location = new System.Drawing.Point(0, 725);
 			this.bpEditVertex.Name = "bpEditVertex";
 			this.bpEditVertex.Size = new System.Drawing.Size(75, 23);
 			this.bpEditVertex.TabIndex = 12;
@@ -397,7 +397,7 @@
 			// 
 			// bpAddFace
 			// 
-			this.bpAddFace.Location = new System.Drawing.Point(561, 658);
+			this.bpAddFace.Location = new System.Drawing.Point(561, 667);
 			this.bpAddFace.Name = "bpAddFace";
 			this.bpAddFace.Size = new System.Drawing.Size(75, 23);
 			this.bpAddFace.TabIndex = 12;
@@ -408,7 +408,7 @@
 			// bpSupFace
 			// 
 			this.bpSupFace.Enabled = false;
-			this.bpSupFace.Location = new System.Drawing.Point(561, 687);
+			this.bpSupFace.Location = new System.Drawing.Point(561, 696);
 			this.bpSupFace.Name = "bpSupFace";
 			this.bpSupFace.Size = new System.Drawing.Size(75, 23);
 			this.bpSupFace.TabIndex = 12;
@@ -419,7 +419,7 @@
 			// bpEditFace
 			// 
 			this.bpEditFace.Enabled = false;
-			this.bpEditFace.Location = new System.Drawing.Point(561, 716);
+			this.bpEditFace.Location = new System.Drawing.Point(561, 725);
 			this.bpEditFace.Name = "bpEditFace";
 			this.bpEditFace.Size = new System.Drawing.Size(75, 23);
 			this.bpEditFace.TabIndex = 12;
@@ -440,17 +440,16 @@
 			// lblFaceColor
 			// 
 			this.lblFaceColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.lblFaceColor.Location = new System.Drawing.Point(893, 716);
+			this.lblFaceColor.Location = new System.Drawing.Point(893, 725);
 			this.lblFaceColor.Name = "lblFaceColor";
 			this.lblFaceColor.Size = new System.Drawing.Size(48, 32);
 			this.lblFaceColor.TabIndex = 14;
-			this.lblFaceColor.Click += new System.EventHandler(this.lblFaceColor_Click);
 			// 
 			// EditObjet
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(956, 759);
+			this.ClientSize = new System.Drawing.Size(1010, 759);
 			this.Controls.Add(this.lblFaceColor);
 			this.Controls.Add(this.bpRedraw);
 			this.Controls.Add(this.bpEditFace);

@@ -7,16 +7,27 @@ namespace TriangulArt {
 		private Objet objet = new Objet();
 		private DirectBitmap bmpLock = new DirectBitmap(640, 400);
 		private int numFace = -1, numVertex = -1;
+		private Label[] colors = new Label[16];
+		private byte selColor = 1;
 
 		public EditObjet() {
 			InitializeComponent();
+			for (int i = 0; i < 16; i++) {
+				colors[i] = new Label();
+				colors[i].BorderStyle = BorderStyle.FixedSingle;
+				colors[i].Location = new Point(966, 4 + i * 48);
+				colors[i].Size = new Size(40, 32);
+				colors[i].Tag = i;
+				colors[i].MouseClick += ClickColor;
+				Controls.Add(colors[i]);
+			}
 			DisplayObj();
-			lblFaceColor.BackColor = Color.FromArgb(PaletteCpc.GetColorPal(0).GetColorArgb);
+			UpdatePalette();
 		}
 
 		private void DisplayBoutons() {
-			bpEditVertex.Enabled = bpSupVertex.Enabled = objet.lstVertex.Count > 0;
-			bpEditFace.Enabled = bpSupFace.Enabled = bpSaveObject.Enabled = objet.lstFace.Count > 0;
+			bpEditVertex.Enabled = bpSupVertex.Enabled = objet.lstVertex.Count > 0 && numVertex != -1;
+			bpEditFace.Enabled = bpSupFace.Enabled = bpSaveObject.Enabled = objet.lstFace.Count > 0 && numFace != -1;
 		}
 
 		private void DisplayVertex(int selVertex) {
@@ -51,7 +62,7 @@ namespace TriangulArt {
 
 		private void DisplayObj() {
 			DisplayBoutons();
-			bmpLock.Fill(0x808080);
+			bmpLock.Fill(PaletteCpc.GetColorPal(0).GetColorArgb);
 			int zoom = Utils.ConvertToInt(txbZoom.Text);
 			int angx = Utils.ConvertToInt(txbValX.Text);
 			int angy = Utils.ConvertToInt(txbValY.Text);
@@ -63,20 +74,31 @@ namespace TriangulArt {
 
 		private void listVertex_SelectedIndexChanged(object sender, EventArgs e) {
 			numVertex = listVertex.SelectedIndex;
-			Vertex v = objet.lstVertex[numVertex];
-			txbVertexX.Text = v.X.ToString();
-			txbVertexY.Text = v.Y.ToString();
-			txbVertexZ.Text = v.Z.ToString();
+			if (numVertex!=-1) {
+				Vertex v = objet.lstVertex[numVertex];
+				txbVertexX.Text = v.X.ToString();
+				txbVertexY.Text = v.Y.ToString();
+				txbVertexZ.Text = v.Z.ToString();
+			}
 			DisplayObj();
+		}
+
+		private void UpdatePalette() {
+			for (int i = 0; i < 16; i++)
+				colors[i].BackColor = Color.FromArgb(PaletteCpc.GetColorPal(i).GetColorArgb);
+
+			lblFaceColor.BackColor = Color.FromArgb(PaletteCpc.GetColorPal(selColor).GetColorArgb);
 		}
 
 		private void listFace_SelectedIndexChanged(object sender, EventArgs e) {
 			numFace = listFace.SelectedIndex;
-			Face f = objet.lstFace[numFace];
-			txbFaceA.Text = objet.lstVertex.IndexOf(f.GetA).ToString();
-			txbFaceB.Text = objet.lstVertex.IndexOf(f.GetB).ToString();
-			txbFaceC.Text = objet.lstVertex.IndexOf(f.GetC).ToString();
-			lblFaceColor.BackColor = Color.FromArgb(f.color.r, f.color.v, f.color.b);
+			if (numFace!=-1) {
+				Face f = objet.lstFace[numFace];
+				txbFaceA.Text = objet.lstVertex.IndexOf(f.GetA).ToString();
+				txbFaceB.Text = objet.lstVertex.IndexOf(f.GetB).ToString();
+				txbFaceC.Text = objet.lstVertex.IndexOf(f.GetC).ToString();
+				lblFaceColor.BackColor = Color.FromArgb(PaletteCpc.GetColorPal(f.pen).GetColorArgb);
+			}
 			DisplayObj();
 		}
 
@@ -179,6 +201,7 @@ namespace TriangulArt {
 			int c = Utils.ConvertToInt(txbFaceC.Text);
 			if (a >= 0 && b >= 0 && c >= 0 && a < objet.lstVertex.Count && b < objet.lstVertex.Count && c < objet.lstVertex.Count) {
 				Face f = new Face(numFace++, objet.lstVertex[a], objet.lstVertex[b], objet.lstVertex[c]);
+				f.pen = selColor;
 				objet.lstFace.Add(f);
 				DisplayFace(objet.lstFace.Count - 1);
 			}
@@ -193,25 +216,25 @@ namespace TriangulArt {
 			if (a >= 0 && b >= 0 && c >= 0 && a < objet.lstVertex.Count && b < objet.lstVertex.Count && c < objet.lstVertex.Count) {
 				Face f = objet.lstFace[numFace];
 				f.SetNewVertex(objet.lstVertex[a], objet.lstVertex[b], objet.lstVertex[c]);
-				f.color = new RvbColor(lblFaceColor.BackColor.ToArgb());
+				f.pen = selColor;
 				RedrawAll();
 			}
 			else
 				MessageBox.Show("Certains points n'existent pas.");
 		}
 
-		private void lblFaceColor_Click(object sender, EventArgs e) {
-			EditColor ed = new EditColor(0, 0, lblFaceColor.BackColor.ToArgb(), PaletteCpc.cpcPlus);
-			ed.ShowDialog(this);
-			if (ed.isValide)
-				lblFaceColor.BackColor = ed.SysColor;
-
-		}
-
 		private void bpSupFace_Click(object sender, EventArgs e) {
 			objet.lstFace.RemoveAt(numFace);
 			bpRedraw_Click(sender, e);
 		}
+
+		private void ClickColor(object sender, MouseEventArgs e) {
+			Label colorClick = sender as Label;
+			byte pen = colorClick.Tag != null ? (byte)colorClick.Tag :(byte)0;
+			selColor = pen;
+			UpdatePalette();
+		}
+
 		#endregion
 	}
 }

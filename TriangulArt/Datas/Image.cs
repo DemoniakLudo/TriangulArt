@@ -19,34 +19,16 @@ namespace TriangulArt {
 			}
 		}
 
-		public void GenereDatas(Datas d, int numImage, bool mode0, bool createPalette = true) {
+		public void GenereDatas(Datas d, int numImage, bool mode0) {
 			int numColor = 1;
 			d.nomImage = "Frame_" + numImage.ToString();
 			for (int i = 0; i < lstTriangle.Count; i++) {
 				Triangle t = lstTriangle[i];
 				if (t.GetPctFill() == 1) {
-					int c = PaletteCpc.GetNumPen(t.color);
-					if (c == -1 && createPalette) {
-						RvbColor tmp = new RvbColor(t.color);
-						if (PaletteCpc.cpcPlus) {
-							c = ((tmp.v >> 4) << 8) + ((tmp.b << 4) << 4) + (tmp.r >> 4);
-						}
-						else {
-
-							for (int p = 0; p < 27; p++) {
-								RvbColor cp = PaletteCpc.RgbCPC[p];
-								if (cp.r == tmp.r && cp.v == tmp.v && cp.b == tmp.v) {
-									c = p;
-									break;
-								}
-							}
-						}
-						PaletteCpc.Palette[numColor++] = c;
-					}
 					//int x1 = t.x1 >> (mode0 ? 1 : 0);
 					//int x2 = t.x2 >> (mode0 ? 1 : 0);
 					//int x3 = t.x3 >> (mode0 ? 1 : 0);
-					d.lstTriangle.Add(new Triangle(t.x1, t.y1, t.x2, t.y2, t.x3, t.y3, c));
+					d.lstTriangle.Add(new Triangle(t.x1, t.y1, t.x2, t.y2, t.x3, t.y3, t.color));
 				}
 			}
 		}

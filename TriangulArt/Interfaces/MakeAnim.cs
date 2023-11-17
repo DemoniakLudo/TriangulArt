@@ -31,7 +31,7 @@ namespace TriangulArt {
 			int ax = s.AngX;
 			int ay = s.AngY;
 			int az = s.AngZ;
-			bmpLock.Fill(0x808080);
+			bmpLock.Fill(PaletteCpc.GetColorPal(0).GetColorArgb);
 			if (lstTriangle != null)
 				bmpCalc.Fill(0xFFFFFF);
 
@@ -63,6 +63,7 @@ namespace TriangulArt {
 		}
 
 		private void Animate(bool setProjet = false) {
+			Enabled = false;
 			if (!chkUseSeq.Checked)
 				CreateSequence();
 
@@ -79,6 +80,7 @@ namespace TriangulArt {
 					img.GenereDatas(d, i, rbMode0.Checked);
 				}
 			}
+			Enabled = true;
 		}
 
 		private void chkUseSeq_CheckedChanged(object sender, EventArgs e) {
@@ -117,15 +119,11 @@ namespace TriangulArt {
 		}
 
 		private void bpAnimate_Click(object sender, EventArgs e) {
-			Enabled = false;
 			Animate();
-			Enabled = true;
 		}
 
 		private void bpWriteTriangle_Click(object sender, EventArgs e) {
-			Enabled = false;
 			Animate(true);
-			Enabled = true;
 		}
 	}
 }
