@@ -69,7 +69,7 @@ namespace TriangulArt {
 					img.Optimize(bmpCalc);
 					Datas d = new Datas();
 					projet.lstData.Add(d);
-					img.GenereDatas(d, i, rbMode0.Checked);
+					img.GenereDatas(d, i, projet.mode == 0);
 				}
 			}
 			Enabled = true;
@@ -82,6 +82,7 @@ namespace TriangulArt {
 
 		private void BpEditSequence_Click(object sender, EventArgs e) {
 			Enabled = false;
+			chkUseSeq.Checked = true;
 			new EditSequence(lstSeq).ShowDialog();
 			Enabled = true;
 		}
