@@ -218,7 +218,7 @@ namespace TriangulArt {
 					Face f = lstFace[i];
 					wr.WriteLine("Face {0}:	A:{1}	B:{2}	C:{3}", i, lstVertex.IndexOf(f.GetA), lstVertex.IndexOf(f.GetB), lstVertex.IndexOf(f.GetC));
 					RvbColor color = PaletteCpc.GetColorPal(f.pen);
-					wr.WriteLine("Material:	r {0}	g {1}	b {1}", color.r, color.v, color.b);
+					wr.WriteLine("Material:	r {0}	g {1}	b {2}", color.r, color.v, color.b);
 				}
 				wr.Close();
 			}

@@ -20,37 +20,39 @@ namespace TriangulArt {
 		}
 
 		private void BpImportSequence_Click(object sender, EventArgs e) {
-			if (MessageBox.Show("Etes vous sur de vouloir importer une nouvelle séquence ?") == DialogResult.OK) {
-				OpenFileDialog of = new OpenFileDialog { Filter = "Fichiers CSV (*.csv)|*.csv" };
-				if (of.ShowDialog() == DialogResult.OK) {
-					lstSeq.Clear();
-					try {
-						StreamReader rd = File.OpenText(of.FileName);
-						string s;
-						int i = 0;
-						do {
-							s = rd.ReadLine();
-							if (s != null && i++ > 0) {
-								string[] tabVal = s.Split(';');
-								if (tabVal.Length == 8) {
-									double px = Utils.ConvertToDouble(tabVal[1]);
-									double py = Utils.ConvertToDouble(tabVal[2]);
-									double zx = Utils.ConvertToDouble(tabVal[3]);
-									double zy = Utils.ConvertToDouble(tabVal[4]);
-									double ax = Utils.ConvertToDouble(tabVal[5]);
-									double ay = Utils.ConvertToDouble(tabVal[6]);
-									double az = Utils.ConvertToDouble(tabVal[7]);
-									lstSeq.Add(new Sequence(px, py, zx, zy, ax, ay, az));
-								}
+			OpenFileDialog of = new OpenFileDialog { Filter = "Fichiers CSV (*.csv)|*.csv" };
+			if (of.ShowDialog() == DialogResult.OK) {
+				lstSeq.Clear();
+				StreamReader rd = null;
+				try {
+					rd = File.OpenText(of.FileName);
+					string s;
+					int i = 0;
+					do {
+						s = rd.ReadLine();
+						if (s != null && i++ > 0) {
+							string[] tabVal = s.Split(';');
+							if (tabVal.Length == 8) {
+								double px = Utils.ConvertToDouble(tabVal[1]);
+								double py = Utils.ConvertToDouble(tabVal[2]);
+								double zx = Utils.ConvertToDouble(tabVal[3]);
+								double zy = Utils.ConvertToDouble(tabVal[4]);
+								double ax = Utils.ConvertToDouble(tabVal[5]);
+								double ay = Utils.ConvertToDouble(tabVal[6]);
+								double az = Utils.ConvertToDouble(tabVal[7]);
+								lstSeq.Add(new Sequence(px, py, zx, zy, ax, ay, az));
 							}
 						}
-						while (s != null);
 					}
-					catch (Exception ex) {
-						MessageBox.Show(ex.Message, "Erreur lecture séquence.");
-					}
-					DisplaySequence();
+					while (s != null);
 				}
+				catch (Exception ex) {
+					MessageBox.Show(ex.Message, "Erreur lecture séquence.");
+				}
+				if (rd != null)
+					rd.Close();
+
+				DisplaySequence();
 			}
 		}
 
@@ -58,19 +60,21 @@ namespace TriangulArt {
 			SaveFileDialog dlg = new SaveFileDialog { Filter = "Fichiers CSV (*.csv)|*.csv" };
 			DialogResult result = dlg.ShowDialog();
 			if (result == DialogResult.OK) {
+				StreamWriter sw =null;
 				try {
-					StreamWriter sw = File.CreateText(dlg.FileName);
+					sw = File.CreateText(dlg.FileName);
 					int i = 0;
 					sw.WriteLine("Numéro Frame;Position X;Position Y;Zoom X;Zoom Y;Angle X;Angle Y;Angle Z");
 					foreach (Sequence s in lstSeq) {
 						sw.WriteLine(i + ";" + s.PosX + ";" + s.PosY + ";" + s.ZoomX + ";" + s.ZoomY + ";" + s.AngX + ";" + s.AngY + ";" + s.AngZ);
 						i++;
 					}
-					sw.Close();
 				}
 				catch (Exception ex) {
 					MessageBox.Show(ex.Message, "Erreur sauvegarde séquence.");
 				}
+				if (sw != null)
+					sw.Close();
 			}
 		}
 

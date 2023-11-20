@@ -56,8 +56,6 @@
 			this.bpRedraw = new System.Windows.Forms.Button();
 			this.bpAnimate = new System.Windows.Forms.Button();
 			this.bpWriteTriangle = new System.Windows.Forms.Button();
-			this.rbMode0 = new System.Windows.Forms.RadioButton();
-			this.rbMode1 = new System.Windows.Forms.RadioButton();
 			this.txbNbImages = new System.Windows.Forms.TextBox();
 			this.label15 = new System.Windows.Forms.Label();
 			this.bpEditObject = new System.Windows.Forms.Button();
@@ -367,28 +365,6 @@
 			this.bpWriteTriangle.UseVisualStyleBackColor = true;
 			this.bpWriteTriangle.Click += new System.EventHandler(this.BpWriteTriangle_Click);
 			// 
-			// rbMode0
-			// 
-			this.rbMode0.AutoSize = true;
-			this.rbMode0.Location = new System.Drawing.Point(791, 421);
-			this.rbMode0.Name = "rbMode0";
-			this.rbMode0.Size = new System.Drawing.Size(61, 17);
-			this.rbMode0.TabIndex = 8;
-			this.rbMode0.Text = "Mode 0";
-			this.rbMode0.UseVisualStyleBackColor = true;
-			// 
-			// rbMode1
-			// 
-			this.rbMode1.AutoSize = true;
-			this.rbMode1.Checked = true;
-			this.rbMode1.Location = new System.Drawing.Point(791, 444);
-			this.rbMode1.Name = "rbMode1";
-			this.rbMode1.Size = new System.Drawing.Size(61, 17);
-			this.rbMode1.TabIndex = 8;
-			this.rbMode1.TabStop = true;
-			this.rbMode1.Text = "Mode 1";
-			this.rbMode1.UseVisualStyleBackColor = true;
-			// 
 			// txbNbImages
 			// 
 			this.txbNbImages.Location = new System.Drawing.Point(100, 619);
@@ -447,8 +423,6 @@
 			this.Controls.Add(this.bpEditObject);
 			this.Controls.Add(this.label15);
 			this.Controls.Add(this.txbNbImages);
-			this.Controls.Add(this.rbMode1);
-			this.Controls.Add(this.rbMode0);
 			this.Controls.Add(this.bpWriteTriangle);
 			this.Controls.Add(this.bpAnimate);
 			this.Controls.Add(this.bpRedraw);
@@ -528,8 +502,6 @@
 		private System.Windows.Forms.Button bpRedraw;
 		private System.Windows.Forms.Button bpAnimate;
 		private System.Windows.Forms.Button bpWriteTriangle;
-		private System.Windows.Forms.RadioButton rbMode0;
-		private System.Windows.Forms.RadioButton rbMode1;
 		private System.Windows.Forms.TextBox txbNbImages;
 		private System.Windows.Forms.Label label15;
 		private System.Windows.Forms.Button bpEditObject;
