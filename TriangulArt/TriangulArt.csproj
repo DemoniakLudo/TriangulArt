@@ -42,8 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cpc.cs" />
     <Compile Include="Datas\Face.cs" />
-    <Compile Include="Datas\Image.cs" />
     <Compile Include="Datas\Objet.cs" />
     <Compile Include="Datas\Sequence.cs" />
     <Compile Include="Datas\Triangle.cs" />
@@ -51,49 +51,42 @@
     <Compile Include="PaletteCpc.cs" />
     <Compile Include="Datas\Datas.cs" />
     <Compile Include="DirectBitmap.cs" />
-
     <Compile Include="Interfaces\TriangulArt.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Interfaces\TriangulArt.Designer.cs">
       <DependentUpon>TriangulArt.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Interfaces\EditColor.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Interfaces\EditColor.Designer.cs">
       <DependentUpon>EditColor.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Interfaces\PackModule.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Interfaces\PackModule.Designer.cs">
       <DependentUpon>PackModule.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Interfaces\EditObject.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Interfaces\EditObject.Designer.cs" >
+    <Compile Include="Interfaces\EditObject.Designer.cs">
       <DependentUpon>EditObject.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Interfaces\EditSequence.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Interfaces\EditSequence.Designer.cs" >
+    <Compile Include="Interfaces\EditSequence.Designer.cs">
       <DependentUpon>EditSequence.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Interfaces\MakeAnim.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Interfaces\MakeAnim.Designer.cs" >
+    <Compile Include="Interfaces\MakeAnim.Designer.cs">
       <DependentUpon>MakeAnim.cs</DependentUpon>
     </Compile>
-
     <Compile Include="GenereAsm.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Datas\Projet.cs" />
@@ -103,13 +96,13 @@
     <EmbeddedResource Include="Interfaces\EditColor.resx">
       <DependentUpon>EditColor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Interfaces\EditObject.resx" >
+    <EmbeddedResource Include="Interfaces\EditObject.resx">
       <DependentUpon>EditObject.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Interfaces\MakeAnim.resx" >
+    <EmbeddedResource Include="Interfaces\MakeAnim.resx">
       <DependentUpon>MakeAnim.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Interfaces\EditSequence.resx" >
+    <EmbeddedResource Include="Interfaces\EditSequence.resx">
       <DependentUpon>EditSequence.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Interfaces\TriangulArt.resx">

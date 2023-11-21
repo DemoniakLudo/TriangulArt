@@ -1126,6 +1126,25 @@ namespace TriangulArt {
 			BpRedraw_Click(null, null);
 		}
 
+		private void bpReadPal_Click(object sender, EventArgs e) {
+			Enabled = false;
+			OpenFileDialog of = new OpenFileDialog { Filter = "Fichiers palette (*.pal)|*.pal|Tous les fichiers (*.*)|*.*\"'" };
+			if (of.ShowDialog() == DialogResult.OK) {
+				PaletteCpc.LirePalette(of.FileName);
+				UpdatePalette();
+			}
+			Enabled = true;
+		}
+
+		private void bpSavePal_Click(object sender, EventArgs e) {
+			Enabled = false;
+			SaveFileDialog sf = new SaveFileDialog { Filter = "Fichiers palette (*.pal)|*.pal|Tous les fichiers (*.*)|*.*\"'" };
+			if (sf.ShowDialog() == DialogResult.OK) {
+				PaletteCpc.SauvePalette(sf.FileName, projet.mode);
+			}
+			Enabled = true;
+		}
+
 		private void BpMakeAnim3D_Click(object sender, EventArgs e) {
 			Enabled = false;
 			new MakeAnim(projet).ShowDialog();

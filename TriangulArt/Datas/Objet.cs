@@ -92,7 +92,7 @@ namespace TriangulArt {
 			for (int i = 0; i < lstFace.Count; i++)
 				lstDraw.Add(lstFace[i]);
 
-			lstDraw.Sort(delegate(Face p1, Face p2) {
+			lstDraw.Sort(delegate (Face p1, Face p2) {
 				int cmp = (p1.GetA.Pz + p1.GetB.Pz + p1.GetC.Pz) - (p2.GetA.Pz + p2.GetB.Pz + p2.GetC.Pz);
 				return cmp != 0 ? cmp : p1.Num - p2.Num;
 			});
@@ -124,8 +124,9 @@ namespace TriangulArt {
 		// Lecture et construction objet
 		//
 		public void ReadObject(string fileName) {
+			StreamReader rd = null;
 			try {
-				StreamReader rd = new StreamReader(fileName);
+				rd = new StreamReader(fileName);
 				lstFace.Clear();
 				lstVertex.Clear();
 				string l;
@@ -195,16 +196,18 @@ namespace TriangulArt {
 					}
 				}
 				while (l != null);
-				rd.Close();
 			}
 			catch (Exception ex) {
 				MessageBox.Show(ex.Message, "Erreur lecture objet.");
 			}
+			if (rd != null)
+				rd.Close();
 		}
 
 		public void SaveObject(string fileName) {
+			StreamWriter wr = null;
 			try {
-				StreamWriter wr = new StreamWriter(fileName);
+				wr = new StreamWriter(fileName);
 				wr.WriteLine("Named object : \"Objet généré avec TriangulArt\"");
 				wr.WriteLine("Tri - mesh, Vertices: {0}	Faces: {1}", lstVertex.Count, lstFace.Count);
 				wr.WriteLine("");
@@ -220,11 +223,12 @@ namespace TriangulArt {
 					RvbColor color = PaletteCpc.GetColorPal(f.pen);
 					wr.WriteLine("Material:	r {0}	g {1}	b {2}", color.r, color.v, color.b);
 				}
-				wr.Close();
 			}
 			catch (Exception ex) {
 				MessageBox.Show(ex.Message, "Erreur sauvegarde objet.");
 			}
+			if (wr != null)
+				wr.Close();
 		}
 	}
 }

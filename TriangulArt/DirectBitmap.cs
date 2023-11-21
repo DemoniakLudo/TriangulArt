@@ -41,8 +41,7 @@ public class DirectBitmap : IDisposable {
 	}
 
 	public void SetPixel(int x, int y, RvbColor color) {
-		if (y < Height)
-			tabBits[x + (y * Width)] = (uint)color.GetColorArgb | 0xFF000000;
+		SetPixel(x, y, color.GetColorArgb);
 	}
 
 	public int GetPixel(int x, int y) {

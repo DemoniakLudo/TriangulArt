@@ -63,13 +63,26 @@ namespace TriangulArt {
 				projet.lstData.Clear();
 
 			for (int i = 0; i < lstSeq.Count; i++) {
-				Image img = new Image();
-				DisplayFrame(lstSeq[i], img.lstTriangle);
+				List<Triangle> lstTriangle = new List<Triangle>();
+				DisplayFrame(lstSeq[i], lstTriangle);
 				if (setProjet) {
-					img.Optimize(bmpCalc);
-					Datas d = new Datas();
-					projet.lstData.Add(d);
-					img.GenereDatas(d, i, projet.mode == 0);
+					Datas data = new Datas();
+					data.nomImage = "Frame_" + i.ToString();
+					for (int t = 0; t < lstTriangle.Count; t++) {
+						for (int y = 0; y < bmpCalc.Height; y++) {
+							for (int x = 0; x < bmpCalc.Width; x++)
+								if (bmpCalc.GetPixel(x, y) == t) {
+									Triangle tr = lstTriangle[t];
+									int x1 = projet.mode == 0 ? tr.x1 >> 1 : tr.x1;
+									int x2 = projet.mode == 0 ? tr.x2 >> 1 : tr.x2;
+									int x3 = projet.mode == 0 ? tr.x3 >> 1 : tr.x3;
+									data.lstTriangle.Add(new Triangle(x1, tr.y1, x2, tr.y2, x3, tr.y3, tr.color));
+									y = bmpCalc.Height;
+									break;
+								}
+						}
+					}
+					projet.lstData.Add(data);
 				}
 			}
 			Enabled = true;

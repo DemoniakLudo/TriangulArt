@@ -115,6 +115,8 @@
 			this.bpFirst = new System.Windows.Forms.Button();
 			this.bpLast = new System.Windows.Forms.Button();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.bpReadPal = new System.Windows.Forms.Button();
+			this.bpSavePal = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -159,9 +161,9 @@
 			// listInfo
 			// 
 			this.listInfo.FormattingEnabled = true;
-			this.listInfo.Location = new System.Drawing.Point(2, 626);
+			this.listInfo.Location = new System.Drawing.Point(2, 652);
 			this.listInfo.Name = "listInfo";
-			this.listInfo.Size = new System.Drawing.Size(542, 108);
+			this.listInfo.Size = new System.Drawing.Size(542, 82);
 			this.listInfo.TabIndex = 3;
 			// 
 			// bpLoad
@@ -1040,6 +1042,8 @@
 			// 
 			// panel1
 			// 
+			this.panel1.Controls.Add(this.bpSavePal);
+			this.panel1.Controls.Add(this.bpReadPal);
 			this.panel1.Controls.Add(this.bpLast);
 			this.panel1.Controls.Add(this.bpClearList);
 			this.panel1.Controls.Add(this.bpRapproche);
@@ -1102,6 +1106,26 @@
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(549, 767);
 			this.panel1.TabIndex = 60;
+			// 
+			// bpReadPal
+			// 
+			this.bpReadPal.Location = new System.Drawing.Point(3, 623);
+			this.bpReadPal.Name = "bpReadPal";
+			this.bpReadPal.Size = new System.Drawing.Size(75, 23);
+			this.bpReadPal.TabIndex = 60;
+			this.bpReadPal.Text = "Lire Palette";
+			this.bpReadPal.UseVisualStyleBackColor = true;
+			this.bpReadPal.Click += new System.EventHandler(this.bpReadPal_Click);
+			// 
+			// bpSavePal
+			// 
+			this.bpSavePal.Location = new System.Drawing.Point(84, 623);
+			this.bpSavePal.Name = "bpSavePal";
+			this.bpSavePal.Size = new System.Drawing.Size(86, 23);
+			this.bpSavePal.TabIndex = 60;
+			this.bpSavePal.Text = "Sauver Palette";
+			this.bpSavePal.UseVisualStyleBackColor = true;
+			this.bpSavePal.Click += new System.EventHandler(this.bpSavePal_Click);
 			// 
 			// TriangulArt
 			// 
@@ -1224,6 +1248,8 @@
 		private System.Windows.Forms.Button bpMakeAnim3D;
 		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.CheckBox chkOverscan;
+		private System.Windows.Forms.Button bpSavePal;
+		private System.Windows.Forms.Button bpReadPal;
 	}
 }
 

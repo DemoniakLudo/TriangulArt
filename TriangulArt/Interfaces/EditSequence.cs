@@ -60,7 +60,7 @@ namespace TriangulArt {
 			SaveFileDialog dlg = new SaveFileDialog { Filter = "Fichiers CSV (*.csv)|*.csv" };
 			DialogResult result = dlg.ShowDialog();
 			if (result == DialogResult.OK) {
-				StreamWriter sw =null;
+				StreamWriter sw = null;
 				try {
 					sw = File.CreateText(dlg.FileName);
 					int i = 0;
