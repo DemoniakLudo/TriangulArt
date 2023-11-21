@@ -28,7 +28,8 @@ namespace TriangulArt {
 
 		private void DisplayBoutons() {
 			bpEditVertex.Enabled = bpSupVertex.Enabled = objet.lstVertex.Count > 0 && numVertex != -1;
-			bpEditFace.Enabled = bpSupFace.Enabled = bpSaveObject.Enabled = objet.lstFace.Count > 0 && numFace != -1;
+			bpEditFace.Enabled = bpSupFace.Enabled = objet.lstFace.Count > 0 && numFace != -1;
+			bpSaveObject.Enabled = objet.lstFace.Count > 0;
 		}
 
 		private void DisplayVertex(int selVertex) {
@@ -46,18 +47,23 @@ namespace TriangulArt {
 
 		private void DisplayFace(int selFace) {
 			DisplayBoutons();
-			listFace.Items.Clear();
+			lstViewFace.Items.Clear();
 			for (int i = 0; i < objet.lstFace.Count; i++) {
 				Face f = objet.lstFace[i];
 				int a = objet.lstVertex.IndexOf(f.GetA);
 				int b = objet.lstVertex.IndexOf(f.GetB);
 				int c = objet.lstVertex.IndexOf(f.GetC);
-				string item = "F." + i.ToString("000") + "\t" + a.ToString() + "\t" + b.ToString() + "\t" + c.ToString();
-				listFace.Items.Add(item);
+				string[] s = { "F." + i.ToString("000"), a.ToString(), b.ToString(), c.ToString(), f.pen.ToString() };
+				ListViewItem item = new ListViewItem(s);
+				item.UseItemStyleForSubItems = false;
+				item.SubItems[4].BackColor = Color.FromArgb(PaletteCpc.GetColorPal(f.pen).GetColorArgb);
+				lstViewFace.Items.Add(item);
 			}
 			numFace = selFace;
-			if (selFace != -1)
-				listFace.SelectedIndex = selFace;
+			if (selFace != -1) {
+				lstViewFace.Items[selFace].Selected = true;
+				lstViewFace.Select();
+			}
 		}
 
 		private void DisplayObj() {
@@ -74,7 +80,7 @@ namespace TriangulArt {
 
 		private void ListVertex_SelectedIndexChanged(object sender, EventArgs e) {
 			numVertex = listVertex.SelectedIndex;
-			if (numVertex!=-1) {
+			if (numVertex != -1) {
 				Vertex v = objet.lstVertex[numVertex];
 				txbVertexX.Text = v.X.ToString();
 				txbVertexY.Text = v.Y.ToString();
@@ -90,17 +96,19 @@ namespace TriangulArt {
 			lblFaceColor.BackColor = Color.FromArgb(PaletteCpc.GetColorPal(selColor).GetColorArgb);
 		}
 
-		private void ListFace_SelectedIndexChanged(object sender, EventArgs e) {
-			numFace = listFace.SelectedIndex;
-			if (numFace!=-1) {
+		private void lstViewFace_SelectedIndexChanged(object sender, EventArgs e) {
+			numFace = lstViewFace.SelectedIndices.Count > 0 ? lstViewFace.SelectedIndices[0] : -1;
+			if (numFace != -1) {
 				Face f = objet.lstFace[numFace];
 				txbFaceA.Text = objet.lstVertex.IndexOf(f.GetA).ToString();
 				txbFaceB.Text = objet.lstVertex.IndexOf(f.GetB).ToString();
 				txbFaceC.Text = objet.lstVertex.IndexOf(f.GetC).ToString();
 				lblFaceColor.BackColor = Color.FromArgb(PaletteCpc.GetColorPal(f.pen).GetColorArgb);
+				selColor = f.pen;
 			}
 			DisplayObj();
 		}
+
 
 		#region gestion trackbars
 		private void TrackX_Scroll(object sender, EventArgs e) {
@@ -150,7 +158,7 @@ namespace TriangulArt {
 
 		private void RedrawAll() {
 			DisplayVertex(listVertex.SelectedIndex);
-			DisplayFace(listFace.SelectedIndex);
+			DisplayFace(numFace);
 			DisplayObj();
 		}
 

@@ -41,7 +41,6 @@
 			this.trackZoom = new System.Windows.Forms.TrackBar();
 			this.txbZoom = new System.Windows.Forms.TextBox();
 			this.listVertex = new System.Windows.Forms.ListBox();
-			this.listFace = new System.Windows.Forms.ListBox();
 			this.txbFaceA = new System.Windows.Forms.TextBox();
 			this.txbFaceB = new System.Windows.Forms.TextBox();
 			this.txbFaceC = new System.Windows.Forms.TextBox();
@@ -62,6 +61,12 @@
 			this.bpEditFace = new System.Windows.Forms.Button();
 			this.bpRedraw = new System.Windows.Forms.Button();
 			this.lblFaceColor = new System.Windows.Forms.Label();
+			this.lstViewFace = new System.Windows.Forms.ListView();
+			this.colNumFace = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.colVertexA = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.colVertexB = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.colVertexC = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.colColor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxObj)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.trackX)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.trackY)).BeginInit();
@@ -252,15 +257,6 @@
 			this.listVertex.TabIndex = 9;
 			this.listVertex.SelectedIndexChanged += new System.EventHandler(this.ListVertex_SelectedIndexChanged);
 			// 
-			// listFace
-			// 
-			this.listFace.FormattingEnabled = true;
-			this.listFace.Location = new System.Drawing.Point(642, 455);
-			this.listFace.Name = "listFace";
-			this.listFace.Size = new System.Drawing.Size(299, 264);
-			this.listFace.TabIndex = 9;
-			this.listFace.SelectedIndexChanged += new System.EventHandler(this.ListFace_SelectedIndexChanged);
-			// 
 			// txbFaceA
 			// 
 			this.txbFaceA.Location = new System.Drawing.Point(661, 725);
@@ -445,11 +441,53 @@
 			this.lblFaceColor.Size = new System.Drawing.Size(48, 32);
 			this.lblFaceColor.TabIndex = 14;
 			// 
+			// lstViewFace
+			// 
+			this.lstViewFace.AutoArrange = false;
+			this.lstViewFace.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.colNumFace,
+            this.colVertexA,
+            this.colVertexB,
+            this.colVertexC,
+            this.colColor});
+			this.lstViewFace.GridLines = true;
+			this.lstViewFace.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+			this.lstViewFace.HideSelection = false;
+			this.lstViewFace.Location = new System.Drawing.Point(642, 455);
+			this.lstViewFace.MultiSelect = false;
+			this.lstViewFace.Name = "lstViewFace";
+			this.lstViewFace.Size = new System.Drawing.Size(310, 264);
+			this.lstViewFace.TabIndex = 15;
+			this.lstViewFace.UseCompatibleStateImageBehavior = false;
+			this.lstViewFace.View = System.Windows.Forms.View.Details;
+			this.lstViewFace.SelectedIndexChanged += new System.EventHandler(this.lstViewFace_SelectedIndexChanged);
+			// 
+			// colNumFace
+			// 
+			this.colNumFace.Text = "Face";
+			// 
+			// colVertexA
+			// 
+			this.colVertexA.Text = "A";
+			// 
+			// colVertexB
+			// 
+			this.colVertexB.Text = "B";
+			// 
+			// colVertexC
+			// 
+			this.colVertexC.Text = "C";
+			// 
+			// colColor
+			// 
+			this.colColor.Text = "Color";
+			// 
 			// EditObjet
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1010, 759);
+			this.ClientSize = new System.Drawing.Size(1021, 759);
+			this.Controls.Add(this.lstViewFace);
 			this.Controls.Add(this.lblFaceColor);
 			this.Controls.Add(this.bpRedraw);
 			this.Controls.Add(this.bpEditFace);
@@ -470,7 +508,6 @@
 			this.Controls.Add(this.txbFaceB);
 			this.Controls.Add(this.txbVertexX);
 			this.Controls.Add(this.txbFaceA);
-			this.Controls.Add(this.listFace);
 			this.Controls.Add(this.listVertex);
 			this.Controls.Add(this.trackZoom);
 			this.Controls.Add(this.label4);
@@ -524,7 +561,6 @@
 		private System.Windows.Forms.TrackBar trackZoom;
 		private System.Windows.Forms.TextBox txbZoom;
 		private System.Windows.Forms.ListBox listVertex;
-		private System.Windows.Forms.ListBox listFace;
 		private System.Windows.Forms.TextBox txbFaceA;
 		private System.Windows.Forms.TextBox txbFaceB;
 		private System.Windows.Forms.TextBox txbFaceC;
@@ -545,6 +581,12 @@
 		private System.Windows.Forms.Button bpEditFace;
 		private System.Windows.Forms.Button bpRedraw;
 		private System.Windows.Forms.Label lblFaceColor;
+		private System.Windows.Forms.ListView lstViewFace;
+		private System.Windows.Forms.ColumnHeader colNumFace;
+		private System.Windows.Forms.ColumnHeader colVertexA;
+		private System.Windows.Forms.ColumnHeader colVertexB;
+		private System.Windows.Forms.ColumnHeader colVertexC;
+		private System.Windows.Forms.ColumnHeader colColor;
 	}
 }
 

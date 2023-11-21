@@ -115,8 +115,8 @@
 			this.bpFirst = new System.Windows.Forms.Button();
 			this.bpLast = new System.Windows.Forms.Button();
 			this.panel1 = new System.Windows.Forms.Panel();
-			this.bpReadPal = new System.Windows.Forms.Button();
 			this.bpSavePal = new System.Windows.Forms.Button();
+			this.bpReadPal = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -305,7 +305,7 @@
 			this.listTriangles.FormattingEnabled = true;
 			this.listTriangles.Location = new System.Drawing.Point(3, 318);
 			this.listTriangles.Name = "listTriangles";
-			this.listTriangles.Size = new System.Drawing.Size(480, 225);
+			this.listTriangles.Size = new System.Drawing.Size(504, 225);
 			this.listTriangles.TabIndex = 20;
 			this.listTriangles.SelectedIndexChanged += new System.EventHandler(this.ListTriangles_SelectedIndexChanged);
 			// 
@@ -403,9 +403,9 @@
 			// 
 			// bpUp
 			// 
-			this.bpUp.Location = new System.Drawing.Point(485, 348);
+			this.bpUp.Location = new System.Drawing.Point(508, 348);
 			this.bpUp.Name = "bpUp";
-			this.bpUp.Size = new System.Drawing.Size(61, 27);
+			this.bpUp.Size = new System.Drawing.Size(41, 27);
 			this.bpUp.TabIndex = 31;
 			this.bpUp.Text = "Up";
 			this.bpUp.UseVisualStyleBackColor = true;
@@ -413,9 +413,9 @@
 			// 
 			// bpDown
 			// 
-			this.bpDown.Location = new System.Drawing.Point(485, 453);
+			this.bpDown.Location = new System.Drawing.Point(508, 453);
 			this.bpDown.Name = "bpDown";
-			this.bpDown.Size = new System.Drawing.Size(62, 27);
+			this.bpDown.Size = new System.Drawing.Size(41, 23);
 			this.bpDown.TabIndex = 32;
 			this.bpDown.Text = "Down";
 			this.bpDown.UseVisualStyleBackColor = true;
@@ -482,7 +482,7 @@
 			this.groupBox2.Controls.Add(this.label8);
 			this.groupBox2.Controls.Add(this.rbDepImage);
 			this.groupBox2.Controls.Add(this.rbDepTriangle);
-			this.groupBox2.Location = new System.Drawing.Point(139, 212);
+			this.groupBox2.Location = new System.Drawing.Point(142, 212);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Size = new System.Drawing.Size(405, 73);
 			this.groupBox2.TabIndex = 34;
@@ -604,21 +604,21 @@
 			// 
 			// bpClean
 			// 
-			this.bpClean.Location = new System.Drawing.Point(485, 393);
+			this.bpClean.Location = new System.Drawing.Point(508, 393);
 			this.bpClean.Name = "bpClean";
-			this.bpClean.Size = new System.Drawing.Size(61, 25);
+			this.bpClean.Size = new System.Drawing.Size(41, 23);
 			this.bpClean.TabIndex = 39;
-			this.bpClean.Text = "Clean";
+			this.bpClean.Text = "Clr";
 			this.bpClean.UseVisualStyleBackColor = true;
 			this.bpClean.Click += new System.EventHandler(this.BpClean_Click);
 			// 
 			// bpRapproche
 			// 
-			this.bpRapproche.Location = new System.Drawing.Point(485, 424);
+			this.bpRapproche.Location = new System.Drawing.Point(508, 424);
 			this.bpRapproche.Name = "bpRapproche";
-			this.bpRapproche.Size = new System.Drawing.Size(62, 23);
+			this.bpRapproche.Size = new System.Drawing.Size(41, 23);
 			this.bpRapproche.TabIndex = 40;
-			this.bpRapproche.Text = "Rapproche";
+			this.bpRapproche.Text = "Rappr";
 			this.bpRapproche.UseVisualStyleBackColor = true;
 			this.bpRapproche.Click += new System.EventHandler(this.BpRapproche_Click);
 			// 
@@ -1022,9 +1022,9 @@
 			// 
 			// bpFirst
 			// 
-			this.bpFirst.Location = new System.Drawing.Point(485, 319);
+			this.bpFirst.Location = new System.Drawing.Point(508, 319);
 			this.bpFirst.Name = "bpFirst";
-			this.bpFirst.Size = new System.Drawing.Size(61, 23);
+			this.bpFirst.Size = new System.Drawing.Size(41, 23);
 			this.bpFirst.TabIndex = 58;
 			this.bpFirst.Text = "First";
 			this.bpFirst.UseVisualStyleBackColor = true;
@@ -1032,9 +1032,9 @@
 			// 
 			// bpLast
 			// 
-			this.bpLast.Location = new System.Drawing.Point(485, 520);
+			this.bpLast.Location = new System.Drawing.Point(508, 520);
 			this.bpLast.Name = "bpLast";
-			this.bpLast.Size = new System.Drawing.Size(61, 23);
+			this.bpLast.Size = new System.Drawing.Size(41, 23);
 			this.bpLast.TabIndex = 59;
 			this.bpLast.Text = "Last";
 			this.bpLast.UseVisualStyleBackColor = true;
@@ -1107,16 +1107,6 @@
 			this.panel1.Size = new System.Drawing.Size(549, 767);
 			this.panel1.TabIndex = 60;
 			// 
-			// bpReadPal
-			// 
-			this.bpReadPal.Location = new System.Drawing.Point(3, 623);
-			this.bpReadPal.Name = "bpReadPal";
-			this.bpReadPal.Size = new System.Drawing.Size(75, 23);
-			this.bpReadPal.TabIndex = 60;
-			this.bpReadPal.Text = "Lire Palette";
-			this.bpReadPal.UseVisualStyleBackColor = true;
-			this.bpReadPal.Click += new System.EventHandler(this.bpReadPal_Click);
-			// 
 			// bpSavePal
 			// 
 			this.bpSavePal.Location = new System.Drawing.Point(84, 623);
@@ -1126,6 +1116,16 @@
 			this.bpSavePal.Text = "Sauver Palette";
 			this.bpSavePal.UseVisualStyleBackColor = true;
 			this.bpSavePal.Click += new System.EventHandler(this.bpSavePal_Click);
+			// 
+			// bpReadPal
+			// 
+			this.bpReadPal.Location = new System.Drawing.Point(3, 623);
+			this.bpReadPal.Name = "bpReadPal";
+			this.bpReadPal.Size = new System.Drawing.Size(75, 23);
+			this.bpReadPal.TabIndex = 60;
+			this.bpReadPal.Text = "Lire Palette";
+			this.bpReadPal.UseVisualStyleBackColor = true;
+			this.bpReadPal.Click += new System.EventHandler(this.bpReadPal_Click);
 			// 
 			// TriangulArt
 			// 

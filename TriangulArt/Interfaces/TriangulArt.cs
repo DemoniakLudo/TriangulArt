@@ -19,7 +19,6 @@ namespace TriangulArt {
 		private Projet projet = new Projet();
 		private Version version = Assembly.GetExecutingAssembly().GetName().Version;
 		private const int MAX_RAYONS = 32;
-		private int maxWidth;
 		private int coefX;
 		private Label[] colors = new Label[16];
 
@@ -66,8 +65,8 @@ namespace TriangulArt {
 
 		public void Reset() {
 			if (bmpFond != null) {
-				for (int y = 0; y < 256; y++)
-					for (int x = 0; x < maxWidth; x++)
+				for (int y = 0; y < bmpLock.Height; y++)
+					for (int x = 0; x < bmpLock.Width; x++)
 						bmpLock.SetPixel(x, y, bmpFond.GetPixel(x, y).ToArgb());
 			}
 			else
@@ -78,8 +77,8 @@ namespace TriangulArt {
 
 		public void ResetNoRender() {
 			if (bmpFond != null) {
-				for (int y = 0; y < 256; y++)
-					for (int x = 0; x < maxWidth; x++)
+				for (int y = 0; y < bmpLock.Height; y++)
+					for (int x = 0; x < bmpLock.Width; x++)
 						bmpLock.SetPixel(x, y, bmpFond.GetPixel(x, y).ToArgb());
 			}
 			else
@@ -124,7 +123,7 @@ namespace TriangulArt {
 				&& int.TryParse(txbY2.Text, out y2)
 				&& int.TryParse(txbX3.Text, out x3)
 				&& int.TryParse(txbY3.Text, out y3)) {
-				if (x1 >= 0 && x1 < maxWidth && y1 >= 0 && y1 < 256 && x2 >= 0 && x2 < maxWidth && y2 >= 0 && y2 < 256 && x3 >= 0 && x3 < maxWidth && y3 >= 0 && y3 < 256)
+				if (x1 >= 0 && x1 < 256 && y1 >= 0 && y1 < 256 && x2 >= 0 && x2 < 256 && y2 >= 0 && y2 < 256 && x3 >= 0 && x3 < 256 && y3 >= 0 && y3 < 256)
 					return new Triangle(x1, y1, x2, y2, x3, y3, selColor);
 				else
 					MessageBox.Show("Les coordonnées doivent être comprises entre 0 et 255");
@@ -136,7 +135,7 @@ namespace TriangulArt {
 
 		private void FillTriangles() {
 			ResetNoRender();
-			projet.SelImage().FillTriangles(bmpLock, maxWidth, chkLine.Checked);
+			projet.SelImage().FillTriangles(bmpLock, bmpLock.Width, chkLine.Checked);
 			Render();
 			bpAjoutLigne.Enabled = bpAjoutTriangle.Enabled = bpAjoutQuadri.Enabled = bpAjoutRect.Enabled = bpAjoutCercle.Enabled = txbNbRayons.Enabled = true;
 			mouseOpt = DrawMd.NONE;
@@ -146,7 +145,7 @@ namespace TriangulArt {
 			listTriangles.Items.Clear();
 			for (int i = 0; i < projet.SelImage().lstTriangle.Count; i++) {
 				Triangle t = projet.SelImage().lstTriangle[i];
-				string inf = "Tr." + i.ToString("000") + "\t(" + t.x1 + "," + t.y1 + ")\t\t(" + t.x2 + "," + t.y2 + ")\t\t(" + t.x3 + "," + t.y3 + ")\t\tcouleur:" + t.color;
+				string inf = i.ToString("000") + "\t(" + t.x1 + "," + t.y1 + ")\t\t(" + t.x2 + "," + t.y2 + ")\t\t(" + t.x3 + "," + t.y3 + ")\t\tcouleur:" + t.color.ToString("00");
 				if (t.GetPctFill() != -1) {
 					int f = t.GetPctFill();
 					inf += "\t" + f + "%";
@@ -172,7 +171,7 @@ namespace TriangulArt {
 
 		private void AddTriangle(Triangle t) {
 			projet.SelImage().lstTriangle.Add(t);
-			projet.SelImage().FillTriangle(bmpLock, t, maxWidth, chkLine.Checked);
+			projet.SelImage().FillTriangle(bmpLock, t, bmpLock.Width, chkLine.Checked);
 			DisplayList();
 		}
 
@@ -235,7 +234,7 @@ namespace TriangulArt {
 				DrawMoveTriangle(g);
 				int dx = xReel - oldx1;
 				int dy = yReel - oldy1;
-				projet.SelImage().DeplaceTriangle(dx, dy, maxWidth);
+				projet.SelImage().DeplaceTriangle(dx, dy, bmpLock.Width);
 				oldx1 = xReel;
 				oldy1 = yReel;
 				DrawMoveTriangle(g);
@@ -670,7 +669,7 @@ namespace TriangulArt {
 		}
 
 		private void BpRedraw_Click(object sender, EventArgs e) {
-			projet.SelImage().CleanUp(maxWidth, true);
+			projet.SelImage().CleanUp(bmpLock.Width, true);
 			DisplayList();
 			FillTriangles();
 		}
@@ -710,7 +709,7 @@ namespace TriangulArt {
 					int y3 = Convert.ToInt32(txbY3.Text);
 					int x4 = 0, y4 = 0;
 					if (int.TryParse(txbX4.Text, out x4) && int.TryParse(txbY4.Text, out y4)) {
-						if (x4 >= 0 && x4 < maxWidth && y4 >= 0 && y4 < 256)
+						if (x4 >= 0 && x4 < 256 && y4 >= 0 && y4 < 256)
 							tnew = new Triangle(x1, y1, x3, y3, x4, y4, selColor);
 					}
 				}
@@ -735,13 +734,13 @@ namespace TriangulArt {
 			DialogResult result = dlg.ShowDialog();
 			if (result == DialogResult.OK) {
 				using (Bitmap b = new Bitmap(dlg.FileName)) {
-					if (b.Width == maxWidth && b.Height == 256) {
+					if (b.Width == bmpLock.Width && b.Height == bmpLock.Height) {
 						bmpFond = new Bitmap(b);
 						Reset();
 						SetInfo("Lecture image de fond ok.");
 					}
 					else
-						MessageBox.Show("L'image n'a pas le bon format (" + maxWidth.ToString() + "x256 pixels)");
+						MessageBox.Show("L'image n'a pas le bon format (" + bmpLock.Width.ToString() + "x" + bmpLock.Height.ToString() + " pixels)");
 				}
 			}
 		}
@@ -811,14 +810,14 @@ namespace TriangulArt {
 				if (rbDepImage.Checked) {
 					if (chkAnim3D.Checked) {
 						foreach (Datas d in projet.lstData) {
-							d.DeplaceImage(deplX, deplY, maxWidth);
+							d.DeplaceImage(deplX, deplY, bmpLock.Width);
 						}
 						DisplayList();
 						FillTriangles();
 						DisplayMemory();
 					}
 					else {
-						projet.SelImage().DeplaceImage(deplX, deplY, maxWidth);
+						projet.SelImage().DeplaceImage(deplX, deplY, bmpLock.Width);
 						DisplayList();
 						FillTriangles();
 					}
@@ -826,7 +825,7 @@ namespace TriangulArt {
 				else
 					if (triSel != null) {
 					int memoSel = projet.SelImage().GetSelTriangle();
-					projet.SelImage().DeplaceTriangle(deplX, deplY, maxWidth);
+					projet.SelImage().DeplaceTriangle(deplX, deplY, bmpLock.Width);
 					DisplayList();
 					listTriangles.SelectedIndex = memoSel;
 				}
@@ -843,14 +842,14 @@ namespace TriangulArt {
 				if (rbDepImage.Checked) {
 					if (chkAnim3D.Checked) {
 						foreach (Datas d in projet.lstData) {
-							d.CoefZoom(zoomX, zoomY, chkCenterZoom.Checked, maxWidth);
+							d.CoefZoom(zoomX, zoomY, chkCenterZoom.Checked, bmpLock.Width);
 						}
 						DisplayList();
 						FillTriangles();
 						DisplayMemory();
 					}
 					else {
-						projet.SelImage().CoefZoom(zoomX, zoomY, chkCenterZoom.Checked, maxWidth);
+						projet.SelImage().CoefZoom(zoomX, zoomY, chkCenterZoom.Checked, bmpLock.Width);
 						DisplayList();
 						FillTriangles();
 					}
@@ -858,7 +857,7 @@ namespace TriangulArt {
 				else
 					if (triSel != null) {
 					int memoSel = projet.SelImage().GetSelTriangle();
-					projet.SelImage().CoefZoom(triSel, zoomX, zoomY, chkCenterZoom.Checked, maxWidth);
+					projet.SelImage().CoefZoom(triSel, zoomX, zoomY, chkCenterZoom.Checked, bmpLock.Width);
 					DisplayList();
 					listTriangles.SelectedIndex = memoSel;
 				}
@@ -871,7 +870,7 @@ namespace TriangulArt {
 
 		private void BpRapproche_Click(object sender, EventArgs e) {
 			projet.SelImage().Rapproche(4);
-			projet.SelImage().CleanUp(maxWidth);
+			projet.SelImage().CleanUp(bmpLock.Width);
 			DisplayList();
 			FillTriangles();
 		}
@@ -919,7 +918,7 @@ namespace TriangulArt {
 
 		private void BpClean_Click(object sender, EventArgs e) {
 			int nbAvant = projet.SelImage().lstTriangle.Count;
-			projet.SelImage().CleanUp(maxWidth);
+			projet.SelImage().CleanUp(bmpLock.Width);
 			int nbApres = projet.SelImage().lstTriangle.Count;
 			if (nbApres != nbAvant)
 				SetInfo("Nbre de triangles optimisés : " + (nbAvant - nbApres).ToString());
@@ -967,8 +966,7 @@ namespace TriangulArt {
 		}
 
 		private void BpSaveProj_Click(object sender, EventArgs e) {
-			SaveFileDialog dlg = new SaveFileDialog();
-			dlg.Filter = "Fichiers xml (*.xml)|*.xml";
+			SaveFileDialog dlg = new SaveFileDialog { Filter = "Fichiers xml (*.xml)|*.xml" };
 			DialogResult result = dlg.ShowDialog();
 			if (result == DialogResult.OK) {
 				MemImage();
@@ -986,8 +984,7 @@ namespace TriangulArt {
 		}
 
 		private void BpFusion_Click(object sender, EventArgs e) {
-			OpenFileDialog dlg = new OpenFileDialog();
-			dlg.Filter = "Fichiers xml (*.xml)|*.xml";
+			OpenFileDialog dlg = new OpenFileDialog { Filter = "Fichiers xml (*.xml)|*.xml" };
 			DialogResult result = dlg.ShowDialog();
 			if (result == DialogResult.OK) {
 				FileStream fileParam = File.Open(dlg.FileName, FileMode.Open);
@@ -1066,15 +1063,13 @@ namespace TriangulArt {
 
 			switch (projet.mode) {
 				case 0:
-					maxWidth = chkOverscan.Checked ? 192 : 160;
 					coefX = 6;
-					bmpLock = new DirectBitmap(maxWidth, 256);
+					bmpLock = new DirectBitmap(chkOverscan.Checked ? 192 : 160, 256);
 					break;
 
 				case 1:
-					maxWidth = chkOverscan.Checked ? 384 : 320;
 					coefX = 3;
-					bmpLock = new DirectBitmap(maxWidth, 256);
+					bmpLock = new DirectBitmap(chkOverscan.Checked ? 384 : 320, 256);
 					break;
 			}
 			if (withResize)
@@ -1104,7 +1099,7 @@ namespace TriangulArt {
 			int nbAvant = 0, nbApres = 0;
 			foreach (Datas d in projet.lstData) {
 				nbAvant += d.lstTriangle.Count;
-				d.CleanUp(maxWidth);
+				d.CleanUp(bmpLock.Width);
 				nbApres += d.lstTriangle.Count;
 			}
 			if (nbApres != nbAvant)
@@ -1131,7 +1126,7 @@ namespace TriangulArt {
 			OpenFileDialog of = new OpenFileDialog { Filter = "Fichiers palette (*.pal)|*.pal|Tous les fichiers (*.*)|*.*\"'" };
 			if (of.ShowDialog() == DialogResult.OK) {
 				PaletteCpc.LirePalette(of.FileName);
-				UpdatePalette();
+				Reset();
 			}
 			Enabled = true;
 		}
