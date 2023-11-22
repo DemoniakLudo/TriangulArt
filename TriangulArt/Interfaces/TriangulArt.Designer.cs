@@ -1115,7 +1115,7 @@
 			this.bpSavePal.TabIndex = 60;
 			this.bpSavePal.Text = "Sauver Palette";
 			this.bpSavePal.UseVisualStyleBackColor = true;
-			this.bpSavePal.Click += new System.EventHandler(this.bpSavePal_Click);
+			this.bpSavePal.Click += new System.EventHandler(this.BpSavePal_Click);
 			// 
 			// bpReadPal
 			// 
@@ -1125,7 +1125,7 @@
 			this.bpReadPal.TabIndex = 60;
 			this.bpReadPal.Text = "Lire Palette";
 			this.bpReadPal.UseVisualStyleBackColor = true;
-			this.bpReadPal.Click += new System.EventHandler(this.bpReadPal_Click);
+			this.bpReadPal.Click += new System.EventHandler(this.BpReadPal_Click);
 			// 
 			// TriangulArt
 			// 

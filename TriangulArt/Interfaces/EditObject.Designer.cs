@@ -460,7 +460,7 @@
 			this.lstViewFace.TabIndex = 15;
 			this.lstViewFace.UseCompatibleStateImageBehavior = false;
 			this.lstViewFace.View = System.Windows.Forms.View.Details;
-			this.lstViewFace.SelectedIndexChanged += new System.EventHandler(this.lstViewFace_SelectedIndexChanged);
+			this.lstViewFace.SelectedIndexChanged += new System.EventHandler(this.LstViewFace_SelectedIndexChanged);
 			// 
 			// colNumFace
 			// 

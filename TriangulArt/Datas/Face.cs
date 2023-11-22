@@ -1,14 +1,14 @@
-﻿namespace TriangulArt {
+﻿using System;
+
+namespace TriangulArt {
+	[Serializable]
 	public class Face {
-		private Vertex a, b, c;
-		private int num;
-
-		public Vertex GetA { get { return a; } }
-		public Vertex GetB { get { return b; } }
-		public Vertex GetC { get { return c; } }
-
-		public int Num { get { return num; } }
+		public Vertex a, b, c;
+		public int num;
 		public byte pen = 1;
+
+		public Face() {
+		}
 
 		public Face(int num, Vertex a, Vertex b, Vertex c) {
 			this.num = num;

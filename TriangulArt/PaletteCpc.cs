@@ -56,7 +56,6 @@ public class PaletteCpc {
 		return 0;
 	}
 
-
 	static public void SauvePalette(string NomFic, int mode) {
 		int i;
 		byte[] pal = new byte[239];

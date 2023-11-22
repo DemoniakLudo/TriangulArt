@@ -1121,7 +1121,7 @@ namespace TriangulArt {
 			BpRedraw_Click(null, null);
 		}
 
-		private void bpReadPal_Click(object sender, EventArgs e) {
+		private void BpReadPal_Click(object sender, EventArgs e) {
 			Enabled = false;
 			OpenFileDialog of = new OpenFileDialog { Filter = "Fichiers palette (*.pal)|*.pal|Tous les fichiers (*.*)|*.*\"'" };
 			if (of.ShowDialog() == DialogResult.OK) {
@@ -1131,7 +1131,7 @@ namespace TriangulArt {
 			Enabled = true;
 		}
 
-		private void bpSavePal_Click(object sender, EventArgs e) {
+		private void BpSavePal_Click(object sender, EventArgs e) {
 			Enabled = false;
 			SaveFileDialog sf = new SaveFileDialog { Filter = "Fichiers palette (*.pal)|*.pal|Tous les fichiers (*.*)|*.*\"'" };
 			if (sf.ShowDialog() == DialogResult.OK) {

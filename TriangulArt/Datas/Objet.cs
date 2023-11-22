@@ -4,11 +4,15 @@ using System.IO;
 using System.Windows.Forms;
 
 namespace TriangulArt {
-	class Objet {
+	[Serializable]
+	public class Objet {
 		const int CONST_Z = 50000;                   // Constante d'affichage 3D->2D
 
 		public List<Vertex> lstVertex = new List<Vertex>();
 		public List<Face> lstFace = new List<Face>();
+
+		public Objet() {
+		}
 
 		//
 		// Calcule les paramètres (centre, taille) d'un objet
@@ -17,30 +21,30 @@ namespace TriangulArt {
 			Vertex MinPt = new Vertex(1000000.0, 1000000.0, 1000000.0);
 			Vertex MaxPt = new Vertex(-1000000.0, -1000000.0, -1000000.0);
 			foreach (Vertex v in lstVertex) {
-				if (MinPt.X > v.X)
-					MinPt.X = v.X;
+				if (MinPt.x > v.x)
+					MinPt.x = v.x;
 
-				if (MinPt.Y > v.Y)
-					MinPt.Y = v.Y;
+				if (MinPt.y > v.y)
+					MinPt.y = v.y;
 
-				if (MinPt.Z > v.Z)
-					MinPt.Z = v.Z;
+				if (MinPt.z > v.z)
+					MinPt.z = v.z;
 
-				if (MaxPt.X < v.X)
-					MaxPt.X = v.X;
+				if (MaxPt.x < v.x)
+					MaxPt.x = v.x;
 
-				if (MaxPt.Y < v.Y)
-					MaxPt.Y = v.Y;
+				if (MaxPt.y < v.y)
+					MaxPt.y = v.y;
 
-				if (MaxPt.Z < v.Z)
-					MaxPt.Z = v.Z;
+				if (MaxPt.z < v.z)
+					MaxPt.z = v.z;
 			}
-			taille.X = MaxPt.X - MinPt.X;
-			taille.Y = MaxPt.Y - MinPt.Y;
-			taille.Z = MaxPt.Z - MinPt.Z;
-			centre.X = MinPt.X + taille.X / 2.0;
-			centre.Y = MinPt.Y + taille.Y / 2.0;
-			centre.Z = MinPt.Z + taille.Z / 2.0;
+			taille.x = MaxPt.x - MinPt.x;
+			taille.y = MaxPt.y - MinPt.y;
+			taille.z = MaxPt.z - MinPt.z;
+			centre.x = MinPt.x + taille.x / 2.0;
+			centre.y = MinPt.y + taille.y / 2.0;
+			centre.z = MinPt.z + taille.z / 2.0;
 		}
 
 		//
@@ -48,9 +52,9 @@ namespace TriangulArt {
 		//
 		private void SetParamObjet(Vertex centre, Vertex taille) {
 			foreach (Vertex v in lstVertex) {
-				v.X = (v.X + centre.X) * taille.X;
-				v.Y = (v.Y + centre.Y) * taille.Y;
-				v.Z = (v.Z + centre.Z) * taille.Z;
+				v.x = (v.x + centre.x) * taille.x;
+				v.y = (v.y + centre.y) * taille.y;
+				v.z = (v.z + centre.z) * taille.z;
 			}
 		}
 
@@ -61,9 +65,9 @@ namespace TriangulArt {
 			Vertex Taille = new Vertex(0, 0, 0), Centre = new Vertex(0, 0, 0);
 			CalcParamObjet(Centre, Taille);
 			foreach (Vertex v in lstVertex) {
-				v.X -= Centre.X;
-				v.Y -= Centre.Y;
-				v.Z -= Centre.Z;
+				v.x -= Centre.x;
+				v.y -= Centre.y;
+				v.z -= Centre.z;
 			}
 		}
 
@@ -72,7 +76,7 @@ namespace TriangulArt {
 		// à l'écran, en fonction des paramètres de position, angle, zoom
 		// Affichage de l'objet complêt en fonction des paramètres choisis
 		//
-		public void DrawObj(DirectBitmap bm, int posx, int posy, int zoomx, int zoomy, int angx, int angy, int angz, int numFace, int numPoint, List<Triangle> lstTri = null, DirectBitmap bmCalc = null) {
+		public void DrawObj(DirectBitmap bm, double posx, double posy, double zoomx, double zoomy, double angx, double angy, double angz, int numFace, int numPoint, List<Triangle> lstTri = null, DirectBitmap bmCalc = null) {
 			double xSin = Math.Sin(angx * Math.PI / 180.0);
 			double xCos = Math.Cos(angx * Math.PI / 180.0);
 			double ySin = Math.Sin(angy * Math.PI / 180.0);
@@ -80,11 +84,11 @@ namespace TriangulArt {
 			double zSin = Math.Sin(angz * Math.PI / 180.0);
 			double zCos = Math.Cos(angz * Math.PI / 180.0);
 			foreach (Vertex v in lstVertex) {
-				double yt = (v.Y * xCos - v.Z * xSin);
-				double zt = (v.Y * xSin + v.Z * xCos);
-				double xt = (v.X * yCos - zt * ySin);
-				double z = CONST_Z + (v.X * ySin + zt * yCos);
-				v.SetPoint(posx + (int)(((xt * zCos - yt * zSin) * zoomx) / z), posy + (int)(((xt * zSin + yt * zCos) * zoomy) / z), (int)z);
+				double yt = (v.y * xCos - v.z * xSin);
+				double zt = (v.y * xSin + v.z * xCos);
+				double xt = (v.x * yCos - zt * ySin);
+				double z = CONST_Z + (v.x * ySin + zt * yCos);
+				v.SetPoint(posx + (((xt * zCos - yt * zSin) * zoomx) / z), posy + (((xt * zSin + yt * zCos) * zoomy) / z), z);
 			}
 
 			// Tri des faces par ordre des Z
@@ -93,14 +97,14 @@ namespace TriangulArt {
 				lstDraw.Add(lstFace[i]);
 
 			lstDraw.Sort(delegate (Face p1, Face p2) {
-				int cmp = (p1.GetA.Pz + p1.GetB.Pz + p1.GetC.Pz) - (p2.GetA.Pz + p2.GetB.Pz + p2.GetC.Pz);
-				return cmp != 0 ? cmp : p1.Num - p2.Num;
+				double cmp = (p1.a.pz + p1.b.pz + p1.c.pz) - (p2.a.pz + p2.b.pz + p2.c.pz);
+				return cmp != 0 ? (int)cmp : p1.num - p2.num;
 			});
 
 			// Affiche les triangles
 			for (int i = 0; i < lstDraw.Count; i++) {
 				Face f = lstDraw[i];
-				Triangle t = new Triangle(f.GetA.Px, f.GetA.Py, f.GetB.Px, f.GetB.Py, f.GetC.Px, f.GetC.Py, f.pen, bm);
+				Triangle t = new Triangle((int)f.a.px, (int)f.a.py, (int)f.b.px, (int)f.b.py, (int)f.c.px, (int)f.c.py, f.pen, bm);
 				t.FillTriangle(bm, false, bmCalc, i);
 				if (lstTri != null)
 					lstTri.Add(t);      // Ajoute dans la liste des triangles si passée en paramètre
@@ -109,7 +113,7 @@ namespace TriangulArt {
 			// Affiche la face sélectionnée
 			if (numFace != -1) {
 				Face f = lstFace[numFace];
-				Triangle t = new Triangle(f.GetA.Px, f.GetA.Py, f.GetB.Px, f.GetB.Py, f.GetC.Px, f.GetC.Py, 0, bm);
+				Triangle t = new Triangle((int)f.a.px, (int)f.a.py, (int)f.b.px, (int)f.b.py, (int)f.c.px, (int)f.c.py, 0, bm);
 				t.FillTriangle(bm, true);
 			}
 
@@ -117,7 +121,7 @@ namespace TriangulArt {
 			if (numPoint > -1)
 				for (int x = -1; x < 2; x++)
 					for (int y = -1; y < 2; y++)
-						bm.SetPixel(x + lstVertex[numPoint].Px, y + lstVertex[numPoint].Py, new RvbColor(0, 0, 0));
+						bm.SetPixel(x + (int)lstVertex[numPoint].px, y + (int)lstVertex[numPoint].py, new RvbColor(0, 0, 0));
 		}
 
 		//
@@ -161,13 +165,13 @@ namespace TriangulArt {
 							if (pa > 0 && pb > 0 && pc > 0) {
 								string newl = l.Substring(pa + 2).Trim();
 								int end = newl.IndexOfAny(new char[] { ' ', '\t' });
-								int a = Utils.ConvertToInt(newl.Substring(0, end + 1));
+								int a = Utils.ToInt(newl.Substring(0, end + 1));
 								newl = l.Substring(pb + 2).Trim();
 								end = newl.IndexOfAny(new char[] { ' ', '\t' });
-								int b = Utils.ConvertToInt(newl.Substring(0, end + 1));
+								int b = Utils.ToInt(newl.Substring(0, end + 1));
 								newl = l.Substring(pc + 2).Trim();
 								end = newl.IndexOfAny(new char[] { ' ', '\t' });
-								int c = Utils.ConvertToInt(newl.Substring(0, end > -1 ? end + 1 : newl.Length));
+								int c = Utils.ToInt(newl.Substring(0, end > -1 ? end + 1 : newl.Length));
 								if (a < lstVertex.Count && b < lstVertex.Count && c < lstVertex.Count) {
 									Face f = new Face(numFace++, lstVertex[a], lstVertex[b], lstVertex[c]);
 									lstFace.Add(f);
@@ -183,10 +187,10 @@ namespace TriangulArt {
 							if (pr > 0 && pg > 0 && pb > 0) {
 								int end = l.Substring(pr + 1).Trim().IndexOfAny(new char[] { ' ', '\t' });
 								if (end > -1) {
-									int r = Utils.ConvertToInt(l.Substring(pr + 1, end + 1));
+									int r = Utils.ToInt(l.Substring(pr + 1, end + 1));
 									end = l.Substring(pg + 2).Trim().IndexOfAny(new char[] { ' ', '\t' });
-									int v = Utils.ConvertToInt(l.Substring(pg + 1, end + 1));
-									int b = Utils.ConvertToInt(l.Substring(pb + 1));
+									int v = Utils.ToInt(l.Substring(pg + 1, end + 1));
+									int b = Utils.ToInt(l.Substring(pb + 1));
 									lstFace[lstFace.Count - 1].pen = PaletteCpc.GetNumPen(new RvbColor((byte)r, (byte)v, (byte)b));
 								}
 								else
@@ -213,13 +217,13 @@ namespace TriangulArt {
 				wr.WriteLine("");
 				wr.WriteLine("Vertex list:");
 				for (int i = 0; i < lstVertex.Count; i++)
-					wr.WriteLine("Vertex {0}:	X:{1}	Y:{2}	Z:{3}", i, lstVertex[i].X, lstVertex[i].Y, lstVertex[i].Z);
+					wr.WriteLine("Vertex {0}:	X:{1}	Y:{2}	Z:{3}", i, lstVertex[i].x, lstVertex[i].y, lstVertex[i].z);
 
 				wr.WriteLine("");
 				wr.WriteLine("Face list:");
 				for (int i = 0; i < lstFace.Count; i++) {
 					Face f = lstFace[i];
-					wr.WriteLine("Face {0}:	A:{1}	B:{2}	C:{3}", i, lstVertex.IndexOf(f.GetA), lstVertex.IndexOf(f.GetB), lstVertex.IndexOf(f.GetC));
+					wr.WriteLine("Face {0}:	A:{1}	B:{2}	C:{3}", i, lstVertex.IndexOf(f.a), lstVertex.IndexOf(f.b), lstVertex.IndexOf(f.c));
 					RvbColor color = PaletteCpc.GetColorPal(f.pen);
 					wr.WriteLine("Material:	r {0}	g {1}	b {2}", color.r, color.v, color.b);
 				}

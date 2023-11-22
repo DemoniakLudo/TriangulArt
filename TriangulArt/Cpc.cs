@@ -3,7 +3,6 @@ using System.IO;
 using System.Runtime.InteropServices;
 
 public class Cpc {
-
 	static public CpcAmsdos CreeEntete(string nomFic, short start, short length, short entry) {
 		CpcAmsdos entete = new CpcAmsdos();
 		string nom = Path.GetFileName(nomFic);

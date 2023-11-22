@@ -59,9 +59,30 @@
 			this.txbNbImages = new System.Windows.Forms.TextBox();
 			this.label15 = new System.Windows.Forms.Label();
 			this.bpEditObject = new System.Windows.Forms.Button();
-			this.bpEditSequence = new System.Windows.Forms.Button();
-			this.chkUseSeq = new System.Windows.Forms.CheckBox();
+			this.txbExprX = new System.Windows.Forms.TextBox();
+			this.txbExprY = new System.Windows.Forms.TextBox();
+			this.txbExprZx = new System.Windows.Forms.TextBox();
+			this.txbExprZy = new System.Windows.Forms.TextBox();
+			this.txbExprAx = new System.Windows.Forms.TextBox();
+			this.txbExprAy = new System.Windows.Forms.TextBox();
+			this.txbExprAz = new System.Windows.Forms.TextBox();
+			this.bpGenSeqIncr = new System.Windows.Forms.Button();
+			this.bpGenSeqExpr = new System.Windows.Forms.Button();
+			this.label16 = new System.Windows.Forms.Label();
+			this.label17 = new System.Windows.Forms.Label();
+			this.label18 = new System.Windows.Forms.Label();
+			this.label19 = new System.Windows.Forms.Label();
+			this.label20 = new System.Windows.Forms.Label();
+			this.label21 = new System.Windows.Forms.Label();
+			this.label22 = new System.Windows.Forms.Label();
+			this.txbError = new System.Windows.Forms.TextBox();
+			this.bpExportSequence = new System.Windows.Forms.Button();
+			this.bpImportSequence = new System.Windows.Forms.Button();
+			this.bpReadAnim = new System.Windows.Forms.Button();
+			this.bpSaveAnim = new System.Windows.Forms.Button();
+			this.trkIndex = new System.Windows.Forms.TrackBar();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxScr)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.trkIndex)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// pictureBoxScr
@@ -85,7 +106,7 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(774, 37);
+			this.label2.Location = new System.Drawing.Point(774, 87);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(21, 13);
 			this.label2.TabIndex = 1;
@@ -102,7 +123,7 @@
 			// 
 			// txbPy
 			// 
-			this.txbPy.Location = new System.Drawing.Point(801, 32);
+			this.txbPy.Location = new System.Drawing.Point(801, 82);
 			this.txbPy.Name = "txbPy";
 			this.txbPy.Size = new System.Drawing.Size(49, 20);
 			this.txbPy.TabIndex = 2;
@@ -112,7 +133,7 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(856, 9);
+			this.label3.Location = new System.Drawing.Point(782, 31);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(13, 13);
 			this.label3.TabIndex = 3;
@@ -121,7 +142,7 @@
 			// label4
 			// 
 			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(856, 35);
+			this.label4.Location = new System.Drawing.Point(782, 109);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(13, 13);
 			this.label4.TabIndex = 3;
@@ -130,7 +151,7 @@
 			// label5
 			// 
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(774, 61);
+			this.label5.Location = new System.Drawing.Point(774, 161);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(21, 13);
 			this.label5.TabIndex = 1;
@@ -139,7 +160,7 @@
 			// label6
 			// 
 			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(774, 89);
+			this.label6.Location = new System.Drawing.Point(774, 239);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(21, 13);
 			this.label6.TabIndex = 1;
@@ -147,7 +168,7 @@
 			// 
 			// txbZx
 			// 
-			this.txbZx.Location = new System.Drawing.Point(801, 58);
+			this.txbZx.Location = new System.Drawing.Point(801, 158);
 			this.txbZx.Name = "txbZx";
 			this.txbZx.Size = new System.Drawing.Size(49, 20);
 			this.txbZx.TabIndex = 2;
@@ -156,7 +177,7 @@
 			// 
 			// txbZy
 			// 
-			this.txbZy.Location = new System.Drawing.Point(801, 84);
+			this.txbZy.Location = new System.Drawing.Point(801, 234);
 			this.txbZy.Name = "txbZy";
 			this.txbZy.Size = new System.Drawing.Size(49, 20);
 			this.txbZy.TabIndex = 2;
@@ -166,7 +187,7 @@
 			// label7
 			// 
 			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(856, 61);
+			this.label7.Location = new System.Drawing.Point(782, 184);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(13, 13);
 			this.label7.TabIndex = 3;
@@ -175,7 +196,7 @@
 			// label8
 			// 
 			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point(856, 87);
+			this.label8.Location = new System.Drawing.Point(782, 260);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(13, 13);
 			this.label8.TabIndex = 3;
@@ -184,7 +205,7 @@
 			// label9
 			// 
 			this.label9.AutoSize = true;
-			this.label9.Location = new System.Drawing.Point(774, 115);
+			this.label9.Location = new System.Drawing.Point(774, 315);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(21, 13);
 			this.label9.TabIndex = 1;
@@ -193,7 +214,7 @@
 			// label10
 			// 
 			this.label10.AutoSize = true;
-			this.label10.Location = new System.Drawing.Point(774, 139);
+			this.label10.Location = new System.Drawing.Point(774, 389);
 			this.label10.Name = "label10";
 			this.label10.Size = new System.Drawing.Size(21, 13);
 			this.label10.TabIndex = 1;
@@ -202,7 +223,7 @@
 			// label11
 			// 
 			this.label11.AutoSize = true;
-			this.label11.Location = new System.Drawing.Point(774, 167);
+			this.label11.Location = new System.Drawing.Point(774, 467);
 			this.label11.Name = "label11";
 			this.label11.Size = new System.Drawing.Size(21, 13);
 			this.label11.TabIndex = 1;
@@ -210,7 +231,7 @@
 			// 
 			// txbAy
 			// 
-			this.txbAy.Location = new System.Drawing.Point(801, 136);
+			this.txbAy.Location = new System.Drawing.Point(801, 386);
 			this.txbAy.Name = "txbAy";
 			this.txbAy.Size = new System.Drawing.Size(49, 20);
 			this.txbAy.TabIndex = 2;
@@ -219,7 +240,7 @@
 			// 
 			// txbAx
 			// 
-			this.txbAx.Location = new System.Drawing.Point(801, 110);
+			this.txbAx.Location = new System.Drawing.Point(801, 310);
 			this.txbAx.Name = "txbAx";
 			this.txbAx.Size = new System.Drawing.Size(49, 20);
 			this.txbAx.TabIndex = 2;
@@ -228,7 +249,7 @@
 			// 
 			// txbAz
 			// 
-			this.txbAz.Location = new System.Drawing.Point(801, 162);
+			this.txbAz.Location = new System.Drawing.Point(801, 462);
 			this.txbAz.Name = "txbAz";
 			this.txbAz.Size = new System.Drawing.Size(49, 20);
 			this.txbAz.TabIndex = 2;
@@ -238,7 +259,7 @@
 			// label12
 			// 
 			this.label12.AutoSize = true;
-			this.label12.Location = new System.Drawing.Point(856, 139);
+			this.label12.Location = new System.Drawing.Point(782, 411);
 			this.label12.Name = "label12";
 			this.label12.Size = new System.Drawing.Size(13, 13);
 			this.label12.TabIndex = 3;
@@ -247,7 +268,7 @@
 			// label13
 			// 
 			this.label13.AutoSize = true;
-			this.label13.Location = new System.Drawing.Point(856, 113);
+			this.label13.Location = new System.Drawing.Point(782, 337);
 			this.label13.Name = "label13";
 			this.label13.Size = new System.Drawing.Size(13, 13);
 			this.label13.TabIndex = 3;
@@ -256,7 +277,7 @@
 			// label14
 			// 
 			this.label14.AutoSize = true;
-			this.label14.Location = new System.Drawing.Point(856, 165);
+			this.label14.Location = new System.Drawing.Point(782, 487);
 			this.label14.Name = "label14";
 			this.label14.Size = new System.Drawing.Size(13, 13);
 			this.label14.TabIndex = 3;
@@ -264,7 +285,7 @@
 			// 
 			// txbIncPx
 			// 
-			this.txbIncPx.Location = new System.Drawing.Point(875, 6);
+			this.txbIncPx.Location = new System.Drawing.Point(801, 29);
 			this.txbIncPx.Name = "txbIncPx";
 			this.txbIncPx.Size = new System.Drawing.Size(49, 20);
 			this.txbIncPx.TabIndex = 2;
@@ -273,7 +294,7 @@
 			// 
 			// txbIncZx
 			// 
-			this.txbIncZx.Location = new System.Drawing.Point(875, 58);
+			this.txbIncZx.Location = new System.Drawing.Point(801, 181);
 			this.txbIncZx.Name = "txbIncZx";
 			this.txbIncZx.Size = new System.Drawing.Size(49, 20);
 			this.txbIncZx.TabIndex = 2;
@@ -282,7 +303,7 @@
 			// 
 			// txbIncPy
 			// 
-			this.txbIncPy.Location = new System.Drawing.Point(875, 32);
+			this.txbIncPy.Location = new System.Drawing.Point(801, 106);
 			this.txbIncPy.Name = "txbIncPy";
 			this.txbIncPy.Size = new System.Drawing.Size(49, 20);
 			this.txbIncPy.TabIndex = 2;
@@ -291,7 +312,7 @@
 			// 
 			// txbIncAy
 			// 
-			this.txbIncAy.Location = new System.Drawing.Point(875, 136);
+			this.txbIncAy.Location = new System.Drawing.Point(801, 408);
 			this.txbIncAy.Name = "txbIncAy";
 			this.txbIncAy.Size = new System.Drawing.Size(49, 20);
 			this.txbIncAy.TabIndex = 2;
@@ -300,7 +321,7 @@
 			// 
 			// txbIncAx
 			// 
-			this.txbIncAx.Location = new System.Drawing.Point(875, 110);
+			this.txbIncAx.Location = new System.Drawing.Point(801, 334);
 			this.txbIncAx.Name = "txbIncAx";
 			this.txbIncAx.Size = new System.Drawing.Size(49, 20);
 			this.txbIncAx.TabIndex = 2;
@@ -309,7 +330,7 @@
 			// 
 			// txbIncZy
 			// 
-			this.txbIncZy.Location = new System.Drawing.Point(875, 84);
+			this.txbIncZy.Location = new System.Drawing.Point(801, 257);
 			this.txbIncZy.Name = "txbIncZy";
 			this.txbIncZy.Size = new System.Drawing.Size(49, 20);
 			this.txbIncZy.TabIndex = 2;
@@ -318,7 +339,7 @@
 			// 
 			// txbIncAz
 			// 
-			this.txbIncAz.Location = new System.Drawing.Point(875, 162);
+			this.txbIncAz.Location = new System.Drawing.Point(801, 484);
 			this.txbIncAz.Name = "txbIncAz";
 			this.txbIncAz.Size = new System.Drawing.Size(49, 20);
 			this.txbIncAz.TabIndex = 2;
@@ -327,7 +348,7 @@
 			// 
 			// bpReadObject
 			// 
-			this.bpReadObject.Location = new System.Drawing.Point(0, 550);
+			this.bpReadObject.Location = new System.Drawing.Point(0, 649);
 			this.bpReadObject.Name = "bpReadObject";
 			this.bpReadObject.Size = new System.Drawing.Size(94, 23);
 			this.bpReadObject.TabIndex = 4;
@@ -337,7 +358,7 @@
 			// 
 			// bpRedraw
 			// 
-			this.bpRedraw.Location = new System.Drawing.Point(822, 198);
+			this.bpRedraw.Location = new System.Drawing.Point(777, 562);
 			this.bpRedraw.Name = "bpRedraw";
 			this.bpRedraw.Size = new System.Drawing.Size(75, 23);
 			this.bpRedraw.TabIndex = 5;
@@ -347,7 +368,7 @@
 			// 
 			// bpAnimate
 			// 
-			this.bpAnimate.Location = new System.Drawing.Point(0, 606);
+			this.bpAnimate.Location = new System.Drawing.Point(0, 678);
 			this.bpAnimate.Name = "bpAnimate";
 			this.bpAnimate.Size = new System.Drawing.Size(94, 23);
 			this.bpAnimate.TabIndex = 6;
@@ -357,7 +378,7 @@
 			// 
 			// bpWriteTriangle
 			// 
-			this.bpWriteTriangle.Location = new System.Drawing.Point(0, 635);
+			this.bpWriteTriangle.Location = new System.Drawing.Point(0, 707);
 			this.bpWriteTriangle.Name = "bpWriteTriangle";
 			this.bpWriteTriangle.Size = new System.Drawing.Size(94, 23);
 			this.bpWriteTriangle.TabIndex = 7;
@@ -367,16 +388,17 @@
 			// 
 			// txbNbImages
 			// 
-			this.txbNbImages.Location = new System.Drawing.Point(100, 619);
+			this.txbNbImages.Location = new System.Drawing.Point(100, 691);
 			this.txbNbImages.Name = "txbNbImages";
 			this.txbNbImages.Size = new System.Drawing.Size(37, 20);
 			this.txbNbImages.TabIndex = 1;
 			this.txbNbImages.Text = "30";
+			this.txbNbImages.TextChanged += new System.EventHandler(this.TxbNbImages_TextChanged);
 			// 
 			// label15
 			// 
 			this.label15.AutoSize = true;
-			this.label15.Location = new System.Drawing.Point(143, 622);
+			this.label15.Location = new System.Drawing.Point(143, 694);
 			this.label15.Name = "label15";
 			this.label15.Size = new System.Drawing.Size(41, 13);
 			this.label15.TabIndex = 10;
@@ -384,7 +406,7 @@
 			// 
 			// bpEditObject
 			// 
-			this.bpEditObject.Location = new System.Drawing.Point(100, 550);
+			this.bpEditObject.Location = new System.Drawing.Point(100, 649);
 			this.bpEditObject.Name = "bpEditObject";
 			this.bpEditObject.Size = new System.Drawing.Size(94, 23);
 			this.bpEditObject.TabIndex = 11;
@@ -392,34 +414,224 @@
 			this.bpEditObject.UseVisualStyleBackColor = true;
 			this.bpEditObject.Click += new System.EventHandler(this.BpEditObject_Click);
 			// 
-			// bpEditSequence
+			// txbExprX
 			// 
-			this.bpEditSequence.Location = new System.Drawing.Point(943, 4);
-			this.bpEditSequence.Name = "bpEditSequence";
-			this.bpEditSequence.Size = new System.Drawing.Size(117, 23);
-			this.bpEditSequence.TabIndex = 12;
-			this.bpEditSequence.Text = "Editeur de séquence";
-			this.bpEditSequence.UseVisualStyleBackColor = true;
-			this.bpEditSequence.Click += new System.EventHandler(this.BpEditSequence_Click);
+			this.txbExprX.Location = new System.Drawing.Point(801, 52);
+			this.txbExprX.Name = "txbExprX";
+			this.txbExprX.Size = new System.Drawing.Size(494, 20);
+			this.txbExprX.TabIndex = 14;
 			// 
-			// chkUseSeq
+			// txbExprY
 			// 
-			this.chkUseSeq.AutoSize = true;
-			this.chkUseSeq.Location = new System.Drawing.Point(943, 36);
-			this.chkUseSeq.Name = "chkUseSeq";
-			this.chkUseSeq.Size = new System.Drawing.Size(107, 17);
-			this.chkUseSeq.TabIndex = 13;
-			this.chkUseSeq.Text = "Utiliser séquence";
-			this.chkUseSeq.UseVisualStyleBackColor = true;
-			this.chkUseSeq.CheckedChanged += new System.EventHandler(this.ChkUseSeq_CheckedChanged);
+			this.txbExprY.Location = new System.Drawing.Point(801, 129);
+			this.txbExprY.Name = "txbExprY";
+			this.txbExprY.Size = new System.Drawing.Size(494, 20);
+			this.txbExprY.TabIndex = 14;
+			// 
+			// txbExprZx
+			// 
+			this.txbExprZx.Location = new System.Drawing.Point(801, 204);
+			this.txbExprZx.Name = "txbExprZx";
+			this.txbExprZx.Size = new System.Drawing.Size(494, 20);
+			this.txbExprZx.TabIndex = 14;
+			// 
+			// txbExprZy
+			// 
+			this.txbExprZy.Location = new System.Drawing.Point(801, 280);
+			this.txbExprZy.Name = "txbExprZy";
+			this.txbExprZy.Size = new System.Drawing.Size(494, 20);
+			this.txbExprZy.TabIndex = 14;
+			// 
+			// txbExprAx
+			// 
+			this.txbExprAx.Location = new System.Drawing.Point(801, 357);
+			this.txbExprAx.Name = "txbExprAx";
+			this.txbExprAx.Size = new System.Drawing.Size(494, 20);
+			this.txbExprAx.TabIndex = 14;
+			// 
+			// txbExprAy
+			// 
+			this.txbExprAy.Location = new System.Drawing.Point(801, 431);
+			this.txbExprAy.Name = "txbExprAy";
+			this.txbExprAy.Size = new System.Drawing.Size(494, 20);
+			this.txbExprAy.TabIndex = 14;
+			// 
+			// txbExprAz
+			// 
+			this.txbExprAz.Location = new System.Drawing.Point(801, 507);
+			this.txbExprAz.Name = "txbExprAz";
+			this.txbExprAz.Size = new System.Drawing.Size(494, 20);
+			this.txbExprAz.TabIndex = 14;
+			// 
+			// bpGenSeqIncr
+			// 
+			this.bpGenSeqIncr.Location = new System.Drawing.Point(785, 649);
+			this.bpGenSeqIncr.Name = "bpGenSeqIncr";
+			this.bpGenSeqIncr.Size = new System.Drawing.Size(204, 23);
+			this.bpGenSeqIncr.TabIndex = 15;
+			this.bpGenSeqIncr.Text = "Générer séquence depuis incréments";
+			this.bpGenSeqIncr.UseVisualStyleBackColor = true;
+			this.bpGenSeqIncr.Click += new System.EventHandler(this.BpGenSeqIncr_Click);
+			// 
+			// bpGenSeqExpr
+			// 
+			this.bpGenSeqExpr.Location = new System.Drawing.Point(785, 678);
+			this.bpGenSeqExpr.Name = "bpGenSeqExpr";
+			this.bpGenSeqExpr.Size = new System.Drawing.Size(204, 23);
+			this.bpGenSeqExpr.TabIndex = 15;
+			this.bpGenSeqExpr.Text = "Générer séquence depuis expressions";
+			this.bpGenSeqExpr.UseVisualStyleBackColor = true;
+			this.bpGenSeqExpr.Click += new System.EventHandler(this.BpGenSeqExpr_Click);
+			// 
+			// label16
+			// 
+			this.label16.AutoSize = true;
+			this.label16.Location = new System.Drawing.Point(771, 55);
+			this.label16.Name = "label16";
+			this.label16.Size = new System.Drawing.Size(28, 13);
+			this.label16.TabIndex = 16;
+			this.label16.Text = "Expr";
+			// 
+			// label17
+			// 
+			this.label17.AutoSize = true;
+			this.label17.Location = new System.Drawing.Point(771, 132);
+			this.label17.Name = "label17";
+			this.label17.Size = new System.Drawing.Size(28, 13);
+			this.label17.TabIndex = 16;
+			this.label17.Text = "Expr";
+			// 
+			// label18
+			// 
+			this.label18.AutoSize = true;
+			this.label18.Location = new System.Drawing.Point(771, 207);
+			this.label18.Name = "label18";
+			this.label18.Size = new System.Drawing.Size(28, 13);
+			this.label18.TabIndex = 16;
+			this.label18.Text = "Expr";
+			// 
+			// label19
+			// 
+			this.label19.AutoSize = true;
+			this.label19.Location = new System.Drawing.Point(771, 283);
+			this.label19.Name = "label19";
+			this.label19.Size = new System.Drawing.Size(28, 13);
+			this.label19.TabIndex = 16;
+			this.label19.Text = "Expr";
+			// 
+			// label20
+			// 
+			this.label20.AutoSize = true;
+			this.label20.Location = new System.Drawing.Point(771, 360);
+			this.label20.Name = "label20";
+			this.label20.Size = new System.Drawing.Size(28, 13);
+			this.label20.TabIndex = 16;
+			this.label20.Text = "Expr";
+			// 
+			// label21
+			// 
+			this.label21.AutoSize = true;
+			this.label21.Location = new System.Drawing.Point(771, 434);
+			this.label21.Name = "label21";
+			this.label21.Size = new System.Drawing.Size(28, 13);
+			this.label21.TabIndex = 16;
+			this.label21.Text = "Expr";
+			// 
+			// label22
+			// 
+			this.label22.AutoSize = true;
+			this.label22.Location = new System.Drawing.Point(771, 510);
+			this.label22.Name = "label22";
+			this.label22.Size = new System.Drawing.Size(28, 13);
+			this.label22.TabIndex = 16;
+			this.label22.Text = "Expr";
+			// 
+			// txbError
+			// 
+			this.txbError.Enabled = false;
+			this.txbError.ForeColor = System.Drawing.Color.Red;
+			this.txbError.Location = new System.Drawing.Point(242, 784);
+			this.txbError.Name = "txbError";
+			this.txbError.ReadOnly = true;
+			this.txbError.Size = new System.Drawing.Size(1048, 20);
+			this.txbError.TabIndex = 19;
+			// 
+			// bpExportSequence
+			// 
+			this.bpExportSequence.Location = new System.Drawing.Point(121, 781);
+			this.bpExportSequence.Name = "bpExportSequence";
+			this.bpExportSequence.Size = new System.Drawing.Size(115, 23);
+			this.bpExportSequence.TabIndex = 17;
+			this.bpExportSequence.Text = "Exporter séquence";
+			this.bpExportSequence.UseVisualStyleBackColor = true;
+			this.bpExportSequence.Click += new System.EventHandler(this.BpExportSequence_Click);
+			// 
+			// bpImportSequence
+			// 
+			this.bpImportSequence.Location = new System.Drawing.Point(0, 781);
+			this.bpImportSequence.Name = "bpImportSequence";
+			this.bpImportSequence.Size = new System.Drawing.Size(115, 23);
+			this.bpImportSequence.TabIndex = 18;
+			this.bpImportSequence.Text = "Importer séquence";
+			this.bpImportSequence.UseVisualStyleBackColor = true;
+			this.bpImportSequence.Click += new System.EventHandler(this.BpImportSequence_Click);
+			// 
+			// bpReadAnim
+			// 
+			this.bpReadAnim.Location = new System.Drawing.Point(0, 736);
+			this.bpReadAnim.Name = "bpReadAnim";
+			this.bpReadAnim.Size = new System.Drawing.Size(115, 39);
+			this.bpReadAnim.TabIndex = 20;
+			this.bpReadAnim.Text = "Lecture animation";
+			this.bpReadAnim.UseVisualStyleBackColor = true;
+			this.bpReadAnim.Click += new System.EventHandler(this.BpReadAnim_Click);
+			// 
+			// bpSaveAnim
+			// 
+			this.bpSaveAnim.Location = new System.Drawing.Point(121, 736);
+			this.bpSaveAnim.Name = "bpSaveAnim";
+			this.bpSaveAnim.Size = new System.Drawing.Size(115, 39);
+			this.bpSaveAnim.TabIndex = 20;
+			this.bpSaveAnim.Text = "Sauvegarde animation";
+			this.bpSaveAnim.UseVisualStyleBackColor = true;
+			this.bpSaveAnim.Click += new System.EventHandler(this.BpSaveAnim_Click);
+			// 
+			// trkIndex
+			// 
+			this.trkIndex.Location = new System.Drawing.Point(0, 550);
+			this.trkIndex.Maximum = 29;
+			this.trkIndex.Name = "trkIndex";
+			this.trkIndex.Size = new System.Drawing.Size(768, 45);
+			this.trkIndex.TabIndex = 21;
+			this.trkIndex.Scroll += new System.EventHandler(this.TrkIndex_Scroll);
 			// 
 			// MakeAnim
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1119, 785);
-			this.Controls.Add(this.chkUseSeq);
-			this.Controls.Add(this.bpEditSequence);
+			this.ClientSize = new System.Drawing.Size(1298, 805);
+			this.Controls.Add(this.trkIndex);
+			this.Controls.Add(this.bpSaveAnim);
+			this.Controls.Add(this.bpReadAnim);
+			this.Controls.Add(this.txbError);
+			this.Controls.Add(this.bpExportSequence);
+			this.Controls.Add(this.bpImportSequence);
+			this.Controls.Add(this.label22);
+			this.Controls.Add(this.label21);
+			this.Controls.Add(this.label20);
+			this.Controls.Add(this.label19);
+			this.Controls.Add(this.label18);
+			this.Controls.Add(this.label17);
+			this.Controls.Add(this.label16);
+			this.Controls.Add(this.bpGenSeqExpr);
+			this.Controls.Add(this.bpGenSeqIncr);
+			this.Controls.Add(this.txbExprAz);
+			this.Controls.Add(this.txbExprAy);
+			this.Controls.Add(this.txbExprAx);
+			this.Controls.Add(this.txbExprZy);
+			this.Controls.Add(this.txbExprZx);
+			this.Controls.Add(this.txbExprY);
+			this.Controls.Add(this.txbExprX);
 			this.Controls.Add(this.bpEditObject);
 			this.Controls.Add(this.label15);
 			this.Controls.Add(this.txbNbImages);
@@ -462,6 +674,7 @@
 			this.Name = "MakeAnim";
 			this.Text = "MakeAnim";
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxScr)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.trkIndex)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -505,7 +718,27 @@
 		private System.Windows.Forms.TextBox txbNbImages;
 		private System.Windows.Forms.Label label15;
 		private System.Windows.Forms.Button bpEditObject;
-		private System.Windows.Forms.Button bpEditSequence;
-		private System.Windows.Forms.CheckBox chkUseSeq;
+		private System.Windows.Forms.TextBox txbExprX;
+		private System.Windows.Forms.TextBox txbExprY;
+		private System.Windows.Forms.TextBox txbExprZx;
+		private System.Windows.Forms.TextBox txbExprZy;
+		private System.Windows.Forms.TextBox txbExprAx;
+		private System.Windows.Forms.TextBox txbExprAy;
+		private System.Windows.Forms.TextBox txbExprAz;
+		private System.Windows.Forms.Button bpGenSeqIncr;
+		private System.Windows.Forms.Button bpGenSeqExpr;
+		private System.Windows.Forms.Label label16;
+		private System.Windows.Forms.Label label17;
+		private System.Windows.Forms.Label label18;
+		private System.Windows.Forms.Label label19;
+		private System.Windows.Forms.Label label20;
+		private System.Windows.Forms.Label label21;
+		private System.Windows.Forms.Label label22;
+		private System.Windows.Forms.TextBox txbError;
+		private System.Windows.Forms.Button bpExportSequence;
+		private System.Windows.Forms.Button bpImportSequence;
+		private System.Windows.Forms.Button bpReadAnim;
+		private System.Windows.Forms.Button bpSaveAnim;
+		private System.Windows.Forms.TrackBar trkIndex;
 	}
 }

@@ -73,9 +73,9 @@ namespace TriangulArt {
 		}
 
 		private void NewColor() {
-			int r = tabVal[0] != null ? Utils.ConvertToInt(tabVal[0].Text) : 0;
-			int v = tabVal[1] != null ? Utils.ConvertToInt(tabVal[1].Text) : 0;
-			int b = tabVal[2] != null ? Utils.ConvertToInt(tabVal[2].Text) : 0;
+			int r = tabVal[0] != null ? Utils.ToInt(tabVal[0].Text) : 0;
+			int v = tabVal[1] != null ? Utils.ToInt(tabVal[1].Text) : 0;
+			int b = tabVal[2] != null ? Utils.ToInt(tabVal[2].Text) : 0;
 			valColor = (v << 8) + (b << 4) + r;
 			selColor.BackColor = Color.FromArgb(r * 17, v * 17, b * 17);
 		}
