@@ -4,14 +4,15 @@ using System.Windows.Forms;
 
 namespace TriangulArt {
 	public partial class EditObjet : Form {
-		private Objet objet = new Objet();
+		private Objet objet;
 		private DirectBitmap bmpLock = new DirectBitmap(768, 512);
 		private int numFace = -1, numVertex = -1;
 		private Label[] colors = new Label[16];
 		private byte selColor = 1;
 
-		public EditObjet() {
+		public EditObjet(Objet o) {
 			InitializeComponent();
+			objet = o != null ? o : new Objet();
 			for (int i = 0; i < 16; i++) {
 				colors[i] = new Label {
 					BorderStyle = BorderStyle.FixedSingle,
@@ -22,6 +23,8 @@ namespace TriangulArt {
 				colors[i].MouseClick += ClickColor;
 				Controls.Add(colors[i]);
 			}
+			DisplayVertex(-1);
+			DisplayFace(-1);
 			DisplayObj();
 			UpdatePalette();
 		}

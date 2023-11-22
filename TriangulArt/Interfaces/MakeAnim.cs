@@ -113,7 +113,7 @@ namespace TriangulArt {
 
 		private void BpEditObject_Click(object sender, EventArgs e) {
 			Enabled = false;
-			new EditObjet().ShowDialog();
+			new EditObjet(anim.objet).ShowDialog();
 			Enabled = true;
 		}
 
@@ -214,6 +214,7 @@ namespace TriangulArt {
 					MessageBox.Show(ex.Message, "Erreur lecture animation.");
 				}
 				fileSeq.Close();
+				anim.RebuildObject();
 			}
 			txbNbImages.Text = anim.lstSeq.Count.ToString();
 			DisplayFrame(0);
