@@ -217,6 +217,13 @@ namespace TriangulArt {
 				anim.RebuildObject();
 			}
 			txbNbImages.Text = anim.lstSeq.Count.ToString();
+			txbExprX.Text = anim.exprPosX;
+			txbExprY.Text = anim.exprPosY;
+			txbExprZx.Text = anim.exprZoomX;
+			txbExprZy.Text = anim.exprZoomY;
+			txbExprAx.Text = anim.exprAngX;
+			txbExprAy.Text = anim.exprAngY;
+			txbExprAz.Text = anim.exprAngZ;
 			DisplayFrame(0);
 			InitBoutons();
 		}
