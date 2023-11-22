@@ -7,14 +7,14 @@ namespace TriangulArt {
 		private Objet objet = new Objet();
 		private DirectBitmap bmpLock = new DirectBitmap(384, 272);
 		private DirectBitmap bmpCalc = new DirectBitmap(384, 272);
-		private List<Sequence> lstSeq = new List<Sequence>();
+		private FullSequence seq = new FullSequence();
 		private Projet projet;
 
 		public MakeAnim(Projet prj) {
 			InitializeComponent();
 			InitBoutons();
 			CreateSequence();
-			DisplayFrame(lstSeq[0]);
+			DisplayFrame(seq.lstSeq[0]);
 			projet = prj;
 		}
 
@@ -41,9 +41,9 @@ namespace TriangulArt {
 			double angy = Utils.ConvertToDouble(txbAy.Text);
 			double angz = Utils.ConvertToDouble(txbAz.Text);
 			int nbImages = Utils.ConvertToInt(txbNbImages.Text);
-			lstSeq.Clear();
+			seq.Clear();
 			for (int i = 0; i < nbImages; i++) {
-				lstSeq.Add(new Sequence(posx, posy, zoomx, zoomy, angx, angy, angz));
+				seq.Add(posx, posy, zoomx, zoomy, angx, angy, angz);
 				posx += Utils.ConvertToDouble(txbIncPx.Text);
 				posy += Utils.ConvertToDouble(txbIncPy.Text);
 				zoomx += Utils.ConvertToDouble(txbIncZx.Text);
@@ -62,9 +62,9 @@ namespace TriangulArt {
 			if (setProjet)
 				projet.lstData.Clear();
 
-			for (int i = 0; i < lstSeq.Count; i++) {
+			for (int i = 0; i < seq.lstSeq.Count; i++) {
 				List<Triangle> lstTriangle = new List<Triangle>();
-				DisplayFrame(lstSeq[i], lstTriangle);
+				DisplayFrame(seq.lstSeq[i], lstTriangle);
 				if (setProjet) {
 					Datas data = new Datas();
 					data.nomImage = "Frame_" + i.ToString();
@@ -96,7 +96,7 @@ namespace TriangulArt {
 		private void BpEditSequence_Click(object sender, EventArgs e) {
 			Enabled = false;
 			chkUseSeq.Checked = true;
-			new EditSequence(lstSeq).ShowDialog();
+			new EditSequence(seq).ShowDialog();
 			Enabled = true;
 		}
 
@@ -105,7 +105,7 @@ namespace TriangulArt {
 			if (of.ShowDialog() == DialogResult.OK) {
 				objet.ReadObject(of.FileName);
 			}
-			DisplayFrame(lstSeq[0]);
+			DisplayFrame(seq.lstSeq[0]);
 			InitBoutons();
 			if (!chkUseSeq.Checked)
 				CreateSequence();
@@ -121,7 +121,7 @@ namespace TriangulArt {
 			if (!chkUseSeq.Checked)
 				CreateSequence();
 
-			DisplayFrame(lstSeq[0]);
+			DisplayFrame(seq.lstSeq[0]);
 		}
 
 		private void BpAnimate_Click(object sender, EventArgs e) {

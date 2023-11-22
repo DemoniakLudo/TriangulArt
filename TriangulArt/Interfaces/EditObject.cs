@@ -5,7 +5,7 @@ using System.Windows.Forms;
 namespace TriangulArt {
 	public partial class EditObjet : Form {
 		private Objet objet = new Objet();
-		private DirectBitmap bmpLock = new DirectBitmap(640, 400);
+		private DirectBitmap bmpLock = new DirectBitmap(768, 512);
 		private int numFace = -1, numVertex = -1;
 		private Label[] colors = new Label[16];
 		private byte selColor = 1;
@@ -73,7 +73,7 @@ namespace TriangulArt {
 			int angx = Utils.ConvertToInt(txbValX.Text);
 			int angy = Utils.ConvertToInt(txbValY.Text);
 			int angz = Utils.ConvertToInt(txbValZ.Text);
-			objet.DrawObj(bmpLock, 320, 200, zoom, zoom, angx, angy, angz, numFace, numVertex);
+			objet.DrawObj(bmpLock, 384, 256, zoom, zoom, angx, angy, angz, numFace, numVertex);
 			pictureBoxObj.Image = bmpLock.Bitmap;
 			pictureBoxObj.Refresh();
 		}

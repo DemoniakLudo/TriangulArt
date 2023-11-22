@@ -78,14 +78,14 @@
 			// 
 			this.pictureBoxObj.Location = new System.Drawing.Point(0, 0);
 			this.pictureBoxObj.Name = "pictureBoxObj";
-			this.pictureBoxObj.Size = new System.Drawing.Size(640, 400);
+			this.pictureBoxObj.Size = new System.Drawing.Size(768, 512);
 			this.pictureBoxObj.TabIndex = 0;
 			this.pictureBoxObj.TabStop = false;
 			// 
 			// bpNewObject
 			// 
 			this.bpNewObject.Enabled = false;
-			this.bpNewObject.Location = new System.Drawing.Point(646, 0);
+			this.bpNewObject.Location = new System.Drawing.Point(782, 8);
 			this.bpNewObject.Name = "bpNewObject";
 			this.bpNewObject.Size = new System.Drawing.Size(90, 23);
 			this.bpNewObject.TabIndex = 1;
@@ -95,7 +95,7 @@
 			// 
 			// bpReadObject
 			// 
-			this.bpReadObject.Location = new System.Drawing.Point(646, 29);
+			this.bpReadObject.Location = new System.Drawing.Point(782, 37);
 			this.bpReadObject.Name = "bpReadObject";
 			this.bpReadObject.Size = new System.Drawing.Size(90, 23);
 			this.bpReadObject.TabIndex = 1;
@@ -106,7 +106,7 @@
 			// bpFusionObject
 			// 
 			this.bpFusionObject.Enabled = false;
-			this.bpFusionObject.Location = new System.Drawing.Point(646, 58);
+			this.bpFusionObject.Location = new System.Drawing.Point(782, 66);
 			this.bpFusionObject.Name = "bpFusionObject";
 			this.bpFusionObject.Size = new System.Drawing.Size(90, 23);
 			this.bpFusionObject.TabIndex = 1;
@@ -117,7 +117,7 @@
 			// bpSaveObject
 			// 
 			this.bpSaveObject.Enabled = false;
-			this.bpSaveObject.Location = new System.Drawing.Point(646, 87);
+			this.bpSaveObject.Location = new System.Drawing.Point(782, 95);
 			this.bpSaveObject.Name = "bpSaveObject";
 			this.bpSaveObject.Size = new System.Drawing.Size(90, 23);
 			this.bpSaveObject.TabIndex = 1;
@@ -127,46 +127,46 @@
 			// 
 			// trackX
 			// 
-			this.trackX.Location = new System.Drawing.Point(642, 130);
+			this.trackX.Location = new System.Drawing.Point(782, 146);
 			this.trackX.Maximum = 359;
 			this.trackX.Name = "trackX";
 			this.trackX.Orientation = System.Windows.Forms.Orientation.Vertical;
 			this.trackX.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
 			this.trackX.RightToLeftLayout = true;
-			this.trackX.Size = new System.Drawing.Size(45, 246);
+			this.trackX.Size = new System.Drawing.Size(45, 318);
 			this.trackX.TabIndex = 2;
 			this.trackX.TickStyle = System.Windows.Forms.TickStyle.None;
 			this.trackX.Scroll += new System.EventHandler(this.TrackX_Scroll);
 			// 
 			// trackY
 			// 
-			this.trackY.Location = new System.Drawing.Point(693, 130);
+			this.trackY.Location = new System.Drawing.Point(833, 146);
 			this.trackY.Maximum = 359;
 			this.trackY.Name = "trackY";
 			this.trackY.Orientation = System.Windows.Forms.Orientation.Vertical;
 			this.trackY.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
 			this.trackY.RightToLeftLayout = true;
-			this.trackY.Size = new System.Drawing.Size(45, 246);
+			this.trackY.Size = new System.Drawing.Size(45, 318);
 			this.trackY.TabIndex = 2;
 			this.trackY.TickStyle = System.Windows.Forms.TickStyle.None;
 			this.trackY.Scroll += new System.EventHandler(this.TrackY_Scroll);
 			// 
 			// trackZ
 			// 
-			this.trackZ.Location = new System.Drawing.Point(744, 130);
+			this.trackZ.Location = new System.Drawing.Point(884, 146);
 			this.trackZ.Maximum = 359;
 			this.trackZ.Name = "trackZ";
 			this.trackZ.Orientation = System.Windows.Forms.Orientation.Vertical;
 			this.trackZ.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
 			this.trackZ.RightToLeftLayout = true;
-			this.trackZ.Size = new System.Drawing.Size(45, 246);
+			this.trackZ.Size = new System.Drawing.Size(45, 318);
 			this.trackZ.TabIndex = 2;
 			this.trackZ.TickStyle = System.Windows.Forms.TickStyle.None;
 			this.trackZ.Scroll += new System.EventHandler(this.TrackZ_Scroll);
 			// 
 			// txbValX
 			// 
-			this.txbValX.Location = new System.Drawing.Point(659, 380);
+			this.txbValX.Location = new System.Drawing.Point(799, 468);
 			this.txbValX.Name = "txbValX";
 			this.txbValX.ReadOnly = true;
 			this.txbValX.Size = new System.Drawing.Size(30, 20);
@@ -175,7 +175,7 @@
 			// 
 			// txbValY
 			// 
-			this.txbValY.Location = new System.Drawing.Point(711, 380);
+			this.txbValY.Location = new System.Drawing.Point(851, 468);
 			this.txbValY.Name = "txbValY";
 			this.txbValY.ReadOnly = true;
 			this.txbValY.Size = new System.Drawing.Size(30, 20);
@@ -184,7 +184,7 @@
 			// 
 			// txbValZ
 			// 
-			this.txbValZ.Location = new System.Drawing.Point(762, 380);
+			this.txbValZ.Location = new System.Drawing.Point(902, 468);
 			this.txbValZ.Name = "txbValZ";
 			this.txbValZ.ReadOnly = true;
 			this.txbValZ.Size = new System.Drawing.Size(30, 20);
@@ -194,7 +194,7 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(671, 122);
+			this.label1.Location = new System.Drawing.Point(807, 130);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(14, 13);
 			this.label1.TabIndex = 6;
@@ -203,7 +203,7 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(720, 122);
+			this.label2.Location = new System.Drawing.Point(856, 130);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(14, 13);
 			this.label2.TabIndex = 6;
@@ -212,7 +212,7 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(773, 122);
+			this.label3.Location = new System.Drawing.Point(909, 130);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(14, 13);
 			this.label3.TabIndex = 6;
@@ -221,7 +221,7 @@
 			// label4
 			// 
 			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(1, 413);
+			this.label4.Location = new System.Drawing.Point(0, 524);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(34, 13);
 			this.label4.TabIndex = 7;
@@ -229,11 +229,11 @@
 			// 
 			// trackZoom
 			// 
-			this.trackZoom.Location = new System.Drawing.Point(82, 406);
+			this.trackZoom.Location = new System.Drawing.Point(84, 517);
 			this.trackZoom.Maximum = 200000;
 			this.trackZoom.Minimum = 1;
 			this.trackZoom.Name = "trackZoom";
-			this.trackZoom.Size = new System.Drawing.Size(558, 45);
+			this.trackZoom.Size = new System.Drawing.Size(684, 45);
 			this.trackZoom.TabIndex = 8;
 			this.trackZoom.TickStyle = System.Windows.Forms.TickStyle.None;
 			this.trackZoom.Value = 1;
@@ -241,7 +241,7 @@
 			// 
 			// txbZoom
 			// 
-			this.txbZoom.Location = new System.Drawing.Point(38, 410);
+			this.txbZoom.Location = new System.Drawing.Point(40, 521);
 			this.txbZoom.Name = "txbZoom";
 			this.txbZoom.ReadOnly = true;
 			this.txbZoom.Size = new System.Drawing.Size(43, 20);
@@ -251,7 +251,7 @@
 			// listVertex
 			// 
 			this.listVertex.FormattingEnabled = true;
-			this.listVertex.Location = new System.Drawing.Point(76, 455);
+			this.listVertex.Location = new System.Drawing.Point(78, 566);
 			this.listVertex.Name = "listVertex";
 			this.listVertex.Size = new System.Drawing.Size(308, 264);
 			this.listVertex.TabIndex = 9;
@@ -259,7 +259,7 @@
 			// 
 			// txbFaceA
 			// 
-			this.txbFaceA.Location = new System.Drawing.Point(661, 725);
+			this.txbFaceA.Location = new System.Drawing.Point(663, 836);
 			this.txbFaceA.Name = "txbFaceA";
 			this.txbFaceA.Size = new System.Drawing.Size(51, 20);
 			this.txbFaceA.TabIndex = 10;
@@ -267,7 +267,7 @@
 			// 
 			// txbFaceB
 			// 
-			this.txbFaceB.Location = new System.Drawing.Point(739, 725);
+			this.txbFaceB.Location = new System.Drawing.Point(741, 836);
 			this.txbFaceB.Name = "txbFaceB";
 			this.txbFaceB.Size = new System.Drawing.Size(51, 20);
 			this.txbFaceB.TabIndex = 10;
@@ -275,7 +275,7 @@
 			// 
 			// txbFaceC
 			// 
-			this.txbFaceC.Location = new System.Drawing.Point(818, 725);
+			this.txbFaceC.Location = new System.Drawing.Point(820, 836);
 			this.txbFaceC.Name = "txbFaceC";
 			this.txbFaceC.Size = new System.Drawing.Size(51, 20);
 			this.txbFaceC.TabIndex = 10;
@@ -284,7 +284,7 @@
 			// label5
 			// 
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(643, 728);
+			this.label5.Location = new System.Drawing.Point(645, 830);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(14, 13);
 			this.label5.TabIndex = 11;
@@ -293,7 +293,7 @@
 			// label6
 			// 
 			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(719, 728);
+			this.label6.Location = new System.Drawing.Point(721, 830);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(14, 13);
 			this.label6.TabIndex = 11;
@@ -302,7 +302,7 @@
 			// label7
 			// 
 			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(798, 728);
+			this.label7.Location = new System.Drawing.Point(800, 830);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(14, 13);
 			this.label7.TabIndex = 11;
@@ -310,7 +310,7 @@
 			// 
 			// txbVertexX
 			// 
-			this.txbVertexX.Location = new System.Drawing.Point(105, 725);
+			this.txbVertexX.Location = new System.Drawing.Point(107, 836);
 			this.txbVertexX.Name = "txbVertexX";
 			this.txbVertexX.Size = new System.Drawing.Size(51, 20);
 			this.txbVertexX.TabIndex = 10;
@@ -318,7 +318,7 @@
 			// 
 			// txbVertexY
 			// 
-			this.txbVertexY.Location = new System.Drawing.Point(223, 725);
+			this.txbVertexY.Location = new System.Drawing.Point(225, 836);
 			this.txbVertexY.Name = "txbVertexY";
 			this.txbVertexY.Size = new System.Drawing.Size(51, 20);
 			this.txbVertexY.TabIndex = 10;
@@ -326,7 +326,7 @@
 			// 
 			// txbVertexZ
 			// 
-			this.txbVertexZ.Location = new System.Drawing.Point(334, 725);
+			this.txbVertexZ.Location = new System.Drawing.Point(336, 836);
 			this.txbVertexZ.Name = "txbVertexZ";
 			this.txbVertexZ.Size = new System.Drawing.Size(51, 20);
 			this.txbVertexZ.TabIndex = 10;
@@ -335,7 +335,7 @@
 			// label8
 			// 
 			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point(87, 728);
+			this.label8.Location = new System.Drawing.Point(89, 830);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(14, 13);
 			this.label8.TabIndex = 11;
@@ -344,7 +344,7 @@
 			// label9
 			// 
 			this.label9.AutoSize = true;
-			this.label9.Location = new System.Drawing.Point(203, 728);
+			this.label9.Location = new System.Drawing.Point(205, 830);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(14, 13);
 			this.label9.TabIndex = 11;
@@ -353,7 +353,7 @@
 			// label10
 			// 
 			this.label10.AutoSize = true;
-			this.label10.Location = new System.Drawing.Point(314, 728);
+			this.label10.Location = new System.Drawing.Point(316, 830);
 			this.label10.Name = "label10";
 			this.label10.Size = new System.Drawing.Size(14, 13);
 			this.label10.TabIndex = 11;
@@ -361,7 +361,7 @@
 			// 
 			// bpAddVertex
 			// 
-			this.bpAddVertex.Location = new System.Drawing.Point(0, 667);
+			this.bpAddVertex.Location = new System.Drawing.Point(2, 778);
 			this.bpAddVertex.Name = "bpAddVertex";
 			this.bpAddVertex.Size = new System.Drawing.Size(75, 23);
 			this.bpAddVertex.TabIndex = 12;
@@ -372,7 +372,7 @@
 			// bpSupVertex
 			// 
 			this.bpSupVertex.Enabled = false;
-			this.bpSupVertex.Location = new System.Drawing.Point(0, 696);
+			this.bpSupVertex.Location = new System.Drawing.Point(2, 807);
 			this.bpSupVertex.Name = "bpSupVertex";
 			this.bpSupVertex.Size = new System.Drawing.Size(75, 23);
 			this.bpSupVertex.TabIndex = 12;
@@ -383,7 +383,7 @@
 			// bpEditVertex
 			// 
 			this.bpEditVertex.Enabled = false;
-			this.bpEditVertex.Location = new System.Drawing.Point(0, 725);
+			this.bpEditVertex.Location = new System.Drawing.Point(2, 836);
 			this.bpEditVertex.Name = "bpEditVertex";
 			this.bpEditVertex.Size = new System.Drawing.Size(75, 23);
 			this.bpEditVertex.TabIndex = 12;
@@ -393,7 +393,7 @@
 			// 
 			// bpAddFace
 			// 
-			this.bpAddFace.Location = new System.Drawing.Point(561, 667);
+			this.bpAddFace.Location = new System.Drawing.Point(563, 778);
 			this.bpAddFace.Name = "bpAddFace";
 			this.bpAddFace.Size = new System.Drawing.Size(75, 23);
 			this.bpAddFace.TabIndex = 12;
@@ -404,7 +404,7 @@
 			// bpSupFace
 			// 
 			this.bpSupFace.Enabled = false;
-			this.bpSupFace.Location = new System.Drawing.Point(561, 696);
+			this.bpSupFace.Location = new System.Drawing.Point(563, 807);
 			this.bpSupFace.Name = "bpSupFace";
 			this.bpSupFace.Size = new System.Drawing.Size(75, 23);
 			this.bpSupFace.TabIndex = 12;
@@ -415,7 +415,7 @@
 			// bpEditFace
 			// 
 			this.bpEditFace.Enabled = false;
-			this.bpEditFace.Location = new System.Drawing.Point(561, 725);
+			this.bpEditFace.Location = new System.Drawing.Point(563, 836);
 			this.bpEditFace.Name = "bpEditFace";
 			this.bpEditFace.Size = new System.Drawing.Size(75, 23);
 			this.bpEditFace.TabIndex = 12;
@@ -425,7 +425,7 @@
 			// 
 			// bpRedraw
 			// 
-			this.bpRedraw.Location = new System.Drawing.Point(646, 410);
+			this.bpRedraw.Location = new System.Drawing.Point(782, 489);
 			this.bpRedraw.Name = "bpRedraw";
 			this.bpRedraw.Size = new System.Drawing.Size(75, 23);
 			this.bpRedraw.TabIndex = 13;
@@ -436,7 +436,7 @@
 			// lblFaceColor
 			// 
 			this.lblFaceColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.lblFaceColor.Location = new System.Drawing.Point(893, 725);
+			this.lblFaceColor.Location = new System.Drawing.Point(895, 836);
 			this.lblFaceColor.Name = "lblFaceColor";
 			this.lblFaceColor.Size = new System.Drawing.Size(48, 32);
 			this.lblFaceColor.TabIndex = 14;
@@ -453,7 +453,7 @@
 			this.lstViewFace.GridLines = true;
 			this.lstViewFace.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.lstViewFace.HideSelection = false;
-			this.lstViewFace.Location = new System.Drawing.Point(642, 455);
+			this.lstViewFace.Location = new System.Drawing.Point(644, 566);
 			this.lstViewFace.MultiSelect = false;
 			this.lstViewFace.Name = "lstViewFace";
 			this.lstViewFace.Size = new System.Drawing.Size(310, 264);
@@ -486,7 +486,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1021, 759);
+			this.ClientSize = new System.Drawing.Size(1021, 862);
 			this.Controls.Add(this.lstViewFace);
 			this.Controls.Add(this.lblFaceColor);
 			this.Controls.Add(this.bpRedraw);

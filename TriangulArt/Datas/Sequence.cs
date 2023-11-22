@@ -30,6 +30,9 @@
 			set { angz = value; }
 		}
 
+		public Sequence() {
+		}
+
 		public Sequence(double px, double py, double zx, double zy, double ax, double ay, double az) {
 			posx = px;
 			posy = py;
