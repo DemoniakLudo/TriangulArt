@@ -16,7 +16,7 @@ namespace TriangulArt {
 			for (int i = 0; i < 16; i++) {
 				colors[i] = new Label {
 					BorderStyle = BorderStyle.FixedSingle,
-					Location = new Point(966, 4 + i * 48),
+					Location = new Point(974, 14 + i * 48),
 					Size = new Size(40, 32),
 					Tag = i
 				};
@@ -37,15 +37,17 @@ namespace TriangulArt {
 
 		private void DisplayVertex(int selVertex) {
 			DisplayBoutons();
-			listVertex.Items.Clear();
+			lstViewVertex.Items.Clear();
 			int i = 0;
 			foreach (Vertex v in objet.lstVertex) {
-				string item = "V." + i++.ToString("000") + "\t" + v.x.ToString("0.0000") + "\t" + v.y.ToString("0.0000") + "\t" + v.z.ToString("0.0000");
-				listVertex.Items.Add(item);
+				string[] s = { "V." + i++.ToString("000"), v.x.ToString("0.0000"), v.y.ToString("0.0000"), v.z.ToString("0.0000") };
+				lstViewVertex.Items.Add(new ListViewItem(s));
 			}
 			numVertex = selVertex;
-			if (selVertex != -1)
-				listVertex.SelectedIndex = selVertex;
+			if (selVertex != -1) {
+				lstViewVertex.Items[selVertex].Selected = true;
+				lstViewVertex.Select();
+			}
 		}
 
 		private void DisplayFace(int selFace) {
@@ -53,10 +55,7 @@ namespace TriangulArt {
 			lstViewFace.Items.Clear();
 			for (int i = 0; i < objet.lstFace.Count; i++) {
 				Face f = objet.lstFace[i];
-				int a = objet.lstVertex.IndexOf(f.a);
-				int b = objet.lstVertex.IndexOf(f.b);
-				int c = objet.lstVertex.IndexOf(f.c);
-				string[] s = { "F." + i.ToString("000"), a.ToString(), b.ToString(), c.ToString(), f.pen.ToString() };
+				string[] s = { "F." + i.ToString("000"), f.a.ToString(), f.b.ToString(), f.c.ToString(), f.pen.ToString() };
 				ListViewItem item = new ListViewItem(s);
 				item.UseItemStyleForSubItems = false;
 				item.SubItems[4].BackColor = Color.FromArgb(PaletteCpc.GetColorPal(f.pen).GetColorArgb);
@@ -81,9 +80,9 @@ namespace TriangulArt {
 			pictureBoxObj.Refresh();
 		}
 
-		private void ListVertex_SelectedIndexChanged(object sender, EventArgs e) {
-			numVertex = listVertex.SelectedIndex;
-			if (numVertex != -1) {
+		private void lstViewVertex_SelectedIndexChanged(object sender, EventArgs e) {
+			numVertex = lstViewVertex.SelectedIndices.Count > 0 ? lstViewVertex.SelectedIndices[0] : -1;
+			if ( numVertex!=-1) {
 				Vertex v = objet.lstVertex[numVertex];
 				txbVertexX.Text = v.x.ToString();
 				txbVertexY.Text = v.y.ToString();
@@ -103,9 +102,9 @@ namespace TriangulArt {
 			numFace = lstViewFace.SelectedIndices.Count > 0 ? lstViewFace.SelectedIndices[0] : -1;
 			if (numFace != -1) {
 				Face f = objet.lstFace[numFace];
-				txbFaceA.Text = objet.lstVertex.IndexOf(f.a).ToString();
-				txbFaceB.Text = objet.lstVertex.IndexOf(f.b).ToString();
-				txbFaceC.Text = objet.lstVertex.IndexOf(f.c).ToString();
+				txbFaceA.Text = f.a.ToString();
+				txbFaceB.Text = f.b.ToString();
+				txbFaceC.Text = f.c.ToString();
 				lblFaceColor.BackColor = Color.FromArgb(PaletteCpc.GetColorPal(f.pen).GetColorArgb);
 				selColor = f.pen;
 			}
@@ -159,7 +158,7 @@ namespace TriangulArt {
 		}
 
 		private void RedrawAll() {
-			DisplayVertex(listVertex.SelectedIndex);
+			DisplayVertex(numVertex);
 			DisplayFace(numFace);
 			DisplayObj();
 		}
@@ -190,15 +189,24 @@ namespace TriangulArt {
 
 		private void BpSupVertex_Click(object sender, EventArgs e) {
 			bool err = false;
-			Vertex v = objet.lstVertex[numVertex];
 			for (int i = 0; i < objet.lstFace.Count; i++) {
-				if (objet.lstFace[i].a == v || objet.lstFace[i].b == v || objet.lstFace[i].c == v) {
+				if (objet.lstFace[i].a == numVertex || objet.lstFace[i].b == numVertex || objet.lstFace[i].c == numVertex) {
 					err = true;
 					break;
 				}
 			}
 			if (!err) {
 				objet.lstVertex.RemoveAt(numVertex);
+				for (int i = 0; i < objet.lstFace.Count; i++) {
+					if (objet.lstFace[i].a >= numVertex)
+						objet.lstFace[i].a--;
+
+					if (objet.lstFace[i].b >= numVertex)
+						objet.lstFace[i].b--;
+
+					if (objet.lstFace[i].c >= numVertex)
+						objet.lstFace[i].c--;
+				}
 				BpRedraw_Click(sender, e);
 			}
 			else
@@ -210,7 +218,7 @@ namespace TriangulArt {
 			int b = Utils.ToInt(txbFaceB.Text);
 			int c = Utils.ToInt(txbFaceC.Text);
 			if (a >= 0 && b >= 0 && c >= 0 && a < objet.lstVertex.Count && b < objet.lstVertex.Count && c < objet.lstVertex.Count) {
-				Face f = new Face(numFace++, objet.lstVertex[a], objet.lstVertex[b], objet.lstVertex[c]);
+				Face f = new Face(numFace++, a, b, c);
 				f.pen = selColor;
 				objet.lstFace.Add(f);
 				DisplayFace(objet.lstFace.Count - 1);
@@ -225,7 +233,7 @@ namespace TriangulArt {
 			int c = Utils.ToInt(txbFaceC.Text);
 			if (a >= 0 && b >= 0 && c >= 0 && a < objet.lstVertex.Count && b < objet.lstVertex.Count && c < objet.lstVertex.Count) {
 				Face f = objet.lstFace[numFace];
-				f.SetNewVertex(objet.lstVertex[a], objet.lstVertex[b], objet.lstVertex[c]);
+				f.SetNewVertex(a, b, c);
 				f.pen = selColor;
 				RedrawAll();
 			}

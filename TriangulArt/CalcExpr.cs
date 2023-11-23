@@ -58,13 +58,13 @@ namespace TriangulArt {
 				{ "abs", Abs }
 			};
 
-		private int ang = 0;
+		private int img = 0;
 
 		private readonly Dictionary<string, string> supportedConstants = new Dictionary<string, string>
 			{
 				{"pi", NumberMaker +  Math.PI.ToString() },
 				{"e", NumberMaker + Math.E.ToString() },
-				{"ang", NumberMaker + "ang" }
+				{"img", NumberMaker + "img" }
 			};
 
 		private readonly char decimalSeparator;
@@ -83,9 +83,9 @@ namespace TriangulArt {
 			this.decimalSeparator = decimalSeparator;
 		}
 
-		public double Parse(string expression, int valAng, bool isRadians = true) {
+		public double Parse(string expression, int i, bool isRadians = true) {
 			this.isRadians = isRadians;
-			ang = valAng;
+			img = i;
 			try {
 				return Calculate(ConvertToRPN(FormatString(expression)));
 			}
@@ -310,8 +310,8 @@ namespace TriangulArt {
 
 		private Stack<double> SyntaxAnalysisRPN(Stack<double> stack, string token) {
 			if (token[0] == NumberMaker[0]) {
-				if (token == "#ang")
-					stack.Push(ang);
+				if (token == "#img")
+					stack.Push(img);
 				else
 					stack.Push(double.Parse(token.Remove(0, 1)));
 			}

@@ -23,6 +23,7 @@
 		/// le contenu de cette méthode avec l'éditeur de code.
 		/// </summary>
 		private void InitializeComponent() {
+			System.Windows.Forms.ColumnHeader colColor;
 			this.pictureBoxObj = new System.Windows.Forms.PictureBox();
 			this.bpNewObject = new System.Windows.Forms.Button();
 			this.bpReadObject = new System.Windows.Forms.Button();
@@ -40,7 +41,6 @@
 			this.label4 = new System.Windows.Forms.Label();
 			this.trackZoom = new System.Windows.Forms.TrackBar();
 			this.txbZoom = new System.Windows.Forms.TextBox();
-			this.listVertex = new System.Windows.Forms.ListBox();
 			this.txbFaceA = new System.Windows.Forms.TextBox();
 			this.txbFaceB = new System.Windows.Forms.TextBox();
 			this.txbFaceC = new System.Windows.Forms.TextBox();
@@ -66,7 +66,12 @@
 			this.colVertexA = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.colVertexB = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.colVertexC = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.colColor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.lstViewVertex = new System.Windows.Forms.ListView();
+			this.colNumVertex = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.colX = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.colY = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.colZ = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			colColor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxObj)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.trackX)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.trackY)).BeginInit();
@@ -248,15 +253,6 @@
 			this.txbZoom.TabIndex = 3;
 			this.txbZoom.Text = "1";
 			// 
-			// listVertex
-			// 
-			this.listVertex.FormattingEnabled = true;
-			this.listVertex.Location = new System.Drawing.Point(78, 566);
-			this.listVertex.Name = "listVertex";
-			this.listVertex.Size = new System.Drawing.Size(308, 264);
-			this.listVertex.TabIndex = 9;
-			this.listVertex.SelectedIndexChanged += new System.EventHandler(this.ListVertex_SelectedIndexChanged);
-			// 
 			// txbFaceA
 			// 
 			this.txbFaceA.Location = new System.Drawing.Point(663, 836);
@@ -284,7 +280,7 @@
 			// label5
 			// 
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(645, 830);
+			this.label5.Location = new System.Drawing.Point(645, 840);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(14, 13);
 			this.label5.TabIndex = 11;
@@ -293,7 +289,7 @@
 			// label6
 			// 
 			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(721, 830);
+			this.label6.Location = new System.Drawing.Point(723, 840);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(14, 13);
 			this.label6.TabIndex = 11;
@@ -302,7 +298,7 @@
 			// label7
 			// 
 			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(800, 830);
+			this.label7.Location = new System.Drawing.Point(802, 840);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(14, 13);
 			this.label7.TabIndex = 11;
@@ -310,32 +306,32 @@
 			// 
 			// txbVertexX
 			// 
-			this.txbVertexX.Location = new System.Drawing.Point(107, 836);
+			this.txbVertexX.Location = new System.Drawing.Point(166, 836);
 			this.txbVertexX.Name = "txbVertexX";
-			this.txbVertexX.Size = new System.Drawing.Size(51, 20);
+			this.txbVertexX.Size = new System.Drawing.Size(59, 20);
 			this.txbVertexX.TabIndex = 10;
 			this.txbVertexX.Text = "0";
 			// 
 			// txbVertexY
 			// 
-			this.txbVertexY.Location = new System.Drawing.Point(225, 836);
+			this.txbVertexY.Location = new System.Drawing.Point(256, 836);
 			this.txbVertexY.Name = "txbVertexY";
-			this.txbVertexY.Size = new System.Drawing.Size(51, 20);
+			this.txbVertexY.Size = new System.Drawing.Size(59, 20);
 			this.txbVertexY.TabIndex = 10;
 			this.txbVertexY.Text = "0";
 			// 
 			// txbVertexZ
 			// 
-			this.txbVertexZ.Location = new System.Drawing.Point(336, 836);
+			this.txbVertexZ.Location = new System.Drawing.Point(347, 836);
 			this.txbVertexZ.Name = "txbVertexZ";
-			this.txbVertexZ.Size = new System.Drawing.Size(51, 20);
+			this.txbVertexZ.Size = new System.Drawing.Size(59, 20);
 			this.txbVertexZ.TabIndex = 10;
 			this.txbVertexZ.Text = "0";
 			// 
 			// label8
 			// 
 			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point(89, 830);
+			this.label8.Location = new System.Drawing.Point(148, 840);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(14, 13);
 			this.label8.TabIndex = 11;
@@ -344,7 +340,7 @@
 			// label9
 			// 
 			this.label9.AutoSize = true;
-			this.label9.Location = new System.Drawing.Point(205, 830);
+			this.label9.Location = new System.Drawing.Point(238, 840);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(14, 13);
 			this.label9.TabIndex = 11;
@@ -353,7 +349,7 @@
 			// label10
 			// 
 			this.label10.AutoSize = true;
-			this.label10.Location = new System.Drawing.Point(316, 830);
+			this.label10.Location = new System.Drawing.Point(329, 840);
 			this.label10.Name = "label10";
 			this.label10.Size = new System.Drawing.Size(14, 13);
 			this.label10.TabIndex = 11;
@@ -436,7 +432,7 @@
 			// lblFaceColor
 			// 
 			this.lblFaceColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.lblFaceColor.Location = new System.Drawing.Point(895, 836);
+			this.lblFaceColor.Location = new System.Drawing.Point(902, 836);
 			this.lblFaceColor.Name = "lblFaceColor";
 			this.lblFaceColor.Size = new System.Drawing.Size(48, 32);
 			this.lblFaceColor.TabIndex = 14;
@@ -449,14 +445,15 @@
             this.colVertexA,
             this.colVertexB,
             this.colVertexC,
-            this.colColor});
+            colColor});
+			this.lstViewFace.FullRowSelect = true;
 			this.lstViewFace.GridLines = true;
 			this.lstViewFace.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.lstViewFace.HideSelection = false;
 			this.lstViewFace.Location = new System.Drawing.Point(644, 566);
 			this.lstViewFace.MultiSelect = false;
 			this.lstViewFace.Name = "lstViewFace";
-			this.lstViewFace.Size = new System.Drawing.Size(310, 264);
+			this.lstViewFace.Size = new System.Drawing.Size(321, 264);
 			this.lstViewFace.TabIndex = 15;
 			this.lstViewFace.UseCompatibleStateImageBehavior = false;
 			this.lstViewFace.View = System.Windows.Forms.View.Details;
@@ -480,13 +477,54 @@
 			// 
 			// colColor
 			// 
-			this.colColor.Text = "Color";
+			colColor.Text = "Color";
+			// 
+			// lstViewVertex
+			// 
+			this.lstViewVertex.AutoArrange = false;
+			this.lstViewVertex.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.colNumVertex,
+            this.colX,
+            this.colY,
+            this.colZ});
+			this.lstViewVertex.FullRowSelect = true;
+			this.lstViewVertex.GridLines = true;
+			this.lstViewVertex.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+			this.lstViewVertex.HideSelection = false;
+			this.lstViewVertex.Location = new System.Drawing.Point(100, 566);
+			this.lstViewVertex.MultiSelect = false;
+			this.lstViewVertex.Name = "lstViewVertex";
+			this.lstViewVertex.Size = new System.Drawing.Size(322, 264);
+			this.lstViewVertex.TabIndex = 16;
+			this.lstViewVertex.UseCompatibleStateImageBehavior = false;
+			this.lstViewVertex.View = System.Windows.Forms.View.Details;
+			this.lstViewVertex.SelectedIndexChanged += new System.EventHandler(this.lstViewVertex_SelectedIndexChanged);
+			// 
+			// colNumVertex
+			// 
+			this.colNumVertex.Text = "Point";
+			// 
+			// colX
+			// 
+			this.colX.Text = "X";
+			this.colX.Width = 80;
+			// 
+			// colY
+			// 
+			this.colY.Text = "Y";
+			this.colY.Width = 80;
+			// 
+			// colZ
+			// 
+			this.colZ.Text = "Z";
+			this.colZ.Width = 80;
 			// 
 			// EditObjet
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1021, 862);
+			this.ClientSize = new System.Drawing.Size(1025, 872);
+			this.Controls.Add(this.lstViewVertex);
 			this.Controls.Add(this.lstViewFace);
 			this.Controls.Add(this.lblFaceColor);
 			this.Controls.Add(this.bpRedraw);
@@ -508,7 +546,6 @@
 			this.Controls.Add(this.txbFaceB);
 			this.Controls.Add(this.txbVertexX);
 			this.Controls.Add(this.txbFaceA);
-			this.Controls.Add(this.listVertex);
 			this.Controls.Add(this.trackZoom);
 			this.Controls.Add(this.label4);
 			this.Controls.Add(this.label3);
@@ -560,7 +597,6 @@
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.TrackBar trackZoom;
 		private System.Windows.Forms.TextBox txbZoom;
-		private System.Windows.Forms.ListBox listVertex;
 		private System.Windows.Forms.TextBox txbFaceA;
 		private System.Windows.Forms.TextBox txbFaceB;
 		private System.Windows.Forms.TextBox txbFaceC;
@@ -586,7 +622,11 @@
 		private System.Windows.Forms.ColumnHeader colVertexA;
 		private System.Windows.Forms.ColumnHeader colVertexB;
 		private System.Windows.Forms.ColumnHeader colVertexC;
-		private System.Windows.Forms.ColumnHeader colColor;
+		private System.Windows.Forms.ListView lstViewVertex;
+		private System.Windows.Forms.ColumnHeader colNumVertex;
+		private System.Windows.Forms.ColumnHeader colX;
+		private System.Windows.Forms.ColumnHeader colY;
+		private System.Windows.Forms.ColumnHeader colZ;
 	}
 }
 

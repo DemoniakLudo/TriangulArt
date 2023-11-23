@@ -91,7 +91,6 @@
 			this.chkLine = new System.Windows.Forms.CheckBox();
 			this.bpCleanProj = new System.Windows.Forms.Button();
 			this.chkZX0 = new System.Windows.Forms.CheckBox();
-			this.chkAnim3D = new System.Windows.Forms.CheckBox();
 			this.rbMode1 = new System.Windows.Forms.RadioButton();
 			this.rbMode0 = new System.Windows.Forms.RadioButton();
 			this.bpNewProjet = new System.Windows.Forms.Button();
@@ -117,6 +116,7 @@
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.bpSavePal = new System.Windows.Forms.Button();
 			this.bpReadPal = new System.Windows.Forms.Button();
+			this.chkAnim3D = new System.Windows.Forms.CheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -190,7 +190,7 @@
 			// 
 			this.ColorSel.BackColor = System.Drawing.Color.Transparent;
 			this.ColorSel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.ColorSel.Location = new System.Drawing.Point(183, 567);
+			this.ColorSel.Location = new System.Drawing.Point(183, 570);
 			this.ColorSel.Name = "ColorSel";
 			this.ColorSel.Size = new System.Drawing.Size(82, 56);
 			this.ColorSel.TabIndex = 5;
@@ -763,7 +763,6 @@
 			this.bpMakeAnim3D.TabIndex = 32;
 			this.bpMakeAnim3D.Text = "Editeur d\'animations 3D";
 			this.bpMakeAnim3D.UseVisualStyleBackColor = true;
-			this.bpMakeAnim3D.Visible = false;
 			this.bpMakeAnim3D.Click += new System.EventHandler(this.BpMakeAnim3D_Click);
 			// 
 			// bpFusion
@@ -806,18 +805,6 @@
 			this.chkZX0.TabIndex = 28;
 			this.chkZX0.Text = "ZX0";
 			this.chkZX0.UseVisualStyleBackColor = true;
-			this.chkZX0.Visible = false;
-			// 
-			// chkAnim3D
-			// 
-			this.chkAnim3D.AutoSize = true;
-			this.chkAnim3D.Location = new System.Drawing.Point(242, 77);
-			this.chkAnim3D.Name = "chkAnim3D";
-			this.chkAnim3D.Size = new System.Drawing.Size(118, 17);
-			this.chkAnim3D.TabIndex = 27;
-			this.chkAnim3D.Text = "Mode animation 3D";
-			this.chkAnim3D.UseVisualStyleBackColor = true;
-			this.chkAnim3D.CheckedChanged += new System.EventHandler(this.ChkAnim3D_CheckedChanged);
 			// 
 			// rbMode1
 			// 
@@ -1127,6 +1114,17 @@
 			this.bpReadPal.UseVisualStyleBackColor = true;
 			this.bpReadPal.Click += new System.EventHandler(this.BpReadPal_Click);
 			// 
+			// chkAnim3D
+			// 
+			this.chkAnim3D.AutoSize = true;
+			this.chkAnim3D.Location = new System.Drawing.Point(242, 77);
+			this.chkAnim3D.Name = "chkAnim3D";
+			this.chkAnim3D.Size = new System.Drawing.Size(101, 17);
+			this.chkAnim3D.TabIndex = 27;
+			this.chkAnim3D.Text = "Mode animation";
+			this.chkAnim3D.UseVisualStyleBackColor = true;
+			this.chkAnim3D.CheckedChanged += new System.EventHandler(this.ChkAnim3D_CheckedChanged);
+			// 
 			// TriangulArt
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1237,7 +1235,6 @@
 		private System.Windows.Forms.Label label15;
 		private System.Windows.Forms.RadioButton rbMode1;
 		private System.Windows.Forms.RadioButton rbMode0;
-		private System.Windows.Forms.CheckBox chkAnim3D;
 		private System.Windows.Forms.CheckBox chkZX0;
 		private System.Windows.Forms.Button bpCleanProj;
 		private System.Windows.Forms.CheckBox chkLine;
@@ -1250,6 +1247,7 @@
 		private System.Windows.Forms.CheckBox chkOverscan;
 		private System.Windows.Forms.Button bpSavePal;
 		private System.Windows.Forms.Button bpReadPal;
+		private System.Windows.Forms.CheckBox chkAnim3D;
 	}
 }
 

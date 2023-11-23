@@ -97,14 +97,14 @@ namespace TriangulArt {
 				lstDraw.Add(lstFace[i]);
 
 			lstDraw.Sort(delegate (Face p1, Face p2) {
-				double cmp = (p1.a.pz + p1.b.pz + p1.c.pz) - (p2.a.pz + p2.b.pz + p2.c.pz);
+				double cmp = (lstVertex[p1.a].pz + lstVertex[p1.b].pz + lstVertex[p1.c].pz) - (lstVertex[p2.a].pz + lstVertex[p2.b].pz + lstVertex[p2.c].pz);
 				return cmp != 0 ? (int)cmp : p1.num - p2.num;
 			});
 
 			// Affiche les triangles
 			for (int i = 0; i < lstDraw.Count; i++) {
 				Face f = lstDraw[i];
-				Triangle t = new Triangle((int)f.a.px, (int)f.a.py, (int)f.b.px, (int)f.b.py, (int)f.c.px, (int)f.c.py, f.pen, bm);
+				Triangle t = new Triangle((int)lstVertex[f.a].px, (int)lstVertex[f.a].py, (int)lstVertex[f.b].px, (int)lstVertex[f.b].py, (int)lstVertex[f.c].px, (int)lstVertex[f.c].py, f.pen, bm);
 				t.FillTriangle(bm, false, bmCalc, i);
 				if (lstTri != null)
 					lstTri.Add(t);      // Ajoute dans la liste des triangles si passée en paramètre
@@ -113,7 +113,7 @@ namespace TriangulArt {
 			// Affiche la face sélectionnée
 			if (numFace != -1) {
 				Face f = lstFace[numFace];
-				Triangle t = new Triangle((int)f.a.px, (int)f.a.py, (int)f.b.px, (int)f.b.py, (int)f.c.px, (int)f.c.py, 0, bm);
+				Triangle t = new Triangle((int)lstVertex[f.a].px, (int)lstVertex[f.a].py, (int)lstVertex[f.b].px, (int)lstVertex[f.b].py, (int)lstVertex[f.c].px, (int)lstVertex[f.c].py, 0, bm);
 				t.FillTriangle(bm, true);
 			}
 
@@ -173,7 +173,7 @@ namespace TriangulArt {
 								end = newl.IndexOfAny(new char[] { ' ', '\t' });
 								int c = Utils.ToInt(newl.Substring(0, end > -1 ? end + 1 : newl.Length));
 								if (a < lstVertex.Count && b < lstVertex.Count && c < lstVertex.Count) {
-									Face f = new Face(numFace++, lstVertex[a], lstVertex[b], lstVertex[c]);
+									Face f = new Face(numFace++, a, b, c);
 									lstFace.Add(f);
 								}
 							}
@@ -223,7 +223,7 @@ namespace TriangulArt {
 				wr.WriteLine("Face list:");
 				for (int i = 0; i < lstFace.Count; i++) {
 					Face f = lstFace[i];
-					wr.WriteLine("Face {0}:	A:{1}	B:{2}	C:{3}", i, lstVertex.IndexOf(f.a), lstVertex.IndexOf(f.b), lstVertex.IndexOf(f.c));
+					wr.WriteLine("Face {0}:	A:{1}	B:{2}	C:{3}", i, f.a, f.b, f.c);
 					RvbColor color = PaletteCpc.GetColorPal(f.pen);
 					wr.WriteLine("Material:	r {0}	g {1}	b {2}", color.r, color.v, color.b);
 				}
