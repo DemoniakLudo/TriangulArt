@@ -17,6 +17,7 @@ namespace TriangulArt {
 		private byte selColor = 1;
 		private Bitmap bmpFond = null;
 		private Projet projet = new Projet();
+		private Animation anim = new Animation();
 		private Version version = Assembly.GetExecutingAssembly().GetName().Version;
 		private const int MAX_RAYONS = 32;
 		private int coefX;
@@ -1113,10 +1114,6 @@ namespace TriangulArt {
 			Enabled = true;
 		}
 
-		private void ChkAnim3D_CheckedChanged(object sender, EventArgs e) {
-			bpMakeAnim3D.Visible = chkZX0.Visible = chkAnim3D.Checked;
-		}
-
 		private void ChkLine_CheckedChanged(object sender, EventArgs e) {
 			BpRedraw_Click(null, null);
 		}
@@ -1140,9 +1137,13 @@ namespace TriangulArt {
 			Enabled = true;
 		}
 
+		private void ChkAnim3D_CheckedChanged(object sender, EventArgs e) {
+
+		}
+
 		private void BpMakeAnim3D_Click(object sender, EventArgs e) {
 			Enabled = false;
-			new MakeAnim(projet).ShowDialog();
+			new MakeAnim(projet, anim).ShowDialog();
 			projet.SelectImage(0);
 			SetImageProjet();
 			Enabled = true;
