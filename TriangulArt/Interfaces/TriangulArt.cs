@@ -65,8 +65,8 @@ namespace TriangulArt {
 
 		public void Reset() {
 			if (bmpFond != null) {
-				for (int y = 0; y < bmpLock.Height; y++)
-					for (int x = 0; x < bmpLock.Width; x++)
+				for (int y = 0; y < bmpFond.Height; y++)
+					for (int x = 0; x < bmpFond.Width; x++)
 						bmpLock.SetPixel(x, y, bmpFond.GetPixel(x, y).ToArgb());
 			}
 			else
@@ -734,7 +734,7 @@ namespace TriangulArt {
 			DialogResult result = dlg.ShowDialog();
 			if (result == DialogResult.OK) {
 				using (Bitmap b = new Bitmap(dlg.FileName)) {
-					if (b.Width == bmpLock.Width && b.Height == bmpLock.Height) {
+					if (b.Width <= bmpLock.Width && b.Height <= bmpLock.Height) {
 						bmpFond = new Bitmap(b);
 						Reset();
 						SetInfo("Lecture image de fond ok.");
