@@ -36,7 +36,7 @@ public class DirectBitmap : IDisposable {
 	}
 
 	public void SetPixel(int x, int y, int c) {
-		if (y < Height)
+		if (y < Height && x < Width)
 			tabBits[x + (y * Width)] = (uint)c | 0xFF000000;
 	}
 

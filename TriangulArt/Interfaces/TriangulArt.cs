@@ -78,8 +78,8 @@ namespace TriangulArt {
 
 		public void ResetNoRender() {
 			if (bmpFond != null) {
-				for (int y = 0; y < bmpLock.Height; y++)
-					for (int x = 0; x < bmpLock.Width; x++)
+				for (int y = 0; y < bmpFond.Height; y++)
+					for (int x = 0; x < bmpFond.Width; x++)
 						bmpLock.SetPixel(x, y, bmpFond.GetPixel(x, y).ToArgb());
 			}
 			else

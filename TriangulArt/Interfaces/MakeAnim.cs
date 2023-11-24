@@ -293,6 +293,8 @@ namespace TriangulArt {
 			txbExprAx.Text = anim.exprAngX;
 			txbExprAy.Text = anim.exprAngY;
 			txbExprAz.Text = anim.exprAngZ;
+			txbNbImages.Text = anim.lstSeq.Count > 0 ? anim.lstSeq.Count.ToString() : txbNbImages.Text;
+			rbSeqExpression.Checked = anim.withExpression;
 			GenereSeq();
 			DisplayFrame(0);
 			InitBoutons();
