@@ -91,6 +91,7 @@
 			this.chkLine = new System.Windows.Forms.CheckBox();
 			this.bpCleanProj = new System.Windows.Forms.Button();
 			this.chkZX0 = new System.Windows.Forms.CheckBox();
+			this.chkAnim3D = new System.Windows.Forms.CheckBox();
 			this.rbMode1 = new System.Windows.Forms.RadioButton();
 			this.rbMode0 = new System.Windows.Forms.RadioButton();
 			this.bpNewProjet = new System.Windows.Forms.Button();
@@ -116,7 +117,6 @@
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.bpSavePal = new System.Windows.Forms.Button();
 			this.bpReadPal = new System.Windows.Forms.Button();
-			this.chkAnim3D = new System.Windows.Forms.CheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -172,7 +172,7 @@
 			this.bpLoad.Name = "bpLoad";
 			this.bpLoad.Size = new System.Drawing.Size(112, 22);
 			this.bpLoad.TabIndex = 4;
-			this.bpLoad.Text = "Lire";
+			this.bpLoad.Text = "Lire image";
 			this.bpLoad.UseVisualStyleBackColor = true;
 			this.bpLoad.Click += new System.EventHandler(this.BpLoad_Click);
 			// 
@@ -182,7 +182,7 @@
 			this.bpSave.Name = "bpSave";
 			this.bpSave.Size = new System.Drawing.Size(112, 22);
 			this.bpSave.TabIndex = 4;
-			this.bpSave.Text = "Sauver";
+			this.bpSave.Text = "Sauver image";
 			this.bpSave.UseVisualStyleBackColor = true;
 			this.bpSave.Click += new System.EventHandler(this.BpSave_Click);
 			// 
@@ -806,6 +806,17 @@
 			this.chkZX0.Text = "ZX0";
 			this.chkZX0.UseVisualStyleBackColor = true;
 			// 
+			// chkAnim3D
+			// 
+			this.chkAnim3D.AutoSize = true;
+			this.chkAnim3D.Location = new System.Drawing.Point(242, 77);
+			this.chkAnim3D.Name = "chkAnim3D";
+			this.chkAnim3D.Size = new System.Drawing.Size(101, 17);
+			this.chkAnim3D.TabIndex = 27;
+			this.chkAnim3D.Text = "Mode animation";
+			this.chkAnim3D.UseVisualStyleBackColor = true;
+			this.chkAnim3D.CheckedChanged += new System.EventHandler(this.ChkAnim3D_CheckedChanged);
+			// 
 			// rbMode1
 			// 
 			this.rbMode1.AutoSize = true;
@@ -1113,17 +1124,6 @@
 			this.bpReadPal.Text = "Lire Palette";
 			this.bpReadPal.UseVisualStyleBackColor = true;
 			this.bpReadPal.Click += new System.EventHandler(this.BpReadPal_Click);
-			// 
-			// chkAnim3D
-			// 
-			this.chkAnim3D.AutoSize = true;
-			this.chkAnim3D.Location = new System.Drawing.Point(242, 77);
-			this.chkAnim3D.Name = "chkAnim3D";
-			this.chkAnim3D.Size = new System.Drawing.Size(101, 17);
-			this.chkAnim3D.TabIndex = 27;
-			this.chkAnim3D.Text = "Mode animation";
-			this.chkAnim3D.UseVisualStyleBackColor = true;
-			this.chkAnim3D.CheckedChanged += new System.EventHandler(this.ChkAnim3D_CheckedChanged);
 			// 
 			// TriangulArt
 			// 

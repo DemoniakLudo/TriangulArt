@@ -1,20 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 
 namespace TriangulArt {
 	public partial class MakeAnim : Form {
-		private DirectBitmap bmpLock = new DirectBitmap(384, 272);
-		private DirectBitmap bmpCalc = new DirectBitmap(384, 272);
+		private DirectBitmap bmpLock;
+		private DirectBitmap bmpCalc;
+		private Bitmap bmpFond;
 		private Animation anim;
 		private Projet projet;
 
-		public MakeAnim(Projet prj, Animation anm) {
+		public MakeAnim(Projet prj, Animation anm, Bitmap bf) {
 			InitializeComponent();
+			int width = prj.mode == 0 ? 192 : 384;
+			bmpLock = new DirectBitmap(width, 272);
+			bmpCalc = new DirectBitmap(width, 272);
+			txbPx.Text = txbExprX.Text = (width / 2).ToString();
 			projet = prj;
 			anim = anm;
+			bmpFond = bf;
 			txbExprX.Text = anim.exprPosX == "" ? txbExprX.Text : anim.exprPosX;
 			txbExprY.Text = anim.exprPosY == "" ? txbExprY.Text : anim.exprPosY;
 			txbExprZx.Text = anim.exprZoomX == "" ? txbExprZx.Text : anim.exprZoomX;
@@ -44,7 +51,15 @@ namespace TriangulArt {
 		}
 
 		private void DisplayFrame(int index, List<Triangle> lstTriangle = null) {
-			bmpLock.Fill(PaletteCpc.GetColorPal(0).GetColorArgb);
+			lblNumImage.Text = "Image " + String.Format("{0,3}", index);
+			if (bmpFond != null) {
+				for (int y = 0; y < bmpFond.Height; y++)
+					for (int x = 0; x < bmpFond.Width; x++)
+						bmpLock.SetPixel(x, y, bmpFond.GetPixel(x, y).ToArgb());
+			}
+			else
+				bmpLock.Fill(PaletteCpc.GetColorPal(0).GetColorArgb);
+
 			if (lstTriangle != null)
 				bmpCalc.Fill(0xFFFFFF);
 
@@ -117,10 +132,7 @@ namespace TriangulArt {
 							for (int x = 0; x < bmpCalc.Width; x++)
 								if (bmpCalc.GetPixel(x, y) == t) {
 									Triangle tr = lstTriangle[t];
-									int x1 = projet.mode == 0 ? tr.x1 >> 1 : tr.x1;
-									int x2 = projet.mode == 0 ? tr.x2 >> 1 : tr.x2;
-									int x3 = projet.mode == 0 ? tr.x3 >> 1 : tr.x3;
-									data.lstTriangle.Add(new Triangle(x1, tr.y1, x2, tr.y2, x3, tr.y3, tr.color));
+									data.lstTriangle.Add(new Triangle(tr.x1, tr.y1, tr.x2, tr.y2, tr.x3, tr.y3, tr.color));
 									y = bmpCalc.Height;
 									break;
 								}
@@ -133,6 +145,9 @@ namespace TriangulArt {
 			InitBoutons();
 			Enabled = true;
 			if (setProjet) {
+				int nbAvant = 0;
+				int nbApres = 0;
+				projet.Clean(bmpLock.Width, ref nbAvant, ref nbApres);
 				if (fusion)
 					AddInfo("Fusion de " + anim.lstSeq.Count.ToString() + " images avec le projet en cours.");
 				else
@@ -153,7 +168,6 @@ namespace TriangulArt {
 		}
 
 		private void TrkIndex_Scroll(object sender, EventArgs e) {
-			lblNumImage.Text = "Image " + String.Format("{0,3}", trkIndex.Value);
 			DisplayFrame(trkIndex.Value);
 		}
 

@@ -45,6 +45,15 @@ namespace TriangulArt {
 			selData = 0;
 		}
 
+		public void Clean(int width, ref int nbAvant, ref int nbApres) {
+			nbAvant = nbApres = 0;
+			foreach (Datas d in lstData) {
+				nbAvant += d.lstTriangle.Count;
+				d.CleanUp(width);
+				nbApres += d.lstTriangle.Count;
+			}
+		}
+
 		public void GenereSourceAsm(string fileName, bool modePolice, bool mode3D, bool zx0) {
 			StreamWriter sw = GenereAsm.OpenAsm(fileName);
 			if (zx0) {

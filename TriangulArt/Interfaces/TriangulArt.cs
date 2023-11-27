@@ -1098,11 +1098,7 @@ namespace TriangulArt {
 		private void BpCleanProj_Click(object sender, EventArgs e) {
 			Enabled = false;
 			int nbAvant = 0, nbApres = 0;
-			foreach (Datas d in projet.lstData) {
-				nbAvant += d.lstTriangle.Count;
-				d.CleanUp(bmpLock.Width);
-				nbApres += d.lstTriangle.Count;
-			}
+			projet.Clean(bmpLock.Width, ref nbAvant, ref nbApres);
 			if (nbApres != nbAvant)
 				SetInfo("Nbre de triangles optimisés : " + (nbAvant - nbApres).ToString());
 			else
@@ -1110,7 +1106,7 @@ namespace TriangulArt {
 
 			DisplayList();
 			FillTriangles();
-			DisplayMemory();
+			SetImageProjet();
 			Enabled = true;
 		}
 
@@ -1143,7 +1139,7 @@ namespace TriangulArt {
 
 		private void BpMakeAnim3D_Click(object sender, EventArgs e) {
 			Enabled = false;
-			new MakeAnim(projet, anim).ShowDialog();
+			new MakeAnim(projet, anim, bmpFond).ShowDialog();
 			projet.SelectImage(0);
 			SetImageProjet();
 			Enabled = true;

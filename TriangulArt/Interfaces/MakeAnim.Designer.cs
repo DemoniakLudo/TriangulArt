@@ -113,7 +113,6 @@
 			this.txbPx.Name = "txbPx";
 			this.txbPx.Size = new System.Drawing.Size(49, 20);
 			this.txbPx.TabIndex = 2;
-			this.txbPx.Text = "160";
 			this.txbPx.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// txbPy
@@ -415,7 +414,6 @@
 			this.txbExprX.Name = "txbExprX";
 			this.txbExprX.Size = new System.Drawing.Size(500, 20);
 			this.txbExprX.TabIndex = 14;
-			this.txbExprX.Text = "160";
 			// 
 			// txbExprY
 			// 
