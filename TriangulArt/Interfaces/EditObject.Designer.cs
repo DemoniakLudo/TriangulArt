@@ -24,7 +24,6 @@
 		/// </summary>
 		private void InitializeComponent() {
 			System.Windows.Forms.ColumnHeader colColor;
-			this.pictureBoxObj = new System.Windows.Forms.PictureBox();
 			this.bpNewObject = new System.Windows.Forms.Button();
 			this.bpReadObject = new System.Windows.Forms.Button();
 			this.bpFusionObject = new System.Windows.Forms.Button();
@@ -53,12 +52,6 @@
 			this.label8 = new System.Windows.Forms.Label();
 			this.label9 = new System.Windows.Forms.Label();
 			this.label10 = new System.Windows.Forms.Label();
-			this.bpAddVertex = new System.Windows.Forms.Button();
-			this.bpSupVertex = new System.Windows.Forms.Button();
-			this.bpEditVertex = new System.Windows.Forms.Button();
-			this.bpAddFace = new System.Windows.Forms.Button();
-			this.bpSupFace = new System.Windows.Forms.Button();
-			this.bpEditFace = new System.Windows.Forms.Button();
 			this.bpRedraw = new System.Windows.Forms.Button();
 			this.lblFaceColor = new System.Windows.Forms.Label();
 			this.lstViewFace = new System.Windows.Forms.ListView();
@@ -71,25 +64,27 @@
 			this.colX = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.colY = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.colZ = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.bpEditFace = new System.Windows.Forms.Button();
+			this.bpEditVertex = new System.Windows.Forms.Button();
+			this.bpSupFace = new System.Windows.Forms.Button();
+			this.bpSupVertex = new System.Windows.Forms.Button();
+			this.bpAddFace = new System.Windows.Forms.Button();
+			this.bpAddVertex = new System.Windows.Forms.Button();
+			this.pictureBoxObj = new System.Windows.Forms.PictureBox();
 			colColor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			((System.ComponentModel.ISupportInitialize)(this.pictureBoxObj)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.trackX)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.trackY)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.trackZ)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.trackZoom)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxObj)).BeginInit();
 			this.SuspendLayout();
 			// 
-			// pictureBoxObj
+			// colColor
 			// 
-			this.pictureBoxObj.Location = new System.Drawing.Point(0, 0);
-			this.pictureBoxObj.Name = "pictureBoxObj";
-			this.pictureBoxObj.Size = new System.Drawing.Size(768, 512);
-			this.pictureBoxObj.TabIndex = 0;
-			this.pictureBoxObj.TabStop = false;
+			colColor.Text = "Color";
 			// 
 			// bpNewObject
 			// 
-			this.bpNewObject.Enabled = false;
 			this.bpNewObject.Location = new System.Drawing.Point(782, 8);
 			this.bpNewObject.Name = "bpNewObject";
 			this.bpNewObject.Size = new System.Drawing.Size(90, 23);
@@ -355,70 +350,6 @@
 			this.label10.TabIndex = 11;
 			this.label10.Text = "Z";
 			// 
-			// bpAddVertex
-			// 
-			this.bpAddVertex.Location = new System.Drawing.Point(2, 778);
-			this.bpAddVertex.Name = "bpAddVertex";
-			this.bpAddVertex.Size = new System.Drawing.Size(75, 23);
-			this.bpAddVertex.TabIndex = 12;
-			this.bpAddVertex.Text = "Ajouter";
-			this.bpAddVertex.UseVisualStyleBackColor = true;
-			this.bpAddVertex.Click += new System.EventHandler(this.BpAddVertex_Click);
-			// 
-			// bpSupVertex
-			// 
-			this.bpSupVertex.Enabled = false;
-			this.bpSupVertex.Location = new System.Drawing.Point(2, 807);
-			this.bpSupVertex.Name = "bpSupVertex";
-			this.bpSupVertex.Size = new System.Drawing.Size(75, 23);
-			this.bpSupVertex.TabIndex = 12;
-			this.bpSupVertex.Text = "Supprimer";
-			this.bpSupVertex.UseVisualStyleBackColor = true;
-			this.bpSupVertex.Click += new System.EventHandler(this.BpSupVertex_Click);
-			// 
-			// bpEditVertex
-			// 
-			this.bpEditVertex.Enabled = false;
-			this.bpEditVertex.Location = new System.Drawing.Point(2, 836);
-			this.bpEditVertex.Name = "bpEditVertex";
-			this.bpEditVertex.Size = new System.Drawing.Size(75, 23);
-			this.bpEditVertex.TabIndex = 12;
-			this.bpEditVertex.Text = "Modifier";
-			this.bpEditVertex.UseVisualStyleBackColor = true;
-			this.bpEditVertex.Click += new System.EventHandler(this.BpEditVertex_Click);
-			// 
-			// bpAddFace
-			// 
-			this.bpAddFace.Location = new System.Drawing.Point(563, 778);
-			this.bpAddFace.Name = "bpAddFace";
-			this.bpAddFace.Size = new System.Drawing.Size(75, 23);
-			this.bpAddFace.TabIndex = 12;
-			this.bpAddFace.Text = "Ajouter";
-			this.bpAddFace.UseVisualStyleBackColor = true;
-			this.bpAddFace.Click += new System.EventHandler(this.BpAddFace_Click);
-			// 
-			// bpSupFace
-			// 
-			this.bpSupFace.Enabled = false;
-			this.bpSupFace.Location = new System.Drawing.Point(563, 807);
-			this.bpSupFace.Name = "bpSupFace";
-			this.bpSupFace.Size = new System.Drawing.Size(75, 23);
-			this.bpSupFace.TabIndex = 12;
-			this.bpSupFace.Text = "Supprimer";
-			this.bpSupFace.UseVisualStyleBackColor = true;
-			this.bpSupFace.Click += new System.EventHandler(this.BpSupFace_Click);
-			// 
-			// bpEditFace
-			// 
-			this.bpEditFace.Enabled = false;
-			this.bpEditFace.Location = new System.Drawing.Point(563, 836);
-			this.bpEditFace.Name = "bpEditFace";
-			this.bpEditFace.Size = new System.Drawing.Size(75, 23);
-			this.bpEditFace.TabIndex = 12;
-			this.bpEditFace.Text = "Modifier";
-			this.bpEditFace.UseVisualStyleBackColor = true;
-			this.bpEditFace.Click += new System.EventHandler(this.BpEditFace_Click);
-			// 
 			// bpRedraw
 			// 
 			this.bpRedraw.Location = new System.Drawing.Point(782, 489);
@@ -475,10 +406,6 @@
 			// 
 			this.colVertexC.Text = "C";
 			// 
-			// colColor
-			// 
-			colColor.Text = "Color";
-			// 
 			// lstViewVertex
 			// 
 			this.lstViewVertex.AutoArrange = false;
@@ -518,6 +445,85 @@
 			// 
 			this.colZ.Text = "Z";
 			this.colZ.Width = 80;
+			// 
+			// bpEditFace
+			// 
+			this.bpEditFace.Enabled = false;
+			this.bpEditFace.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.bpEditFace.Image = global::TriangulArt.Properties.Resources.Edit;
+			this.bpEditFace.Location = new System.Drawing.Point(603, 836);
+			this.bpEditFace.Name = "bpEditFace";
+			this.bpEditFace.Size = new System.Drawing.Size(35, 27);
+			this.bpEditFace.TabIndex = 12;
+			this.bpEditFace.UseVisualStyleBackColor = true;
+			this.bpEditFace.Click += new System.EventHandler(this.BpEditFace_Click);
+			// 
+			// bpEditVertex
+			// 
+			this.bpEditVertex.Enabled = false;
+			this.bpEditVertex.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.bpEditVertex.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.bpEditVertex.Image = global::TriangulArt.Properties.Resources.Edit;
+			this.bpEditVertex.Location = new System.Drawing.Point(59, 836);
+			this.bpEditVertex.Name = "bpEditVertex";
+			this.bpEditVertex.Size = new System.Drawing.Size(35, 27);
+			this.bpEditVertex.TabIndex = 12;
+			this.bpEditVertex.UseVisualStyleBackColor = true;
+			this.bpEditVertex.Click += new System.EventHandler(this.BpEditVertex_Click);
+			// 
+			// bpSupFace
+			// 
+			this.bpSupFace.Enabled = false;
+			this.bpSupFace.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.bpSupFace.Image = global::TriangulArt.Properties.Resources.Del;
+			this.bpSupFace.Location = new System.Drawing.Point(603, 803);
+			this.bpSupFace.Name = "bpSupFace";
+			this.bpSupFace.Size = new System.Drawing.Size(35, 27);
+			this.bpSupFace.TabIndex = 12;
+			this.bpSupFace.UseVisualStyleBackColor = true;
+			this.bpSupFace.Click += new System.EventHandler(this.BpSupFace_Click);
+			// 
+			// bpSupVertex
+			// 
+			this.bpSupVertex.Enabled = false;
+			this.bpSupVertex.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.bpSupVertex.Image = global::TriangulArt.Properties.Resources.Del;
+			this.bpSupVertex.Location = new System.Drawing.Point(59, 803);
+			this.bpSupVertex.Name = "bpSupVertex";
+			this.bpSupVertex.Size = new System.Drawing.Size(35, 27);
+			this.bpSupVertex.TabIndex = 12;
+			this.bpSupVertex.UseVisualStyleBackColor = true;
+			this.bpSupVertex.Click += new System.EventHandler(this.BpSupVertex_Click);
+			// 
+			// bpAddFace
+			// 
+			this.bpAddFace.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.bpAddFace.Image = global::TriangulArt.Properties.Resources.Add;
+			this.bpAddFace.Location = new System.Drawing.Point(603, 770);
+			this.bpAddFace.Name = "bpAddFace";
+			this.bpAddFace.Size = new System.Drawing.Size(35, 27);
+			this.bpAddFace.TabIndex = 12;
+			this.bpAddFace.UseVisualStyleBackColor = true;
+			this.bpAddFace.Click += new System.EventHandler(this.BpAddFace_Click);
+			// 
+			// bpAddVertex
+			// 
+			this.bpAddVertex.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.bpAddVertex.Image = global::TriangulArt.Properties.Resources.Add;
+			this.bpAddVertex.Location = new System.Drawing.Point(59, 770);
+			this.bpAddVertex.Name = "bpAddVertex";
+			this.bpAddVertex.Size = new System.Drawing.Size(35, 27);
+			this.bpAddVertex.TabIndex = 12;
+			this.bpAddVertex.UseVisualStyleBackColor = true;
+			this.bpAddVertex.Click += new System.EventHandler(this.BpAddVertex_Click);
+			// 
+			// pictureBoxObj
+			// 
+			this.pictureBoxObj.Location = new System.Drawing.Point(0, 0);
+			this.pictureBoxObj.Name = "pictureBoxObj";
+			this.pictureBoxObj.Size = new System.Drawing.Size(768, 512);
+			this.pictureBoxObj.TabIndex = 0;
+			this.pictureBoxObj.TabStop = false;
 			// 
 			// EditObjet
 			// 
@@ -568,11 +574,11 @@
 			this.MinimizeBox = false;
 			this.Name = "EditObjet";
 			this.Text = "Editeur d\'objets";
-			((System.ComponentModel.ISupportInitialize)(this.pictureBoxObj)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.trackX)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.trackY)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.trackZ)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.trackZoom)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxObj)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

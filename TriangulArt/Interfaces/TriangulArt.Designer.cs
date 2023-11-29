@@ -114,9 +114,9 @@
 			this.bpFirst = new System.Windows.Forms.Button();
 			this.bpLast = new System.Windows.Forms.Button();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.bpGenPal = new System.Windows.Forms.Button();
 			this.bpSavePal = new System.Windows.Forms.Button();
 			this.bpReadPal = new System.Windows.Forms.Button();
-			this.bpGenPal = new System.Windows.Forms.Button();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -137,7 +137,7 @@
 			// 
 			// bpAjoutTriangle
 			// 
-			this.bpAjoutTriangle.Location = new System.Drawing.Point(3, 222);
+			this.bpAjoutTriangle.Location = new System.Drawing.Point(3, 204);
 			this.bpAjoutTriangle.Name = "bpAjoutTriangle";
 			this.bpAjoutTriangle.Size = new System.Drawing.Size(113, 23);
 			this.bpAjoutTriangle.TabIndex = 2;
@@ -155,7 +155,7 @@
 			// 
 			// bpLoad
 			// 
-			this.bpLoad.Location = new System.Drawing.Point(3, 104);
+			this.bpLoad.Location = new System.Drawing.Point(3, 100);
 			this.bpLoad.Name = "bpLoad";
 			this.bpLoad.Size = new System.Drawing.Size(112, 22);
 			this.bpLoad.TabIndex = 4;
@@ -165,7 +165,7 @@
 			// 
 			// bpSave
 			// 
-			this.bpSave.Location = new System.Drawing.Point(3, 132);
+			this.bpSave.Location = new System.Drawing.Point(3, 124);
 			this.bpSave.Name = "bpSave";
 			this.bpSave.Size = new System.Drawing.Size(112, 22);
 			this.bpSave.TabIndex = 4;
@@ -184,7 +184,7 @@
 			// 
 			// bpGenereAsm
 			// 
-			this.bpGenereAsm.Location = new System.Drawing.Point(3, 165);
+			this.bpGenereAsm.Location = new System.Drawing.Point(3, 157);
 			this.bpGenereAsm.Name = "bpGenereAsm";
 			this.bpGenereAsm.Size = new System.Drawing.Size(112, 23);
 			this.bpGenereAsm.TabIndex = 6;
@@ -290,9 +290,9 @@
 			// listTriangles
 			// 
 			this.listTriangles.FormattingEnabled = true;
-			this.listTriangles.Location = new System.Drawing.Point(3, 318);
+			this.listTriangles.Location = new System.Drawing.Point(3, 302);
 			this.listTriangles.Name = "listTriangles";
-			this.listTriangles.Size = new System.Drawing.Size(504, 225);
+			this.listTriangles.Size = new System.Drawing.Size(504, 238);
 			this.listTriangles.TabIndex = 20;
 			this.listTriangles.SelectedIndexChanged += new System.EventHandler(this.ListTriangles_SelectedIndexChanged);
 			// 
@@ -351,7 +351,7 @@
 			// chkCodeAsm
 			// 
 			this.chkCodeAsm.AutoSize = true;
-			this.chkCodeAsm.Location = new System.Drawing.Point(119, 157);
+			this.chkCodeAsm.Location = new System.Drawing.Point(119, 149);
 			this.chkCodeAsm.Name = "chkCodeAsm";
 			this.chkCodeAsm.Size = new System.Drawing.Size(181, 17);
 			this.chkCodeAsm.TabIndex = 25;
@@ -360,7 +360,7 @@
 			// 
 			// bpImport
 			// 
-			this.bpImport.Location = new System.Drawing.Point(122, 104);
+			this.bpImport.Location = new System.Drawing.Point(122, 100);
 			this.bpImport.Name = "bpImport";
 			this.bpImport.Size = new System.Drawing.Size(139, 22);
 			this.bpImport.TabIndex = 26;
@@ -370,7 +370,7 @@
 			// 
 			// bpImportImage
 			// 
-			this.bpImportImage.Location = new System.Drawing.Point(122, 132);
+			this.bpImportImage.Location = new System.Drawing.Point(122, 124);
 			this.bpImportImage.Name = "bpImportImage";
 			this.bpImportImage.Size = new System.Drawing.Size(139, 22);
 			this.bpImportImage.TabIndex = 27;
@@ -390,7 +390,7 @@
 			// 
 			// bpUp
 			// 
-			this.bpUp.Location = new System.Drawing.Point(508, 348);
+			this.bpUp.Location = new System.Drawing.Point(508, 330);
 			this.bpUp.Name = "bpUp";
 			this.bpUp.Size = new System.Drawing.Size(41, 27);
 			this.bpUp.TabIndex = 31;
@@ -413,7 +413,7 @@
 			this.groupBox1.Controls.Add(this.rbVertical);
 			this.groupBox1.Controls.Add(this.rbHorizontal);
 			this.groupBox1.Controls.Add(this.rbStandard);
-			this.groupBox1.Location = new System.Drawing.Point(276, 171);
+			this.groupBox1.Location = new System.Drawing.Point(276, 163);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Size = new System.Drawing.Size(268, 42);
 			this.groupBox1.TabIndex = 33;
@@ -424,7 +424,7 @@
 			// 
 			this.rbVertical.AutoSize = true;
 			this.rbVertical.Enabled = false;
-			this.rbVertical.Location = new System.Drawing.Point(177, 19);
+			this.rbVertical.Location = new System.Drawing.Point(177, 11);
 			this.rbVertical.Name = "rbVertical";
 			this.rbVertical.Size = new System.Drawing.Size(87, 17);
 			this.rbVertical.TabIndex = 2;
@@ -436,7 +436,7 @@
 			// rbHorizontal
 			// 
 			this.rbHorizontal.AutoSize = true;
-			this.rbHorizontal.Location = new System.Drawing.Point(73, 19);
+			this.rbHorizontal.Location = new System.Drawing.Point(73, 11);
 			this.rbHorizontal.Name = "rbHorizontal";
 			this.rbHorizontal.Size = new System.Drawing.Size(98, 17);
 			this.rbHorizontal.TabIndex = 1;
@@ -449,7 +449,7 @@
 			// 
 			this.rbStandard.AutoSize = true;
 			this.rbStandard.Checked = true;
-			this.rbStandard.Location = new System.Drawing.Point(4, 19);
+			this.rbStandard.Location = new System.Drawing.Point(4, 11);
 			this.rbStandard.Name = "rbStandard";
 			this.rbStandard.Size = new System.Drawing.Size(68, 17);
 			this.rbStandard.TabIndex = 0;
@@ -469,7 +469,7 @@
 			this.groupBox2.Controls.Add(this.label8);
 			this.groupBox2.Controls.Add(this.rbDepImage);
 			this.groupBox2.Controls.Add(this.rbDepTriangle);
-			this.groupBox2.Location = new System.Drawing.Point(142, 212);
+			this.groupBox2.Location = new System.Drawing.Point(142, 194);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Size = new System.Drawing.Size(405, 73);
 			this.groupBox2.TabIndex = 34;
@@ -572,7 +572,7 @@
 			// chkClearData
 			// 
 			this.chkClearData.AutoSize = true;
-			this.chkClearData.Location = new System.Drawing.Point(267, 108);
+			this.chkClearData.Location = new System.Drawing.Point(267, 104);
 			this.chkClearData.Name = "chkClearData";
 			this.chkClearData.Size = new System.Drawing.Size(165, 17);
 			this.chkClearData.TabIndex = 37;
@@ -611,7 +611,7 @@
 			// 
 			// bpAjoutQuadri
 			// 
-			this.bpAjoutQuadri.Location = new System.Drawing.Point(3, 244);
+			this.bpAjoutQuadri.Location = new System.Drawing.Point(3, 226);
 			this.bpAjoutQuadri.Name = "bpAjoutQuadri";
 			this.bpAjoutQuadri.Size = new System.Drawing.Size(113, 23);
 			this.bpAjoutQuadri.TabIndex = 41;
@@ -658,7 +658,7 @@
 			// label12
 			// 
 			this.label12.AutoSize = true;
-			this.label12.Location = new System.Drawing.Point(227, 299);
+			this.label12.Location = new System.Drawing.Point(227, 281);
 			this.label12.Name = "label12";
 			this.label12.Size = new System.Drawing.Size(249, 13);
 			this.label12.TabIndex = 46;
@@ -666,7 +666,7 @@
 			// 
 			// txbTpsAttente
 			// 
-			this.txbTpsAttente.Location = new System.Drawing.Point(482, 296);
+			this.txbTpsAttente.Location = new System.Drawing.Point(482, 278);
 			this.txbTpsAttente.Name = "txbTpsAttente";
 			this.txbTpsAttente.Size = new System.Drawing.Size(39, 20);
 			this.txbTpsAttente.TabIndex = 47;
@@ -943,7 +943,7 @@
 			// 
 			// txbNomImage
 			// 
-			this.txbNomImage.Location = new System.Drawing.Point(330, 134);
+			this.txbNomImage.Location = new System.Drawing.Point(330, 126);
 			this.txbNomImage.Name = "txbNomImage";
 			this.txbNomImage.Size = new System.Drawing.Size(210, 20);
 			this.txbNomImage.TabIndex = 52;
@@ -951,7 +951,7 @@
 			// chkModePolice
 			// 
 			this.chkModePolice.AutoSize = true;
-			this.chkModePolice.Location = new System.Drawing.Point(119, 179);
+			this.chkModePolice.Location = new System.Drawing.Point(119, 171);
 			this.chkModePolice.Name = "chkModePolice";
 			this.chkModePolice.Size = new System.Drawing.Size(157, 17);
 			this.chkModePolice.TabIndex = 53;
@@ -960,7 +960,7 @@
 			// 
 			// bpAjoutRect
 			// 
-			this.bpAjoutRect.Location = new System.Drawing.Point(3, 266);
+			this.bpAjoutRect.Location = new System.Drawing.Point(3, 248);
 			this.bpAjoutRect.Name = "bpAjoutRect";
 			this.bpAjoutRect.Size = new System.Drawing.Size(113, 23);
 			this.bpAjoutRect.TabIndex = 54;
@@ -970,7 +970,7 @@
 			// 
 			// bpAjoutCercle
 			// 
-			this.bpAjoutCercle.Location = new System.Drawing.Point(3, 288);
+			this.bpAjoutCercle.Location = new System.Drawing.Point(3, 270);
 			this.bpAjoutCercle.Name = "bpAjoutCercle";
 			this.bpAjoutCercle.Size = new System.Drawing.Size(113, 23);
 			this.bpAjoutCercle.TabIndex = 54;
@@ -980,7 +980,7 @@
 			// 
 			// txbNbRayons
 			// 
-			this.txbNbRayons.Location = new System.Drawing.Point(119, 290);
+			this.txbNbRayons.Location = new System.Drawing.Point(119, 272);
 			this.txbNbRayons.Name = "txbNbRayons";
 			this.txbNbRayons.Size = new System.Drawing.Size(43, 20);
 			this.txbNbRayons.TabIndex = 55;
@@ -989,7 +989,7 @@
 			// label15
 			// 
 			this.label15.AutoSize = true;
-			this.label15.Location = new System.Drawing.Point(166, 293);
+			this.label15.Location = new System.Drawing.Point(166, 275);
 			this.label15.Name = "label15";
 			this.label15.Size = new System.Drawing.Size(38, 13);
 			this.label15.TabIndex = 56;
@@ -997,7 +997,7 @@
 			// 
 			// bpAjoutLigne
 			// 
-			this.bpAjoutLigne.Location = new System.Drawing.Point(3, 200);
+			this.bpAjoutLigne.Location = new System.Drawing.Point(3, 182);
 			this.bpAjoutLigne.Name = "bpAjoutLigne";
 			this.bpAjoutLigne.Size = new System.Drawing.Size(113, 23);
 			this.bpAjoutLigne.TabIndex = 57;
@@ -1007,7 +1007,7 @@
 			// 
 			// bpFirst
 			// 
-			this.bpFirst.Location = new System.Drawing.Point(508, 319);
+			this.bpFirst.Location = new System.Drawing.Point(508, 301);
 			this.bpFirst.Name = "bpFirst";
 			this.bpFirst.Size = new System.Drawing.Size(41, 23);
 			this.bpFirst.TabIndex = 58;
@@ -1093,6 +1093,17 @@
 			this.panel1.Size = new System.Drawing.Size(549, 767);
 			this.panel1.TabIndex = 60;
 			// 
+			// bpGenPal
+			// 
+			this.bpGenPal.Image = global::TriangulArt.Properties.Resources.GenPalette;
+			this.bpGenPal.Location = new System.Drawing.Point(277, 598);
+			this.bpGenPal.Name = "bpGenPal";
+			this.bpGenPal.Size = new System.Drawing.Size(48, 48);
+			this.bpGenPal.TabIndex = 61;
+			this.bpGenPal.UseVisualStyleBackColor = true;
+			this.bpGenPal.Visible = false;
+			this.bpGenPal.Click += new System.EventHandler(this.bpGenPal_Click);
+			// 
 			// bpSavePal
 			// 
 			this.bpSavePal.Location = new System.Drawing.Point(84, 623);
@@ -1112,17 +1123,6 @@
 			this.bpReadPal.Text = "Lire Palette";
 			this.bpReadPal.UseVisualStyleBackColor = true;
 			this.bpReadPal.Click += new System.EventHandler(this.BpReadPal_Click);
-			// 
-			// bpGenPal
-			// 
-			this.bpGenPal.Image = global::TriangulArt.Properties.Resources.GenPalette;
-			this.bpGenPal.Location = new System.Drawing.Point(282, 598);
-			this.bpGenPal.Name = "bpGenPal";
-			this.bpGenPal.Size = new System.Drawing.Size(48, 48);
-			this.bpGenPal.TabIndex = 61;
-			this.bpGenPal.UseVisualStyleBackColor = true;
-			this.bpGenPal.Visible = false;
-			this.bpGenPal.Click += new System.EventHandler(this.bpGenPal_Click);
 			// 
 			// pictureBox
 			// 

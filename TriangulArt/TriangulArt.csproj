@@ -52,6 +52,7 @@
     <Compile Include="Datas\Sequence.cs" />
     <Compile Include="Datas\Triangle.cs" />
     <Compile Include="Datas\Vertex.cs" />
+    <Compile Include="ImageFond.cs" />
     <Compile Include="Interfaces\GenPalette.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -138,6 +139,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\GenPalette.png" />
+    <None Include="Resources\Edit.png" />
+    <None Include="Resources\Del.png" />
+    <None Include="Resources\Add.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

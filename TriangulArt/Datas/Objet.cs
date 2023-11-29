@@ -14,6 +14,12 @@ namespace TriangulArt {
 		public Objet() {
 		}
 
+		// Raz objet
+		public void Clear() {
+			lstFace.Clear();
+			lstVertex.Clear();
+		}
+
 		//
 		// Calcule les paramètres (centre, taille) d'un objet
 		//
@@ -88,7 +94,7 @@ namespace TriangulArt {
 				double zt = (v.y * xSin + v.z * xCos);
 				double xt = (v.x * yCos - zt * ySin);
 				double z = CONST_Z + (v.x * ySin + zt * yCos);
-				v.SetPoint(posx + (((xt * zCos - yt * zSin) * zoomx) / z), posy + (((xt * zSin + yt * zCos) * zoomy) / z), z);
+				v.SetPoint(posx + (((xt * zCos - yt * zSin) * zoomx) / z), posy - (((xt * zSin + yt * zCos) * zoomy) / z), z);
 			}
 
 			// Tri des faces par ordre des Z
@@ -121,7 +127,7 @@ namespace TriangulArt {
 			if (numPoint > -1)
 				for (int x = -1; x < 2; x++)
 					for (int y = -1; y < 2; y++)
-						bm.SetPixel(x + (int)lstVertex[numPoint].px, y + (int)lstVertex[numPoint].py, new RvbColor(0, 0, 0));
+						bm.SetPixel(x + (int)lstVertex[numPoint].px, y + (int)lstVertex[numPoint].py, new RvbColor((byte)(128 - x * 127), (byte)(128 + y * 128), (byte)((x + y) * 127)));
 		}
 
 		//

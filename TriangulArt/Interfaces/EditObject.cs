@@ -30,7 +30,18 @@ namespace TriangulArt {
 		}
 
 		private void DisplayBoutons() {
-			bpEditVertex.Enabled = bpSupVertex.Enabled = objet.lstVertex.Count > 0 && numVertex != -1;
+			bpEditVertex.Enabled = objet.lstVertex.Count > 0 && numVertex != -1;
+			bool errFace = true;
+			if (numVertex != -1) {
+				errFace = false;
+				for (int i = 0; i < objet.lstFace.Count; i++) {
+					if (objet.lstFace[i].a == numVertex || objet.lstFace[i].b == numVertex || objet.lstFace[i].c == numVertex) {
+						errFace = true;
+						break;
+					}
+				}
+			}
+			bpSupVertex.Enabled = !errFace;
 			bpEditFace.Enabled = bpSupFace.Enabled = objet.lstFace.Count > 0 && numFace != -1;
 			bpSaveObject.Enabled = objet.lstFace.Count > 0;
 		}
@@ -91,7 +102,7 @@ namespace TriangulArt {
 
 		private void lstViewVertex_SelectedIndexChanged(object sender, EventArgs e) {
 			numVertex = lstViewVertex.SelectedIndices.Count > 0 ? lstViewVertex.SelectedIndices[0] : -1;
-			if ( numVertex!=-1) {
+			if (numVertex != -1) {
 				Vertex v = objet.lstVertex[numVertex];
 				txbVertexX.Text = v.x.ToString();
 				txbVertexY.Text = v.y.ToString();
@@ -145,6 +156,12 @@ namespace TriangulArt {
 
 		#region gestion boutons
 		private void BpNewObject_Click(object sender, EventArgs e) {
+			if (MessageBox.Show("Confirmer la création d'un nouvel objet", "", MessageBoxButtons.YesNo) == DialogResult.Yes) {
+				objet.Clear();
+				DisplayVertex(-1);
+				DisplayFace(-1);
+				DisplayObj();
+			}
 		}
 
 		private void BpReadObject_Click(object sender, EventArgs e) {
@@ -198,14 +215,7 @@ namespace TriangulArt {
 		}
 
 		private void BpSupVertex_Click(object sender, EventArgs e) {
-			bool err = false;
-			for (int i = 0; i < objet.lstFace.Count; i++) {
-				if (objet.lstFace[i].a == numVertex || objet.lstFace[i].b == numVertex || objet.lstFace[i].c == numVertex) {
-					err = true;
-					break;
-				}
-			}
-			if (!err) {
+			if (MessageBox.Show("Confirmer la supperssion du point " + numVertex, "", MessageBoxButtons.YesNo) == DialogResult.Yes) {
 				objet.lstVertex.RemoveAt(numVertex);
 				for (int i = 0; i < objet.lstFace.Count; i++) {
 					if (objet.lstFace[i].a >= numVertex)
@@ -219,8 +229,6 @@ namespace TriangulArt {
 				}
 				BpRedraw_Click(sender, e);
 			}
-			else
-				MessageBox.Show("Erreur: ce point est utilisé dans au moins une face.");
 		}
 
 		private void BpAddFace_Click(object sender, EventArgs e) {
@@ -252,15 +260,18 @@ namespace TriangulArt {
 		}
 
 		private void BpSupFace_Click(object sender, EventArgs e) {
-			objet.lstFace.RemoveAt(numFace);
-			BpRedraw_Click(sender, e);
+			if (MessageBox.Show("Confirmer la supperssion de la face " + numFace, "", MessageBoxButtons.YesNo) == DialogResult.Yes) {
+				objet.lstFace.RemoveAt(numFace);
+				BpRedraw_Click(sender, e);
+			}
 		}
 
 		private void ClickColor(object sender, MouseEventArgs e) {
 			Label colorClick = sender as Label;
 			selColor = (byte)(colorClick.Tag != null ? (int)colorClick.Tag : 0);
-			Face f = objet.lstFace[numFace];
-			f.pen = selColor;
+			if (numFace != -1)
+				objet.lstFace[numFace].pen = selColor;
+
 			UpdatePalette();
 			RedrawAll();
 		}

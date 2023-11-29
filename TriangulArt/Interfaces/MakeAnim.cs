@@ -13,7 +13,7 @@ namespace TriangulArt {
 		private Animation anim;
 		private Projet projet;
 
-		public MakeAnim(Projet prj, Animation anm, Bitmap bf) {
+		public MakeAnim(Projet prj, Animation anm, ImageFond bf) {
 			InitializeComponent();
 			int width = prj.mode == 0 ? 192 : 384;
 			bmpLock = new DirectBitmap(width, 272);
@@ -21,7 +21,7 @@ namespace TriangulArt {
 			txbPx.Text = txbExprX.Text = (width / 2).ToString();
 			projet = prj;
 			anim = anm;
-			bmpFond = bf;
+			bmpFond = bf.NbImg > 0 ? bf.GetImage : null;
 			txbExprX.Text = anim.exprPosX == "" ? txbExprX.Text : anim.exprPosX;
 			txbExprY.Text = anim.exprPosY == "" ? txbExprY.Text : anim.exprPosY;
 			txbExprZx.Text = anim.exprZoomX == "" ? txbExprZx.Text : anim.exprZoomX;

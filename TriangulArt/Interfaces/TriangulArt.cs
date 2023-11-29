@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
@@ -8,6 +9,7 @@ using System.Xml.Serialization;
 
 namespace TriangulArt {
 	public partial class TriangulArt : Form {
+		private List<Bitmap> tabImage = new List<Bitmap>();
 		private DirectBitmap bmpLock;
 		private enum DrawMd { NONE = 0, MOVETRIANGLE, ADDTRIANGLE, ADDQUADRI, ADDRECTANGLE, ADDCERCLE, ADDLINE };
 		private DrawMd mouseOpt = DrawMd.NONE;
@@ -15,7 +17,7 @@ namespace TriangulArt {
 		private Triangle triSel;
 		private int oldx1, oldy1;
 		private byte selColor = 1;
-		private Bitmap bmpFond = null;
+		private ImageFond bmpFond = new ImageFond();
 		private Projet projet = new Projet();
 		private Animation anim = new Animation();
 		private Version version = Assembly.GetExecutingAssembly().GetName().Version;
@@ -65,10 +67,10 @@ namespace TriangulArt {
 		}
 
 		public void Reset() {
-			if (bmpFond != null) {
-				for (int y = 0; y < bmpFond.Height; y++)
-					for (int x = 0; x < bmpFond.Width; x++)
-						bmpLock.SetPixel(x, y, bmpFond.GetPixel(x, y).ToArgb());
+			if (bmpFond.NbImg > 0) {
+				for (int y = 0; y < bmpFond.GetImage.Height; y++)
+					for (int x = 0; x < bmpFond.GetImage.Width; x++)
+						bmpLock.SetPixel(x, y, bmpFond.GetImage.GetPixel(x, y).ToArgb());
 			}
 			else
 				bmpLock.Fill(PaletteCpc.GetColorPal(0).GetColorArgb);
@@ -77,10 +79,10 @@ namespace TriangulArt {
 		}
 
 		public void ResetNoRender() {
-			if (bmpFond != null) {
-				for (int y = 0; y < bmpFond.Height; y++)
-					for (int x = 0; x < bmpFond.Width; x++)
-						bmpLock.SetPixel(x, y, bmpFond.GetPixel(x, y).ToArgb());
+			if (bmpFond.NbImg > 0) {
+				for (int y = 0; y < bmpFond.GetImage.Height; y++)
+					for (int x = 0; x < bmpFond.GetImage.Width; x++)
+						bmpLock.SetPixel(x, y, bmpFond.GetImage.GetPixel(x, y).ToArgb());
 			}
 			else
 				bmpLock.Fill(PaletteCpc.GetColorPal(0).GetColorArgb);
@@ -736,9 +738,18 @@ namespace TriangulArt {
 			if (result == DialogResult.OK) {
 				using (Bitmap b = new Bitmap(dlg.FileName)) {
 					if (b.Width <= bmpLock.Width && b.Height <= bmpLock.Height) {
-						bmpFond = new Bitmap(b);
+						FileStream fileScr = new FileStream(dlg.FileName, FileMode.Open, FileAccess.Read);
+						byte[] tabBytes = new byte[fileScr.Length];
+						fileScr.Read(tabBytes, 0, tabBytes.Length);
+						fileScr.Close();
+						MemoryStream imageStream = new MemoryStream(tabBytes);
+						imageStream.Position = 0;
+						bmpFond.InitBitmap(imageStream);
 						Reset();
 						SetInfo("Lecture image de fond ok.");
+						while (bmpFond.NbImg > projet.lstData.Count)
+							projet.lstData.Add(new Datas());
+
 					}
 					else
 						MessageBox.Show("L'image n'a pas le bon format (" + bmpLock.Width.ToString() + "x" + bmpLock.Height.ToString() + " pixels)");
@@ -748,10 +759,7 @@ namespace TriangulArt {
 
 		private void BpClear_Click(object sender, EventArgs e) {
 			if (MessageBox.Show("Etes vous certain de vouloir tout effacer ?", "Confirmation d'effacement", MessageBoxButtons.YesNo) == DialogResult.Yes) {
-				if (bmpFond != null) {
-					bmpFond.Dispose();
-					bmpFond = null;
-				}
+				bmpFond.ClearAll();
 				projet.SelImage().Clear();
 				DisplayList();
 				Reset();
@@ -1029,12 +1037,18 @@ namespace TriangulArt {
 		private void BpImagePrec_Click(object sender, EventArgs e) {
 			MemImage();
 			projet.SelectImage(projet.selData - 1);
+			if (bmpFond.NbImg > projet.selData)
+				bmpFond.SelectBitmap(projet.selData);
+
 			SetImageProjet();
 		}
 
 		private void BpImageSuiv_Click(object sender, EventArgs e) {
 			MemImage();
 			projet.SelectImage(projet.selData + 1);
+			if (bmpFond.NbImg > projet.selData)
+				bmpFond.SelectBitmap(projet.selData);
+
 			SetImageProjet();
 		}
 
@@ -1164,7 +1178,7 @@ namespace TriangulArt {
 			SetNewMode(false);
 		}
 
-		
+
 		private void bpGenPal_Click(object sender, EventArgs e) {
 			GenPalette g = new GenPalette(PaletteCpc.Palette, 0, DoGenPal);
 			g.ShowDialog();
