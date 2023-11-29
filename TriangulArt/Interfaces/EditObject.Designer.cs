@@ -231,12 +231,12 @@
 			// 
 			this.trackZoom.Location = new System.Drawing.Point(84, 517);
 			this.trackZoom.Maximum = 200000;
-			this.trackZoom.Minimum = 1;
+			this.trackZoom.Minimum = 500;
 			this.trackZoom.Name = "trackZoom";
 			this.trackZoom.Size = new System.Drawing.Size(684, 45);
 			this.trackZoom.TabIndex = 8;
 			this.trackZoom.TickStyle = System.Windows.Forms.TickStyle.None;
-			this.trackZoom.Value = 1;
+			this.trackZoom.Value = 500;
 			this.trackZoom.Scroll += new System.EventHandler(this.TrackZoom_Scroll);
 			// 
 			// txbZoom
@@ -246,7 +246,7 @@
 			this.txbZoom.ReadOnly = true;
 			this.txbZoom.Size = new System.Drawing.Size(43, 20);
 			this.txbZoom.TabIndex = 3;
-			this.txbZoom.Text = "1";
+			this.txbZoom.Text = "500";
 			// 
 			// txbFaceA
 			// 

@@ -76,6 +76,7 @@
 			this.rbSeqIncrement = new System.Windows.Forms.RadioButton();
 			this.rbSeqExpression = new System.Windows.Forms.RadioButton();
 			this.lstInfo = new System.Windows.Forms.ListBox();
+			this.bpStopAnim = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxScr)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.trkIndex)).BeginInit();
 			this.SuspendLayout();
@@ -563,11 +564,23 @@
 			this.lstInfo.Size = new System.Drawing.Size(1112, 173);
 			this.lstInfo.TabIndex = 25;
 			// 
+			// bpStopAnim
+			// 
+			this.bpStopAnim.Enabled = false;
+			this.bpStopAnim.Location = new System.Drawing.Point(121, 658);
+			this.bpStopAnim.Name = "bpStopAnim";
+			this.bpStopAnim.Size = new System.Drawing.Size(115, 23);
+			this.bpStopAnim.TabIndex = 26;
+			this.bpStopAnim.Text = "Stop Anim.";
+			this.bpStopAnim.UseVisualStyleBackColor = true;
+			this.bpStopAnim.Click += new System.EventHandler(this.bpStopAnim_Click);
+			// 
 			// MakeAnim
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1360, 805);
+			this.Controls.Add(this.bpStopAnim);
 			this.Controls.Add(this.lstInfo);
 			this.Controls.Add(this.rbSeqExpression);
 			this.Controls.Add(this.rbSeqIncrement);
@@ -688,5 +701,6 @@
 		private System.Windows.Forms.RadioButton rbSeqIncrement;
 		private System.Windows.Forms.RadioButton rbSeqExpression;
 		private System.Windows.Forms.ListBox lstInfo;
+		private System.Windows.Forms.Button bpStopAnim;
 	}
 }

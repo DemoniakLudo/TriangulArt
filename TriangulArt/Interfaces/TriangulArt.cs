@@ -225,10 +225,10 @@ namespace TriangulArt {
 			if (mouseOpt == DrawMd.ADDCERCLE && triSel != null) {
 				Graphics g = Graphics.FromImage(pictureBox.Image);
 				if (numPt == 2) {
-					XorDrawing.DrawXorCercle(g, (Bitmap)pictureBox.Image, triSel.x1, triSel.y1, oldx1, oldy1, nbr);
+					XorDrawing.DrawXorCercle(g, (Bitmap)pictureBox.Image, projet.mode, triSel.x1, triSel.y1, oldx1, oldy1, nbr);
 					oldx1 = xReel;
 					oldy1 = yReel;
-					XorDrawing.DrawXorCercle(g, (Bitmap)pictureBox.Image, triSel.x1, triSel.y1, oldx1, oldy1, nbr);
+					XorDrawing.DrawXorCercle(g, (Bitmap)pictureBox.Image, projet.mode, triSel.x1, triSel.y1, oldx1, oldy1, nbr);
 				}
 				pictureBox.Refresh();
 			}
@@ -407,22 +407,22 @@ namespace TriangulArt {
 						color = selColor
 					};
 					numPt = 2;
-					SetInfo("Attente définition rayon cercle");
+					SetInfo("Centre en " + xReel + "," + yReel + ", attente définition rayon cercle");
 					oldx1 = xReel;
 					oldy1 = yReel;
 					break;
 
 				case 2:
-					XorDrawing.DrawXorCercle(g, (Bitmap)pictureBox.Image, triSel.x1, triSel.y1, oldx1, oldy1, nbr);
+					XorDrawing.DrawXorCercle(g, (Bitmap)pictureBox.Image, projet.mode, triSel.x1, triSel.y1, oldx1, oldy1, nbr);
 					double r = Math.Sqrt((oldx1 - triSel.x1) * (oldx1 - triSel.x1) + (oldy1 - triSel.y1) * (oldy1 - triSel.y1));
 					int x1 = triSel.x1;
 					int y1 = triSel.y1;
 					int ang = (360 / nbr);
 					for (int a = 0; a < 360; a += ang) {
 						int x2 = x1 + (int)(r * Math.Cos(a / 180.0 * Math.PI));
-						int y2 = y1 + (int)(r * Math.Sin(a / 180.0 * Math.PI));
+						int y2 = y1 + ((int)(r * Math.Sin(a / 180.0 * Math.PI)));
 						int x3 = x1 + (int)(r * Math.Cos((a - ang) / 180.0 * Math.PI));
-						int y3 = y1 + (int)(r * Math.Sin((a - ang) / 180.0 * Math.PI));
+						int y3 = y1 + ((int)(r * Math.Sin((a - ang) / 180.0 * Math.PI)));
 						Triangle t = new Triangle(x1, y1, x2, y2, x3, y3, selColor);
 						AddTriangle(t);
 						SetInfo("Triangle enregistré : (" + t.x1 + "," + t.y1 + "),(" + t.x2 + "," + t.y2 + "),(" + t.x3 + "," + t.y3 + ")");
@@ -833,13 +833,13 @@ namespace TriangulArt {
 				}
 				else
 					if (triSel != null) {
-					int memoSel = projet.SelImage().GetSelTriangle();
-					projet.SelImage().DeplaceTriangle(deplX, deplY, bmpLock.Width);
-					DisplayList();
-					listTriangles.SelectedIndex = memoSel;
-				}
-				else
-					MessageBox.Show("Pas de triangle sélectionné");
+						int memoSel = projet.SelImage().GetSelTriangle();
+						projet.SelImage().DeplaceTriangle(deplX, deplY, bmpLock.Width);
+						DisplayList();
+						listTriangles.SelectedIndex = memoSel;
+					}
+					else
+						MessageBox.Show("Pas de triangle sélectionné");
 			}
 			else
 				MessageBox.Show("Veuillez sélectionner des données de déplacement valide");
@@ -865,13 +865,13 @@ namespace TriangulArt {
 				}
 				else
 					if (triSel != null) {
-					int memoSel = projet.SelImage().GetSelTriangle();
-					projet.SelImage().CoefZoom(triSel, zoomX, zoomY, chkCenterZoom.Checked, bmpLock.Width);
-					DisplayList();
-					listTriangles.SelectedIndex = memoSel;
-				}
-				else
-					MessageBox.Show("Pas de triangle sélectionné");
+						int memoSel = projet.SelImage().GetSelTriangle();
+						projet.SelImage().CoefZoom(triSel, zoomX, zoomY, chkCenterZoom.Checked, bmpLock.Width);
+						DisplayList();
+						listTriangles.SelectedIndex = memoSel;
+					}
+					else
+						MessageBox.Show("Pas de triangle sélectionné");
 			}
 			else
 				MessageBox.Show("Veuillez sélectionner des données de zoom valide");
@@ -1187,6 +1187,13 @@ namespace TriangulArt {
 		private void DoGenPal() {
 			for (int c = 0; c < 16; c++) {
 				int col = PaletteCpc.Palette[c];
+				if (chkAnim3D.Checked) {
+					foreach (Datas d in projet.lstData)
+						d.palette[c] = col;
+				}
+				else
+					projet.SelImage().palette[c] = col;
+
 				int r = ((col & 0x0F) * 17);
 				int v = (((col & 0xF00) >> 8) * 17);
 				int b = (((col & 0xF0) >> 4) * 17);

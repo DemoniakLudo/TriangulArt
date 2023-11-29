@@ -187,16 +187,16 @@ public static class XorDrawing {
 		FinishDraw(bmp, g, hdc, oldpen, oldRop, img, dash);
 	}
 
-	public static void DrawXorCercle(Graphics g, Bitmap bmp, int x1, int y1, int x2, int y2, int nbr, bool dash = true) {
+	public static void DrawXorCercle(Graphics g, Bitmap bmp, int mode, int x1, int y1, int x2, int y2, int nbr, bool dash = true) {
 		double r = Math.Sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 		int ang = (int)(360 / nbr);
 		int oldRop;
 		IntPtr oldpen, img, hdc = BeginDraw(bmp, g, x1, y1, x2, y2, dash, out oldRop, out img, out oldpen);
 		for (int a = 0; a < 360; a += ang) {
 			int xa = x1 + (int)(r * Math.Cos(a / 180.0 * Math.PI));
-			int ya = y1 + (int)(r * Math.Sin(a / 180.0 * Math.PI));
+			int ya = y1 + ((int)(r * Math.Sin(a / 180.0 * Math.PI)));
 			int xb = x1 + (int)(r * Math.Cos((a + ang) / 180.0 * Math.PI));
-			int yb = y1 + (int)(r * Math.Sin((a + ang) / 180.0 * Math.PI));
+			int yb = y1 + ((int)(r * Math.Sin((a + ang) / 180.0 * Math.PI)));
 			MoveToEx(hdc, xa, ya, IntPtr.Zero);
 			LineTo(hdc, xb, yb);
 		}

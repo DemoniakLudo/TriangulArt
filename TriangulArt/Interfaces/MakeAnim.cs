@@ -12,6 +12,7 @@ namespace TriangulArt {
 		private Bitmap bmpFond;
 		private Animation anim;
 		private Projet projet;
+		private bool inAnim = false, endAnim = false;
 
 		public MakeAnim(Projet prj, Animation anm, ImageFond bf) {
 			InitializeComponent();
@@ -37,9 +38,10 @@ namespace TriangulArt {
 		}
 
 		private void InitBoutons() {
-			bpAnimate.Enabled = bpWriteTriangle.Enabled = bpRedraw.Enabled = anim.objet.lstFace.Count > 0;
-			bpFusion.Enabled = projet.lstData.Count == Utils.ToInt(txbNbImages.Text);
-			bpExportSequence.Enabled = bpImportSequence.Enabled = rbSeqIncrement.Checked;
+			bpAnimate.Enabled = bpWriteTriangle.Enabled = bpRedraw.Enabled = !inAnim && anim.objet.lstFace.Count > 0;
+			bpStopAnim.Enabled = inAnim;
+			bpFusion.Enabled = !inAnim && projet.lstData.Count == Utils.ToInt(txbNbImages.Text);
+			bpReadObject.Enabled = bpEditObject.Enabled = bpReadAnim.Enabled = bpSaveAnim.Enabled = bpExportSequence.Enabled = bpImportSequence.Enabled = !inAnim&& rbSeqIncrement.Checked;
 			txbPx.Enabled = txbPy.Enabled = txbZx.Enabled = txbZy.Enabled = txbAx.Enabled = txbAy.Enabled = txbAz.Enabled =
 			txbIncPx.Enabled = txbIncPy.Enabled = txbIncZx.Enabled = txbIncZy.Enabled = txbIncAx.Enabled = txbIncAy.Enabled = txbIncAz.Enabled = rbSeqIncrement.Checked;
 			txbExprX.Enabled = txbExprY.Enabled = txbExprZx.Enabled = txbExprZy.Enabled = txbExprAx.Enabled = txbExprAy.Enabled = txbExprAz.Enabled = rbSeqExpression.Checked;
@@ -116,14 +118,15 @@ namespace TriangulArt {
 		}
 
 		private void Animate(bool setProjet = false, bool fusion = false) {
-			Enabled = false;
 			GenereSeq();
 			if (setProjet && !fusion)
 				projet.lstData.Clear();
 
+			InitBoutons();
 			for (int i = 0; i < anim.lstSeq.Count; i++) {
 				List<Triangle> lstTriangle = new List<Triangle>();
 				DisplayFrame(i, lstTriangle);
+				Application.DoEvents();
 				if (setProjet) {
 					Datas data = fusion ? projet.lstData[i] : new Datas();
 					data.nomImage = "Frame_" + i.ToString();
@@ -141,9 +144,10 @@ namespace TriangulArt {
 					if (!fusion)
 						projet.lstData.Add(data);
 				}
+				if (endAnim)
+					break;
 			}
 			InitBoutons();
-			Enabled = true;
 			if (setProjet) {
 				int nbAvant = 0;
 				int nbApres = 0;
@@ -184,6 +188,7 @@ namespace TriangulArt {
 		private void BpEditObject_Click(object sender, EventArgs e) {
 			Enabled = false;
 			new EditObjet(anim.objet).ShowDialog();
+			InitBoutons();
 			Enabled = true;
 		}
 
@@ -193,9 +198,16 @@ namespace TriangulArt {
 		}
 
 		private void BpAnimate_Click(object sender, EventArgs e) {
-			Enabled = false;
-			Animate();
-			Enabled = true;
+			endAnim = false;
+			inAnim = true;
+			while (!endAnim) {
+				Animate();
+			}
+		}
+
+		private void bpStopAnim_Click(object sender, EventArgs e) {
+			endAnim = true;
+			inAnim = false;
 		}
 
 		private void BpWriteTriangle_Click(object sender, EventArgs e) {
