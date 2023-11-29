@@ -301,7 +301,7 @@
 			// 
 			// txbVertexX
 			// 
-			this.txbVertexX.Location = new System.Drawing.Point(166, 836);
+			this.txbVertexX.Location = new System.Drawing.Point(106, 836);
 			this.txbVertexX.Name = "txbVertexX";
 			this.txbVertexX.Size = new System.Drawing.Size(59, 20);
 			this.txbVertexX.TabIndex = 10;
@@ -309,7 +309,7 @@
 			// 
 			// txbVertexY
 			// 
-			this.txbVertexY.Location = new System.Drawing.Point(256, 836);
+			this.txbVertexY.Location = new System.Drawing.Point(196, 836);
 			this.txbVertexY.Name = "txbVertexY";
 			this.txbVertexY.Size = new System.Drawing.Size(59, 20);
 			this.txbVertexY.TabIndex = 10;
@@ -317,7 +317,7 @@
 			// 
 			// txbVertexZ
 			// 
-			this.txbVertexZ.Location = new System.Drawing.Point(347, 836);
+			this.txbVertexZ.Location = new System.Drawing.Point(287, 836);
 			this.txbVertexZ.Name = "txbVertexZ";
 			this.txbVertexZ.Size = new System.Drawing.Size(59, 20);
 			this.txbVertexZ.TabIndex = 10;
@@ -326,7 +326,7 @@
 			// label8
 			// 
 			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point(148, 840);
+			this.label8.Location = new System.Drawing.Point(88, 840);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(14, 13);
 			this.label8.TabIndex = 11;
@@ -335,7 +335,7 @@
 			// label9
 			// 
 			this.label9.AutoSize = true;
-			this.label9.Location = new System.Drawing.Point(238, 840);
+			this.label9.Location = new System.Drawing.Point(178, 840);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(14, 13);
 			this.label9.TabIndex = 11;
@@ -344,7 +344,7 @@
 			// label10
 			// 
 			this.label10.AutoSize = true;
-			this.label10.Location = new System.Drawing.Point(329, 840);
+			this.label10.Location = new System.Drawing.Point(269, 840);
 			this.label10.Name = "label10";
 			this.label10.Size = new System.Drawing.Size(14, 13);
 			this.label10.TabIndex = 11;
@@ -418,7 +418,7 @@
 			this.lstViewVertex.GridLines = true;
 			this.lstViewVertex.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.lstViewVertex.HideSelection = false;
-			this.lstViewVertex.Location = new System.Drawing.Point(100, 566);
+			this.lstViewVertex.Location = new System.Drawing.Point(40, 566);
 			this.lstViewVertex.MultiSelect = false;
 			this.lstViewVertex.Name = "lstViewVertex";
 			this.lstViewVertex.Size = new System.Drawing.Size(322, 264);
@@ -451,9 +451,9 @@
 			this.bpEditFace.Enabled = false;
 			this.bpEditFace.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.bpEditFace.Image = global::TriangulArt.Properties.Resources.Edit;
-			this.bpEditFace.Location = new System.Drawing.Point(603, 836);
+			this.bpEditFace.Location = new System.Drawing.Point(610, 836);
 			this.bpEditFace.Name = "bpEditFace";
-			this.bpEditFace.Size = new System.Drawing.Size(35, 27);
+			this.bpEditFace.Size = new System.Drawing.Size(28, 28);
 			this.bpEditFace.TabIndex = 12;
 			this.bpEditFace.UseVisualStyleBackColor = true;
 			this.bpEditFace.Click += new System.EventHandler(this.BpEditFace_Click);
@@ -464,9 +464,9 @@
 			this.bpEditVertex.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.bpEditVertex.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.bpEditVertex.Image = global::TriangulArt.Properties.Resources.Edit;
-			this.bpEditVertex.Location = new System.Drawing.Point(59, 836);
+			this.bpEditVertex.Location = new System.Drawing.Point(6, 836);
 			this.bpEditVertex.Name = "bpEditVertex";
-			this.bpEditVertex.Size = new System.Drawing.Size(35, 27);
+			this.bpEditVertex.Size = new System.Drawing.Size(28, 28);
 			this.bpEditVertex.TabIndex = 12;
 			this.bpEditVertex.UseVisualStyleBackColor = true;
 			this.bpEditVertex.Click += new System.EventHandler(this.BpEditVertex_Click);
@@ -476,9 +476,9 @@
 			this.bpSupFace.Enabled = false;
 			this.bpSupFace.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.bpSupFace.Image = global::TriangulArt.Properties.Resources.Del;
-			this.bpSupFace.Location = new System.Drawing.Point(603, 803);
+			this.bpSupFace.Location = new System.Drawing.Point(610, 803);
 			this.bpSupFace.Name = "bpSupFace";
-			this.bpSupFace.Size = new System.Drawing.Size(35, 27);
+			this.bpSupFace.Size = new System.Drawing.Size(28, 28);
 			this.bpSupFace.TabIndex = 12;
 			this.bpSupFace.UseVisualStyleBackColor = true;
 			this.bpSupFace.Click += new System.EventHandler(this.BpSupFace_Click);
@@ -488,9 +488,9 @@
 			this.bpSupVertex.Enabled = false;
 			this.bpSupVertex.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.bpSupVertex.Image = global::TriangulArt.Properties.Resources.Del;
-			this.bpSupVertex.Location = new System.Drawing.Point(59, 803);
+			this.bpSupVertex.Location = new System.Drawing.Point(6, 803);
 			this.bpSupVertex.Name = "bpSupVertex";
-			this.bpSupVertex.Size = new System.Drawing.Size(35, 27);
+			this.bpSupVertex.Size = new System.Drawing.Size(28, 28);
 			this.bpSupVertex.TabIndex = 12;
 			this.bpSupVertex.UseVisualStyleBackColor = true;
 			this.bpSupVertex.Click += new System.EventHandler(this.BpSupVertex_Click);
@@ -499,9 +499,9 @@
 			// 
 			this.bpAddFace.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.bpAddFace.Image = global::TriangulArt.Properties.Resources.Add;
-			this.bpAddFace.Location = new System.Drawing.Point(603, 770);
+			this.bpAddFace.Location = new System.Drawing.Point(610, 770);
 			this.bpAddFace.Name = "bpAddFace";
-			this.bpAddFace.Size = new System.Drawing.Size(35, 27);
+			this.bpAddFace.Size = new System.Drawing.Size(28, 28);
 			this.bpAddFace.TabIndex = 12;
 			this.bpAddFace.UseVisualStyleBackColor = true;
 			this.bpAddFace.Click += new System.EventHandler(this.BpAddFace_Click);
@@ -510,9 +510,9 @@
 			// 
 			this.bpAddVertex.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.bpAddVertex.Image = global::TriangulArt.Properties.Resources.Add;
-			this.bpAddVertex.Location = new System.Drawing.Point(59, 770);
+			this.bpAddVertex.Location = new System.Drawing.Point(6, 770);
 			this.bpAddVertex.Name = "bpAddVertex";
-			this.bpAddVertex.Size = new System.Drawing.Size(35, 27);
+			this.bpAddVertex.Size = new System.Drawing.Size(28, 28);
 			this.bpAddVertex.TabIndex = 12;
 			this.bpAddVertex.UseVisualStyleBackColor = true;
 			this.bpAddVertex.Click += new System.EventHandler(this.BpAddVertex_Click);

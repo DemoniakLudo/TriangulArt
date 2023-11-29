@@ -194,11 +194,12 @@
 			// 
 			// bpAddCoord
 			// 
+			this.bpAddCoord.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.bpAddCoord.Image = global::TriangulArt.Properties.Resources.Add;
 			this.bpAddCoord.Location = new System.Drawing.Point(465, 544);
 			this.bpAddCoord.Name = "bpAddCoord";
-			this.bpAddCoord.Size = new System.Drawing.Size(81, 22);
+			this.bpAddCoord.Size = new System.Drawing.Size(28, 28);
 			this.bpAddCoord.TabIndex = 7;
-			this.bpAddCoord.Text = "Ajout direct";
 			this.bpAddCoord.UseVisualStyleBackColor = true;
 			this.bpAddCoord.Click += new System.EventHandler(this.BpAddCoord_Click);
 			// 
@@ -299,11 +300,12 @@
 			// bpEdit
 			// 
 			this.bpEdit.Enabled = false;
-			this.bpEdit.Location = new System.Drawing.Point(465, 568);
+			this.bpEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.bpEdit.Image = global::TriangulArt.Properties.Resources.Edit;
+			this.bpEdit.Location = new System.Drawing.Point(465, 576);
 			this.bpEdit.Name = "bpEdit";
-			this.bpEdit.Size = new System.Drawing.Size(81, 22);
+			this.bpEdit.Size = new System.Drawing.Size(28, 28);
 			this.bpEdit.TabIndex = 7;
-			this.bpEdit.Text = "Modifier";
 			this.bpEdit.UseVisualStyleBackColor = true;
 			this.bpEdit.Click += new System.EventHandler(this.BpEdit_Click);
 			// 
@@ -320,11 +322,12 @@
 			// bpDelete
 			// 
 			this.bpDelete.Enabled = false;
-			this.bpDelete.Location = new System.Drawing.Point(465, 593);
+			this.bpDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.bpDelete.Image = global::TriangulArt.Properties.Resources.Del;
+			this.bpDelete.Location = new System.Drawing.Point(465, 608);
 			this.bpDelete.Name = "bpDelete";
-			this.bpDelete.Size = new System.Drawing.Size(81, 22);
+			this.bpDelete.Size = new System.Drawing.Size(28, 28);
 			this.bpDelete.TabIndex = 22;
-			this.bpDelete.Text = "Supprimer";
 			this.bpDelete.UseVisualStyleBackColor = true;
 			this.bpDelete.Click += new System.EventHandler(this.BpDelete_Click);
 			// 
