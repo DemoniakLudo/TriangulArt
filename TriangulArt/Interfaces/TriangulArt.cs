@@ -726,7 +726,7 @@ namespace TriangulArt {
 		}
 
 		private void ChkPlus_CheckedChanged(object sender, EventArgs e) {
-			projet.cpcPlus = PaletteCpc.cpcPlus = chkPlus.Checked;
+			bpGenPal.Visible = projet.cpcPlus = PaletteCpc.cpcPlus = chkPlus.Checked;
 			FillTriangles();
 		}
 
@@ -958,6 +958,7 @@ namespace TriangulArt {
 					projet.SelectImage(0);
 					SetImageProjet();
 					this.Text = Path.GetFileName(dlg.FileName);
+					bpGenPal.Visible = projet.cpcPlus;
 				}
 				catch {
 					MessageBox.Show("Erreur lecture projet...");
@@ -1161,6 +1162,24 @@ namespace TriangulArt {
 					colors[i].Left = 966;
 			}
 			SetNewMode(false);
+		}
+
+		
+		private void bpGenPal_Click(object sender, EventArgs e) {
+			GenPalette g = new GenPalette(PaletteCpc.Palette, 0, DoGenPal);
+			g.ShowDialog();
+		}
+
+		private void DoGenPal() {
+			for (int c = 0; c < 16; c++) {
+				int col = PaletteCpc.Palette[c];
+				int r = ((col & 0x0F) * 17);
+				int v = (((col & 0xF00) >> 8) * 17);
+				int b = (((col & 0xF0) >> 4) * 17);
+				colors[c].BackColor = Color.FromArgb(r, v, b);
+				colors[c].Refresh();
+			}
+			UpdatePalette();
 		}
 	}
 }

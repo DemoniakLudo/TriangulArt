@@ -52,6 +52,12 @@
     <Compile Include="Datas\Sequence.cs" />
     <Compile Include="Datas\Triangle.cs" />
     <Compile Include="Datas\Vertex.cs" />
+    <Compile Include="Interfaces\GenPalette.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interfaces\GenPalette.designer.cs">
+      <DependentUpon>GenPalette.cs</DependentUpon>
+    </Compile>
     <Compile Include="PaletteCpc.cs" />
     <Compile Include="Datas\Datas.cs" />
     <Compile Include="DirectBitmap.cs" />
@@ -97,6 +103,9 @@
     <EmbeddedResource Include="Interfaces\EditObject.resx">
       <DependentUpon>EditObject.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Interfaces\GenPalette.resx">
+      <DependentUpon>GenPalette.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Interfaces\MakeAnim.resx">
       <DependentUpon>MakeAnim.cs</DependentUpon>
     </EmbeddedResource>
@@ -127,7 +136,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Images\GenPalette.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

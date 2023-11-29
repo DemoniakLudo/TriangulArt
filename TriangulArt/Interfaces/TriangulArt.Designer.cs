@@ -23,7 +23,6 @@
 		/// le contenu de cette méthode avec l'éditeur de code.
 		/// </summary>
 		private void InitializeComponent() {
-			this.pictureBox = new System.Windows.Forms.PictureBox();
 			this.lblInfoPos = new System.Windows.Forms.Label();
 			this.bpAjoutTriangle = new System.Windows.Forms.Button();
 			this.listInfo = new System.Windows.Forms.ListBox();
@@ -117,27 +116,15 @@
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.bpSavePal = new System.Windows.Forms.Button();
 			this.bpReadPal = new System.Windows.Forms.Button();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
+			this.bpGenPal = new System.Windows.Forms.Button();
+			this.pictureBox = new System.Windows.Forms.PictureBox();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.grpProjet.SuspendLayout();
 			this.grpImage.SuspendLayout();
 			this.panel1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.SuspendLayout();
-			// 
-			// pictureBox
-			// 
-			this.pictureBox.Location = new System.Drawing.Point(0, 0);
-			this.pictureBox.Name = "pictureBox";
-			this.pictureBox.Size = new System.Drawing.Size(960, 768);
-			this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-			this.pictureBox.TabIndex = 0;
-			this.pictureBox.TabStop = false;
-			this.pictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.PictureBox_Paint);
-			this.pictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureBox_MouseDown);
-			this.pictureBox.MouseLeave += new System.EventHandler(this.PictureBox_MouseLeave);
-			this.pictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TrtMouseMove);
-			this.pictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseUp);
 			// 
 			// lblInfoPos
 			// 
@@ -1040,6 +1027,7 @@
 			// 
 			// panel1
 			// 
+			this.panel1.Controls.Add(this.bpGenPal);
 			this.panel1.Controls.Add(this.bpSavePal);
 			this.panel1.Controls.Add(this.bpReadPal);
 			this.panel1.Controls.Add(this.bpLast);
@@ -1125,6 +1113,31 @@
 			this.bpReadPal.UseVisualStyleBackColor = true;
 			this.bpReadPal.Click += new System.EventHandler(this.BpReadPal_Click);
 			// 
+			// bpGenPal
+			// 
+			this.bpGenPal.Image = global::TriangulArt.Properties.Resources.GenPalette;
+			this.bpGenPal.Location = new System.Drawing.Point(282, 598);
+			this.bpGenPal.Name = "bpGenPal";
+			this.bpGenPal.Size = new System.Drawing.Size(48, 48);
+			this.bpGenPal.TabIndex = 61;
+			this.bpGenPal.UseVisualStyleBackColor = true;
+			this.bpGenPal.Visible = false;
+			this.bpGenPal.Click += new System.EventHandler(this.bpGenPal_Click);
+			// 
+			// pictureBox
+			// 
+			this.pictureBox.Location = new System.Drawing.Point(0, 0);
+			this.pictureBox.Name = "pictureBox";
+			this.pictureBox.Size = new System.Drawing.Size(960, 768);
+			this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+			this.pictureBox.TabIndex = 0;
+			this.pictureBox.TabStop = false;
+			this.pictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.PictureBox_Paint);
+			this.pictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureBox_MouseDown);
+			this.pictureBox.MouseLeave += new System.EventHandler(this.PictureBox_MouseLeave);
+			this.pictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TrtMouseMove);
+			this.pictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseUp);
+			// 
 			// TriangulArt
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1137,7 +1150,6 @@
 			this.MinimizeBox = false;
 			this.Name = "TriangulArt";
 			this.Text = "TriangulArt";
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
@@ -1148,6 +1160,7 @@
 			this.grpImage.PerformLayout();
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -1248,6 +1261,7 @@
 		private System.Windows.Forms.Button bpSavePal;
 		private System.Windows.Forms.Button bpReadPal;
 		private System.Windows.Forms.CheckBox chkAnim3D;
+		private System.Windows.Forms.Button bpGenPal;
 	}
 }
 

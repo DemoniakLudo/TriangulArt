@@ -46,6 +46,7 @@ namespace TriangulArt {
 			numVertex = selVertex;
 			if (selVertex != -1) {
 				lstViewVertex.Items[selVertex].Selected = true;
+				lstViewVertex.TopItem = lstViewVertex.Items[selVertex];
 				lstViewVertex.Select();
 			}
 		}
@@ -58,12 +59,20 @@ namespace TriangulArt {
 				string[] s = { "F." + i.ToString("000"), f.a.ToString(), f.b.ToString(), f.c.ToString(), f.pen.ToString() };
 				ListViewItem item = new ListViewItem(s);
 				item.UseItemStyleForSubItems = false;
-				item.SubItems[4].BackColor = Color.FromArgb(PaletteCpc.GetColorPal(f.pen).GetColorArgb);
+				RvbColor faceColor = PaletteCpc.GetColorPal(f.pen);
+				item.SubItems[4].BackColor = Color.FromArgb(faceColor.GetColorArgb);
+				int val = faceColor.r * 9798 + faceColor.v * 19235 + faceColor.b * 3735;
+				if (val > 4194304)
+					item.SubItems[4].ForeColor = Color.Black;
+				else
+					item.SubItems[4].ForeColor = Color.White;
+
 				lstViewFace.Items.Add(item);
 			}
 			numFace = selFace;
 			if (selFace != -1) {
 				lstViewFace.Items[selFace].Selected = true;
+				lstViewFace.TopItem = lstViewFace.Items[selFace];
 				lstViewFace.Select();
 			}
 		}
@@ -105,8 +114,9 @@ namespace TriangulArt {
 				txbFaceA.Text = f.a.ToString();
 				txbFaceB.Text = f.b.ToString();
 				txbFaceC.Text = f.c.ToString();
-				lblFaceColor.BackColor = Color.FromArgb(PaletteCpc.GetColorPal(f.pen).GetColorArgb);
 				selColor = f.pen;
+				RvbColor faceColor = PaletteCpc.GetColorPal(f.pen);
+				lblFaceColor.BackColor = Color.FromArgb(faceColor.GetColorArgb);
 			}
 			DisplayObj();
 		}
@@ -249,7 +259,10 @@ namespace TriangulArt {
 		private void ClickColor(object sender, MouseEventArgs e) {
 			Label colorClick = sender as Label;
 			selColor = (byte)(colorClick.Tag != null ? (int)colorClick.Tag : 0);
+			Face f = objet.lstFace[numFace];
+			f.pen = selColor;
 			UpdatePalette();
+			RedrawAll();
 		}
 		#endregion
 	}
