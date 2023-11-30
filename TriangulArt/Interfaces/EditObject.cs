@@ -9,14 +9,16 @@ namespace TriangulArt {
 		private int numFace = -1, numVertex = -1;
 		private Label[] colors = new Label[16];
 		private byte selColor = 1;
+		private int maxPen = 15;
 
-		public EditObjet(Objet o) {
+		public EditObjet(Projet p, Objet o) {
 			InitializeComponent();
+			chkImportPalette.Visible= p.cpcPlus;
 			objet = o != null ? o : new Objet();
 			for (int i = 0; i < 16; i++) {
 				colors[i] = new Label {
 					BorderStyle = BorderStyle.FixedSingle,
-					Location = new Point(974, 14 + i * 48),
+					Location = new Point(974, 76 + i * 48),
 					Size = new Size(40, 32),
 					Tag = i
 				};
@@ -30,7 +32,6 @@ namespace TriangulArt {
 		}
 
 		private void DisplayBoutons() {
-			bpEditVertex.Enabled = objet.lstVertex.Count > 0 && numVertex != -1;
 			bool errFace = true;
 			if (numVertex != -1) {
 				errFace = false;
@@ -41,9 +42,10 @@ namespace TriangulArt {
 					}
 				}
 			}
+			bpEditVertex.Enabled = objet.lstVertex.Count > 0 && numVertex != -1;
 			bpSupVertex.Enabled = !errFace;
 			bpEditFace.Enabled = bpSupFace.Enabled = objet.lstFace.Count > 0 && numFace != -1;
-			bpSaveObject.Enabled = objet.lstFace.Count > 0;
+			bpFusionObject.Enabled = bpSaveObject.Enabled = objet.lstFace.Count > 0;
 		}
 
 		private void DisplayVertex(int selVertex) {
@@ -164,17 +166,27 @@ namespace TriangulArt {
 			}
 		}
 
-		private void BpReadObject_Click(object sender, EventArgs e) {
+		private void ReadObject(bool withFusion = false) {
 			OpenFileDialog of = new OpenFileDialog { Filter = "Fichiers objets ascii (*.asc)|*.asc|Tous les fichiers (*.*)|*.*\"'" };
 			if (of.ShowDialog() == DialogResult.OK) {
-				objet.ReadObject(of.FileName);
+				int numPen =  chkImportPalette.Checked ? maxPen : 0;
+				objet.ReadObject(of.FileName, ref numPen, withFusion);
+				if (chkImportPalette.Checked)
+					maxPen = numPen;
 			}
+			UpdatePalette();
 			DisplayVertex(-1);
 			DisplayFace(-1);
 			DisplayObj();
 		}
 
+		private void BpReadObject_Click(object sender, EventArgs e) {
+			maxPen = 15;
+			ReadObject();
+		}
+
 		private void BpFusionObject_Click(object sender, EventArgs e) {
+			ReadObject(true);
 		}
 
 		private void BpSaveObject_Click(object sender, EventArgs e) {

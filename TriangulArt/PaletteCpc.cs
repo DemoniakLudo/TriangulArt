@@ -56,6 +56,23 @@ public class PaletteCpc {
 		return 0;
 	}
 
+	static public bool SetPaletteFromColor(RvbColor c, int newPen) {
+		int found = -1;
+		for (int i = 15; i >= 0; i--) {
+			RvbColor p = GetColorPal(i);
+			if (Math.Abs(c.r - p.r) < 16 && Math.Abs(c.b - p.b) < 16 && Math.Abs(c.v - p.v) < 16)
+				found = i;
+		}
+		if (found == -1) {
+			int r = c.r / 17;
+			int v = c.v / 17;
+			int b = c.b / 17;
+			Palette[newPen] = (v << 8) + (b << 4) + r;
+			return true;
+		}
+		return false;
+	}
+
 	static public void SauvePalette(string NomFic, int mode) {
 		int i;
 		byte[] pal = new byte[239];
@@ -101,7 +118,7 @@ public class PaletteCpc {
 				if (cpcPlus) {
 					for (int i = 0; i < 16; i++) {
 						int r = 0, v = 0, b = 0;
-						for (int k = 26; k-- > 0;) {
+						for (int k = 26; k-- > 0; ) {
 							if (pal[3 + i * 12] == (byte)CpcVGA[k])
 								r = (26 - k) << 4;
 

@@ -178,7 +178,8 @@ namespace TriangulArt {
 		private void BpReadObject_Click(object sender, EventArgs e) {
 			OpenFileDialog of = new OpenFileDialog { Filter = "Fichiers objets ascii (*.asc)|*.asc|Tous les fichiers (*.*)|*.*\"'" };
 			if (of.ShowDialog() == DialogResult.OK) {
-				anim.objet.ReadObject(of.FileName);
+				int numPen = 0;
+				anim.objet.ReadObject(of.FileName, ref numPen);
 				AddInfo("Objet " + Path.GetFileName(of.FileName) + " chargé. " + anim.objet.lstFace.Count + " Faces.");
 			}
 			DisplayFrame(trkIndex.Value);
@@ -187,7 +188,7 @@ namespace TriangulArt {
 
 		private void BpEditObject_Click(object sender, EventArgs e) {
 			Enabled = false;
-			new EditObjet(anim.objet).ShowDialog();
+			new EditObjet(projet, anim.objet).ShowDialog();
 			InitBoutons();
 			Enabled = true;
 		}

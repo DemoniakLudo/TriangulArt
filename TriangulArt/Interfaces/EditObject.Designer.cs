@@ -71,6 +71,7 @@
 			this.bpAddFace = new System.Windows.Forms.Button();
 			this.bpAddVertex = new System.Windows.Forms.Button();
 			this.pictureBoxObj = new System.Windows.Forms.PictureBox();
+			this.chkImportPalette = new System.Windows.Forms.CheckBox();
 			colColor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			((System.ComponentModel.ISupportInitialize)(this.trackX)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.trackY)).BeginInit();
@@ -85,7 +86,7 @@
 			// 
 			// bpNewObject
 			// 
-			this.bpNewObject.Location = new System.Drawing.Point(782, 8);
+			this.bpNewObject.Location = new System.Drawing.Point(782, 4);
 			this.bpNewObject.Name = "bpNewObject";
 			this.bpNewObject.Size = new System.Drawing.Size(90, 23);
 			this.bpNewObject.TabIndex = 1;
@@ -95,7 +96,7 @@
 			// 
 			// bpReadObject
 			// 
-			this.bpReadObject.Location = new System.Drawing.Point(782, 37);
+			this.bpReadObject.Location = new System.Drawing.Point(782, 32);
 			this.bpReadObject.Name = "bpReadObject";
 			this.bpReadObject.Size = new System.Drawing.Size(90, 23);
 			this.bpReadObject.TabIndex = 1;
@@ -106,7 +107,7 @@
 			// bpFusionObject
 			// 
 			this.bpFusionObject.Enabled = false;
-			this.bpFusionObject.Location = new System.Drawing.Point(782, 66);
+			this.bpFusionObject.Location = new System.Drawing.Point(782, 60);
 			this.bpFusionObject.Name = "bpFusionObject";
 			this.bpFusionObject.Size = new System.Drawing.Size(90, 23);
 			this.bpFusionObject.TabIndex = 1;
@@ -117,7 +118,7 @@
 			// bpSaveObject
 			// 
 			this.bpSaveObject.Enabled = false;
-			this.bpSaveObject.Location = new System.Drawing.Point(782, 95);
+			this.bpSaveObject.Location = new System.Drawing.Point(782, 88);
 			this.bpSaveObject.Name = "bpSaveObject";
 			this.bpSaveObject.Size = new System.Drawing.Size(90, 23);
 			this.bpSaveObject.TabIndex = 1;
@@ -127,46 +128,46 @@
 			// 
 			// trackX
 			// 
-			this.trackX.Location = new System.Drawing.Point(782, 146);
+			this.trackX.Location = new System.Drawing.Point(777, 154);
 			this.trackX.Maximum = 359;
 			this.trackX.Name = "trackX";
 			this.trackX.Orientation = System.Windows.Forms.Orientation.Vertical;
 			this.trackX.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
 			this.trackX.RightToLeftLayout = true;
-			this.trackX.Size = new System.Drawing.Size(45, 318);
+			this.trackX.Size = new System.Drawing.Size(45, 327);
 			this.trackX.TabIndex = 2;
 			this.trackX.TickStyle = System.Windows.Forms.TickStyle.None;
 			this.trackX.Scroll += new System.EventHandler(this.TrackX_Scroll);
 			// 
 			// trackY
 			// 
-			this.trackY.Location = new System.Drawing.Point(833, 146);
+			this.trackY.Location = new System.Drawing.Point(828, 154);
 			this.trackY.Maximum = 359;
 			this.trackY.Name = "trackY";
 			this.trackY.Orientation = System.Windows.Forms.Orientation.Vertical;
 			this.trackY.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
 			this.trackY.RightToLeftLayout = true;
-			this.trackY.Size = new System.Drawing.Size(45, 318);
+			this.trackY.Size = new System.Drawing.Size(45, 327);
 			this.trackY.TabIndex = 2;
 			this.trackY.TickStyle = System.Windows.Forms.TickStyle.None;
 			this.trackY.Scroll += new System.EventHandler(this.TrackY_Scroll);
 			// 
 			// trackZ
 			// 
-			this.trackZ.Location = new System.Drawing.Point(884, 146);
+			this.trackZ.Location = new System.Drawing.Point(879, 154);
 			this.trackZ.Maximum = 359;
 			this.trackZ.Name = "trackZ";
 			this.trackZ.Orientation = System.Windows.Forms.Orientation.Vertical;
 			this.trackZ.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
 			this.trackZ.RightToLeftLayout = true;
-			this.trackZ.Size = new System.Drawing.Size(45, 318);
+			this.trackZ.Size = new System.Drawing.Size(45, 327);
 			this.trackZ.TabIndex = 2;
 			this.trackZ.TickStyle = System.Windows.Forms.TickStyle.None;
 			this.trackZ.Scroll += new System.EventHandler(this.TrackZ_Scroll);
 			// 
 			// txbValX
 			// 
-			this.txbValX.Location = new System.Drawing.Point(799, 468);
+			this.txbValX.Location = new System.Drawing.Point(794, 486);
 			this.txbValX.Name = "txbValX";
 			this.txbValX.ReadOnly = true;
 			this.txbValX.Size = new System.Drawing.Size(30, 20);
@@ -175,7 +176,7 @@
 			// 
 			// txbValY
 			// 
-			this.txbValY.Location = new System.Drawing.Point(851, 468);
+			this.txbValY.Location = new System.Drawing.Point(846, 486);
 			this.txbValY.Name = "txbValY";
 			this.txbValY.ReadOnly = true;
 			this.txbValY.Size = new System.Drawing.Size(30, 20);
@@ -184,7 +185,7 @@
 			// 
 			// txbValZ
 			// 
-			this.txbValZ.Location = new System.Drawing.Point(902, 468);
+			this.txbValZ.Location = new System.Drawing.Point(897, 486);
 			this.txbValZ.Name = "txbValZ";
 			this.txbValZ.ReadOnly = true;
 			this.txbValZ.Size = new System.Drawing.Size(30, 20);
@@ -194,7 +195,7 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(807, 130);
+			this.label1.Location = new System.Drawing.Point(802, 140);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(14, 13);
 			this.label1.TabIndex = 6;
@@ -203,7 +204,7 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(856, 130);
+			this.label2.Location = new System.Drawing.Point(851, 140);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(14, 13);
 			this.label2.TabIndex = 6;
@@ -212,7 +213,7 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(909, 130);
+			this.label3.Location = new System.Drawing.Point(904, 140);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(14, 13);
 			this.label3.TabIndex = 6;
@@ -352,7 +353,7 @@
 			// 
 			// bpRedraw
 			// 
-			this.bpRedraw.Location = new System.Drawing.Point(782, 489);
+			this.bpRedraw.Location = new System.Drawing.Point(782, 515);
 			this.bpRedraw.Name = "bpRedraw";
 			this.bpRedraw.Size = new System.Drawing.Size(75, 23);
 			this.bpRedraw.TabIndex = 13;
@@ -525,11 +526,22 @@
 			this.pictureBoxObj.TabIndex = 0;
 			this.pictureBoxObj.TabStop = false;
 			// 
+			// chkImportPalette
+			// 
+			this.chkImportPalette.AutoSize = true;
+			this.chkImportPalette.Location = new System.Drawing.Point(873, 49);
+			this.chkImportPalette.Name = "chkImportPalette";
+			this.chkImportPalette.Size = new System.Drawing.Size(159, 17);
+			this.chkImportPalette.TabIndex = 17;
+			this.chkImportPalette.Text = "Importer palette depuis objet";
+			this.chkImportPalette.UseVisualStyleBackColor = true;
+			// 
 			// EditObjet
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1025, 872);
+			this.ClientSize = new System.Drawing.Size(1031, 872);
+			this.Controls.Add(this.chkImportPalette);
 			this.Controls.Add(this.lstViewVertex);
 			this.Controls.Add(this.lstViewFace);
 			this.Controls.Add(this.lblFaceColor);
@@ -633,6 +645,7 @@
 		private System.Windows.Forms.ColumnHeader colX;
 		private System.Windows.Forms.ColumnHeader colY;
 		private System.Windows.Forms.ColumnHeader colZ;
+		private System.Windows.Forms.CheckBox chkImportPalette;
 	}
 }
 
