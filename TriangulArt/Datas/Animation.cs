@@ -8,7 +8,12 @@ namespace TriangulArt {
 		public string exprPosX = "", exprPosY = "", exprZoomX = "", exprZoomY = "", exprAngX = "", exprAngY = "", exprAngZ = "";
 		public List<Sequence> lstSeq = new List<Sequence>();
 		public bool withExpression = false;
-
+		private string nom;
+		public string Nom {
+			get { return nom; }
+			set { nom = value; }
+		}
+		
 		public void Clear() {
 			lstSeq.Clear();
 		}

@@ -6,11 +6,11 @@ using System.Windows.Forms;
 namespace TriangulArt {
 	[Serializable]
 	public class Objet {
-		const int CONST_Z = 50000;                   // Constante d'affichage 3D->2D
+		const int CONST_Z = 50000;		// Constante d'affichage 3D->2D
 
 		public List<Vertex> lstVertex = new List<Vertex>();
 		public List<Face> lstFace = new List<Face>();
-
+		public string nom = "";
 		public Objet() {
 		}
 
@@ -102,7 +102,7 @@ namespace TriangulArt {
 			for (int i = 0; i < lstFace.Count; i++)
 				lstDraw.Add(lstFace[i]);
 
-			lstDraw.Sort(delegate(Face p1, Face p2) {
+			lstDraw.Sort(delegate (Face p1, Face p2) {
 				double cmp = (lstVertex[p1.a].pz + lstVertex[p1.b].pz + lstVertex[p1.c].pz) - (lstVertex[p2.a].pz + lstVertex[p2.b].pz + lstVertex[p2.c].pz);
 				return cmp != 0 ? (int)cmp : p1.num - p2.num;
 			});
@@ -130,21 +130,25 @@ namespace TriangulArt {
 						bm.SetPixel(x + (int)lstVertex[numPoint].px, y + (int)lstVertex[numPoint].py, new RvbColor((byte)(64 - x * 63), (byte)(64 + y * 63), (byte)((x + y) * 63)));
 		}
 
+		private double DecodeValue(string l) {
+			int p;
+			l = l.Trim();
+			for (p = 0; p < l.Length; p++) {
+				if (!Char.IsDigit(l[p]) && l[p] != ' ' && l[p] != '\t' && l[p] != '.' && l[p] != '-')
+					break;
+			}
+			return Utils.ToDouble(l.Substring(0, p));
+		}
+
 		private void AddVertex(string l) {
 			// Ajout Vertex
 			int px = l.IndexOf("X:");
 			int py = l.IndexOf("Y:");
 			int pz = l.IndexOf("Z:");
 			if (px > 0 && py > 0 && pz > 0) {
-				string newl = l.Substring(px + 2).Trim();
-				int end = newl.IndexOfAny(new char[] { ' ', '\t' });
-				double x = Convert.ToDouble(newl.Substring(0, end).Replace('.', ','));
-				newl = l.Substring(py + 2).Trim();
-				end = newl.IndexOfAny(new char[] { ' ', '\t' });
-				double y = Convert.ToDouble(newl.Substring(0, end).Replace('.', ','));
-				newl = l.Substring(pz + 2).Trim();
-				end = newl.IndexOfAny(new char[] { ' ', '\t' });
-				double z = Convert.ToDouble(newl.Substring(0, end > -1 ? end + 1 : newl.Length).Replace('.', ','));
+				double x = DecodeValue(l.Substring(px + 2));
+				double y = DecodeValue(l.Substring(py + 2));
+				double z = DecodeValue(l.Substring(pz + 2));
 				lstVertex.Add(new Vertex(x, y, z));
 			}
 		}
@@ -157,13 +161,9 @@ namespace TriangulArt {
 			if (pa > 0 && pb > 0 && pc > 0) {
 				string newl = l.Substring(pa + 2).Trim();
 				int end = newl.IndexOfAny(new char[] { ' ', '\t' });
-				int a = Utils.ToInt(newl.Substring(0, end + 1));
-				newl = l.Substring(pb + 2).Trim();
-				end = newl.IndexOfAny(new char[] { ' ', '\t' });
-				int b = Utils.ToInt(newl.Substring(0, end + 1));
-				newl = l.Substring(pc + 2).Trim();
-				end = newl.IndexOfAny(new char[] { ' ', '\t' });
-				int c = Utils.ToInt(newl.Substring(0, end > -1 ? end + 1 : newl.Length));
+				int a = (int)DecodeValue(l.Substring(pa + 2));
+				int b = (int)DecodeValue(l.Substring(pb + 2));
+				int c = (int)DecodeValue(l.Substring(pc + 2));
 				if (a < lstVertex.Count && b < lstVertex.Count && c < lstVertex.Count) {
 					Face f = new Face(numFace++, a + offsetVertex, b + offsetVertex, c + offsetVertex);
 					lstFace.Add(f);
@@ -177,22 +177,17 @@ namespace TriangulArt {
 			int pg = l.LastIndexOf('G');
 			int pb = l.LastIndexOf('B');
 			if (pr > 0 && pg > 0 && pb > 0) {
-				int end = l.Substring(pr + 1).Trim().IndexOfAny(new char[] { ' ', '\t' });
-				if (end > -1) {
-					int r = Utils.ToInt(l.Substring(pr + 1, end + 1));
-					end = l.Substring(pg + 2).Trim().IndexOfAny(new char[] { ' ', '\t' });
-					int v = Utils.ToInt(l.Substring(pg + 1, end + 1));
-					int b = Utils.ToInt(l.Substring(pb + 1));
-					RvbColor faceColor = new RvbColor((byte)r, (byte)v, (byte)b);
-					if (numPen != 0) {
-						if (PaletteCpc.SetPaletteFromColor(faceColor, numPen) && numPen > 0)
-							numPen--;
-					}
-					lstFace[lstFace.Count - 1].pen = PaletteCpc.GetNumPen(faceColor);
-				}
-				else
-					lstFace[lstFace.Count - 1].pen = 1;
+				byte r = (byte)DecodeValue(l.Substring(pr + 1));
+				byte v = (byte)DecodeValue(l.Substring(pg + 1));
+				byte b = (byte)DecodeValue(l.Substring(pb + 1));
+				RvbColor faceColor = new RvbColor(r, v, b);
+				if (numPen != 0 && PaletteCpc.SetPaletteFromColor(faceColor, numPen))
+					numPen--;
+
+				lstFace[lstFace.Count - 1].pen = PaletteCpc.GetNumPen(faceColor);
 			}
+			else
+				lstFace[lstFace.Count - 1].pen = 1;
 		}
 
 		//
@@ -224,6 +219,7 @@ namespace TriangulArt {
 					}
 				}
 				while (l != null);
+				nom = Path.GetFileName(fileName);
 			}
 			catch (Exception ex) {
 				MessageBox.Show(ex.Message, "Erreur lecture objet.");
@@ -251,6 +247,7 @@ namespace TriangulArt {
 					RvbColor color = PaletteCpc.GetColorPal(f.pen);
 					wr.WriteLine("Material:	r {0}	g {1}	b {2}", color.r, color.v, color.b);
 				}
+				nom = Path.GetFileName(fileName);
 			}
 			catch (Exception ex) {
 				MessageBox.Show(ex.Message, "Erreur sauvegarde objet.");

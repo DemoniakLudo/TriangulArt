@@ -13,7 +13,7 @@ namespace TriangulArt {
 
 		public EditObjet(Projet p, Objet o) {
 			InitializeComponent();
-			chkImportPalette.Visible= p.cpcPlus;
+			chkImportPalette.Visible = p.cpcPlus;
 			objet = o != null ? o : new Objet();
 			for (int i = 0; i < 16; i++) {
 				colors[i] = new Label {
@@ -91,6 +91,7 @@ namespace TriangulArt {
 		}
 
 		private void DisplayObj() {
+			Text = "EditObject" + (String.IsNullOrEmpty(objet.nom) ? "" : (" - " + objet.nom));
 			DisplayBoutons();
 			bmpLock.Fill(PaletteCpc.GetColorPal(0).GetColorArgb);
 			int zoom = Utils.ToInt(txbZoom.Text);
@@ -169,7 +170,7 @@ namespace TriangulArt {
 		private void ReadObject(bool withFusion = false) {
 			OpenFileDialog of = new OpenFileDialog { Filter = "Fichiers objets ascii (*.asc)|*.asc|Tous les fichiers (*.*)|*.*\"'" };
 			if (of.ShowDialog() == DialogResult.OK) {
-				int numPen =  chkImportPalette.Checked ? maxPen : 0;
+				int numPen = chkImportPalette.Checked ? maxPen : 0;
 				objet.ReadObject(of.FileName, ref numPen, withFusion);
 				if (chkImportPalette.Checked)
 					maxPen = numPen;

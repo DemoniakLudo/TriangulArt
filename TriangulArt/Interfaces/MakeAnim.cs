@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Runtime.Remoting;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 
@@ -38,13 +39,14 @@ namespace TriangulArt {
 		}
 
 		private void InitBoutons() {
-			bpAnimate.Enabled = bpWriteTriangle.Enabled = bpRedraw.Enabled = !inAnim && anim.objet.lstFace.Count > 0;
+			bpAnimate.Enabled = bpWriteTriangle.Enabled = bpRedraw.Enabled = !inAnim && anim.objet.lstFace.Count > 0 && anim.lstSeq.Count > 0;
 			bpStopAnim.Enabled = inAnim;
 			bpFusion.Enabled = !inAnim && projet.lstData.Count == Utils.ToInt(txbNbImages.Text);
-			bpReadObject.Enabled = bpEditObject.Enabled = bpReadAnim.Enabled = bpSaveAnim.Enabled = bpExportSequence.Enabled = bpImportSequence.Enabled = !inAnim&& rbSeqIncrement.Checked;
+			bpReadObject.Enabled = bpEditObject.Enabled = bpReadAnim.Enabled = bpSaveAnim.Enabled = bpExportSequence.Enabled = bpImportSequence.Enabled = !inAnim;
 			txbPx.Enabled = txbPy.Enabled = txbZx.Enabled = txbZy.Enabled = txbAx.Enabled = txbAy.Enabled = txbAz.Enabled =
 			txbIncPx.Enabled = txbIncPy.Enabled = txbIncZx.Enabled = txbIncZy.Enabled = txbIncAx.Enabled = txbIncAy.Enabled = txbIncAz.Enabled = rbSeqIncrement.Checked;
 			txbExprX.Enabled = txbExprY.Enabled = txbExprZx.Enabled = txbExprZy.Enabled = txbExprAx.Enabled = txbExprAy.Enabled = txbExprAz.Enabled = rbSeqExpression.Checked;
+			Text = "MakeAnim" + (String.IsNullOrEmpty(anim.Nom) ? "" : (" - " + anim.Nom));
 		}
 
 		private void AddInfo(string msg) {
@@ -65,8 +67,10 @@ namespace TriangulArt {
 			if (lstTriangle != null)
 				bmpCalc.Fill(0xFFFFFF);
 
-			Sequence s = anim.lstSeq[index];
-			anim.objet.DrawObj(bmpLock, s.posx, s.posy, s.zoomx, s.zoomy, s.angx, s.angy, s.angz, -1, -1, lstTriangle, bmpCalc);
+			if (index < anim.lstSeq.Count) {
+				Sequence s = anim.lstSeq[index];
+				anim.objet.DrawObj(bmpLock, s.posx, s.posy, s.zoomx, s.zoomy, s.angx, s.angy, s.angz, -1, -1, lstTriangle, bmpCalc);
+			}
 			pictureBoxScr.Image = bmpLock.Bitmap;
 			pictureBoxScr.Refresh();
 		}
@@ -151,7 +155,9 @@ namespace TriangulArt {
 			if (setProjet) {
 				int nbAvant = 0;
 				int nbApres = 0;
+				AddInfo("Nettoyage triangles non visibles...");
 				projet.Clean(bmpLock.Width, ref nbAvant, ref nbApres);
+				AddInfo("Nombre de triangles nettoyés : " + (nbAvant - nbApres).ToString());
 				if (fusion)
 					AddInfo("Fusion de " + anim.lstSeq.Count.ToString() + " images avec le projet en cours.");
 				else
@@ -190,6 +196,7 @@ namespace TriangulArt {
 			Enabled = false;
 			new EditObjet(projet, anim.objet).ShowDialog();
 			InitBoutons();
+			DisplayFrame(trkIndex.Value);
 			Enabled = true;
 		}
 
@@ -209,10 +216,13 @@ namespace TriangulArt {
 		private void bpStopAnim_Click(object sender, EventArgs e) {
 			endAnim = true;
 			inAnim = false;
+			InitBoutons();
 		}
 
 		private void BpWriteTriangle_Click(object sender, EventArgs e) {
 			Enabled = false;
+			endAnim = false;
+			inAnim = false;
 			Animate(true);
 			Enabled = true;
 		}
@@ -301,6 +311,8 @@ namespace TriangulArt {
 				FileStream fileSeq = File.Open(of.FileName, FileMode.Open);
 				try {
 					anim = (Animation)new XmlSerializer(typeof(Animation)).Deserialize(fileSeq);
+					anim.Nom = Path.GetFileName(of.FileName);
+					InitBoutons();
 				}
 				catch (Exception ex) {
 					err = true;
@@ -321,6 +333,7 @@ namespace TriangulArt {
 			txbExprAy.Text = anim.exprAngY;
 			txbExprAz.Text = anim.exprAngZ;
 			txbNbImages.Text = anim.lstSeq.Count > 0 ? anim.lstSeq.Count.ToString() : txbNbImages.Text;
+			trkIndex.Maximum = Utils.ToInt(txbNbImages.Text);
 			rbSeqExpression.Checked = anim.withExpression;
 			GenereSeq();
 			DisplayFrame(0);
@@ -335,6 +348,8 @@ namespace TriangulArt {
 				FileStream file = File.Open(dlg.FileName, FileMode.Create);
 				try {
 					new XmlSerializer(typeof(Animation)).Serialize(file, anim);
+					anim.Nom = Path.GetFileName(dlg.FileName);
+					InitBoutons();
 				}
 				catch (Exception ex) {
 					err = true;

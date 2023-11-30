@@ -36,7 +36,7 @@ public class DirectBitmap : IDisposable {
 	}
 
 	public void SetPixel(int x, int y, int c) {
-		if (y < Height && x < Width)
+		if (x >= 0 && y >= 0 && y < Height && x < Width)
 			tabBits[x + (y * Width)] = (uint)c | 0xFF000000;
 	}
 
@@ -51,7 +51,7 @@ public class DirectBitmap : IDisposable {
 	public void SetHorLine(int pixelX, int pixelY, int lineLength, int c, bool increment = false) {
 		uint color = (uint)c | 0xFF000000;
 		int index = pixelX + (pixelY * Width);
-		for (; lineLength-- > 0; ) {
+		for (; lineLength-- > 0;) {
 			if (index < Length)
 				tabBits[index] = color;
 
@@ -100,7 +100,7 @@ public class DirectBitmap : IDisposable {
 						dy <<= 1;
 						dx <<= 1;
 						while (y1 != y2) {
-							SetPixel(x1, y1, selected ? (y1 << 13) + (y1 << 4) + (y1 << 22) + (x1 <<5) : c);
+							SetPixel(x1, y1, selected ? (y1 << 13) + (y1 << 4) + (y1 << 22) + (x1 << 5) : c);
 							y1++;
 							e -= dx;
 							if (e < 0) {
@@ -116,7 +116,7 @@ public class DirectBitmap : IDisposable {
 						dy <<= 1;
 						dx <<= 1;
 						while (x1 != x2) {
-							SetPixel(x1, y1, selected ? (y1 << 13) + (y1 << 4) + (y1 << 22) + (x1 <<5) : c);
+							SetPixel(x1, y1, selected ? (y1 << 13) + (y1 << 4) + (y1 << 22) + (x1 << 5) : c);
 							x1++;
 							e += dy;
 							if (e < 0) {

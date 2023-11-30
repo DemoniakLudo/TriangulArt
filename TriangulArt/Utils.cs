@@ -8,7 +8,7 @@
 
 		static public double ToDouble(object v) {
 			double r = 0;
-			double.TryParse(v.ToString(), out r);
+			double.TryParse(v.ToString().Replace('.',','), out r);
 			return r;
 		}
 	}
