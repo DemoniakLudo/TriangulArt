@@ -45,7 +45,7 @@ namespace TriangulArt {
 			bpEditVertex.Enabled = objet.lstVertex.Count > 0 && numVertex != -1;
 			bpSupVertex.Enabled = !errFace;
 			bpEditFace.Enabled = bpSupFace.Enabled = objet.lstFace.Count > 0 && numFace != -1;
-			bpFusionObject.Enabled = bpSaveObject.Enabled = objet.lstFace.Count > 0;
+			bpFusionObject.Enabled = bpSaveObject.Enabled = bpParamObjet.Enabled = objet.lstFace.Count > 0;
 		}
 
 		private void DisplayVertex(int selVertex) {
@@ -289,5 +289,10 @@ namespace TriangulArt {
 			RedrawAll();
 		}
 		#endregion
+
+		private void bpParamObjet_Click(object sender, EventArgs e) {
+			new ParamObjet(objet).ShowDialog();
+			DisplayObj();
+		}
 	}
 }

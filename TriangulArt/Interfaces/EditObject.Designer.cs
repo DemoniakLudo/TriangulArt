@@ -64,6 +64,7 @@
 			this.colX = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.colY = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.colZ = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.chkImportPalette = new System.Windows.Forms.CheckBox();
 			this.bpEditFace = new System.Windows.Forms.Button();
 			this.bpEditVertex = new System.Windows.Forms.Button();
 			this.bpSupFace = new System.Windows.Forms.Button();
@@ -71,7 +72,7 @@
 			this.bpAddFace = new System.Windows.Forms.Button();
 			this.bpAddVertex = new System.Windows.Forms.Button();
 			this.pictureBoxObj = new System.Windows.Forms.PictureBox();
-			this.chkImportPalette = new System.Windows.Forms.CheckBox();
+			this.bpParamObjet = new System.Windows.Forms.Button();
 			colColor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			((System.ComponentModel.ISupportInitialize)(this.trackX)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.trackY)).BeginInit();
@@ -447,6 +448,16 @@
 			this.colZ.Text = "Z";
 			this.colZ.Width = 80;
 			// 
+			// chkImportPalette
+			// 
+			this.chkImportPalette.AutoSize = true;
+			this.chkImportPalette.Location = new System.Drawing.Point(873, 49);
+			this.chkImportPalette.Name = "chkImportPalette";
+			this.chkImportPalette.Size = new System.Drawing.Size(159, 17);
+			this.chkImportPalette.TabIndex = 17;
+			this.chkImportPalette.Text = "Importer palette depuis objet";
+			this.chkImportPalette.UseVisualStyleBackColor = true;
+			// 
 			// bpEditFace
 			// 
 			this.bpEditFace.Enabled = false;
@@ -526,21 +537,22 @@
 			this.pictureBoxObj.TabIndex = 0;
 			this.pictureBoxObj.TabStop = false;
 			// 
-			// chkImportPalette
+			// bpParamObjet
 			// 
-			this.chkImportPalette.AutoSize = true;
-			this.chkImportPalette.Location = new System.Drawing.Point(873, 49);
-			this.chkImportPalette.Name = "chkImportPalette";
-			this.chkImportPalette.Size = new System.Drawing.Size(159, 17);
-			this.chkImportPalette.TabIndex = 17;
-			this.chkImportPalette.Text = "Importer palette depuis objet";
-			this.chkImportPalette.UseVisualStyleBackColor = true;
+			this.bpParamObjet.Location = new System.Drawing.Point(443, 568);
+			this.bpParamObjet.Name = "bpParamObjet";
+			this.bpParamObjet.Size = new System.Drawing.Size(113, 23);
+			this.bpParamObjet.TabIndex = 18;
+			this.bpParamObjet.Text = "Paramèrtres objet";
+			this.bpParamObjet.UseVisualStyleBackColor = true;
+			this.bpParamObjet.Click += new System.EventHandler(this.bpParamObjet_Click);
 			// 
 			// EditObjet
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1031, 872);
+			this.Controls.Add(this.bpParamObjet);
 			this.Controls.Add(this.chkImportPalette);
 			this.Controls.Add(this.lstViewVertex);
 			this.Controls.Add(this.lstViewFace);
@@ -646,6 +658,7 @@
 		private System.Windows.Forms.ColumnHeader colY;
 		private System.Windows.Forms.ColumnHeader colZ;
 		private System.Windows.Forms.CheckBox chkImportPalette;
+		private System.Windows.Forms.Button bpParamObjet;
 	}
 }
 

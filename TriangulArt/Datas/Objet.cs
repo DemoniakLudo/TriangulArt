@@ -23,7 +23,7 @@ namespace TriangulArt {
 		//
 		// Calcule les paramètres (centre, taille) d'un objet
 		//
-		private void CalcParamObjet(Vertex centre, Vertex taille) {
+		public void CalcParamObjet(ref Vertex centre, ref Vertex taille) {
 			Vertex MinPt = new Vertex(1000000.0, 1000000.0, 1000000.0);
 			Vertex MaxPt = new Vertex(-1000000.0, -1000000.0, -1000000.0);
 			foreach (Vertex v in lstVertex) {
@@ -56,7 +56,7 @@ namespace TriangulArt {
 		//
 		// Modifie les paramètres (centre, taille) d'un objet
 		//
-		private void SetParamObjet(Vertex centre, Vertex taille) {
+		public void SetParamObjet(Vertex centre, Vertex taille) {
 			foreach (Vertex v in lstVertex) {
 				v.x = (v.x + centre.x) * taille.x;
 				v.y = (v.y + centre.y) * taille.y;
@@ -69,7 +69,7 @@ namespace TriangulArt {
 		//
 		private void RecentrePoints() {
 			Vertex Taille = new Vertex(0, 0, 0), Centre = new Vertex(0, 0, 0);
-			CalcParamObjet(Centre, Taille);
+			CalcParamObjet(ref Centre, ref Taille);
 			foreach (Vertex v in lstVertex) {
 				v.x -= Centre.x;
 				v.y -= Centre.y;
