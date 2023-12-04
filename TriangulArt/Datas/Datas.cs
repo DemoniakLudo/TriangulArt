@@ -264,7 +264,7 @@ namespace TriangulArt {
 				FillTriangle(bmpLock, lstTriangle[i], maxWidth, false, false, i + 1); // tracé triangle dans la couleur i+1
 
 			if (!onlyCalc) {
-				// Premiere passe : vérifier triangle complètement recouvert
+				// Premiere passe : supprimer triangle complètement recouvert
 				for (int i = 0; i < nbTri; i++) {
 					bool found = false;
 					for (int x = 0; x < maxWidth; x++)

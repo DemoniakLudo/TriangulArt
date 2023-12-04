@@ -7,7 +7,7 @@ namespace TriangulArt {
 	[Serializable]
 	public class Objet {
 		const int CONST_Z = 50000;		// Constante d'affichage 3D->2D
-
+		const double CONV = Math.PI / 180;
 		public List<Vertex> lstVertex = new List<Vertex>();
 		public List<Face> lstFace = new List<Face>();
 		public string nom = "";
@@ -82,13 +82,13 @@ namespace TriangulArt {
 		// à l'écran, en fonction des paramètres de position, angle, zoom
 		// Affichage de l'objet complêt en fonction des paramètres choisis
 		//
-		public void DrawObj(DirectBitmap bm, double posx, double posy, double zoomx, double zoomy, double angx, double angy, double angz, int numFace, int numPoint, List<Triangle> lstTri = null, DirectBitmap bmCalc = null) {
-			double xSin = Math.Sin(angx * Math.PI / 180.0);
-			double xCos = Math.Cos(angx * Math.PI / 180.0);
-			double ySin = Math.Sin(angy * Math.PI / 180.0);
-			double yCos = Math.Cos(angy * Math.PI / 180.0);
-			double zSin = Math.Sin(angz * Math.PI / 180.0);
-			double zCos = Math.Cos(angz * Math.PI / 180.0);
+		public void DrawObj(DirectBitmap bm, double posx, double posy, double zoomx, double zoomy, double ax, double ay, double az, int numFace, int numPoint, List<Triangle> lstTri = null, DirectBitmap bmCalc = null) {
+			double xSin = Math.Sin(ax * CONV);
+			double xCos = Math.Cos(ax * CONV);
+			double ySin = Math.Sin(ay * CONV);
+			double yCos = Math.Cos(ay * CONV);
+			double zSin = Math.Sin(az * CONV);
+			double zCos = Math.Cos(az * CONV);
 			foreach (Vertex v in lstVertex) {
 				double yt = (v.y * xCos - v.z * xSin);
 				double zt = (v.y * xSin + v.z * xCos);

@@ -84,7 +84,6 @@
 			this.txbPos = new System.Windows.Forms.TextBox();
 			this.label13 = new System.Windows.Forms.Label();
 			this.grpProjet = new System.Windows.Forms.GroupBox();
-			this.chkOverscan = new System.Windows.Forms.CheckBox();
 			this.bpMakeAnim3D = new System.Windows.Forms.Button();
 			this.bpFusion = new System.Windows.Forms.Button();
 			this.chkLine = new System.Windows.Forms.CheckBox();
@@ -118,6 +117,7 @@
 			this.bpSavePal = new System.Windows.Forms.Button();
 			this.bpReadPal = new System.Windows.Forms.Button();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
+			this.comboNbColonnes = new System.Windows.Forms.ComboBox();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.grpProjet.SuspendLayout();
@@ -712,7 +712,7 @@
 			// 
 			// grpProjet
 			// 
-			this.grpProjet.Controls.Add(this.chkOverscan);
+			this.grpProjet.Controls.Add(this.comboNbColonnes);
 			this.grpProjet.Controls.Add(this.bpMakeAnim3D);
 			this.grpProjet.Controls.Add(this.bpFusion);
 			this.grpProjet.Controls.Add(this.chkLine);
@@ -733,17 +733,6 @@
 			this.grpProjet.TabIndex = 50;
 			this.grpProjet.TabStop = false;
 			this.grpProjet.Text = "Projet";
-			// 
-			// chkOverscan
-			// 
-			this.chkOverscan.AutoSize = true;
-			this.chkOverscan.Location = new System.Drawing.Point(233, 37);
-			this.chkOverscan.Name = "chkOverscan";
-			this.chkOverscan.Size = new System.Drawing.Size(72, 17);
-			this.chkOverscan.TabIndex = 33;
-			this.chkOverscan.Text = "Overscan";
-			this.chkOverscan.UseVisualStyleBackColor = true;
-			this.chkOverscan.CheckedChanged += new System.EventHandler(this.ChkOverscan_CheckedChanged);
 			// 
 			// bpMakeAnim3D
 			// 
@@ -768,7 +757,7 @@
 			// chkLine
 			// 
 			this.chkLine.AutoSize = true;
-			this.chkLine.Location = new System.Drawing.Point(233, 18);
+			this.chkLine.Location = new System.Drawing.Point(213, 18);
 			this.chkLine.Name = "chkLine";
 			this.chkLine.Size = new System.Drawing.Size(83, 17);
 			this.chkLine.TabIndex = 30;
@@ -861,7 +850,7 @@
 			this.grpImage.Location = new System.Drawing.Point(8, 12);
 			this.grpImage.Name = "grpImage";
 			this.grpImage.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-			this.grpImage.Size = new System.Drawing.Size(220, 60);
+			this.grpImage.Size = new System.Drawing.Size(202, 60);
 			this.grpImage.TabIndex = 1;
 			this.grpImage.TabStop = false;
 			this.grpImage.Text = "Images";
@@ -1141,6 +1130,20 @@
 			this.pictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TrtMouseMove);
 			this.pictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseUp);
 			// 
+			// comboNbColonnes
+			// 
+			this.comboNbColonnes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboNbColonnes.FormattingEnabled = true;
+			this.comboNbColonnes.Items.AddRange(new object[] {
+            "64 colonnes",
+            "80 colonnes",
+            "96 colonnes"});
+			this.comboNbColonnes.Location = new System.Drawing.Point(213, 41);
+			this.comboNbColonnes.Name = "comboNbColonnes";
+			this.comboNbColonnes.Size = new System.Drawing.Size(93, 21);
+			this.comboNbColonnes.TabIndex = 34;
+			this.comboNbColonnes.SelectedIndexChanged += new System.EventHandler(this.comboNbColonnes_SelectedIndexChanged);
+			// 
 			// TriangulArt
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1260,11 +1263,11 @@
 		private System.Windows.Forms.Button bpFusion;
 		private System.Windows.Forms.Button bpMakeAnim3D;
 		private System.Windows.Forms.Panel panel1;
-		private System.Windows.Forms.CheckBox chkOverscan;
 		private System.Windows.Forms.Button bpSavePal;
 		private System.Windows.Forms.Button bpReadPal;
 		private System.Windows.Forms.CheckBox chkAnim3D;
 		private System.Windows.Forms.Button bpGenPal;
+		private System.Windows.Forms.ComboBox comboNbColonnes;
 	}
 }
 

@@ -127,7 +127,7 @@ namespace TriangulArt {
 				projet.lstData.Clear();
 
 			InitBoutons();
-			for (int i = 0; i < anim.lstSeq.Count; i++) {
+			for (int i = 0; i < anim.lstSeq.Count && ! endAnim; i++) {
 				List<Triangle> lstTriangle = new List<Triangle>();
 				DisplayFrame(i, lstTriangle);
 				Application.DoEvents();
@@ -148,8 +148,8 @@ namespace TriangulArt {
 					if (!fusion)
 						projet.lstData.Add(data);
 				}
-				if (endAnim)
-					break;
+				else
+					System.Threading.Thread.Sleep(20);
 			}
 			InitBoutons();
 			if (setProjet) {

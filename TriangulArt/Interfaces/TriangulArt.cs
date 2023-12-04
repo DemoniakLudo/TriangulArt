@@ -40,6 +40,7 @@ namespace TriangulArt {
 			}
 			lblInfoVersion.Text = "V " + version.ToString() + " - " + new DateTime(2000, 1, 1).AddDays(version.Build).ToShortDateString();
 			projet.AddData();
+			comboNbColonnes.SelectedIndex = 1;
 			SetNewMode(true);
 			Reset();
 			SetImageProjet();
@@ -1080,12 +1081,12 @@ namespace TriangulArt {
 			switch (projet.mode) {
 				case 0:
 					coefX = 6;
-					bmpLock = new DirectBitmap(chkOverscan.Checked ? 192 : 160, 256);
+					bmpLock = new DirectBitmap(comboNbColonnes.SelectedIndex == 2 ? 192: comboNbColonnes.SelectedIndex == 1 ? 160 : 128, 256);
 					break;
 
 				case 1:
 					coefX = 3;
-					bmpLock = new DirectBitmap(chkOverscan.Checked ? 384 : 320, 256);
+					bmpLock = new DirectBitmap(comboNbColonnes.SelectedIndex == 2 ? 384: comboNbColonnes.SelectedIndex == 1 ? 320 : 256, 256);
 					break;
 			}
 			if (withResize)
@@ -1160,25 +1161,6 @@ namespace TriangulArt {
 			Enabled = true;
 		}
 
-		private void ChkOverscan_CheckedChanged(object sender, EventArgs e) {
-			if (chkOverscan.Checked) {
-				pictureBox.Width = 1152;
-				panel1.Left = 1202;
-				Width = 1770;
-				for (int i = 0; i < 16; i++)
-					colors[i].Left = 1158;
-			}
-			else {
-				pictureBox.Width = 960;
-				panel1.Left = 1010;
-				Width = 1578;
-				for (int i = 0; i < 16; i++)
-					colors[i].Left = 966;
-			}
-			SetNewMode(false);
-		}
-
-
 		private void bpGenPal_Click(object sender, EventArgs e) {
 			GenPalette g = new GenPalette(PaletteCpc.Palette, 0, DoGenPal);
 			g.ShowDialog();
@@ -1201,6 +1183,35 @@ namespace TriangulArt {
 				colors[c].Refresh();
 			}
 			UpdatePalette();
+		}
+
+		private void comboNbColonnes_SelectedIndexChanged(object sender, EventArgs e) {
+			switch (comboNbColonnes.SelectedIndex) {
+				case 0:
+					pictureBox.Width = 768;
+					panel1.Left = 818;
+					Width = 1386;
+					for (int i = 0; i < 16; i++)
+						colors[i].Left = 774;
+					break;
+
+				case 1:
+					pictureBox.Width = 960;
+					panel1.Left = 1010;
+					Width = 1578;
+					for (int i = 0; i < 16; i++)
+						colors[i].Left = 966;
+					break;
+
+				case 2:
+					pictureBox.Width = 1152;
+					panel1.Left = 1202;
+					Width = 1770;
+					for (int i = 0; i < 16; i++)
+						colors[i].Left = 1158;
+					break;
+			}
+			SetNewMode(false);
 		}
 	}
 }
