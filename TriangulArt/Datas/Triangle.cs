@@ -159,13 +159,11 @@ namespace TriangulArt {
 				int color = selected ? (y << 13) + (y << 4) + (y << 22) : PaletteCpc.GetColorPal(this.color).GetColorArgb;
 				if (xr > xl) {
 					bmpLock.SetHorLine(xl, y, (xr - xl), color, selected);
-					if (bmCalc != null)
-						bmCalc.SetHorLine(xl, y, (xr - xl), indice);
+					bmCalc?.SetHorLine(xl, y, (xr - xl), indice);
 				}
 				else {
 					bmpLock.SetHorLine(xr, y, (xl - xr), color, selected);
-					if (bmCalc != null)
-						bmCalc.SetHorLine(xr, y, (xl - xr), indice);
+					bmCalc?.SetHorLine(xr, y, (xl - xr), indice);
 				}
 				err1 += dx1;
 				while (err1 >= dy1) {

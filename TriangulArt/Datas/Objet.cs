@@ -6,7 +6,7 @@ using System.Windows.Forms;
 namespace TriangulArt {
 	[Serializable]
 	public class Objet {
-		const int CONST_Z = 50000;		// Constante d'affichage 3D->2D
+		const int CONST_Z = 50000;      // Constante d'affichage 3D->2D
 		const double CONV = Math.PI / 180;
 		public List<Vertex> lstVertex = new List<Vertex>();
 		public List<Face> lstFace = new List<Face>();
@@ -27,23 +27,12 @@ namespace TriangulArt {
 			Vertex MinPt = new Vertex(1000000.0, 1000000.0, 1000000.0);
 			Vertex MaxPt = new Vertex(-1000000.0, -1000000.0, -1000000.0);
 			foreach (Vertex v in lstVertex) {
-				if (MinPt.x > v.x)
-					MinPt.x = v.x;
-
-				if (MinPt.y > v.y)
-					MinPt.y = v.y;
-
-				if (MinPt.z > v.z)
-					MinPt.z = v.z;
-
-				if (MaxPt.x < v.x)
-					MaxPt.x = v.x;
-
-				if (MaxPt.y < v.y)
-					MaxPt.y = v.y;
-
-				if (MaxPt.z < v.z)
-					MaxPt.z = v.z;
+				MinPt.x = Math.Min(MinPt.x, v.x);
+				MinPt.y = Math.Min(MinPt.y, v.y);
+				MinPt.z = Math.Min(MinPt.z, v.z);
+				MaxPt.x = Math.Max(MaxPt.x, v.x);
+				MaxPt.y = Math.Max(MaxPt.y, v.y);
+				MaxPt.z = Math.Max(MaxPt.z, v.z);
 			}
 			taille.x = MaxPt.x - MinPt.x;
 			taille.y = MaxPt.y - MinPt.y;
@@ -109,19 +98,14 @@ namespace TriangulArt {
 
 			// Affiche les triangles
 			for (int i = 0; i < lstDraw.Count; i++) {
-				Face f = lstDraw[i];
-				Triangle t = new Triangle((int)lstVertex[f.a].px, (int)lstVertex[f.a].py, (int)lstVertex[f.b].px, (int)lstVertex[f.b].py, (int)lstVertex[f.c].px, (int)lstVertex[f.c].py, f.pen, bm);
+				Triangle t = lstDraw[i].GetTriangleCalc(lstVertex, lstDraw[i].pen, bm);
 				t.FillTriangle(bm, false, bmCalc, i);
-				if (lstTri != null)
-					lstTri.Add(t);      // Ajoute dans la liste des triangles si passée en paramètre
+				lstTri?.Add(t);      // Ajoute dans la liste des triangles si passée en paramètre
 			}
 
 			// Affiche la face sélectionnée
-			if (numFace != -1) {
-				Face f = lstFace[numFace];
-				Triangle t = new Triangle((int)lstVertex[f.a].px, (int)lstVertex[f.a].py, (int)lstVertex[f.b].px, (int)lstVertex[f.b].py, (int)lstVertex[f.c].px, (int)lstVertex[f.c].py, 0, bm);
-				t.FillTriangle(bm, true);
-			}
+			if (numFace != -1)
+				lstFace[numFace].GetTriangleCalc(lstVertex, 0, bm).FillTriangle(bm, true);
 
 			// Affiche le point sélectionné
 			if (numPoint > -1)
@@ -130,9 +114,9 @@ namespace TriangulArt {
 						bm.SetPixel(x + (int)lstVertex[numPoint].px, y + (int)lstVertex[numPoint].py, new RvbColor((byte)(64 - x * 63), (byte)(64 + y * 63), (byte)((x + y) * 63)));
 		}
 
-		private double DecodeValue(string l) {
+		private double DecodeValue(string l, int startPos) {
 			int p;
-			l = l.Trim();
+			l = l.Substring(startPos).Trim();
 			for (p = 0; p < l.Length; p++) {
 				if (!Char.IsDigit(l[p]) && l[p] != ' ' && l[p] != '\t' && l[p] != '.' && l[p] != '-')
 					break;
@@ -142,28 +126,23 @@ namespace TriangulArt {
 
 		private void AddVertex(string l) {
 			// Ajout Vertex
-			int px = l.IndexOf("X:");
-			int py = l.IndexOf("Y:");
-			int pz = l.IndexOf("Z:");
-			if (px > 0 && py > 0 && pz > 0) {
-				double x = DecodeValue(l.Substring(px + 2));
-				double y = DecodeValue(l.Substring(py + 2));
-				double z = DecodeValue(l.Substring(pz + 2));
-				lstVertex.Add(new Vertex(x, y, z));
+			int px = l.IndexOf("X:") + 2;
+			int py = l.IndexOf("Y:") + 2;
+			int pz = l.IndexOf("Z:") + 2;
+			if (px > 2 && py > 2 && pz > 2) {
+				lstVertex.Add(new Vertex(DecodeValue(l, px), DecodeValue(l, py), DecodeValue(l, pz)));
 			}
 		}
 
 		private void AddFace(string l, int offsetVertex, ref int numFace) {
 			// Ajout Face
-			int pa = l.IndexOf("A:");
-			int pb = l.IndexOf("B:");
-			int pc = l.IndexOf("C:");
-			if (pa > 0 && pb > 0 && pc > 0) {
-				string newl = l.Substring(pa + 2).Trim();
-				int end = newl.IndexOfAny(new char[] { ' ', '\t' });
-				int a = (int)DecodeValue(l.Substring(pa + 2));
-				int b = (int)DecodeValue(l.Substring(pb + 2));
-				int c = (int)DecodeValue(l.Substring(pc + 2));
+			int pa = l.IndexOf("A:") + 2;
+			int pb = l.IndexOf("B:") + 2;
+			int pc = l.IndexOf("C:") + 2;
+			if (pa > 2 && pb > 2 && pc > 2) {
+				int a = (int)DecodeValue(l, pa);
+				int b = (int)DecodeValue(l, pb);
+				int c = (int)DecodeValue(l, pc);
 				if (a < lstVertex.Count && b < lstVertex.Count && c < lstVertex.Count) {
 					Face f = new Face(numFace++, a + offsetVertex, b + offsetVertex, c + offsetVertex);
 					lstFace.Add(f);
@@ -173,14 +152,11 @@ namespace TriangulArt {
 
 		private void SetFaceColor(string l, ref int numPen) {
 			// Lecture couleurs R,V,B de la face
-			int pr = l.LastIndexOf('R');
-			int pg = l.LastIndexOf('G');
-			int pb = l.LastIndexOf('B');
-			if (pr > 0 && pg > 0 && pb > 0) {
-				byte r = (byte)DecodeValue(l.Substring(pr + 1));
-				byte v = (byte)DecodeValue(l.Substring(pg + 1));
-				byte b = (byte)DecodeValue(l.Substring(pb + 1));
-				RvbColor faceColor = new RvbColor(r, v, b);
+			int pr = l.LastIndexOf('R') + 1;
+			int pg = l.LastIndexOf('G') + 1;
+			int pb = l.LastIndexOf('B') + 1;
+			if (pr > 1 && pg > 1 && pb > 1) {
+				RvbColor faceColor = new RvbColor((byte)DecodeValue(l, pr), (byte)DecodeValue(l, pg), (byte)DecodeValue(l, pb));
 				if (numPen != 0 && PaletteCpc.SetPaletteFromColor(faceColor, numPen))
 					numPen--;
 
@@ -224,8 +200,7 @@ namespace TriangulArt {
 			catch (Exception ex) {
 				MessageBox.Show(ex.Message, "Erreur lecture objet.");
 			}
-			if (rd != null)
-				rd.Close();
+			rd?.Close();
 		}
 
 		public void SaveObject(string fileName) {
@@ -252,8 +227,7 @@ namespace TriangulArt {
 			catch (Exception ex) {
 				MessageBox.Show(ex.Message, "Erreur sauvegarde objet.");
 			}
-			if (wr != null)
-				wr.Close();
+			wr?.Close();
 		}
 	}
 }

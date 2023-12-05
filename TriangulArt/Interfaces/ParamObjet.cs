@@ -44,9 +44,9 @@ namespace TriangulArt {
 			newTaille.x = taille.x != 0 ? newTaille.x / taille.x : 0;
 			newTaille.y = taille.y != 0 ? newTaille.y / taille.y : 0;
 			newTaille.z = taille.z != 0 ? newTaille.z / taille.z : 0;
-			newCentre.x = newCentre.x - centre.x;
-			newCentre.y = newCentre.y - centre.y;
-			newCentre.z = newCentre.z - centre.z;
+			newCentre.x -= centre.x;
+			newCentre.y -= centre.y;
+			newCentre.z -= centre.z;
 			objet.SetParamObjet(newCentre, newTaille);
 			Close();
 		}

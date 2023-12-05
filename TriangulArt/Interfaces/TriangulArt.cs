@@ -469,7 +469,7 @@ namespace TriangulArt {
 			}
 		}
 
-		private void pictureBox_MouseUp(object sender, MouseEventArgs e) {
+		private void PictureBox_MouseUp(object sender, MouseEventArgs e) {
 			int yReel = (e.Y + 2) / 3;
 			int xReel = (e.X + 2) / coefX;
 			if (e.Button == MouseButtons.Left) {
@@ -693,7 +693,7 @@ namespace TriangulArt {
 		private void BpEdit_Click(object sender, EventArgs e) {
 			Triangle t = CheckDatas();
 			if (t != null) {
-				int newIndex = -1;
+				int newIndex;
 				int.TryParse(txbPos.Text, out newIndex);
 				projet.SelImage().EditSelTriangle(t, selColor, newIndex);
 				int memoSel = projet.SelImage().GetSelTriangle();
@@ -750,7 +750,6 @@ namespace TriangulArt {
 						SetInfo("Lecture image de fond ok.");
 						while (bmpFond.NbImg > projet.lstData.Count)
 							projet.lstData.Add(new Datas());
-
 					}
 					else
 						MessageBox.Show("L'image n'a pas le bon format (" + bmpLock.Width.ToString() + "x" + bmpLock.Height.ToString() + " pixels)");
@@ -964,6 +963,7 @@ namespace TriangulArt {
 						rbMode1.Checked = true;
 
 					SetNewMode(false);
+					bmpFond.ClearAll();
 					projet.SelectImage(0);
 					SetImageProjet();
 					this.Text = Path.GetFileName(dlg.FileName);
@@ -1071,9 +1071,7 @@ namespace TriangulArt {
 		#endregion
 
 		private void SetNewMode(bool withResize) {
-			if (bmpLock != null)
-				bmpLock.Dispose();
-
+			bmpLock?.Dispose();
 			int nbCols = 1 << (4 >> projet.mode);
 			for (int i = 0; i < 16; i++)
 				colors[i].Visible = i < nbCols;
@@ -1081,12 +1079,12 @@ namespace TriangulArt {
 			switch (projet.mode) {
 				case 0:
 					coefX = 6;
-					bmpLock = new DirectBitmap(comboNbColonnes.SelectedIndex == 2 ? 192: comboNbColonnes.SelectedIndex == 1 ? 160 : 128, 256);
+					bmpLock = new DirectBitmap(comboNbColonnes.SelectedIndex == 2 ? 192 : comboNbColonnes.SelectedIndex == 1 ? 160 : 128, 256);
 					break;
 
 				case 1:
 					coefX = 3;
-					bmpLock = new DirectBitmap(comboNbColonnes.SelectedIndex == 2 ? 384: comboNbColonnes.SelectedIndex == 1 ? 320 : 256, 256);
+					bmpLock = new DirectBitmap(comboNbColonnes.SelectedIndex == 2 ? 384 : comboNbColonnes.SelectedIndex == 1 ? 320 : 256, 256);
 					break;
 			}
 			if (withResize)
@@ -1161,9 +1159,19 @@ namespace TriangulArt {
 			Enabled = true;
 		}
 
-		private void bpGenPal_Click(object sender, EventArgs e) {
+		private void BpGenPal_Click(object sender, EventArgs e) {
 			GenPalette g = new GenPalette(PaletteCpc.Palette, 0, DoGenPal);
 			g.ShowDialog();
+		}
+
+		private void BpRazAll_Click(object sender, EventArgs e) {
+			if (MessageBox.Show("Confirmez l'effacement du projet", "Tout Effacer", MessageBoxButtons.YesNo) == DialogResult.Yes) {
+				projet.Clear();
+				bmpFond.ClearAll();
+				DisplayList();
+				Reset();
+				SetImageProjet();
+			}
 		}
 
 		private void DoGenPal() {
@@ -1185,7 +1193,7 @@ namespace TriangulArt {
 			UpdatePalette();
 		}
 
-		private void comboNbColonnes_SelectedIndexChanged(object sender, EventArgs e) {
+		private void ComboNbColonnes_SelectedIndexChanged(object sender, EventArgs e) {
 			switch (comboNbColonnes.SelectedIndex) {
 				case 0:
 					pictureBox.Width = 768;

@@ -20,9 +20,9 @@ namespace TriangulArt {
 					string line = "";
 					for (int i = 0; i < nbCols; i++) {
 						int c = PaletteCpc.Palette[i];
-						line += (line != "" ? "," : "") + "#" + ((byte)(((c >> 4) & 0x0F) | (c << 4))).ToString("X2") + ",#" + ((byte)(c >> 8)).ToString("X2");
+						line += (line != "" ? "," : "") + ("#" + ((byte)(c >> 8)).ToString("X1") + ((byte)(((c >> 4) & 0x0F) | (c << 4))).ToString("X2"));
 					}
-					sw.WriteLine("	DB	" + line);
+					sw.WriteLine("	DW	" + line);
 				}
 				else {
 					for (int i = 0; i < nbCols; i++)
@@ -88,7 +88,7 @@ namespace TriangulArt {
 
 			sw.WriteLine("; Taille totale " + length.ToString() + " octets");
 		}
-		
+
 		static public void GenereDrawTriangleCode(StreamWriter sw, string nom, int mode, bool cpcPlus) {
 			GenereInitCode(sw, mode, cpcPlus);
 			GenereInitPalette(sw, nom, mode, cpcPlus);

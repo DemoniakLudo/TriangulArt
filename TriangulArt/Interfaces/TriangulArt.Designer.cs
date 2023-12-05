@@ -84,6 +84,8 @@
 			this.txbPos = new System.Windows.Forms.TextBox();
 			this.label13 = new System.Windows.Forms.Label();
 			this.grpProjet = new System.Windows.Forms.GroupBox();
+			this.bpRazAll = new System.Windows.Forms.Button();
+			this.comboNbColonnes = new System.Windows.Forms.ComboBox();
 			this.bpMakeAnim3D = new System.Windows.Forms.Button();
 			this.bpFusion = new System.Windows.Forms.Button();
 			this.chkLine = new System.Windows.Forms.CheckBox();
@@ -117,7 +119,6 @@
 			this.bpSavePal = new System.Windows.Forms.Button();
 			this.bpReadPal = new System.Windows.Forms.Button();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
-			this.comboNbColonnes = new System.Windows.Forms.ComboBox();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.grpProjet.SuspendLayout();
@@ -184,7 +185,7 @@
 			// 
 			// bpGenereAsm
 			// 
-			this.bpGenereAsm.Location = new System.Drawing.Point(3, 157);
+			this.bpGenereAsm.Location = new System.Drawing.Point(3, 148);
 			this.bpGenereAsm.Name = "bpGenereAsm";
 			this.bpGenereAsm.Size = new System.Drawing.Size(112, 23);
 			this.bpGenereAsm.TabIndex = 6;
@@ -712,6 +713,7 @@
 			// 
 			// grpProjet
 			// 
+			this.grpProjet.Controls.Add(this.bpRazAll);
 			this.grpProjet.Controls.Add(this.comboNbColonnes);
 			this.grpProjet.Controls.Add(this.bpMakeAnim3D);
 			this.grpProjet.Controls.Add(this.bpFusion);
@@ -734,9 +736,33 @@
 			this.grpProjet.TabStop = false;
 			this.grpProjet.Text = "Projet";
 			// 
+			// bpRazAll
+			// 
+			this.bpRazAll.Location = new System.Drawing.Point(233, 70);
+			this.bpRazAll.Name = "bpRazAll";
+			this.bpRazAll.Size = new System.Drawing.Size(56, 23);
+			this.bpRazAll.TabIndex = 35;
+			this.bpRazAll.Text = "Raz All";
+			this.bpRazAll.UseVisualStyleBackColor = true;
+			this.bpRazAll.Click += new System.EventHandler(this.BpRazAll_Click);
+			// 
+			// comboNbColonnes
+			// 
+			this.comboNbColonnes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboNbColonnes.FormattingEnabled = true;
+			this.comboNbColonnes.Items.AddRange(new object[] {
+            "64 colonnes",
+            "80 colonnes",
+            "96 colonnes"});
+			this.comboNbColonnes.Location = new System.Drawing.Point(213, 41);
+			this.comboNbColonnes.Name = "comboNbColonnes";
+			this.comboNbColonnes.Size = new System.Drawing.Size(93, 21);
+			this.comboNbColonnes.TabIndex = 34;
+			this.comboNbColonnes.SelectedIndexChanged += new System.EventHandler(this.ComboNbColonnes_SelectedIndexChanged);
+			// 
 			// bpMakeAnim3D
 			// 
-			this.bpMakeAnim3D.Location = new System.Drawing.Point(366, 71);
+			this.bpMakeAnim3D.Location = new System.Drawing.Point(398, 71);
 			this.bpMakeAnim3D.Name = "bpMakeAnim3D";
 			this.bpMakeAnim3D.Size = new System.Drawing.Size(138, 23);
 			this.bpMakeAnim3D.TabIndex = 32;
@@ -767,7 +793,7 @@
 			// 
 			// bpCleanProj
 			// 
-			this.bpCleanProj.Location = new System.Drawing.Point(472, 40);
+			this.bpCleanProj.Location = new System.Drawing.Point(483, 40);
 			this.bpCleanProj.Name = "bpCleanProj";
 			this.bpCleanProj.Size = new System.Drawing.Size(53, 23);
 			this.bpCleanProj.TabIndex = 29;
@@ -788,7 +814,7 @@
 			// chkAnim3D
 			// 
 			this.chkAnim3D.AutoSize = true;
-			this.chkAnim3D.Location = new System.Drawing.Point(242, 77);
+			this.chkAnim3D.Location = new System.Drawing.Point(295, 74);
 			this.chkAnim3D.Name = "chkAnim3D";
 			this.chkAnim3D.Size = new System.Drawing.Size(101, 17);
 			this.chkAnim3D.TabIndex = 27;
@@ -800,7 +826,7 @@
 			// 
 			this.rbMode1.AutoSize = true;
 			this.rbMode1.Checked = true;
-			this.rbMode1.Location = new System.Drawing.Point(167, 76);
+			this.rbMode1.Location = new System.Drawing.Point(164, 76);
 			this.rbMode1.Name = "rbMode1";
 			this.rbMode1.Size = new System.Drawing.Size(61, 17);
 			this.rbMode1.TabIndex = 25;
@@ -812,7 +838,7 @@
 			// rbMode0
 			// 
 			this.rbMode0.AutoSize = true;
-			this.rbMode0.Location = new System.Drawing.Point(106, 76);
+			this.rbMode0.Location = new System.Drawing.Point(103, 76);
 			this.rbMode0.Name = "rbMode0";
 			this.rbMode0.Size = new System.Drawing.Size(61, 17);
 			this.rbMode0.TabIndex = 25;
@@ -1094,7 +1120,7 @@
 			this.bpGenPal.TabIndex = 61;
 			this.bpGenPal.UseVisualStyleBackColor = true;
 			this.bpGenPal.Visible = false;
-			this.bpGenPal.Click += new System.EventHandler(this.bpGenPal_Click);
+			this.bpGenPal.Click += new System.EventHandler(this.BpGenPal_Click);
 			// 
 			// bpSavePal
 			// 
@@ -1128,21 +1154,7 @@
 			this.pictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureBox_MouseDown);
 			this.pictureBox.MouseLeave += new System.EventHandler(this.PictureBox_MouseLeave);
 			this.pictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TrtMouseMove);
-			this.pictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseUp);
-			// 
-			// comboNbColonnes
-			// 
-			this.comboNbColonnes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.comboNbColonnes.FormattingEnabled = true;
-			this.comboNbColonnes.Items.AddRange(new object[] {
-            "64 colonnes",
-            "80 colonnes",
-            "96 colonnes"});
-			this.comboNbColonnes.Location = new System.Drawing.Point(213, 41);
-			this.comboNbColonnes.Name = "comboNbColonnes";
-			this.comboNbColonnes.Size = new System.Drawing.Size(93, 21);
-			this.comboNbColonnes.TabIndex = 34;
-			this.comboNbColonnes.SelectedIndexChanged += new System.EventHandler(this.comboNbColonnes_SelectedIndexChanged);
+			this.pictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PictureBox_MouseUp);
 			// 
 			// TriangulArt
 			// 
@@ -1268,6 +1280,7 @@
 		private System.Windows.Forms.CheckBox chkAnim3D;
 		private System.Windows.Forms.Button bpGenPal;
 		private System.Windows.Forms.ComboBox comboNbColonnes;
+		private System.Windows.Forms.Button bpRazAll;
 	}
 }
 

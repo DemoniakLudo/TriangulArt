@@ -127,7 +127,8 @@ namespace TriangulArt {
 				projet.lstData.Clear();
 
 			InitBoutons();
-			for (int i = 0; i < anim.lstSeq.Count && ! endAnim; i++) {
+			for (int i = 0; i < anim.lstSeq.Count && !endAnim; i++) {
+				trkIndex.Value = i;
 				List<Triangle> lstTriangle = new List<Triangle>();
 				DisplayFrame(i, lstTriangle);
 				Application.DoEvents();
@@ -265,8 +266,7 @@ namespace TriangulArt {
 					err = true;
 					AddInfo("Erreur import séquence : " + ex.Message);
 				}
-				if (rd != null)
-					rd.Close();
+				rd?.Close();
 
 
 			}
@@ -296,9 +296,7 @@ namespace TriangulArt {
 					err = true;
 					AddInfo("Erreur export séquence : " + ex.Message);
 				}
-				if (sw != null)
-					sw.Close();
-
+				sw?.Close();
 				if (!err)
 					AddInfo("Séquence exportée.");
 			}
@@ -333,7 +331,7 @@ namespace TriangulArt {
 			txbExprAy.Text = anim.exprAngY;
 			txbExprAz.Text = anim.exprAngZ;
 			txbNbImages.Text = anim.lstSeq.Count > 0 ? anim.lstSeq.Count.ToString() : txbNbImages.Text;
-			trkIndex.Maximum = Utils.ToInt(txbNbImages.Text);
+			trkIndex.Maximum = Utils.ToInt(txbNbImages.Text) - 1;
 			rbSeqExpression.Checked = anim.withExpression;
 			GenereSeq();
 			DisplayFrame(0);

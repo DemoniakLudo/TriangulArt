@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TriangulArt {
 	[Serializable]
@@ -19,6 +20,10 @@ namespace TriangulArt {
 			this.a = a;
 			this.b = b;
 			this.c = c;
+		}
+
+		public Triangle GetTriangleCalc(List<Vertex> lstVertex, byte pen, DirectBitmap bm) {
+			return new Triangle((int)lstVertex[a].px, (int)lstVertex[a].py, (int)lstVertex[b].px, (int)lstVertex[b].py, (int)lstVertex[c].px, (int)lstVertex[c].py, pen, bm);
 		}
 	}
 }
