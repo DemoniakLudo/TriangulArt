@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Security.Cryptography;
+using System.Windows.Forms;
 
 namespace TriangulArt {
 	[Serializable]
@@ -16,10 +18,6 @@ namespace TriangulArt {
 		public Datas() {
 			for (int i = 0; i < 16; i++)
 				palette[i] = PaletteCpc.Palette[i];
-		}
-
-		public int GetPalCPC(int c) {
-			return PaletteCpc.cpcPlus ? (((c & 0xF0) >> 4) * 17) + ((((c & 0xF00) >> 8) * 17) << 8) + (((c & 0x0F) * 17) << 16) : PaletteCpc.RgbCPC[c < 27 ? c : 0].GetColor;
 		}
 
 		private void FillTriangle(DirectBitmap bmpLock, int x1, int y1, int x2, int y2, int x3, int y3, int c, bool selected = false) {
@@ -137,7 +135,7 @@ namespace TriangulArt {
 					FillTriangle(bmpLock, maxWidth - 1 - x1, y1, maxWidth - 1 - x2, y2, maxWidth - 1 - x3, y3, trueCol != 0 ? trueCol : PaletteCpc.GetColorPal(c).GetColorArgb, false);
 				else
 					if (modeRendu == 2)
-						FillTriangle(bmpLock, x3, 255 - y3, x2, 255 - y2, x1, 255 - y1, trueCol != 0 ? trueCol : PaletteCpc.GetColorPal(c).GetColorArgb, false);
+					FillTriangle(bmpLock, x3, 255 - y3, x2, 255 - y2, x1, 255 - y1, trueCol != 0 ? trueCol : PaletteCpc.GetColorPal(c).GetColorArgb, false);
 			}
 		}
 
@@ -296,6 +294,80 @@ namespace TriangulArt {
 				lstTriangle[i].SetPctFill(CountPctFillTriangle(bmpLock, t.x1, t.y1, t.x2, t.y2, t.x3, t.y3, i + 1));
 			}
 			bmpLock.Dispose();
+		}
+
+		public void ToQuadri() {
+			List<Triangle> copyList = new List<Triangle>();
+			foreach (Triangle t in lstTriangle)
+				copyList.Add(t);
+
+			List<Quadri> lstQuadri = new List<Quadri>();
+			for (int i = 0; i < copyList.Count; i++) {
+				for (int j = 0; j < copyList.Count; j++) {
+					if (i != j) {
+						Triangle t1 = copyList[i];
+						Triangle t2 = copyList[j];
+						// Cas 1
+						if (t1.x2 == t2.x1 && t1.y2 == t2.y1 && t1.x3 == t2.x2 && t1.y3 == t2.y2 && t1.color == t2.color) {
+							lstQuadri.Add(new Quadri(t1.x1, t1.y1, t1.x2, t1.y2, t2.x2, t2.y2, t2.x3, t2.y3, t1.color));
+							copyList.Remove(t1);
+							copyList.Remove(t2);
+							i = j = 0;
+						}
+						// Cas 2
+						if (t1.x1 == t2.x1 && t1.y1 == t2.y1 && t1.x3 == t2.x3 && t1.y3 == t2.y3 && t1.color == t2.color) {
+							lstQuadri.Add(new Quadri(t1.x1, t1.y1, t1.x2, t1.y2, t2.x2, t2.y2, t2.x3, t2.y3, t1.color));
+							copyList.Remove(t1);
+							copyList.Remove(t2);
+							i = j = 0;
+						}
+					}
+				}
+			}
+			bool trouve;
+			do {
+				List<Quadri> copyQuadri = new List<Quadri>();
+				foreach (Quadri q in lstQuadri)
+					copyQuadri.Add(q);
+
+				trouve = false;
+				lstQuadri.Clear();
+				for (int i = 0; i < copyQuadri.Count; i++) {
+					for (int j = 0; j < copyQuadri.Count; j++) {
+						if (i != j) {
+							Quadri q1 = copyQuadri[i];
+							Quadri q2 = copyQuadri[j];
+							// Cas 1
+							if (q1.x2 == q2.x1 && q1.y2 == q2.y1 && q1.x4 == q2.x3 && q1.y4 == q2.y3 && q1.color == q2.color) {
+								lstQuadri.Add(new Quadri(q1.x1, q1.y1, q2.x2, q2.y2, q1.x3, q1.y3, q2.x4, q2.y4, q1.color));
+								copyQuadri.Remove(q1);
+								copyQuadri.Remove(q2);
+								i = j = 0;
+								trouve = true;
+							}
+							// Cas 2
+							if (q1.x3 == q2.x1 && q1.y3 == q2.y1 && q1.x4 == q2.x2 && q1.y4 == q2.y2 && q1.color == q2.color) {
+								lstQuadri.Add(new Quadri(q1.x1, q1.y1, q1.x2, q1.y2, q2.x3, q2.y3, q2.x4, q2.y4, q1.color));
+								copyQuadri.Remove(q1);
+								copyQuadri.Remove(q2);
+								i = j = 0;
+								trouve = true;
+							}
+						}
+					}
+				}
+
+				foreach (Quadri q in copyQuadri)
+					lstQuadri.Add(q);
+			}
+			while (trouve);
+
+			// Reformer les triangles à partir des quadri
+			lstTriangle.Clear();
+			foreach (Quadri q in lstQuadri) {
+				lstTriangle.Add(new Triangle(q.x1, q.y1, q.x3, q.y3, q.x4, q.y4, q.color));
+				lstTriangle.Add(new Triangle(q.x1, q.y1, q.x2, q.y2, q.x4, q.y4, q.color));
+			}
 		}
 
 		public void Rapproche(int distMin) {

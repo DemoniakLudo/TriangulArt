@@ -879,6 +879,7 @@ namespace TriangulArt {
 
 		private void BpRapproche_Click(object sender, EventArgs e) {
 			projet.SelImage().Rapproche(4);
+			projet.SelImage().ToQuadri();
 			projet.SelImage().CleanUp(bmpLock.Width);
 			DisplayList();
 			FillTriangles();

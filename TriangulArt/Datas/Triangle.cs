@@ -9,26 +9,34 @@ namespace TriangulArt {
 		public Triangle() {
 		}
 
-		public Triangle(int x1, int y1, int x2, int y2, int x3, int y3, byte color) {
+		public Triangle(int x1, int y1, int x2, int y2, int x3, int y3, byte color, DirectBitmap bm = null) {
 			this.x1 = x1;
 			this.y1 = y1;
 			this.x2 = x2;
 			this.y2 = y2;
 			this.x3 = x3;
 			this.y3 = y3;
-			Normalise();
+			if ( bm == null)
+				Normalise();
+			else
+				Normalise(bm.Width, bm.Height);
+
 			TriSommets();
 			TriSommets3();
 			this.color = color;
 		}
 
 		public void Normalise() {
-			x1 = Math.Max(Math.Min(x1, 383), 0);
-			y1 = Math.Max(Math.Min(y1, 383), 0);
-			x2 = Math.Max(Math.Min(x2, 383), 0);
-			y2 = Math.Max(Math.Min(y2, 383), 0);
-			x3 = Math.Max(Math.Min(x3, 383), 0);
-			y3 = Math.Max(Math.Min(y3, 383), 0);
+			Normalise(383, 255);
+		}
+
+		public void Normalise(int maxX, int maxY) {
+			x1 = Math.Max(Math.Min(x1, maxX - 1), 0);
+			y1 = Math.Max(Math.Min(y1, maxY - 1), 0);
+			x2 = Math.Max(Math.Min(x2, maxX - 1), 0);
+			y2 = Math.Max(Math.Min(y2, maxY - 1), 0);
+			x3 = Math.Max(Math.Min(x3, maxX - 1), 0);
+			y3 = Math.Max(Math.Min(y3, maxY - 1), 0);
 		}
 
 		public bool EquPoly(Triangle t) {
@@ -45,28 +53,6 @@ namespace TriangulArt {
 
 		public void SetPctFill(int pct) {
 			pctFill = pct;
-		}
-
-		public Triangle(int x1, int y1, int x2, int y2, int x3, int y3, byte color, DirectBitmap bm) {
-			this.x1 = x1;
-			this.y1 = y1;
-			this.x2 = x2;
-			this.y2 = y2;
-			this.x3 = x3;
-			this.y3 = y3;
-			Normalise(bm.Width, bm.Height);
-			TriSommets();
-			TriSommets3();
-			this.color = color;
-		}
-
-		public void Normalise(int maxX, int maxY) {
-			x1 = Math.Max(Math.Min(x1, maxX - 1), 0);
-			y1 = Math.Max(Math.Min(y1, maxY - 1), 0);
-			x2 = Math.Max(Math.Min(x2, maxX - 1), 0);
-			y2 = Math.Max(Math.Min(y2, maxY - 1), 0);
-			x3 = Math.Max(Math.Min(x3, maxX - 1), 0);
-			y3 = Math.Max(Math.Min(y3, maxY - 1), 0);
 		}
 
 		public void TriSommets() {
@@ -108,38 +94,8 @@ namespace TriangulArt {
 		}
 
 		public void FillTriangle(DirectBitmap bmpLock, bool selected = false, DirectBitmap bmCalc = null, int indice = 0) {
-			if (y1 > y2) {
-				int tmp = y1;
-				y1 = y2;
-				y2 = tmp;
-				tmp = x1;
-				x1 = x2;
-				x2 = tmp;
-			}
-			if (y1 > y3) {
-				int tmp = y1;
-				y1 = y3;
-				y3 = tmp;
-				tmp = x1;
-				x1 = x3;
-				x3 = tmp;
-			}
-			if (y1 > y2) {
-				int tmp = y1;
-				y1 = y2;
-				y2 = tmp;
-				tmp = x1;
-				x1 = x2;
-				x2 = tmp;
-			}
-			if (y2 > y3) {
-				int tmp = y2;
-				y2 = y3;
-				y3 = tmp;
-				tmp = x2;
-				x2 = x3;
-				x3 = tmp;
-			}
+			TriSommets();
+			TriSommets3();
 			int dx1 = x3 - x1;
 			int dy1 = y3 - y1;
 			int sgn1 = dx1 > 0 ? 1 : -1;

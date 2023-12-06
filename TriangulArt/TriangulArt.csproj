@@ -49,6 +49,7 @@
     <Compile Include="Datas\Face.cs" />
     <Compile Include="Datas\Animation.cs" />
     <Compile Include="Datas\Objet.cs" />
+    <Compile Include="Datas\Quadri.cs" />
     <Compile Include="Datas\Sequence.cs" />
     <Compile Include="Datas\Triangle.cs" />
     <Compile Include="Datas\Vertex.cs" />
