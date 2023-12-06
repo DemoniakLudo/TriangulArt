@@ -127,7 +127,8 @@ public partial class GenPalette : Form {
 				}
 			}
 		}
-		FctToDo?.Invoke();
+		if (FctToDo!=null)
+			FctToDo();
 	}
 
 	private void bpGetCol_Click(object sender, EventArgs e) {

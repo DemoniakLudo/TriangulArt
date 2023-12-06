@@ -529,7 +529,7 @@ namespace TriangulArt {
 		}
 
 		private void InitImage() {
-			for (int i = 0; i < 16; i++)
+			for (int i = 0; i < projet.SelImage().palette.Length; i++)
 				PaletteCpc.Palette[i] = projet.SelImage().palette[i];
 
 			PaletteCpc.cpcPlus = chkPlus.Checked = projet.cpcPlus;
@@ -1071,7 +1071,9 @@ namespace TriangulArt {
 		#endregion
 
 		private void SetNewMode(bool withResize) {
-			bmpLock?.Dispose();
+			if ( bmpLock!=null)
+				bmpLock.Dispose();
+
 			int nbCols = 1 << (4 >> projet.mode);
 			for (int i = 0; i < 16; i++)
 				colors[i].Visible = i < nbCols;

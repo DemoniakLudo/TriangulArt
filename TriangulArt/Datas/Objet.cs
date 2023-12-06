@@ -91,7 +91,7 @@ namespace TriangulArt {
 			for (int i = 0; i < lstFace.Count; i++)
 				lstDraw.Add(lstFace[i]);
 
-			lstDraw.Sort(delegate (Face p1, Face p2) {
+			lstDraw.Sort(delegate(Face p1, Face p2) {
 				double cmp = (lstVertex[p1.a].pz + lstVertex[p1.b].pz + lstVertex[p1.c].pz) - (lstVertex[p2.a].pz + lstVertex[p2.b].pz + lstVertex[p2.c].pz);
 				return cmp != 0 ? (int)cmp : p1.num - p2.num;
 			});
@@ -100,7 +100,8 @@ namespace TriangulArt {
 			for (int i = 0; i < lstDraw.Count; i++) {
 				Triangle t = lstDraw[i].GetTriangleCalc(lstVertex, lstDraw[i].pen, bm);
 				t.FillTriangle(bm, false, bmCalc, i);
-				lstTri?.Add(t);      // Ajoute dans la liste des triangles si passée en paramètre
+				if (lstTri != null)
+					lstTri.Add(t);      // Ajoute dans la liste des triangles si passée en paramètre
 			}
 
 			// Affiche la face sélectionnée
@@ -200,7 +201,8 @@ namespace TriangulArt {
 			catch (Exception ex) {
 				MessageBox.Show(ex.Message, "Erreur lecture objet.");
 			}
-			rd?.Close();
+			if (rd != null)
+				rd.Close();
 		}
 
 		public void SaveObject(string fileName) {
@@ -227,7 +229,8 @@ namespace TriangulArt {
 			catch (Exception ex) {
 				MessageBox.Show(ex.Message, "Erreur sauvegarde objet.");
 			}
-			wr?.Close();
+			if (wr != null)
+				wr.Close();
 		}
 	}
 }
