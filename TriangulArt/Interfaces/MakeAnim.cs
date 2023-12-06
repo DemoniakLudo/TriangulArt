@@ -266,9 +266,8 @@ namespace TriangulArt {
 					err = true;
 					AddInfo("Erreur import séquence : " + ex.Message);
 				}
-				rd?.Close();
-
-
+				if (rd != null)
+					rd.Close();
 			}
 			int nbImages = anim.lstSeq.Count;
 			if (!err) {
@@ -296,7 +295,9 @@ namespace TriangulArt {
 					err = true;
 					AddInfo("Erreur export séquence : " + ex.Message);
 				}
-				sw?.Close();
+				if (sw != null)
+					sw.Close();
+
 				if (!err)
 					AddInfo("Séquence exportée.");
 			}
