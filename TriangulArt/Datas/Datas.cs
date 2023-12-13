@@ -344,6 +344,7 @@ namespace TriangulArt {
 								copyQuadri.Remove(q2);
 								i = j = 0;
 								trouve = true;
+								break;
 							}
 							// Cas 2
 							if (q1.x3 == q2.x1 && q1.y3 == q2.y1 && q1.x4 == q2.x2 && q1.y4 == q2.y2 && q1.color == q2.color) {

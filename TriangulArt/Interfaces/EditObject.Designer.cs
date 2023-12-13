@@ -73,6 +73,7 @@
 			this.bpAddVertex = new System.Windows.Forms.Button();
 			this.pictureBoxObj = new System.Windows.Forms.PictureBox();
 			this.bpParamObjet = new System.Windows.Forms.Button();
+			this.bpModif = new System.Windows.Forms.Button();
 			colColor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			((System.ComponentModel.ISupportInitialize)(this.trackX)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.trackY)).BeginInit();
@@ -547,11 +548,22 @@
 			this.bpParamObjet.UseVisualStyleBackColor = true;
 			this.bpParamObjet.Click += new System.EventHandler(this.bpParamObjet_Click);
 			// 
+			// bpModif
+			// 
+			this.bpModif.Location = new System.Drawing.Point(428, 697);
+			this.bpModif.Name = "bpModif";
+			this.bpModif.Size = new System.Drawing.Size(75, 23);
+			this.bpModif.TabIndex = 19;
+			this.bpModif.Text = "Modif";
+			this.bpModif.UseVisualStyleBackColor = true;
+			this.bpModif.Click += new System.EventHandler(this.bpModif_Click);
+			// 
 			// EditObjet
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1031, 872);
+			this.Controls.Add(this.bpModif);
 			this.Controls.Add(this.bpParamObjet);
 			this.Controls.Add(this.chkImportPalette);
 			this.Controls.Add(this.lstViewVertex);
@@ -659,6 +671,7 @@
 		private System.Windows.Forms.ColumnHeader colZ;
 		private System.Windows.Forms.CheckBox chkImportPalette;
 		private System.Windows.Forms.Button bpParamObjet;
+		private System.Windows.Forms.Button bpModif;
 	}
 }
 

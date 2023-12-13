@@ -290,6 +290,11 @@ namespace TriangulArt {
 		}
 		#endregion
 
+		private void bpModif_Click(object sender, EventArgs e) {
+			objet.ModifObject(384, 256);
+			DisplayObj();
+		}
+
 		private void bpParamObjet_Click(object sender, EventArgs e) {
 			new ParamObjet(objet).ShowDialog();
 			DisplayObj();

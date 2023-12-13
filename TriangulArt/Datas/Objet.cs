@@ -53,6 +53,14 @@ namespace TriangulArt {
 			}
 		}
 
+		public void ModifObject(double posx, double posy) {
+			foreach (Vertex v in lstVertex) {
+				v.x = v.px - posx;
+				v.y = posy - v.py;
+				v.z = v.pz - CONST_Z;
+			}
+		}
+
 		//
 		// Recentre un objet
 		//
@@ -91,7 +99,7 @@ namespace TriangulArt {
 			for (int i = 0; i < lstFace.Count; i++)
 				lstDraw.Add(lstFace[i]);
 
-			lstDraw.Sort(delegate(Face p1, Face p2) {
+			lstDraw.Sort(delegate (Face p1, Face p2) {
 				double cmp = (lstVertex[p1.a].pz + lstVertex[p1.b].pz + lstVertex[p1.c].pz) - (lstVertex[p2.a].pz + lstVertex[p2.b].pz + lstVertex[p2.c].pz);
 				return cmp != 0 ? (int)cmp : p1.num - p2.num;
 			});
