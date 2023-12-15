@@ -142,7 +142,8 @@ namespace TriangulArt {
 		public void FillTriangles(DirectBitmap bmpLock, int maxWidth, bool modeLines) {
 			for (int i = 0; i < lstTriangle.Count; i++) {
 				Triangle t = lstTriangle[i];
-				FillTriangle(bmpLock, t, maxWidth, modeLines, i == selLigne);
+				if ( t.enabled)
+					FillTriangle(bmpLock, t, maxWidth, modeLines, i == selLigne);
 			}
 		}
 

@@ -297,6 +297,7 @@
 			this.listTriangles.Size = new System.Drawing.Size(504, 238);
 			this.listTriangles.TabIndex = 20;
 			this.listTriangles.SelectedIndexChanged += new System.EventHandler(this.ListTriangles_SelectedIndexChanged);
+			this.listTriangles.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listTriangles_MouseDoubleClick);
 			// 
 			// bpEdit
 			// 

@@ -149,7 +149,7 @@ namespace TriangulArt {
 			listTriangles.Items.Clear();
 			for (int i = 0; i < projet.SelImage().lstTriangle.Count; i++) {
 				Triangle t = projet.SelImage().lstTriangle[i];
-				string inf = i.ToString("000") + "\t(" + t.x1 + "," + t.y1 + ")\t\t(" + t.x2 + "," + t.y2 + ")\t\t(" + t.x3 + "," + t.y3 + ")\t\tcouleur:" + t.color.ToString("00");
+				string inf = (t.enabled ? "" : "*") + i.ToString("000") + "\t(" + t.x1 + "," + t.y1 + ")\t\t(" + t.x2 + "," + t.y2 + ")\t\t(" + t.x3 + "," + t.y3 + ")\t\tcouleur:" + t.color.ToString("00");
 				if (t.GetPctFill() != -1) {
 					int f = t.GetPctFill();
 					inf += "\t" + f + "%";
@@ -166,6 +166,7 @@ namespace TriangulArt {
 						inf += "=";
 				}
 				listTriangles.Items.Add(inf);
+
 			}
 			txbX1.Text = txbX2.Text = txbX3.Text = txbY1.Text = txbY2.Text = txbY3.Text = txbX4.Text = txbY4.Text = txbPos.Text = "";
 			bpUp.Enabled = bpDown.Enabled = bpFirst.Enabled = bpLast.Enabled = false;
@@ -1072,7 +1073,7 @@ namespace TriangulArt {
 		#endregion
 
 		private void SetNewMode(bool withResize) {
-			if ( bmpLock!=null)
+			if (bmpLock!=null)
 				bmpLock.Dispose();
 
 			int nbCols = 1 << (4 >> projet.mode);
@@ -1136,7 +1137,22 @@ namespace TriangulArt {
 			OpenFileDialog of = new OpenFileDialog { Filter = "Fichiers palette (*.pal)|*.pal|Tous les fichiers (*.*)|*.*\"'" };
 			if (of.ShowDialog() == DialogResult.OK) {
 				PaletteCpc.LirePalette(of.FileName);
-				Reset();
+				if (chkAnim3D.Checked) {
+					foreach (Datas d in projet.lstData)
+						for (int pen = 0; pen < 16; pen++)
+							d.palette[pen] = PaletteCpc.Palette[pen];
+
+					DisplayList();
+					FillTriangles();
+					DisplayMemory();
+				}
+				else {
+					for (int pen = 0; pen < 16; pen++)
+						projet.SelImage().palette[pen] = PaletteCpc.Palette[pen];
+
+					UpdatePalette();
+					FillTriangles();
+				}
 			}
 			Enabled = true;
 		}
@@ -1223,6 +1239,16 @@ namespace TriangulArt {
 					break;
 			}
 			SetNewMode(false);
+		}
+
+		private void listTriangles_MouseDoubleClick(object sender, MouseEventArgs e) {
+			triSel = projet.SelImage().SelectTriangle(listTriangles.SelectedIndex);
+			if (triSel != null) {
+				triSel.enabled = !triSel.enabled;
+				projet.SelImage().CleanUp(bmpLock.Width, true);
+				DisplayList();
+				FillTriangles();
+			}
 		}
 	}
 }

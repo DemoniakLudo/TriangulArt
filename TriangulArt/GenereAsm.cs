@@ -46,11 +46,13 @@ namespace TriangulArt {
 			int xMax = 0;
 			for (int i = 0; i < data.lstTriangle.Count; i++) {
 				Triangle t = data.lstTriangle[i];
-				int color = i < data.lstTriangle.Count - 1 ? t.color : t.color + 0x80;
-				s = "	DB	#" + t.x1.ToString("X2") + ",#" + t.y1.ToString("X2") + ",#" + t.x2.ToString("X2") + ",#" + t.y2.ToString("X2") + ",#" + t.x3.ToString("X2") + ",#" + t.y3.ToString("X2") + (modePolice ? "" : (",#" + color.ToString("X2")));
-				xMax = Math.Max(Math.Max(Math.Max(t.x1, xMax), t.x2), t.x3);
-				sw.WriteLine(s);
-				nbOctets += (modePolice ? 6 : 7);
+				if (t.enabled) {
+					int color = i < data.lstTriangle.Count - 1 ? t.color : t.color + 0x80;
+					s = "	DB	#" + t.x1.ToString("X2") + ",#" + t.y1.ToString("X2") + ",#" + t.x2.ToString("X2") + ",#" + t.y2.ToString("X2") + ",#" + t.x3.ToString("X2") + ",#" + t.y3.ToString("X2") + (modePolice ? "" : (",#" + color.ToString("X2")));
+					xMax = Math.Max(Math.Max(Math.Max(t.x1, xMax), t.x2), t.x3);
+					sw.WriteLine(s);
+					nbOctets += (modePolice ? 6 : 7);
+				}
 			}
 			xMax++;
 			if (modePolice)

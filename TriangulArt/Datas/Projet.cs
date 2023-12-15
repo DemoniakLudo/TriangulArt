@@ -63,14 +63,16 @@ namespace TriangulArt {
 				foreach (Datas d in lstData) {
 					for (int i = 0; i < d.lstTriangle.Count; i++) {
 						Triangle t = d.lstTriangle[i];
-						int color = i < d.lstTriangle.Count - 1 ? t.color : t.color + 0x80;
-						datas[posData++] = (byte)t.x1;
-						datas[posData++] = (byte)t.y1;
-						datas[posData++] = (byte)t.x2;
-						datas[posData++] = (byte)t.y2;
-						datas[posData++] = (byte)t.x3;
-						datas[posData++] = (byte)t.y3;
-						datas[posData++] = (byte)(i < d.lstTriangle.Count - 1 ? t.color : t.color + 0x80);
+						if (t.enabled) {
+							int color = i < d.lstTriangle.Count - 1 ? t.color : t.color + 0x80;
+							datas[posData++] = (byte)t.x1;
+							datas[posData++] = (byte)t.y1;
+							datas[posData++] = (byte)t.x2;
+							datas[posData++] = (byte)t.y2;
+							datas[posData++] = (byte)t.x3;
+							datas[posData++] = (byte)t.y3;
+							datas[posData++] = (byte)(i < d.lstTriangle.Count - 1 ? t.color : t.color + 0x80);
+						}
 					}
 				}
 				datas[posData++] = 0xFF;
