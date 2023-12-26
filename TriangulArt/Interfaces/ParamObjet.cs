@@ -38,8 +38,8 @@ namespace TriangulArt {
 					newTaille.y = newTaille.z = 0;
 			}
 			else {
-				newTaille.y = Utils.ToDouble(txbZoomX.Text);
-				newTaille.z = Utils.ToDouble(txbZoomX.Text);
+				newTaille.y = Utils.ToDouble(txbZoomY.Text);
+				newTaille.z = Utils.ToDouble(txbZoomZ.Text);
 			}
 			newTaille.x = taille.x != 0 ? newTaille.x / taille.x : 0;
 			newTaille.y = taille.y != 0 ? newTaille.y / taille.y : 0;
