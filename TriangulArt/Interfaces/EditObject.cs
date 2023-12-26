@@ -20,7 +20,8 @@ namespace TriangulArt {
 					BorderStyle = BorderStyle.FixedSingle,
 					Location = new Point(974, 76 + i * 48),
 					Size = new Size(40, 32),
-					Tag = i
+					Tag = i,
+					Text=i.ToString()
 				};
 				colors[i].MouseClick += ClickColor;
 				Controls.Add(colors[i]);
@@ -292,12 +293,40 @@ namespace TriangulArt {
 
 		private void bpModif_Click(object sender, EventArgs e) {
 			objet.ModifObject(384, 256);
-			DisplayObj();
+			BpRedraw_Click(sender, e);
 		}
 
 		private void bpParamObjet_Click(object sender, EventArgs e) {
 			new ParamObjet(objet).ShowDialog();
-			DisplayObj();
+			BpRedraw_Click(sender, e);
+		}
+
+		private void bpSupPtsNotUse_Click(object sender, EventArgs e) {
+			if (MessageBox.Show("Confirmer la supperssion des points inutilisés", "", MessageBoxButtons.YesNo) == DialogResult.Yes) {
+				for (int v = objet.lstVertex.Count-1; v >= 0; v--) {
+					bool errFace = false;
+					for (int i = 0; i < objet.lstFace.Count; i++) {
+						if (objet.lstFace[i].a == v || objet.lstFace[i].b == v || objet.lstFace[i].c == v) {
+							errFace = true;
+							break;
+						}
+					}
+					if (!errFace) {
+						objet.lstVertex.RemoveAt(v);
+						for (int i = 0; i < objet.lstFace.Count; i++) {
+							if (objet.lstFace[i].a >= v)
+								objet.lstFace[i].a--;
+
+							if (objet.lstFace[i].b >= v)
+								objet.lstFace[i].b--;
+
+							if (objet.lstFace[i].c >= v)
+								objet.lstFace[i].c--;
+						}
+					}
+				}
+				BpRedraw_Click(sender, e);
+			}
 		}
 	}
 }

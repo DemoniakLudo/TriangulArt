@@ -74,6 +74,7 @@
 			this.pictureBoxObj = new System.Windows.Forms.PictureBox();
 			this.bpParamObjet = new System.Windows.Forms.Button();
 			this.bpModif = new System.Windows.Forms.Button();
+			this.bpSupPtsNotUse = new System.Windows.Forms.Button();
 			colColor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			((System.ComponentModel.ISupportInitialize)(this.trackX)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.trackY)).BeginInit();
@@ -558,11 +559,22 @@
 			this.bpModif.UseVisualStyleBackColor = true;
 			this.bpModif.Click += new System.EventHandler(this.bpModif_Click);
 			// 
+			// bpSupPtsNotUse
+			// 
+			this.bpSupPtsNotUse.Location = new System.Drawing.Point(368, 808);
+			this.bpSupPtsNotUse.Name = "bpSupPtsNotUse";
+			this.bpSupPtsNotUse.Size = new System.Drawing.Size(135, 23);
+			this.bpSupPtsNotUse.TabIndex = 20;
+			this.bpSupPtsNotUse.Text = "Supprimer points inutilisés";
+			this.bpSupPtsNotUse.UseVisualStyleBackColor = true;
+			this.bpSupPtsNotUse.Click += new System.EventHandler(this.bpSupPtsNotUse_Click);
+			// 
 			// EditObjet
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1031, 872);
+			this.Controls.Add(this.bpSupPtsNotUse);
 			this.Controls.Add(this.bpModif);
 			this.Controls.Add(this.bpParamObjet);
 			this.Controls.Add(this.chkImportPalette);
@@ -672,6 +684,7 @@
 		private System.Windows.Forms.CheckBox chkImportPalette;
 		private System.Windows.Forms.Button bpParamObjet;
 		private System.Windows.Forms.Button bpModif;
+		private System.Windows.Forms.Button bpSupPtsNotUse;
 	}
 }
 

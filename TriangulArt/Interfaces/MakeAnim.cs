@@ -229,6 +229,7 @@ namespace TriangulArt {
 		}
 		private void bpFusion_Click(object sender, EventArgs e) {
 			Enabled = false;
+			endAnim = false;
 			Animate(true, true);
 			Enabled = true;
 		}

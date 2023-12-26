@@ -33,7 +33,8 @@ namespace TriangulArt {
 					BorderStyle = BorderStyle.FixedSingle,
 					Location = new Point(966, 4 + i * 48),
 					Size = new Size(40, 32),
-					Tag = i
+					Tag = i,
+					Text=i.ToString()
 				};
 				colors[i].MouseClick += ClickColor;
 				Controls.Add(colors[i]);
@@ -1248,6 +1249,29 @@ namespace TriangulArt {
 				projet.SelImage().CleanUp(bmpLock.Width, true);
 				DisplayList();
 				FillTriangles();
+			}
+		}
+
+		private void bpGen3D_Click(object sender, EventArgs e) {
+			List<Triangle> lst = projet.SelImage().lstTriangle;
+			if (lst.Count>0) {
+				Objet o = new Objet();
+				int nFace = 0;
+				int nVertex = 0;
+				int adjX = projet.mode == 0 ? 2 : 1;
+				foreach (Triangle t in lst) {
+					Vertex v1 = new Vertex(adjX * (t.x1 - bmpLock.Width / 2), bmpLock.Height / 2 - t.y1, 0);
+					Vertex v2 = new Vertex(adjX * (t.x2- bmpLock.Width / 2), bmpLock.Height / 2 - t.y2, 0);
+					Vertex v3 = new Vertex(adjX * (t.x3- bmpLock.Width / 2), bmpLock.Height / 2 - t.y3, 0);
+					o.lstVertex.Add(v1);
+					o.lstVertex.Add(v2);
+					o.lstVertex.Add(v3);
+					Face f = new Face(nFace++, nVertex, nVertex + 1, nVertex + 2);
+					f.pen = t.color;
+					o.lstFace.Add(f);
+					nVertex+=3;
+				}
+				new EditObjet(projet, o).ShowDialog();
 			}
 		}
 	}

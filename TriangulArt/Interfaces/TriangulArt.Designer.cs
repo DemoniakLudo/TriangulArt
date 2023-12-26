@@ -119,6 +119,7 @@
 			this.bpSavePal = new System.Windows.Forms.Button();
 			this.bpReadPal = new System.Windows.Forms.Button();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
+			this.bpGen3D = new System.Windows.Forms.Button();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.grpProjet.SuspendLayout();
@@ -1046,6 +1047,7 @@
 			// 
 			// panel1
 			// 
+			this.panel1.Controls.Add(this.bpGen3D);
 			this.panel1.Controls.Add(this.bpGenPal);
 			this.panel1.Controls.Add(this.bpSavePal);
 			this.panel1.Controls.Add(this.bpReadPal);
@@ -1156,6 +1158,16 @@
 			this.pictureBox.MouseLeave += new System.EventHandler(this.PictureBox_MouseLeave);
 			this.pictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TrtMouseMove);
 			this.pictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PictureBox_MouseUp);
+			// 
+			// bpGen3D
+			// 
+			this.bpGen3D.Location = new System.Drawing.Point(336, 615);
+			this.bpGen3D.Name = "bpGen3D";
+			this.bpGen3D.Size = new System.Drawing.Size(96, 21);
+			this.bpGen3D.TabIndex = 62;
+			this.bpGen3D.Text = "Générer objet 3D";
+			this.bpGen3D.UseVisualStyleBackColor = true;
+			this.bpGen3D.Click += new System.EventHandler(this.bpGen3D_Click);
 			// 
 			// TriangulArt
 			// 
@@ -1282,6 +1294,7 @@
 		private System.Windows.Forms.Button bpGenPal;
 		private System.Windows.Forms.ComboBox comboNbColonnes;
 		private System.Windows.Forms.Button bpRazAll;
+		private System.Windows.Forms.Button bpGen3D;
 	}
 }
 

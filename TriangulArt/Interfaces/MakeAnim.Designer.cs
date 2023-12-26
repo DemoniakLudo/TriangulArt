@@ -347,7 +347,7 @@
 			this.bpReadObject.Name = "bpReadObject";
 			this.bpReadObject.Size = new System.Drawing.Size(115, 23);
 			this.bpReadObject.TabIndex = 4;
-			this.bpReadObject.Text = "Fichier objet";
+			this.bpReadObject.Text = "Lire objet";
 			this.bpReadObject.UseVisualStyleBackColor = true;
 			this.bpReadObject.Click += new System.EventHandler(this.BpReadObject_Click);
 			// 
