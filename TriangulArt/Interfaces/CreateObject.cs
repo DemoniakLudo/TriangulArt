@@ -71,7 +71,20 @@ namespace TriangulArt {
 			int rayon = 0;
 			int.TryParse(txbRayon.Text, out rayon);
 			if (rayon >= 2 && rayon <= 16) {
-				//return true;
+				int nFace = 0;
+				int nVertex = 0;
+				int adjX = projet.mode == 0 ? 2 : 1;
+				for (int r = 0; r < rayon; r++) {
+					double ay = r * 360 / rayon;
+					foreach (Triangle t in projet.SelImage().lstTriangle) {
+						o.AddRotateVertex(adjX * (t.x1 - width / 2), height / 2 - t.y1, ay);
+						o.AddRotateVertex(adjX * (t.x2 - width / 2), height / 2 - t.y2, ay);
+						o.AddRotateVertex(adjX * (t.x3 - width / 2), height / 2 - t.y3, ay);
+						o.lstFace.Add(new Face(nFace++, nVertex, nVertex + 1, nVertex + 2, t.color));
+						nVertex += 3;
+					}
+				}
+				return true;
 			}
 			MessageBox.Show("Le rayon doit être compris entre 2 et 16.");
 			return false;

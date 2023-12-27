@@ -74,6 +74,10 @@ namespace TriangulArt {
 			}
 		}
 
+		public void AddRotateVertex(double x, double y, double ay) {
+			lstVertex.Add(new Vertex(x * Math.Cos(ay * CONV), y, x * Math.Sin(ay * CONV)));
+		}
+
 		//
 		// Calcule les coordonnées de chaque points composant l'objet pour l'affichage
 		// à l'écran, en fonction des paramètres de position, angle, zoom
@@ -99,7 +103,7 @@ namespace TriangulArt {
 			for (int i = 0; i < lstFace.Count; i++)
 				lstDraw.Add(lstFace[i]);
 
-			lstDraw.Sort(delegate (Face p1, Face p2) {
+			lstDraw.Sort(delegate(Face p1, Face p2) {
 				double cmp = (lstVertex[p1.a].pz + lstVertex[p1.b].pz + lstVertex[p1.c].pz) - (lstVertex[p2.a].pz + lstVertex[p2.b].pz + lstVertex[p2.c].pz);
 				return cmp != 0 ? (int)cmp : p1.num - p2.num;
 			});
