@@ -21,7 +21,8 @@ namespace TriangulArt {
 					Location = new Point(974, 76 + i * 48),
 					Size = new Size(40, 32),
 					Tag = i,
-					Text=i.ToString()
+					TextAlign = ContentAlignment.MiddleCenter,
+					Text = i.ToString()
 				};
 				colors[i].MouseClick += ClickColor;
 				Controls.Add(colors[i]);
@@ -116,9 +117,15 @@ namespace TriangulArt {
 		}
 
 		private void UpdatePalette() {
-			for (int i = 0; i < 16; i++)
-				colors[i].BackColor = Color.FromArgb(PaletteCpc.GetColorPal(i).GetColorArgb);
-
+			for (int i = 0; i < 16; i++) {
+				RvbColor col = PaletteCpc.GetColorPal(i);
+				colors[i].BackColor = Color.FromArgb(col.GetColorArgb);
+				int val = col.r * 9798 + col.v * 19235 + col.b * 3735;
+				if (val > 4194304)
+					colors[i].ForeColor = Color.Black;
+				else
+					colors[i].ForeColor = Color.White;
+			}
 			lblFaceColor.BackColor = Color.FromArgb(PaletteCpc.GetColorPal(selColor).GetColorArgb);
 		}
 

@@ -91,7 +91,7 @@
 			// 
 			this.bpNewObject.Location = new System.Drawing.Point(782, 4);
 			this.bpNewObject.Name = "bpNewObject";
-			this.bpNewObject.Size = new System.Drawing.Size(90, 23);
+			this.bpNewObject.Size = new System.Drawing.Size(120, 23);
 			this.bpNewObject.TabIndex = 1;
 			this.bpNewObject.Text = "Nouvel objet";
 			this.bpNewObject.UseVisualStyleBackColor = true;
@@ -101,7 +101,7 @@
 			// 
 			this.bpReadObject.Location = new System.Drawing.Point(782, 32);
 			this.bpReadObject.Name = "bpReadObject";
-			this.bpReadObject.Size = new System.Drawing.Size(90, 23);
+			this.bpReadObject.Size = new System.Drawing.Size(120, 23);
 			this.bpReadObject.TabIndex = 1;
 			this.bpReadObject.Text = "Lire objet";
 			this.bpReadObject.UseVisualStyleBackColor = true;
@@ -110,9 +110,9 @@
 			// bpFusionObject
 			// 
 			this.bpFusionObject.Enabled = false;
-			this.bpFusionObject.Location = new System.Drawing.Point(782, 60);
+			this.bpFusionObject.Location = new System.Drawing.Point(908, 4);
 			this.bpFusionObject.Name = "bpFusionObject";
-			this.bpFusionObject.Size = new System.Drawing.Size(90, 23);
+			this.bpFusionObject.Size = new System.Drawing.Size(120, 23);
 			this.bpFusionObject.TabIndex = 1;
 			this.bpFusionObject.Text = "Fusionner objet";
 			this.bpFusionObject.UseVisualStyleBackColor = true;
@@ -121,9 +121,9 @@
 			// bpSaveObject
 			// 
 			this.bpSaveObject.Enabled = false;
-			this.bpSaveObject.Location = new System.Drawing.Point(782, 88);
+			this.bpSaveObject.Location = new System.Drawing.Point(908, 32);
 			this.bpSaveObject.Name = "bpSaveObject";
-			this.bpSaveObject.Size = new System.Drawing.Size(90, 23);
+			this.bpSaveObject.Size = new System.Drawing.Size(120, 23);
 			this.bpSaveObject.TabIndex = 1;
 			this.bpSaveObject.Text = "Sauver objet";
 			this.bpSaveObject.UseVisualStyleBackColor = true;
@@ -453,7 +453,7 @@
 			// chkImportPalette
 			// 
 			this.chkImportPalette.AutoSize = true;
-			this.chkImportPalette.Location = new System.Drawing.Point(873, 49);
+			this.chkImportPalette.Location = new System.Drawing.Point(782, 61);
 			this.chkImportPalette.Name = "chkImportPalette";
 			this.chkImportPalette.Size = new System.Drawing.Size(159, 17);
 			this.chkImportPalette.TabIndex = 17;

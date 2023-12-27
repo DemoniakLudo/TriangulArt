@@ -44,6 +44,7 @@
 			this.lblNumColor.Name = "lblNumColor";
 			this.lblNumColor.Size = new System.Drawing.Size(0, 13);
 			this.lblNumColor.TabIndex = 1;
+			this.lblNumColor.Text="Pen ";
 			// 
 			// bpValide
 			// 
