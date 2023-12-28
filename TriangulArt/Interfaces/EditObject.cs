@@ -120,11 +120,7 @@ namespace TriangulArt {
 			for (int i = 0; i < 16; i++) {
 				RvbColor col = PaletteCpc.GetColorPal(i);
 				colors[i].BackColor = Color.FromArgb(col.GetColorArgb);
-				int val = col.r * 9798 + col.v * 19235 + col.b * 3735;
-				if (val > 4194304)
-					colors[i].ForeColor = Color.Black;
-				else
-					colors[i].ForeColor = Color.White;
+				colors[i].ForeColor = (col.r * 9798 + col.v * 19235 + col.b * 3735) > 0x400000 ? Color.Black : Color.White;
 			}
 			lblFaceColor.BackColor = Color.FromArgb(PaletteCpc.GetColorPal(selColor).GetColorArgb);
 		}
@@ -257,9 +253,7 @@ namespace TriangulArt {
 			int b = Utils.ToInt(txbFaceB.Text);
 			int c = Utils.ToInt(txbFaceC.Text);
 			if (a >= 0 && b >= 0 && c >= 0 && a < objet.lstVertex.Count && b < objet.lstVertex.Count && c < objet.lstVertex.Count) {
-				Face f = new Face(numFace++, a, b, c);
-				f.pen = selColor;
-				objet.lstFace.Add(f);
+				objet.lstFace.Add(new Face(numFace++, a, b, c, selColor));
 				DisplayFace(objet.lstFace.Count - 1);
 			}
 			else
@@ -310,7 +304,7 @@ namespace TriangulArt {
 
 		private void bpSupPtsNotUse_Click(object sender, EventArgs e) {
 			if (MessageBox.Show("Confirmer la supperssion des points inutilisés", "", MessageBoxButtons.YesNo) == DialogResult.Yes) {
-				for (int v = objet.lstVertex.Count-1; v >= 0; v--) {
+				for (int v = objet.lstVertex.Count - 1; v >= 0; v--) {
 					bool errFace = false;
 					for (int i = 0; i < objet.lstFace.Count; i++) {
 						if (objet.lstFace[i].a == v || objet.lstFace[i].b == v || objet.lstFace[i].c == v) {

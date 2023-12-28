@@ -281,9 +281,8 @@ namespace TriangulArt {
 
 		private void BpExportSequence_Click(object sender, EventArgs e) {
 			SaveFileDialog dlg = new SaveFileDialog { Filter = "Fichiers CSV (*.csv)|*.csv" };
-			DialogResult result = dlg.ShowDialog();
 			bool err = false;
-			if (result == DialogResult.OK) {
+			if (dlg.ShowDialog() == DialogResult.OK) {
 				StreamWriter sw = null;
 				try {
 					sw = File.CreateText(dlg.FileName);
@@ -343,8 +342,7 @@ namespace TriangulArt {
 		private void BpSaveAnim_Click(object sender, EventArgs e) {
 			bool err = false;
 			SaveFileDialog dlg = new SaveFileDialog { Filter = "Fichiers XML (*.XML)|*.xml" };
-			DialogResult result = dlg.ShowDialog();
-			if (result == DialogResult.OK) {
+			if (dlg.ShowDialog() == DialogResult.OK) {
 				FileStream file = File.Open(dlg.FileName, FileMode.Create);
 				try {
 					new XmlSerializer(typeof(Animation)).Serialize(file, anim);

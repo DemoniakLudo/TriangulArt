@@ -115,11 +115,11 @@
 			this.bpFirst = new System.Windows.Forms.Button();
 			this.bpLast = new System.Windows.Forms.Button();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.bpGen3D = new System.Windows.Forms.Button();
 			this.bpGenPal = new System.Windows.Forms.Button();
 			this.bpSavePal = new System.Windows.Forms.Button();
 			this.bpReadPal = new System.Windows.Forms.Button();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
-			this.bpGen3D = new System.Windows.Forms.Button();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.grpProjet.SuspendLayout();
@@ -388,9 +388,9 @@
 			// 
 			this.bpClear.Location = new System.Drawing.Point(365, 571);
 			this.bpClear.Name = "bpClear";
-			this.bpClear.Size = new System.Drawing.Size(73, 22);
+			this.bpClear.Size = new System.Drawing.Size(82, 22);
 			this.bpClear.TabIndex = 28;
-			this.bpClear.Text = "Tout effacer";
+			this.bpClear.Text = "Effacer image";
 			this.bpClear.UseVisualStyleBackColor = true;
 			this.bpClear.Click += new System.EventHandler(this.BpClear_Click);
 			// 
@@ -1114,6 +1114,16 @@
 			this.panel1.Size = new System.Drawing.Size(549, 767);
 			this.panel1.TabIndex = 60;
 			// 
+			// bpGen3D
+			// 
+			this.bpGen3D.Location = new System.Drawing.Point(336, 615);
+			this.bpGen3D.Name = "bpGen3D";
+			this.bpGen3D.Size = new System.Drawing.Size(96, 21);
+			this.bpGen3D.TabIndex = 62;
+			this.bpGen3D.Text = "Générer objet 3D";
+			this.bpGen3D.UseVisualStyleBackColor = true;
+			this.bpGen3D.Click += new System.EventHandler(this.bpGen3D_Click);
+			// 
 			// bpGenPal
 			// 
 			this.bpGenPal.Image = global::TriangulArt.Properties.Resources.GenPalette;
@@ -1158,16 +1168,6 @@
 			this.pictureBox.MouseLeave += new System.EventHandler(this.PictureBox_MouseLeave);
 			this.pictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TrtMouseMove);
 			this.pictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PictureBox_MouseUp);
-			// 
-			// bpGen3D
-			// 
-			this.bpGen3D.Location = new System.Drawing.Point(336, 615);
-			this.bpGen3D.Name = "bpGen3D";
-			this.bpGen3D.Size = new System.Drawing.Size(96, 21);
-			this.bpGen3D.TabIndex = 62;
-			this.bpGen3D.Text = "Générer objet 3D";
-			this.bpGen3D.UseVisualStyleBackColor = true;
-			this.bpGen3D.Click += new System.EventHandler(this.bpGen3D_Click);
 			// 
 			// TriangulArt
 			// 

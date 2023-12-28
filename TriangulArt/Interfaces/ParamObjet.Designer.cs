@@ -131,7 +131,7 @@
 			this.chkLies.TabIndex = 2;
 			this.chkLies.Text = "Liés";
 			this.chkLies.UseVisualStyleBackColor = true;
-			this.chkLies.CheckedChanged += new System.EventHandler(this.chkLies_CheckedChanged);
+			this.chkLies.CheckedChanged += new System.EventHandler(this.ChkLies_CheckedChanged);
 			// 
 			// txbZoomZ
 			// 

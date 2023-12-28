@@ -11,11 +11,6 @@ namespace TriangulArt {
 		public Face() {
 		}
 
-		public Face(int n, int a, int b, int c) {
-			num = n;
-			SetNewVertex(a, b, c);
-		}
-
 		public Face(int n, int a, int b, int c, byte p) {
 			num = n;
 			pen = p;

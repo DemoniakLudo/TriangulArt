@@ -9,6 +9,7 @@ namespace TriangulArt {
 		public List<Sequence> lstSeq = new List<Sequence>();
 		public bool withExpression = false;
 		private string nom;
+
 		public string Nom {
 			get { return nom; }
 			set { nom = value; }
@@ -20,14 +21,6 @@ namespace TriangulArt {
 
 		public void Add(double posx, double posy, double zoomx, double zoomy, double angx, double angy, double angz) {
 			lstSeq.Add(new Sequence(posx, posy, zoomx, zoomy, angx, angy, angz));
-		}
-
-		public void DrawObj(int index, DirectBitmap bmpLock, DirectBitmap bmpCalc, List<Triangle> lstTriangle = null) {
-			if (lstTriangle != null)
-				bmpCalc.Fill(0xFFFFFF);
-
-			Sequence s = lstSeq[index];
-			objet.DrawObj(bmpLock, s.posx, s.posy, s.zoomx, s.zoomy, s.angx, s.angy, s.angz, -1, -1, lstTriangle, bmpCalc);
 		}
 
 		public string AddEval() {

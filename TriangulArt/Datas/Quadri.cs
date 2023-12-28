@@ -5,10 +5,6 @@ namespace TriangulArt {
 		public int x1, y1, x2, y2, x3, y3, x4, y4;
 		public byte color;
 
-		public Quadri() {
-
-		}
-
 		public Quadri(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4, byte color) {
 			this.x1 = x1;
 			this.y1 = y1;

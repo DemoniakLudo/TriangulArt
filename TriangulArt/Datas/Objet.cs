@@ -103,7 +103,7 @@ namespace TriangulArt {
 			for (int i = 0; i < lstFace.Count; i++)
 				lstDraw.Add(lstFace[i]);
 
-			lstDraw.Sort(delegate(Face p1, Face p2) {
+			lstDraw.Sort(delegate (Face p1, Face p2) {
 				double cmp = (lstVertex[p1.a].pz + lstVertex[p1.b].pz + lstVertex[p1.c].pz) - (lstVertex[p2.a].pz + lstVertex[p2.b].pz + lstVertex[p2.c].pz);
 				return cmp != 0 ? (int)cmp : p1.num - p2.num;
 			});
@@ -142,9 +142,8 @@ namespace TriangulArt {
 			int px = l.IndexOf("X:") + 2;
 			int py = l.IndexOf("Y:") + 2;
 			int pz = l.IndexOf("Z:") + 2;
-			if (px > 2 && py > 2 && pz > 2) {
+			if (px > 2 && py > 2 && pz > 2)
 				lstVertex.Add(new Vertex(DecodeValue(l, px), DecodeValue(l, py), DecodeValue(l, pz)));
-			}
 		}
 
 		private void AddFace(string l, int offsetVertex, ref int numFace) {
@@ -156,10 +155,8 @@ namespace TriangulArt {
 				int a = (int)DecodeValue(l, pa);
 				int b = (int)DecodeValue(l, pb);
 				int c = (int)DecodeValue(l, pc);
-				if (a < lstVertex.Count && b < lstVertex.Count && c < lstVertex.Count) {
-					Face f = new Face(numFace++, a + offsetVertex, b + offsetVertex, c + offsetVertex);
-					lstFace.Add(f);
-				}
+				if (a < lstVertex.Count && b < lstVertex.Count && c < lstVertex.Count)
+					lstFace.Add(new Face(numFace++, a + offsetVertex, b + offsetVertex, c + offsetVertex, 1));
 			}
 		}
 
@@ -175,8 +172,6 @@ namespace TriangulArt {
 
 				lstFace[lstFace.Count - 1].pen = PaletteCpc.GetNumPen(faceColor);
 			}
-			else
-				lstFace[lstFace.Count - 1].pen = 1;
 		}
 
 		//

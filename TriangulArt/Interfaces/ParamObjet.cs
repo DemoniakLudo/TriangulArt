@@ -19,23 +19,20 @@ namespace TriangulArt {
 			txbZoomZ.Text = taille.z.ToString("0.0000");
 		}
 
-		private void chkLies_CheckedChanged(object sender, EventArgs e) {
+		private void ChkLies_CheckedChanged(object sender, EventArgs e) {
 			txbZoomY.Enabled = !chkLies.Checked;
 			txbZoomZ.Enabled = !chkLies.Checked;
 		}
 
 		private void bpAppliquer_Click(object sender, EventArgs e) {
 			Vertex newCentre = new Vertex(Utils.ToDouble(txbPosX.Text), Utils.ToDouble(txbPosY.Text), Utils.ToDouble(txbPosZ.Text));
-			Vertex newTaille = new Vertex();
-			newTaille.x = Utils.ToDouble(txbZoomX.Text);
+			Vertex newTaille = new Vertex(Utils.ToDouble(txbZoomX.Text), 0, 0);
 			// Coeff. de zoom liés ?
 			if (chkLies.Checked) {
 				if (taille.x != 0) {
 					newTaille.y = taille.y * newTaille.x / taille.x;
 					newTaille.z = taille.z * newTaille.x / taille.x;
 				}
-				else
-					newTaille.y = newTaille.z = 0;
 			}
 			else {
 				newTaille.y = Utils.ToDouble(txbZoomY.Text);

@@ -20,7 +20,6 @@ namespace TriangulArt {
 		private ImageFond bmpFond = new ImageFond();
 		private Projet projet = new Projet();
 		private Animation anim = new Animation();
-		private Version version = Assembly.GetExecutingAssembly().GetName().Version;
 		private const int MAX_RAYONS = 32;
 		private int coefX;
 		private Label[] colors = new Label[16];
@@ -40,6 +39,7 @@ namespace TriangulArt {
 				colors[i].MouseClick += ClickColor;
 				Controls.Add(colors[i]);
 			}
+			Version version = Assembly.GetExecutingAssembly().GetName().Version;
 			lblInfoVersion.Text = "V " + version.ToString() + " - " + new DateTime(2000, 1, 1).AddDays(version.Build).ToShortDateString();
 			projet.AddData();
 			comboNbColonnes.SelectedIndex = 1;
@@ -107,11 +107,7 @@ namespace TriangulArt {
 			for (int i = 0; i < 16; i++) {
 				RvbColor col = PaletteCpc.GetColorPal(i);
 				colors[i].BackColor = Color.FromArgb(col.GetColorArgb);
-				int val = col.r * 9798 + col.v * 19235 + col.b * 3735;
-				if (val > 4194304)
-					colors[i].ForeColor = Color.Black;
-				else
-					colors[i].ForeColor = Color.White;
+				colors[i].ForeColor = (col.r * 9798 + col.v * 19235 + col.b * 3735) > 0x400000 ? Color.Black : Color.White;
 			}
 			ColorSel.BackColor = Color.FromArgb(PaletteCpc.GetColorPal(selColor).GetColorArgb);
 		}
@@ -575,8 +571,7 @@ namespace TriangulArt {
 
 		private void BpLoad_Click(object sender, EventArgs e) {
 			OpenFileDialog dlg = new OpenFileDialog { Filter = "Fichiers xml (*.xml)|*.xml" };
-			DialogResult result = dlg.ShowDialog();
-			if (result == DialogResult.OK) {
+			if (dlg.ShowDialog() == DialogResult.OK) {
 				FileStream fileParam = File.Open(dlg.FileName, FileMode.Open);
 				try {
 					Datas d = (Datas)new XmlSerializer(typeof(Datas)).Deserialize(fileParam);
@@ -596,8 +591,7 @@ namespace TriangulArt {
 
 		private void BpSave_Click(object sender, EventArgs e) {
 			SaveFileDialog dlg = new SaveFileDialog { Filter = "Fichiers xml (*.xml)|*.xml" };
-			DialogResult result = dlg.ShowDialog();
-			if (result == DialogResult.OK) {
+			if (dlg.ShowDialog() == DialogResult.OK) {
 				MemImage();
 				FileStream file = File.Open(dlg.FileName, FileMode.Create);
 				try {
@@ -614,8 +608,7 @@ namespace TriangulArt {
 
 		private void BpImport_Click(object sender, EventArgs e) {
 			OpenFileDialog dlg = new OpenFileDialog { Filter = "Fichiers assembleur (*.asm)|*.asm" };
-			DialogResult result = dlg.ShowDialog();
-			if (result == DialogResult.OK) {
+			if (dlg.ShowDialog() == DialogResult.OK) {
 				try {
 					projet.SelImage().Import(dlg.FileName, chkClearData.Checked);
 					SetInfo("Import triangles ok");
@@ -630,8 +623,7 @@ namespace TriangulArt {
 
 		private void BpGenereAsm_Click(object sender, EventArgs e) {
 			SaveFileDialog dlg = new SaveFileDialog { Filter = "Fichiers assembleur (*.asm)|*.asm" };
-			DialogResult result = dlg.ShowDialog();
-			if (result == DialogResult.OK) {
+			if (dlg.ShowDialog() == DialogResult.OK) {
 				int.TryParse(txbTpsAttente.Text, out projet.SelImage().tpsAttente);
 				projet.SelImage().tpsAttente = Math.Min(850, Math.Max(1, projet.SelImage().tpsAttente));
 				projet.SelImage().GenereSourceAsm(dlg.FileName, projet.mode, projet.cpcPlus, chkCodeAsm.Checked, chkModePolice.Checked, chkAnim3D.Checked);
@@ -744,8 +736,7 @@ namespace TriangulArt {
 
 		private void BpImportImage_Click(object sender, EventArgs e) {
 			OpenFileDialog dlg = new OpenFileDialog { Filter = "Fichier image (*.bmp, *.gif, *.png, *.jpg,*.jpeg)|*.bmp;*.gif;*.png;*.jpg;*.jpeg;" };
-			DialogResult result = dlg.ShowDialog();
-			if (result == DialogResult.OK) {
+			if (dlg.ShowDialog() == DialogResult.OK) {
 				using (Bitmap b = new Bitmap(dlg.FileName)) {
 					if (b.Width <= bmpLock.Width && b.Height <= bmpLock.Height) {
 						FileStream fileScr = new FileStream(dlg.FileName, FileMode.Open, FileAccess.Read);
@@ -767,7 +758,7 @@ namespace TriangulArt {
 		}
 
 		private void BpClear_Click(object sender, EventArgs e) {
-			if (MessageBox.Show("Etes vous certain de vouloir tout effacer ?", "Confirmation d'effacement", MessageBoxButtons.YesNo) == DialogResult.Yes) {
+			if (MessageBox.Show("Etes vous certain de vouloir effaccer cette image ?", "Confirmation d'effacement", MessageBoxButtons.YesNo) == DialogResult.Yes) {
 				bmpFond.ClearAll();
 				projet.SelImage().Clear();
 				DisplayList();
@@ -842,13 +833,13 @@ namespace TriangulArt {
 				}
 				else
 					if (triSel != null) {
-						int memoSel = projet.SelImage().GetSelTriangle();
-						projet.SelImage().DeplaceTriangle(deplX, deplY, bmpLock.Width);
-						DisplayList();
-						listTriangles.SelectedIndex = memoSel;
-					}
-					else
-						MessageBox.Show("Pas de triangle sélectionné");
+					int memoSel = projet.SelImage().GetSelTriangle();
+					projet.SelImage().DeplaceTriangle(deplX, deplY, bmpLock.Width);
+					DisplayList();
+					listTriangles.SelectedIndex = memoSel;
+				}
+				else
+					MessageBox.Show("Pas de triangle sélectionné");
 			}
 			else
 				MessageBox.Show("Veuillez sélectionner des données de déplacement valide");
@@ -874,13 +865,13 @@ namespace TriangulArt {
 				}
 				else
 					if (triSel != null) {
-						int memoSel = projet.SelImage().GetSelTriangle();
-						projet.SelImage().CoefZoom(triSel, zoomX, zoomY, chkCenterZoom.Checked, bmpLock.Width);
-						DisplayList();
-						listTriangles.SelectedIndex = memoSel;
-					}
-					else
-						MessageBox.Show("Pas de triangle sélectionné");
+					int memoSel = projet.SelImage().GetSelTriangle();
+					projet.SelImage().CoefZoom(triSel, zoomX, zoomY, chkCenterZoom.Checked, bmpLock.Width);
+					DisplayList();
+					listTriangles.SelectedIndex = memoSel;
+				}
+				else
+					MessageBox.Show("Pas de triangle sélectionné");
 			}
 			else
 				MessageBox.Show("Veuillez sélectionner des données de zoom valide");
@@ -961,8 +952,7 @@ namespace TriangulArt {
 		private void BpReadProj_Click(object sender, EventArgs e) {
 			OpenFileDialog dlg = new OpenFileDialog();
 			dlg.Filter = "Fichiers xml (*.xml)|*.xml";
-			DialogResult result = dlg.ShowDialog();
-			if (result == DialogResult.OK) {
+			if (dlg.ShowDialog() == DialogResult.OK) {
 				FileStream fileParam = File.Open(dlg.FileName, FileMode.Open);
 				try {
 					projet = (Projet)new XmlSerializer(typeof(Projet)).Deserialize(fileParam);
@@ -988,8 +978,7 @@ namespace TriangulArt {
 
 		private void BpSaveProj_Click(object sender, EventArgs e) {
 			SaveFileDialog dlg = new SaveFileDialog { Filter = "Fichiers xml (*.xml)|*.xml" };
-			DialogResult result = dlg.ShowDialog();
-			if (result == DialogResult.OK) {
+			if (dlg.ShowDialog() == DialogResult.OK) {
 				MemImage();
 				FileStream file = File.Open(dlg.FileName, FileMode.Create);
 				try {
@@ -1006,8 +995,7 @@ namespace TriangulArt {
 
 		private void BpFusion_Click(object sender, EventArgs e) {
 			OpenFileDialog dlg = new OpenFileDialog { Filter = "Fichiers xml (*.xml)|*.xml" };
-			DialogResult result = dlg.ShowDialog();
-			if (result == DialogResult.OK) {
+			if (dlg.ShowDialog() == DialogResult.OK) {
 				FileStream fileParam = File.Open(dlg.FileName, FileMode.Open);
 				try {
 					Projet projetTmp = (Projet)new XmlSerializer(typeof(Projet)).Deserialize(fileParam);
@@ -1065,8 +1053,7 @@ namespace TriangulArt {
 
 		private void BpGenereProjetAsm_Click(object sender, EventArgs e) {
 			SaveFileDialog dlg = new SaveFileDialog { Filter = "Fichiers assembleur (*.asm)|*.asm" };
-			DialogResult result = dlg.ShowDialog();
-			if (result == DialogResult.OK) {
+			if (dlg.ShowDialog() == DialogResult.OK) {
 				projet.GenereSourceAsm(dlg.FileName, chkModePolice.Checked, chkAnim3D.Checked, chkZX0.Checked);
 				SetInfo("Génération assembleur ok.");
 			}
@@ -1081,7 +1068,7 @@ namespace TriangulArt {
 		#endregion
 
 		private void SetNewMode(bool withResize) {
-			if (bmpLock!=null)
+			if (bmpLock != null)
 				bmpLock.Dispose();
 
 			int nbCols = 1 << (4 >> projet.mode);
