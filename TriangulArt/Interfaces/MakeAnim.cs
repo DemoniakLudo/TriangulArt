@@ -107,10 +107,9 @@ namespace TriangulArt {
                 anim.exprAngX = txbExprAx.Text;
                 anim.exprAngY = txbExprAy.Text;
                 anim.exprAngZ = txbExprAz.Text;
-                string err = "";
                 int nbImages = Utils.ToInt(txbNbImages.Text);
                 for (int i = 0; i < nbImages; i++) {
-                    err = anim.AddEval();
+                    string err = anim.AddEval();
                     if (err != "") {
                         AddInfo(err);
                         break;
