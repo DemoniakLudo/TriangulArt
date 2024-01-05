@@ -6,7 +6,7 @@ using System.Windows.Forms;
 namespace TriangulArt {
 	[Serializable]
 	public class Objet {
-		const int CONST_Z = 50000;      // Constante d'affichage 3D->2D
+		const int CONST_Z = 100000;      // Constante d'affichage 3D->2D
 		const double CONV = Math.PI / 180;
 		public List<Vertex> lstVertex = new List<Vertex>();
 		public List<Face> lstFace = new List<Face>();
@@ -64,7 +64,7 @@ namespace TriangulArt {
 		//
 		// Recentre un objet
 		//
-		private void RecentrePoints() {
+		public void RecentrePoints() {
 			Vertex Taille = new Vertex(0, 0, 0), Centre = new Vertex(0, 0, 0);
 			CalcParamObjet(ref Centre, ref Taille);
 			foreach (Vertex v in lstVertex) {
@@ -84,6 +84,17 @@ namespace TriangulArt {
 		// Affichage de l'objet complêt en fonction des paramètres choisis
 		//
 		public void DrawObj(DirectBitmap bm, double posx, double posy, double zoomx, double zoomy, double ax, double ay, double az, int numFace, int numPoint, List<Triangle> lstTri = null, DirectBitmap bmCalc = null) {
+			double xxp = Math.Cos(ax * CONV) * Math.Cos(ay * CONV);
+			double xyp = Math.Sin(ax * CONV) * Math.Cos(ay * CONV);
+			double xzp = Math.Sin(ay * CONV);
+			double yxp = Math.Sin(ax * CONV) * Math.Cos(az * CONV) + Math.Cos(ax * CONV) * Math.Sin(ay * CONV) * Math.Sin(az * CONV);
+			double yyp = -Math.Cos(ax * CONV) * Math.Cos(az * CONV) + Math.Sin(ax * CONV) * Math.Sin(ay * CONV) * Math.Sin(az * CONV);
+			double yzp = -Math.Cos(ay * CONV) * Math.Sin(az * CONV);
+			double zxp = Math.Sin(ax * CONV) * Math.Sin(az * CONV) - Math.Cos(ax * CONV) * Math.Sin(ay * CONV) * Math.Cos(az * CONV);
+			double zyp = -Math.Cos(ax * CONV) * Math.Sin(az * CONV) - Math.Sin(ax * CONV) * Math.Sin(ay * CONV) * Math.Cos(az * CONV);
+			double zzp = Math.Cos(ay * CONV) * Math.Cos(az * CONV);
+
+
 			double xSin = Math.Sin(ax * CONV);
 			double xCos = Math.Cos(ax * CONV);
 			double ySin = Math.Sin(ay * CONV);
@@ -91,11 +102,17 @@ namespace TriangulArt {
 			double zSin = Math.Sin(az * CONV);
 			double zCos = Math.Cos(az * CONV);
 			foreach (Vertex v in lstVertex) {
+				double xx = v.x * xxp + v.y * xyp + v.z * xzp;
+				double yy = v.x * yxp + v.y * yyp + v.z * yzp;
+				double zz = v.x * zxp + v.y * zyp + v.z * zzp;
+
 				double yt = (v.y * xCos - v.z * xSin);
 				double zt = (v.y * xSin + v.z * xCos);
 				double xt = (v.x * yCos - zt * ySin);
 				double z = CONST_Z + (v.x * ySin + zt * yCos);
 				v.SetPoint(posx + (((xt * zCos - yt * zSin) * zoomx) / z), posy - (((xt * zSin + yt * zCos) * zoomy) / z), z);
+
+				v.SetPoint(posx + xx * zoomx, posy - yy * zoomy, zz);
 			}
 
 			// Tri des faces par ordre des Z
@@ -104,7 +121,7 @@ namespace TriangulArt {
 				lstDraw.Add(lstFace[i]);
 
 			lstDraw.Sort(delegate (Face p1, Face p2) {
-				double cmp = (lstVertex[p1.a].pz + lstVertex[p1.b].pz + lstVertex[p1.c].pz) - (lstVertex[p2.a].pz + lstVertex[p2.b].pz + lstVertex[p2.c].pz);
+				double cmp = p1.GetZFace(lstVertex) - p2.GetZFace(lstVertex);
 				return cmp != 0 ? (int)cmp : p1.num - p2.num;
 			});
 
@@ -127,6 +144,7 @@ namespace TriangulArt {
 						bm.SetPixel(x + (int)lstVertex[numPoint].px, y + (int)lstVertex[numPoint].py, new RvbColor((byte)(64 - x * 63), (byte)(64 + y * 63), (byte)((x + y) * 63)));
 		}
 
+		#region Lecture/Sauvegarde objet
 		private double DecodeValue(string l, int startPos) {
 			int p;
 			l = l.Substring(startPos).Trim();
@@ -239,5 +257,6 @@ namespace TriangulArt {
 			if (wr != null)
 				wr.Close();
 		}
+		#endregion
 	}
 }

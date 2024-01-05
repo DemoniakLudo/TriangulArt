@@ -75,6 +75,7 @@
 			this.bpParamObjet = new System.Windows.Forms.Button();
 			this.bpModif = new System.Windows.Forms.Button();
 			this.bpSupPtsNotUse = new System.Windows.Forms.Button();
+			this.bpRecentre = new System.Windows.Forms.Button();
 			colColor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			((System.ComponentModel.ISupportInitialize)(this.trackX)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.trackY)).BeginInit();
@@ -429,7 +430,7 @@
 			this.lstViewVertex.TabIndex = 16;
 			this.lstViewVertex.UseCompatibleStateImageBehavior = false;
 			this.lstViewVertex.View = System.Windows.Forms.View.Details;
-			this.lstViewVertex.SelectedIndexChanged += new System.EventHandler(this.lstViewVertex_SelectedIndexChanged);
+			this.lstViewVertex.SelectedIndexChanged += new System.EventHandler(this.LstViewVertex_SelectedIndexChanged);
 			// 
 			// colNumVertex
 			// 
@@ -547,7 +548,7 @@
 			this.bpParamObjet.TabIndex = 18;
 			this.bpParamObjet.Text = "Paramèrtres objet";
 			this.bpParamObjet.UseVisualStyleBackColor = true;
-			this.bpParamObjet.Click += new System.EventHandler(this.bpParamObjet_Click);
+			this.bpParamObjet.Click += new System.EventHandler(this.BpParamObjet_Click);
 			// 
 			// bpModif
 			// 
@@ -557,7 +558,7 @@
 			this.bpModif.TabIndex = 19;
 			this.bpModif.Text = "Modif";
 			this.bpModif.UseVisualStyleBackColor = true;
-			this.bpModif.Click += new System.EventHandler(this.bpModif_Click);
+			this.bpModif.Click += new System.EventHandler(this.BpModif_Click);
 			// 
 			// bpSupPtsNotUse
 			// 
@@ -567,13 +568,24 @@
 			this.bpSupPtsNotUse.TabIndex = 20;
 			this.bpSupPtsNotUse.Text = "Supprimer points inutilisés";
 			this.bpSupPtsNotUse.UseVisualStyleBackColor = true;
-			this.bpSupPtsNotUse.Click += new System.EventHandler(this.bpSupPtsNotUse_Click);
+			this.bpSupPtsNotUse.Click += new System.EventHandler(this.BpSupPtsNotUse_Click);
+			// 
+			// bpRecentre
+			// 
+			this.bpRecentre.Location = new System.Drawing.Point(443, 597);
+			this.bpRecentre.Name = "bpRecentre";
+			this.bpRecentre.Size = new System.Drawing.Size(113, 23);
+			this.bpRecentre.TabIndex = 21;
+			this.bpRecentre.Text = "Recentrer objet";
+			this.bpRecentre.UseVisualStyleBackColor = true;
+			this.bpRecentre.Click += new System.EventHandler(this.BpRecentre_Click);
 			// 
 			// EditObjet
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1031, 872);
+			this.Controls.Add(this.bpRecentre);
 			this.Controls.Add(this.bpSupPtsNotUse);
 			this.Controls.Add(this.bpModif);
 			this.Controls.Add(this.bpParamObjet);
@@ -685,6 +697,7 @@
 		private System.Windows.Forms.Button bpParamObjet;
 		private System.Windows.Forms.Button bpModif;
 		private System.Windows.Forms.Button bpSupPtsNotUse;
+		private System.Windows.Forms.Button bpRecentre;
 	}
 }
 

@@ -27,6 +27,16 @@ namespace TriangulArt {
 				o.lstVertex.Add(v3);
 				o.lstFace.Add(new Face(nFace++, nVertex, nVertex + 1, nVertex + 2, t.color));
 				nVertex += 3;
+				if (projet.SelImage().modeRendu == 1) {
+					v1 = new Vertex(adjX * (width - t.x1 - width / 2), height / 2 - t.y1, 0);
+					v2 = new Vertex(adjX * (width - t.x2 - width / 2), height / 2 - t.y2, 0);
+					v3 = new Vertex(adjX * (width - t.x3 - width / 2), height / 2 - t.y3, 0);
+					o.lstVertex.Add(v1);
+					o.lstVertex.Add(v2);
+					o.lstVertex.Add(v3);
+					o.lstFace.Add(new Face(nFace++, nVertex, nVertex + 1, nVertex + 2, t.color));
+					nVertex += 3;
+				}
 			}
 			return true;
 		}

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace TriangulArt {
@@ -10,6 +11,8 @@ namespace TriangulArt {
 		private Label[] colors = new Label[16];
 		private byte selColor = 1;
 		private int maxPen = 15;
+		private enum LstSel { SelPoint, SelFace };
+		private LstSel lastSel;
 
 		public EditObjet(Projet p, Objet o) {
 			InitializeComponent();
@@ -33,17 +36,47 @@ namespace TriangulArt {
 			UpdatePalette();
 		}
 
+		protected override bool ProcessCmdKey(ref Message msg, Keys keyData) {
+			switch (keyData) {
+				case Keys.Left:
+					return true;
+
+				case Keys.Right:
+					return true;
+
+				case Keys.Delete:
+					switch (lastSel) {
+						case LstSel.SelPoint:
+							bool errFace = numVertex == -1;
+							if (!errFace)
+								for (int i = 0; i < objet.lstFace.Count; i++) {
+									if (objet.lstFace[i].a == numVertex || objet.lstFace[i].b == numVertex || objet.lstFace[i].c == numVertex) {
+										errFace = true;
+										break;
+									}
+								}
+							if (!errFace)
+								DeleteVertex();
+							break;
+
+						case LstSel.SelFace:
+							DeleteFace();
+							break;
+					}
+					return true;
+			}
+			return base.ProcessCmdKey(ref msg, keyData);
+		}
+
 		private void DisplayBoutons() {
-			bool errFace = true;
-			if (numVertex != -1) {
-				errFace = false;
+			bool errFace = numVertex == -1;
+			if (numVertex != -1)
 				for (int i = 0; i < objet.lstFace.Count; i++) {
 					if (objet.lstFace[i].a == numVertex || objet.lstFace[i].b == numVertex || objet.lstFace[i].c == numVertex) {
 						errFace = true;
 						break;
 					}
 				}
-			}
 			bpEditVertex.Enabled = objet.lstVertex.Count > 0 && numVertex != -1;
 			bpSupVertex.Enabled = !errFace;
 			bpEditFace.Enabled = bpSupFace.Enabled = objet.lstFace.Count > 0 && numFace != -1;
@@ -105,17 +138,6 @@ namespace TriangulArt {
 			pictureBoxObj.Refresh();
 		}
 
-		private void lstViewVertex_SelectedIndexChanged(object sender, EventArgs e) {
-			numVertex = lstViewVertex.SelectedIndices.Count > 0 ? lstViewVertex.SelectedIndices[0] : -1;
-			if (numVertex != -1) {
-				Vertex v = objet.lstVertex[numVertex];
-				txbVertexX.Text = v.x.ToString();
-				txbVertexY.Text = v.y.ToString();
-				txbVertexZ.Text = v.z.ToString();
-			}
-			DisplayObj();
-		}
-
 		private void UpdatePalette() {
 			for (int i = 0; i < 16; i++) {
 				RvbColor col = PaletteCpc.GetColorPal(i);
@@ -123,6 +145,42 @@ namespace TriangulArt {
 				colors[i].ForeColor = (col.r * 9798 + col.v * 19235 + col.b * 3735) > 0x400000 ? Color.Black : Color.White;
 			}
 			lblFaceColor.BackColor = Color.FromArgb(PaletteCpc.GetColorPal(selColor).GetColorArgb);
+		}
+
+		private void DeleteVertex() {
+			if (MessageBox.Show("Confirmer la supperssion du point " + numVertex, "", MessageBoxButtons.YesNo) == DialogResult.Yes) {
+				objet.lstVertex.RemoveAt(numVertex);
+				for (int i = 0; i < objet.lstFace.Count; i++) {
+					if (objet.lstFace[i].a >= numVertex)
+						objet.lstFace[i].a--;
+
+					if (objet.lstFace[i].b >= numVertex)
+						objet.lstFace[i].b--;
+
+					if (objet.lstFace[i].c >= numVertex)
+						objet.lstFace[i].c--;
+				}
+				BpRedraw_Click(null, null);
+			}
+		}
+
+		private void DeleteFace() {
+			if (MessageBox.Show("Confirmer la supperssion de la face " + numFace, "", MessageBoxButtons.YesNo) == DialogResult.Yes) {
+				objet.lstFace.RemoveAt(numFace);
+				BpRedraw_Click(null, null);
+			}
+		}
+
+		private void LstViewVertex_SelectedIndexChanged(object sender, EventArgs e) {
+			numVertex = lstViewVertex.SelectedIndices.Count > 0 ? lstViewVertex.SelectedIndices[0] : -1;
+			if (numVertex != -1) {
+				Vertex v = objet.lstVertex[numVertex];
+				txbVertexX.Text = v.x.ToString();
+				txbVertexY.Text = v.y.ToString();
+				txbVertexZ.Text = v.z.ToString();
+				lastSel = LstSel.SelPoint;
+			}
+			DisplayObj();
 		}
 
 		private void LstViewFace_SelectedIndexChanged(object sender, EventArgs e) {
@@ -135,6 +193,7 @@ namespace TriangulArt {
 				selColor = f.pen;
 				RvbColor faceColor = PaletteCpc.GetColorPal(f.pen);
 				lblFaceColor.BackColor = Color.FromArgb(faceColor.GetColorArgb);
+				lastSel = LstSel.SelFace;
 			}
 			DisplayObj();
 		}
@@ -232,20 +291,7 @@ namespace TriangulArt {
 		}
 
 		private void BpSupVertex_Click(object sender, EventArgs e) {
-			if (MessageBox.Show("Confirmer la supperssion du point " + numVertex, "", MessageBoxButtons.YesNo) == DialogResult.Yes) {
-				objet.lstVertex.RemoveAt(numVertex);
-				for (int i = 0; i < objet.lstFace.Count; i++) {
-					if (objet.lstFace[i].a >= numVertex)
-						objet.lstFace[i].a--;
-
-					if (objet.lstFace[i].b >= numVertex)
-						objet.lstFace[i].b--;
-
-					if (objet.lstFace[i].c >= numVertex)
-						objet.lstFace[i].c--;
-				}
-				BpRedraw_Click(sender, e);
-			}
+			DeleteVertex();
 		}
 
 		private void BpAddFace_Click(object sender, EventArgs e) {
@@ -275,10 +321,7 @@ namespace TriangulArt {
 		}
 
 		private void BpSupFace_Click(object sender, EventArgs e) {
-			if (MessageBox.Show("Confirmer la supperssion de la face " + numFace, "", MessageBoxButtons.YesNo) == DialogResult.Yes) {
-				objet.lstFace.RemoveAt(numFace);
-				BpRedraw_Click(sender, e);
-			}
+			DeleteFace();
 		}
 
 		private void ClickColor(object sender, MouseEventArgs e) {
@@ -292,17 +335,22 @@ namespace TriangulArt {
 		}
 		#endregion
 
-		private void bpModif_Click(object sender, EventArgs e) {
+		private void BpModif_Click(object sender, EventArgs e) {
 			objet.ModifObject(384, 256);
 			BpRedraw_Click(sender, e);
 		}
 
-		private void bpParamObjet_Click(object sender, EventArgs e) {
+		private void BpParamObjet_Click(object sender, EventArgs e) {
 			new ParamObjet(objet).ShowDialog();
 			BpRedraw_Click(sender, e);
 		}
 
-		private void bpSupPtsNotUse_Click(object sender, EventArgs e) {
+		private void BpRecentre_Click(object sender, EventArgs e) {
+			objet.RecentrePoints();
+			BpRedraw_Click(sender, e);
+		}
+
+		private void BpSupPtsNotUse_Click(object sender, EventArgs e) {
 			if (MessageBox.Show("Confirmer la supperssion des points inutilisés", "", MessageBoxButtons.YesNo) == DialogResult.Yes) {
 				for (int v = objet.lstVertex.Count - 1; v >= 0; v--) {
 					bool errFace = false;
