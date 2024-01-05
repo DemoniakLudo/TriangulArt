@@ -13,7 +13,7 @@ namespace TriangulArt {
 			int nbOctets = 0;
 			string s = "";
 
-			sw.WriteLine(nom);
+			sw.WriteLine(";" + nom);
 			if (!modePolice && !mode3D) {
 				int nbCols = 1 << (4 >> mode);
 				if (cpcPlus) {

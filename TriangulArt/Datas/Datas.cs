@@ -371,14 +371,13 @@ namespace TriangulArt {
 		}
 
 		public void Rapproche(int distMin) {
-			int deltax = 0, deltay = 0;
-			for (int i = 0; i < lstTriangle.Count - 1; i++)
+            for (int i = 0; i < lstTriangle.Count - 1; i++)
 				for (int j = i + 1; j < lstTriangle.Count; j++) {
 					Triangle tFirst = lstTriangle[i];
 					Triangle tSecond = lstTriangle[j];
-					deltax = tFirst.x1 - tSecond.x1;
-					deltay = tFirst.y1 - tSecond.y1;
-					double d = Math.Sqrt(deltax * deltax + deltay * deltay);
+                    int deltax = tFirst.x1 - tSecond.x1;
+                    int deltay = tFirst.y1 - tSecond.y1;
+                    double d = Math.Sqrt(deltax * deltax + deltay * deltay);
 					if (d > 0 && d <= distMin) {
 						tFirst.x1 -= (deltax + 1) / 2;
 						tSecond.x1 += (deltax + 1) / 2;
