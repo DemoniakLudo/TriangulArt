@@ -84,17 +84,6 @@ namespace TriangulArt {
 		// Affichage de l'objet complêt en fonction des paramètres choisis
 		//
 		public void DrawObj(DirectBitmap bm, double posx, double posy, double zoomx, double zoomy, double ax, double ay, double az, int numFace, int numPoint, List<Triangle> lstTri = null, DirectBitmap bmCalc = null) {
-			double xxp = Math.Cos(ax * CONV) * Math.Cos(ay * CONV);
-			double xyp = Math.Sin(ax * CONV) * Math.Cos(ay * CONV);
-			double xzp = Math.Sin(ay * CONV);
-			double yxp = Math.Sin(ax * CONV) * Math.Cos(az * CONV) + Math.Cos(ax * CONV) * Math.Sin(ay * CONV) * Math.Sin(az * CONV);
-			double yyp = -Math.Cos(ax * CONV) * Math.Cos(az * CONV) + Math.Sin(ax * CONV) * Math.Sin(ay * CONV) * Math.Sin(az * CONV);
-			double yzp = -Math.Cos(ay * CONV) * Math.Sin(az * CONV);
-			double zxp = Math.Sin(ax * CONV) * Math.Sin(az * CONV) - Math.Cos(ax * CONV) * Math.Sin(ay * CONV) * Math.Cos(az * CONV);
-			double zyp = -Math.Cos(ax * CONV) * Math.Sin(az * CONV) - Math.Sin(ax * CONV) * Math.Sin(ay * CONV) * Math.Cos(az * CONV);
-			double zzp = Math.Cos(ay * CONV) * Math.Cos(az * CONV);
-
-
 			double xSin = Math.Sin(ax * CONV);
 			double xCos = Math.Cos(ax * CONV);
 			double ySin = Math.Sin(ay * CONV);
@@ -102,17 +91,11 @@ namespace TriangulArt {
 			double zSin = Math.Sin(az * CONV);
 			double zCos = Math.Cos(az * CONV);
 			foreach (Vertex v in lstVertex) {
-				double xx = v.x * xxp + v.y * xyp + v.z * xzp;
-				double yy = v.x * yxp + v.y * yyp + v.z * yzp;
-				double zz = v.x * zxp + v.y * zyp + v.z * zzp;
-
 				double yt = (v.y * xCos - v.z * xSin);
 				double zt = (v.y * xSin + v.z * xCos);
 				double xt = (v.x * yCos - zt * ySin);
 				double z = CONST_Z + (v.x * ySin + zt * yCos);
 				v.SetPoint(posx + (((xt * zCos - yt * zSin) * zoomx) / z), posy - (((xt * zSin + yt * zCos) * zoomy) / z), z);
-
-				v.SetPoint(posx + xx * zoomx, posy - yy * zoomy, zz);
 			}
 
             // Tri des faces par ordre des Z
