@@ -55,6 +55,7 @@
 			this.label13 = new System.Windows.Forms.Label();
 			this.txbPosZ = new System.Windows.Forms.TextBox();
 			this.chkClearObj = new System.Windows.Forms.CheckBox();
+			this.chkYorient = new System.Windows.Forms.CheckBox();
 			this.SuspendLayout();
 			// 
 			// rbVide
@@ -362,11 +363,22 @@
 			this.chkClearObj.Text = "Effacer objet précédent";
 			this.chkClearObj.UseVisualStyleBackColor = true;
 			// 
+			// chkYorient
+			// 
+			this.chkYorient.AutoSize = true;
+			this.chkYorient.Location = new System.Drawing.Point(460, 267);
+			this.chkYorient.Name = "chkYorient";
+			this.chkYorient.Size = new System.Drawing.Size(110, 17);
+			this.chkYorient.TabIndex = 19;
+			this.chkYorient.Text = "Orientation vers Y";
+			this.chkYorient.UseVisualStyleBackColor = true;
+			// 
 			// NewObject
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(622, 371);
+			this.Controls.Add(this.chkYorient);
 			this.Controls.Add(this.chkClearObj);
 			this.Controls.Add(this.label13);
 			this.Controls.Add(this.txbPosZ);
@@ -443,5 +455,6 @@
 		private System.Windows.Forms.Label label13;
 		private System.Windows.Forms.TextBox txbPosZ;
 		private System.Windows.Forms.CheckBox chkClearObj;
-    }
+		private System.Windows.Forms.CheckBox chkYorient;
+	}
 }

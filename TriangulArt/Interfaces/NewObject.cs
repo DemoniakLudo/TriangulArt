@@ -53,7 +53,7 @@ namespace TriangulArt {
 
 			if (rbPyramide.Checked) {
 				if (double.TryParse(txbPyraBase.Text, out arete) && double.TryParse(txbPyraHauteur.Text, out hauteur1) && arete > 0 && hauteur1 != 0)
-					obj.CreePyramide(posx, posy, posz, arete, hauteur1);
+					obj.CreePyramide(posx, posy, posz, arete, hauteur1, chkYorient.Checked);
 				else {
 					err = true;
 					MessageBox.Show("Les données pour la création d'une pyramide sont invalide", "Erreur");
@@ -69,7 +69,7 @@ namespace TriangulArt {
 			}
 			if (rbDisque.Checked) {
 				if (double.TryParse(txbDisqueRayon.Text, out rayon) && int.TryParse(txbDisqueDivision.Text, out division) && rayon > 0 && division > 0)
-					obj.CreeDisque(posx, posy, posz, rayon, division);
+					obj.CreeDisque(posx, posy, posz, rayon, division, chkYorient.Checked);
 				else {
 					err = true;
 					MessageBox.Show("Les données pour la création d'un disque sont invalide", "Erreur");
@@ -79,7 +79,7 @@ namespace TriangulArt {
 				if (double.TryParse(txbSoucoupeRayon.Text, out rayon) && int.TryParse(txbSoucoupeDivision.Text, out division)
 					&& double.TryParse(txbSoucoupeHauteur1.Text, out hauteur1) && double.TryParse(txbSoucoupeHauteur2.Text, out hauteur2)
 					&& rayon > 0 && division > 0 && hauteur1 != hauteur2)
-					obj.CreeDoubleDisque(posx, posy, posz, rayon, division, hauteur1, hauteur2);
+					obj.CreeDoubleDisque(posx, posy, posz, rayon, division, hauteur1, hauteur2, chkYorient.Checked);
 				else {
 					err = true;
 					MessageBox.Show("Les données pour la création d'une soucoupe sont invalide", "Erreur");

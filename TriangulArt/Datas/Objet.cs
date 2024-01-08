@@ -139,31 +139,41 @@ namespace TriangulArt {
 			lstVertex.Add(new Vertex(px + lg, py + lg, pz + lg));
 			lstVertex.Add(new Vertex(px + lg, py + lg, pz - lg));
 			lstVertex.Add(new Vertex(px - lg, py + lg, pz - lg));
+
 			lstFace.Add(new Face(0, nv, nv + 4, nv + 5, 1));
 			lstFace.Add(new Face(1, nv, nv + 5, nv + 1, 1));
 			lstFace.Add(new Face(2, nv + 1, nv + 5, nv + 6, 2));
 			lstFace.Add(new Face(3, nv + 1, nv + 6, nv + 2, 2));
-			;
+
 			lstFace.Add(new Face(4, nv + 2, nv, nv + 1, 3));
 			lstFace.Add(new Face(5, nv + 2, nv, nv + 3, 3));
 			lstFace.Add(new Face(6, nv + 2, nv + 6, nv + 7, 4));
 			lstFace.Add(new Face(7, nv + 2, nv + 7, nv + 3, 4));
-			;
+
 			lstFace.Add(new Face(8, nv + 3, nv + 7, nv + 4, 5));
 			lstFace.Add(new Face(9, nv + 3, nv + 4, nv, 5));
 			lstFace.Add(new Face(10, nv + 6, nv + 4, nv + 5, 6));
 			lstFace.Add(new Face(11, nv + 6, nv + 4, nv + 7, 6));
 		}
 
-		public void CreePyramide(double px, double py, double pz, double arete, double hauteur) {
+		public void CreePyramide(double px, double py, double pz, double arete, double hauteur, bool yOrient) {
 			double lg = arete / 2.0;
 			double h2 = hauteur / 2.0;
 			int nv = lstVertex.Count;
-			lstVertex.Add(new Vertex(px, py, pz - h2));
-			lstVertex.Add(new Vertex(px - lg, py - lg, pz + h2));
-			lstVertex.Add(new Vertex(px + lg, py - lg, pz + h2));
-			lstVertex.Add(new Vertex(px + lg, py + lg, pz + h2));
-			lstVertex.Add(new Vertex(px - lg, py + lg, pz + h2));
+			if (yOrient) {
+				lstVertex.Add(new Vertex(px, py - h2, pz));
+				lstVertex.Add(new Vertex(px - lg, py + h2, pz - lg));
+				lstVertex.Add(new Vertex(px + lg, py + h2, pz - lg));
+				lstVertex.Add(new Vertex(px + lg, py + h2, pz + lg));
+				lstVertex.Add(new Vertex(px - lg, py + h2, pz + lg));
+			}
+			else {
+				lstVertex.Add(new Vertex(px, py, pz - h2));
+				lstVertex.Add(new Vertex(px - lg, py - lg, pz + h2));
+				lstVertex.Add(new Vertex(px + lg, py - lg, pz + h2));
+				lstVertex.Add(new Vertex(px + lg, py + lg, pz + h2));
+				lstVertex.Add(new Vertex(px - lg, py + lg, pz + h2));
+			}
 			lstFace.Add(new Face(0, nv + 0, nv + 1, nv + 2, 1));
 			lstFace.Add(new Face(1, nv + 0, nv + 2, nv + 3, 2));
 			lstFace.Add(new Face(2, nv + 0, nv + 3, nv + 4, 1));
@@ -172,14 +182,18 @@ namespace TriangulArt {
 			lstFace.Add(new Face(4, nv + 3, nv + 1, nv + 4, 3));
 		}
 
-		public void CreeDisque(double px, double py, double pz, double rayon, int division) {
+		public void CreeDisque(double px, double py, double pz, double rayon, int division, bool yOrient) {
 			int numVertex = 0;
 			int nv = lstVertex.Count;
 			lstVertex.Add(new Vertex(px, py, pz));
 			for (int ang = 0; ang < 360; ang += 360 / division) {
 				double x = rayon * Math.Cos(ang * CONV);
 				double z = rayon * Math.Sin(ang * CONV);
-				lstVertex.Add(new Vertex(px + x, py + z, pz));
+				if (yOrient)
+					lstVertex.Add(new Vertex(px + x, py + z, pz));
+				else
+					lstVertex.Add(new Vertex(px + x, py, pz + z));
+
 				numVertex++;
 			}
 			int numFace = 0;
@@ -190,17 +204,29 @@ namespace TriangulArt {
 			}
 		}
 
-		public void CreeDoubleDisque(double px, double py, double pz, double rayon, int division, double haut1, double haut3) {
+		public void CreeDoubleDisque(double px, double py, double pz, double rayon, int division, double haut1, double haut3, bool yOrient) {
 			int numVertex = 0;
 			int nv = lstVertex.Count;
-			lstVertex.Add(new Vertex(px, py, pz + haut1));
+			if (yOrient)
+				lstVertex.Add(new Vertex(px, py, pz + haut1));
+			else
+				lstVertex.Add(new Vertex(px, py + haut1, pz));
+
 			for (int ang = 0; ang < 360; ang += 360 / division) {
 				double x = rayon * Math.Cos(ang * CONV);
 				double z = rayon * Math.Sin(ang * CONV);
-				lstVertex.Add(new Vertex(px + x, py + z, pz));
+				if (yOrient)
+					lstVertex.Add(new Vertex(px + x, py + z, pz));
+				else
+					lstVertex.Add(new Vertex(px + x, py, pz + z));
+
 				numVertex++;
 			}
-			lstVertex.Add(new Vertex(px, py, pz + haut3));
+			if (yOrient)
+				lstVertex.Add(new Vertex(px, py, pz + haut3));
+			else
+				lstVertex.Add(new Vertex(px, py + haut3, pz));
+
 			int numFace = 0;
 			for (int i = 1; i <= numVertex; i++) {
 				int v1 = i <= numVertex ? i : 0 + i - numVertex;
