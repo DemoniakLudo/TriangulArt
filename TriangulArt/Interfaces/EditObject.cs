@@ -9,6 +9,9 @@ namespace TriangulArt {
 		private DirectBitmap bmpLock = new DirectBitmap(768, 512);
 		private int numFace = -1, numVertex = -1;
 		private Label[] colors = new Label[16];
+		private CheckBox[] lockColors = new CheckBox[16];
+		private Label lblLock;
+		private int[] lockState = new int[16];
 		private byte selColor = 1;
 		private int maxPen = 15;
 		private enum LstSel { SelPoint, SelFace };
@@ -29,6 +32,26 @@ namespace TriangulArt {
 				};
 				colors[i].MouseClick += ClickColor;
 				Controls.Add(colors[i]);
+				if (p.cpcPlus) {
+					if (i == 0) {
+						// Affichage de "Lock"
+						lblLock = new Label {
+							Location = new System.Drawing.Point(1013, 58),
+							Size = new System.Drawing.Size(31, 13),
+							Text = "Lock"
+						};
+					}
+					Controls.Add(lblLock);
+					// Générer les contrôles de "bloquage couleur"
+					lockColors[i] = new CheckBox {
+						Location = new Point(974 + 48, 80 + i * 48),
+						Size = new Size(20, 20),
+						Tag = i
+					};
+					lockColors[i].Click += ClickLock;
+					Controls.Add(lockColors[i]);
+					lockColors[i].Update();
+				}
 			}
 			DisplayVertex(-1);
 			DisplayFace(-1);
@@ -222,19 +245,17 @@ namespace TriangulArt {
 
 		#region gestion boutons
 		private void BpNewObject_Click(object sender, EventArgs e) {
-			if (MessageBox.Show("Confirmer la création d'un nouvel objet", "", MessageBoxButtons.YesNo) == DialogResult.Yes) {
-				new NewObject(objet).ShowDialog();
-				DisplayVertex(-1);
-				DisplayFace(-1);
-				DisplayObj();
-			}
+			new NewObject(objet).ShowDialog();
+			DisplayVertex(-1);
+			DisplayFace(-1);
+			DisplayObj();
 		}
 
 		private void ReadObject(bool withFusion = false) {
 			OpenFileDialog of = new OpenFileDialog { Filter = "Fichiers objets ascii (*.asc)|*.asc|Tous les fichiers (*.*)|*.*\"'" };
 			if (of.ShowDialog() == DialogResult.OK) {
 				int numPen = chkImportPalette.Checked ? maxPen : 0;
-				objet.ReadObject(of.FileName, ref numPen, withFusion);
+				objet.ReadObject(of.FileName, ref numPen, lockState, withFusion);
 				if (chkImportPalette.Checked)
 					maxPen = numPen;
 			}
@@ -332,6 +353,12 @@ namespace TriangulArt {
 
 			UpdatePalette();
 			RedrawAll();
+		}
+
+		private void ClickLock(object sender, EventArgs e) {
+			CheckBox colorLock = sender as CheckBox;
+			int numLock = colorLock.Tag != null ? (int)colorLock.Tag : 0;
+			lockState[numLock] = colorLock.Checked ? 1 : 0;
 		}
 		#endregion
 
