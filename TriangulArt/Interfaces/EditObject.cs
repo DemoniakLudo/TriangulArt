@@ -360,7 +360,6 @@ namespace TriangulArt {
 			int numLock = colorLock.Tag != null ? (int)colorLock.Tag : 0;
 			lockState[numLock] = colorLock.Checked ? 1 : 0;
 		}
-		#endregion
 
 		private void BpModif_Click(object sender, EventArgs e) {
 			objet.ModifObject(384, 256);
@@ -404,5 +403,6 @@ namespace TriangulArt {
 				BpRedraw_Click(sender, e);
 			}
 		}
+		#endregion
 	}
 }

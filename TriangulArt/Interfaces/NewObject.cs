@@ -52,9 +52,7 @@ namespace TriangulArt {
 				obj.Clear();
 
 			if (rbPyramide.Checked) {
-				double.TryParse(txbPyraBase.Text, out arete);
-				double.TryParse(txbPyraHauteur.Text, out hauteur1);
-				if (arete > 0 && hauteur1 > 0)
+				if (double.TryParse(txbPyraBase.Text, out arete) && double.TryParse(txbPyraHauteur.Text, out hauteur1) && arete > 0 && hauteur1 != 0)
 					obj.CreePyramide(posx, posy, posz, arete, hauteur1);
 				else {
 					err = true;
@@ -62,8 +60,7 @@ namespace TriangulArt {
 				}
 			}
 			if (rbCube.Checked) {
-				double.TryParse(txbCubeArete.Text, out arete);
-				if (arete != 0)
+				if (double.TryParse(txbCubeArete.Text, out arete) && arete != 0)
 					obj.CreeCube(posx, posy, posz, arete);
 				else {
 					err = true;
@@ -71,9 +68,7 @@ namespace TriangulArt {
 				}
 			}
 			if (rbDisque.Checked) {
-				double.TryParse(txbDisqueRayon.Text, out rayon);
-				int.TryParse(txbDisqueDivision.Text, out division);
-				if (rayon > 0 && division > 0)
+				if (double.TryParse(txbDisqueRayon.Text, out rayon) && int.TryParse(txbDisqueDivision.Text, out division) && rayon > 0 && division > 0)
 					obj.CreeDisque(posx, posy, posz, rayon, division);
 				else {
 					err = true;
@@ -81,11 +76,9 @@ namespace TriangulArt {
 				}
 			}
 			if (rbSoucoupe.Checked) {
-				double.TryParse(txbSoucoupeRayon.Text, out rayon);
-				int.TryParse(txbSoucoupeDivision.Text, out division);
-				double.TryParse(txbSoucoupeHauteur1.Text, out hauteur1);
-				double.TryParse(txbSoucoupeHauteur2.Text, out hauteur2);
-				if (rayon > 0 && division > 0 && hauteur1 != hauteur2)
+				if (double.TryParse(txbSoucoupeRayon.Text, out rayon) && int.TryParse(txbSoucoupeDivision.Text, out division)
+					&& double.TryParse(txbSoucoupeHauteur1.Text, out hauteur1) && double.TryParse(txbSoucoupeHauteur2.Text, out hauteur2)
+					&& rayon > 0 && division > 0 && hauteur1 != hauteur2)
 					obj.CreeDoubleDisque(posx, posy, posz, rayon, division, hauteur1, hauteur2);
 				else {
 					err = true;
