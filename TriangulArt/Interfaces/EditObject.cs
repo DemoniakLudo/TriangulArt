@@ -222,12 +222,10 @@ namespace TriangulArt {
 
 		#region gestion boutons
 		private void BpNewObject_Click(object sender, EventArgs e) {
-			if (MessageBox.Show("Confirmer la création d'un nouvel objet", "", MessageBoxButtons.YesNo) == DialogResult.Yes) {
-				new NewObject(objet).ShowDialog();
-				DisplayVertex(-1);
-				DisplayFace(-1);
-				DisplayObj();
-			}
+			new NewObject(objet).ShowDialog();
+			DisplayVertex(-1);
+			DisplayFace(-1);
+			DisplayObj();
 		}
 
 		private void ReadObject(bool withFusion = false) {
