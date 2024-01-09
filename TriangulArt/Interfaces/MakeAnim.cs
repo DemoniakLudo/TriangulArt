@@ -184,7 +184,7 @@ namespace TriangulArt {
 			OpenFileDialog of = new OpenFileDialog { Filter = "Fichiers objets ascii (*.asc)|*.asc|Tous les fichiers (*.*)|*.*\"'" };
 			if (of.ShowDialog() == DialogResult.OK) {
 				int numPen = 0;
-				anim.objet.ReadObject(of.FileName, ref numPen);
+				anim.objet.ReadObject(projet, of.FileName, ref numPen);
 				AddInfo("Objet " + Path.GetFileName(of.FileName) + " chargé. " + anim.objet.lstFace.Count + " Faces.");
 			}
 			DisplayFrame(trkIndex.Value);

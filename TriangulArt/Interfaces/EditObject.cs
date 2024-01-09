@@ -14,11 +14,13 @@ namespace TriangulArt {
 		private int[] lockState = new int[16];
 		private byte selColor = 1;
 		private int maxPen = 15;
+		private Projet projet;
 		private enum LstSel { SelPoint, SelFace };
 		private LstSel lastSel;
 
 		public EditObjet(Projet p, Objet o) {
 			InitializeComponent();
+			projet = p;
 			chkImportPalette.Visible = p.cpcPlus;
 			objet = o != null ? o : new Objet();
 			for (int i = 0; i < 16; i++) {
@@ -256,7 +258,7 @@ namespace TriangulArt {
 			OpenFileDialog of = new OpenFileDialog { Filter = "Fichiers objets ascii (*.asc)|*.asc|Tous les fichiers (*.*)|*.*\"'" };
 			if (of.ShowDialog() == DialogResult.OK) {
 				int numPen = chkImportPalette.Checked ? maxPen : 0;
-				objet.ReadObject(of.FileName, ref numPen, lockState, withFusion);
+				objet.ReadObject(projet, of.FileName, ref numPen, lockState, withFusion);
 				if (chkImportPalette.Checked)
 					maxPen = numPen;
 			}

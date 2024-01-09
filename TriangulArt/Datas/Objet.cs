@@ -11,6 +11,7 @@ namespace TriangulArt {
 		public List<Vertex> lstVertex = new List<Vertex>();
 		public List<Face> lstFace = new List<Face>();
 		public string nom = "";
+
 		public Objet() {
 		}
 
@@ -275,16 +276,19 @@ namespace TriangulArt {
 			}
 		}
 
-		private void SetFaceColor(string l, ref int numPen) {
+		private void SetFaceColor(Projet p, string l, ref int numPen) {
 			// Lecture couleurs R,V,B de la face
 			int pr = l.LastIndexOf('R') + 1;
 			int pg = l.LastIndexOf('G') + 1;
 			int pb = l.LastIndexOf('B') + 1;
 			if (pr > 1 && pg > 1 && pb > 1) {
 				RvbColor faceColor = new RvbColor((byte)DecodeValue(l, pr), (byte)DecodeValue(l, pg), (byte)DecodeValue(l, pb));
-				if (numPen != 0 && PaletteCpc.SetPaletteFromColor(faceColor, numPen))
-					numPen--;
+				if (numPen != 0 && PaletteCpc.SetPaletteFromColor(faceColor, numPen)) {
+					foreach (Datas d in p.lstData)
+						d.palette[numPen] = PaletteCpc.Palette[numPen];
 
+					numPen--;
+				}
 				lstFace[lstFace.Count - 1].pen = PaletteCpc.GetNumPen(faceColor);
 			}
 		}
@@ -292,7 +296,7 @@ namespace TriangulArt {
 		//
 		// Lecture et construction objet
 		//
-		public void ReadObject(string fileName, ref int numPen, int[] lockState = null, bool fusion = false) {
+		public void ReadObject(Projet p, string fileName, ref int numPen, int[] lockState = null, bool fusion = false) {
 			StreamReader rd = null;
 			try {
 				rd = new StreamReader(fileName);
@@ -318,7 +322,7 @@ namespace TriangulArt {
 								while (lockState[numPen] != 0 && numPen > 0)
 									numPen--;
 
-							SetFaceColor(l, ref numPen);
+							SetFaceColor(p, l, ref numPen);
 						}
 					}
 				}
