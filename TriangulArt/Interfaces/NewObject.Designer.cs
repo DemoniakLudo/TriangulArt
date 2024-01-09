@@ -354,8 +354,6 @@
 			// chkClearObj
 			// 
 			this.chkClearObj.AutoSize = true;
-			this.chkClearObj.Checked = true;
-			this.chkClearObj.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.chkClearObj.Location = new System.Drawing.Point(13, 179);
 			this.chkClearObj.Name = "chkClearObj";
 			this.chkClearObj.Size = new System.Drawing.Size(137, 17);

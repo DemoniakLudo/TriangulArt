@@ -76,6 +76,7 @@
 			this.bpModif = new System.Windows.Forms.Button();
 			this.bpSupPtsNotUse = new System.Windows.Forms.Button();
 			this.bpRecentre = new System.Windows.Forms.Button();
+			this.bpSupFaceDouble = new System.Windows.Forms.Button();
 			colColor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			((System.ComponentModel.ISupportInitialize)(this.trackX)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.trackY)).BeginInit();
@@ -562,7 +563,7 @@
 			// 
 			// bpSupPtsNotUse
 			// 
-			this.bpSupPtsNotUse.Location = new System.Drawing.Point(368, 808);
+			this.bpSupPtsNotUse.Location = new System.Drawing.Point(368, 773);
 			this.bpSupPtsNotUse.Name = "bpSupPtsNotUse";
 			this.bpSupPtsNotUse.Size = new System.Drawing.Size(135, 23);
 			this.bpSupPtsNotUse.TabIndex = 20;
@@ -580,11 +581,22 @@
 			this.bpRecentre.UseVisualStyleBackColor = true;
 			this.bpRecentre.Click += new System.EventHandler(this.BpRecentre_Click);
 			// 
+			// bpSupFaceDouble
+			// 
+			this.bpSupFaceDouble.Location = new System.Drawing.Point(450, 804);
+			this.bpSupFaceDouble.Name = "bpSupFaceDouble";
+			this.bpSupFaceDouble.Size = new System.Drawing.Size(154, 23);
+			this.bpSupFaceDouble.TabIndex = 22;
+			this.bpSupFaceDouble.Text = "Supprimer faces redondantes";
+			this.bpSupFaceDouble.UseVisualStyleBackColor = true;
+			this.bpSupFaceDouble.Click += new System.EventHandler(this.bpSupFaceDouble_Click);
+			// 
 			// EditObjet
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1047, 872);
+			this.Controls.Add(this.bpSupFaceDouble);
 			this.Controls.Add(this.bpRecentre);
 			this.Controls.Add(this.bpSupPtsNotUse);
 			this.Controls.Add(this.bpModif);
@@ -698,6 +710,7 @@
 		private System.Windows.Forms.Button bpModif;
 		private System.Windows.Forms.Button bpSupPtsNotUse;
 		private System.Windows.Forms.Button bpRecentre;
+		private System.Windows.Forms.Button bpSupFaceDouble;
 	}
 }
 

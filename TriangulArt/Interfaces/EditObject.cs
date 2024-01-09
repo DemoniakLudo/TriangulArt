@@ -83,7 +83,8 @@ namespace TriangulArt {
 							break;
 
 						case LstSel.SelFace:
-							DeleteFace();
+							if (numFace != -1)
+								DeleteFace();
 							break;
 					}
 					return true;
@@ -374,6 +375,23 @@ namespace TriangulArt {
 		private void BpRecentre_Click(object sender, EventArgs e) {
 			objet.RecentrePoints();
 			BpRedraw_Click(sender, e);
+		}
+
+		private void bpSupFaceDouble_Click(object sender, EventArgs e) {
+			if (MessageBox.Show("Confirmer la supperssion des faces redondantes", "", MessageBoxButtons.YesNo) == DialogResult.Yes) {
+				DisplayObj();
+				for (int j = objet.lstFace.Count - 1; j >= 0; j--) {
+					for (int i = j - 1; i >= 0; i--) {
+						Triangle t1 = objet.lstFace[i].GetTriangleCalc(objet.lstVertex, 1);
+						Triangle t2 = objet.lstFace[j].GetTriangleCalc(objet.lstVertex, 1);
+						if (t1.x1 == t2.x1 && t1.x2 == t2.x2 && t1.x3 == t2.x3 && t1.y1 == t2.y1 && t1.y2 == t2.y2 && t1.y3 == t2.y3) {
+							objet.lstFace.RemoveAt(j);
+							break;
+						}
+					}
+				}
+				BpRedraw_Click(sender, e);
+			}
 		}
 
 		private void BpSupPtsNotUse_Click(object sender, EventArgs e) {

@@ -23,12 +23,12 @@ namespace TriangulArt {
 			this.c = c;
 		}
 
-		public Triangle GetTriangleCalc(List<Vertex> lstVertex, byte pen, DirectBitmap bm) {
+		public Triangle GetTriangleCalc(List<Vertex> lstVertex, byte pen, DirectBitmap bm = null) {
 			return new Triangle((int)lstVertex[a].px, (int)lstVertex[a].py, (int)lstVertex[b].px, (int)lstVertex[b].py, (int)lstVertex[c].px, (int)lstVertex[c].py, pen, bm);
 		}
 
 		public double GetZFace(List<Vertex> lstVertex) {
-			return	lstVertex[a].pz + lstVertex[b].pz + lstVertex[c].pz;
+			return lstVertex[a].pz + lstVertex[b].pz + lstVertex[c].pz;
 		}
 	}
 }
