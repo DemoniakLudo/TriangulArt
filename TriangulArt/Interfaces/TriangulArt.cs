@@ -19,7 +19,6 @@ namespace TriangulArt {
 		private byte selColor = 1;
 		private ImageFond bmpFond = new ImageFond();
 		private Projet projet = new Projet();
-		private Animation anim = new Animation();
 		private const int MAX_RAYONS = 32;
 		private int coefX;
 		private Label[] colors = new Label[16];
@@ -41,7 +40,7 @@ namespace TriangulArt {
 			}
 			Version version = Assembly.GetExecutingAssembly().GetName().Version;
 			lblInfoVersion.Text = "V " + version.ToString() + " - " + new DateTime(2000, 1, 1).AddDays(version.Build).ToShortDateString();
-			projet.AddData();
+			projet.Init();
 			comboNbColonnes.SelectedIndex = 1;
 			SetNewMode(true);
 			Reset();
@@ -149,7 +148,8 @@ namespace TriangulArt {
 			mouseOpt = DrawMd.NONE;
 		}
 
-		private void DisplayList() {
+		private void DisplayList(bool withCheck = false) {
+			int maxHeight = comboNbColonnes.SelectedIndex == 0 ? 255 : comboNbColonnes.SelectedIndex == 1 ? 199 : 167;
 			listTriangles.Items.Clear();
 			for (int i = 0; i < projet.SelImage().lstTriangle.Count; i++) {
 				Triangle t = projet.SelImage().lstTriangle[i];
@@ -170,7 +170,8 @@ namespace TriangulArt {
 						inf += "=";
 				}
 				listTriangles.Items.Add(inf);
-
+				if (withCheck && (t.y1 > maxHeight || t.y2 > maxHeight || t.y3 > maxHeight))
+					SetInfo("!!! Le triangle " + i + " descend trop bas pour la résolution choisie...");
 			}
 			txbX1.Text = txbX2.Text = txbX3.Text = txbY1.Text = txbY2.Text = txbY3.Text = txbX4.Text = txbY4.Text = txbPos.Text = "";
 			bpUp.Enabled = bpDown.Enabled = bpFirst.Enabled = bpLast.Enabled = false;
@@ -950,8 +951,7 @@ namespace TriangulArt {
 		}
 
 		private void BpReadProj_Click(object sender, EventArgs e) {
-			OpenFileDialog dlg = new OpenFileDialog();
-			dlg.Filter = "Fichiers xml (*.xml)|*.xml";
+			OpenFileDialog dlg = new OpenFileDialog { Filter = "Fichiers xml (*.xml)|*.xml" };
 			if (dlg.ShowDialog() == DialogResult.OK) {
 				FileStream fileParam = File.Open(dlg.FileName, FileMode.Open);
 				try {
@@ -968,6 +968,9 @@ namespace TriangulArt {
 					SetImageProjet();
 					this.Text = Path.GetFileName(dlg.FileName);
 					bpGenPal.Visible = projet.cpcPlus;
+					comboNbColonnes.SelectedIndex = projet.tailleColonnes;
+					if (projet.lstAnim.Count == 0)
+						projet.lstAnim.Add(new Animation());
 				}
 				catch {
 					MessageBox.Show("Erreur lecture projet...");
@@ -1167,7 +1170,7 @@ namespace TriangulArt {
 
 		private void BpMakeAnim3D_Click(object sender, EventArgs e) {
 			Enabled = false;
-			new MakeAnim(projet, anim, bmpFond).ShowDialog();
+			new MakeAnim(projet, bmpFond).ShowDialog();
 			projet.SelectImage(0);
 			SetImageProjet();
 			Enabled = true;
@@ -1233,6 +1236,7 @@ namespace TriangulArt {
 						colors[i].Left = 1158;
 					break;
 			}
+			projet.tailleColonnes = (byte)comboNbColonnes.SelectedIndex;
 			SetNewMode(false);
 		}
 

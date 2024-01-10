@@ -10,42 +10,45 @@ namespace TriangulArt {
 		private DirectBitmap bmpLock;
 		private DirectBitmap bmpCalc;
 		private Bitmap bmpFond;
-		private Animation anim;
 		private Projet projet;
 		private bool inAnim = false, endAnim = false;
+		private int selAnim = 0;
+		private List<Sequence> lstSeq = new List<Sequence>();
 
-		public MakeAnim(Projet prj, Animation anm, ImageFond bf) {
+		public MakeAnim(Projet prj, ImageFond bf) {
 			InitializeComponent();
 			int width = prj.mode == 0 ? 192 : 384;
 			bmpLock = new DirectBitmap(width, 272);
 			bmpCalc = new DirectBitmap(width, 272);
-			txbPx.Text = txbExprX.Text = (width / 2).ToString();
 			projet = prj;
-			anim = anm;
 			bmpFond = bf.NbImg > 0 ? bf.GetImage : null;
-			txbExprX.Text = anim.exprPosX == "" ? txbExprX.Text : anim.exprPosX;
-			txbExprY.Text = anim.exprPosY == "" ? txbExprY.Text : anim.exprPosY;
-			txbExprZx.Text = anim.exprZoomX == "" ? txbExprZx.Text : anim.exprZoomX;
-			txbExprZy.Text = anim.exprZoomY == "" ? txbExprZy.Text : anim.exprZoomY;
-			txbExprAx.Text = anim.exprAngX == "" ? txbExprAx.Text : anim.exprAngX;
-			txbExprAy.Text = anim.exprAngY == "" ? txbExprAy.Text : anim.exprAngY;
-			txbExprAz.Text = anim.exprAngZ == "" ? txbExprAz.Text : anim.exprAngZ;
-			txbNbImages.Text = anim.lstSeq.Count > 0 ? anim.lstSeq.Count.ToString() : txbNbImages.Text;
-			rbSeqExpression.Checked = anim.withExpression;
+			InitInfoAnim();
+		}
+
+		private void InitInfoAnim() {
+			txbExprX.Text = projet.lstAnim[selAnim].exprPosX == "" ? projet.mode == 0 ? "96" : "192" : projet.lstAnim[selAnim].exprPosX;
+			txbExprY.Text = projet.lstAnim[selAnim].exprPosY == "" ? txbExprY.Text : projet.lstAnim[selAnim].exprPosY;
+			txbExprZx.Text = projet.lstAnim[selAnim].exprZoomX == "" ? txbExprZx.Text : projet.lstAnim[selAnim].exprZoomX;
+			txbExprZy.Text = projet.lstAnim[selAnim].exprZoomY == "" ? txbExprZy.Text : projet.lstAnim[selAnim].exprZoomY;
+			txbExprAx.Text = projet.lstAnim[selAnim].exprAngX == "" ? txbExprAx.Text : projet.lstAnim[selAnim].exprAngX;
+			txbExprAy.Text = projet.lstAnim[selAnim].exprAngY == "" ? txbExprAy.Text : projet.lstAnim[selAnim].exprAngY;
+			txbExprAz.Text = projet.lstAnim[selAnim].exprAngZ == "" ? txbExprAz.Text : projet.lstAnim[selAnim].exprAngZ;
+			txbNbImages.Text = projet.lstAnim[selAnim].nbImages > 0 ? projet.lstAnim[selAnim].nbImages.ToString() : txbNbImages.Text;
+			txbNom.Text = projet.lstAnim[selAnim].nom;
+			lblInfoAnim.Text = (selAnim + 1).ToString() + "/" + projet.lstAnim.Count.ToString();
 			InitBoutons();
 			GenereSeq();
 			DisplayFrame(0);
 		}
 
 		private void InitBoutons() {
-			bpAnimate.Enabled = bpWriteTriangle.Enabled = bpRedraw.Enabled = !inAnim && anim.objet.lstFace.Count > 0 && anim.lstSeq.Count > 0;
+			bpAnimate.Enabled = bpWriteTriangle.Enabled = bpRedraw.Enabled = !inAnim && projet.lstAnim[selAnim].objet.lstFace.Count > 0 && projet.lstAnim[selAnim].nbImages > 0;
 			bpStopAnim.Enabled = inAnim;
 			bpFusion.Enabled = !inAnim && projet.lstData.Count == Utils.ToInt(txbNbImages.Text);
 			bpReadObject.Enabled = bpEditObject.Enabled = bpReadAnim.Enabled = bpSaveAnim.Enabled = !inAnim;
-			txbPx.Enabled = txbPy.Enabled = txbZx.Enabled = txbZy.Enabled = txbAx.Enabled = txbAy.Enabled = txbAz.Enabled =
-			txbIncPx.Enabled = txbIncPy.Enabled = txbIncZx.Enabled = txbIncZy.Enabled = txbIncAx.Enabled = txbIncAy.Enabled = txbIncAz.Enabled = rbSeqIncrement.Checked;
-			txbExprX.Enabled = txbExprY.Enabled = txbExprZx.Enabled = txbExprZy.Enabled = txbExprAx.Enabled = txbExprAy.Enabled = txbExprAz.Enabled = rbSeqExpression.Checked;
-			Text = "MakeAnim" + (String.IsNullOrEmpty(anim.Nom) ? "" : (" - " + anim.Nom));
+			bpAnimPrec.Enabled = selAnim > 0;
+			bpAnimSuiv.Enabled = selAnim < projet.lstAnim.Count - 1;
+			bpDeleteAnim.Enabled = projet.lstAnim.Count > 1;
 		}
 
 		private void AddInfo(string msg) {
@@ -66,57 +69,34 @@ namespace TriangulArt {
 			if (lstTriangle != null)
 				bmpCalc.Fill(0xFFFFFF);
 
-			if (index < anim.lstSeq.Count) {
-				Sequence s = anim.lstSeq[index];
-				anim.objet.DrawObj(bmpLock, s.posx, s.posy, s.zoomx, s.zoomy, s.angx, s.angy, s.angz, -1, -1, lstTriangle, bmpCalc);
+			if (index < lstSeq.Count) {
+				Sequence s = lstSeq[index];
+				projet.lstAnim[selAnim].objet.DrawObj(bmpLock, s.posx, s.posy, s.zoomx, s.zoomy, s.angx, s.angy, s.angz, -1, -1, lstTriangle, bmpCalc);
 			}
 			pictureBoxScr.Image = bmpLock.Bitmap;
 			pictureBoxScr.Refresh();
 		}
 
 		private void GenereSeq() {
-			if (rbSeqIncrement.Checked) {
-				// Génération séquence depuis incréments
-				double posx = Utils.ToDouble(txbPx.Text);
-				double posy = Utils.ToDouble(txbPy.Text);
-				double zoomx = Utils.ToDouble(txbZx.Text);
-				double zoomy = Utils.ToDouble(txbZy.Text);
-				double angx = Utils.ToDouble(txbAx.Text);
-				double angy = Utils.ToDouble(txbAy.Text);
-				double angz = Utils.ToDouble(txbAz.Text);
-				int nbImages = Utils.ToInt(txbNbImages.Text);
-				anim.Clear();
-				for (int i = 0; i < nbImages; i++) {
-					anim.Add(posx, posy, zoomx, zoomy, angx, angy, angz);
-					posx += Utils.ToDouble(txbIncPx.Text);
-					posy += Utils.ToDouble(txbIncPy.Text);
-					zoomx += Utils.ToDouble(txbIncZx.Text);
-					zoomy += Utils.ToDouble(txbIncZy.Text);
-					angx += Utils.ToDouble(txbIncAx.Text);
-					angy += Utils.ToDouble(txbIncAy.Text);
-					angz += Utils.ToDouble(txbIncAz.Text);
+			// Génération séquence depuis expressions
+			lstSeq.Clear();
+			projet.lstAnim[selAnim].nbImages = Convert.ToInt32(txbNbImages.Text);
+			projet.lstAnim[selAnim].exprPosX = txbExprX.Text;
+			projet.lstAnim[selAnim].exprPosY = txbExprY.Text;
+			projet.lstAnim[selAnim].exprZoomX = txbExprZx.Text;
+			projet.lstAnim[selAnim].exprZoomY = txbExprZy.Text;
+			projet.lstAnim[selAnim].exprAngX = txbExprAx.Text;
+			projet.lstAnim[selAnim].exprAngY = txbExprAy.Text;
+			projet.lstAnim[selAnim].exprAngZ = txbExprAz.Text;
+			int nbImages = Utils.ToInt(txbNbImages.Text);
+			for (int i = 0; i < nbImages; i++) {
+				string err = projet.lstAnim[selAnim].AddEval(lstSeq);
+				if (err != "") {
+					AddInfo(err);
+					break;
 				}
 			}
-			else {
-				// Génération séquence depuis expressions
-				anim.Clear();
-				anim.exprPosX = txbExprX.Text;
-				anim.exprPosY = txbExprY.Text;
-				anim.exprZoomX = txbExprZx.Text;
-				anim.exprZoomY = txbExprZy.Text;
-				anim.exprAngX = txbExprAx.Text;
-				anim.exprAngY = txbExprAy.Text;
-				anim.exprAngZ = txbExprAz.Text;
-				int nbImages = Utils.ToInt(txbNbImages.Text);
-				for (int i = 0; i < nbImages; i++) {
-					string err = anim.AddEval();
-					if (err != "") {
-						AddInfo(err);
-						break;
-					}
-				}
-				trkIndex.Value = 0;
-			}
+			trkIndex.Value = 0;
 		}
 
 		private void Animate(bool setProjet = false, bool fusion = false) {
@@ -125,7 +105,7 @@ namespace TriangulArt {
 				projet.lstData.Clear();
 
 			InitBoutons();
-			for (int i = 0; i < anim.lstSeq.Count && !endAnim; i++) {
+			for (int i = 0; i < lstSeq.Count && !endAnim; i++) {
 				trkIndex.Value = i;
 				List<Triangle> lstTriangle = new List<Triangle>();
 				DisplayFrame(i, lstTriangle);
@@ -158,9 +138,9 @@ namespace TriangulArt {
 				projet.Clean(bmpLock.Width, ref nbAvant, ref nbApres);
 				AddInfo("Nombre de triangles nettoyés : " + (nbAvant - nbApres).ToString());
 				if (fusion)
-					AddInfo("Fusion de " + anim.lstSeq.Count.ToString() + " images avec le projet en cours.");
+					AddInfo("Fusion de " + lstSeq.Count.ToString() + " images avec le projet en cours.");
 				else
-					AddInfo("Création projet avec " + anim.lstSeq.Count.ToString() + " images.");
+					AddInfo("Création projet avec " + lstSeq.Count.ToString() + " images.");
 			}
 		}
 
@@ -184,8 +164,8 @@ namespace TriangulArt {
 			OpenFileDialog of = new OpenFileDialog { Filter = "Fichiers objets ascii (*.asc)|*.asc|Tous les fichiers (*.*)|*.*\"'" };
 			if (of.ShowDialog() == DialogResult.OK) {
 				int numPen = 0;
-				anim.objet.ReadObject(projet, of.FileName, ref numPen);
-				AddInfo("Objet " + Path.GetFileName(of.FileName) + " chargé. " + anim.objet.lstFace.Count + " Faces.");
+				projet.lstAnim[selAnim].objet.ReadObject(projet, of.FileName, ref numPen);
+				AddInfo("Objet " + Path.GetFileName(of.FileName) + " chargé. " + projet.lstAnim[selAnim].objet.lstFace.Count + " Faces.");
 			}
 			DisplayFrame(trkIndex.Value);
 			InitBoutons();
@@ -193,7 +173,7 @@ namespace TriangulArt {
 
 		private void BpEditObject_Click(object sender, EventArgs e) {
 			Enabled = false;
-			new EditObjet(projet, anim.objet).ShowDialog();
+			new EditObjet(projet, projet.lstAnim[selAnim].objet).ShowDialog();
 			InitBoutons();
 			DisplayFrame(trkIndex.Value);
 			Enabled = true;
@@ -239,8 +219,7 @@ namespace TriangulArt {
 			if (of.ShowDialog() == DialogResult.OK) {
 				FileStream fileSeq = File.Open(of.FileName, FileMode.Open);
 				try {
-					anim = (Animation)new XmlSerializer(typeof(Animation)).Deserialize(fileSeq);
-					anim.Nom = Path.GetFileName(of.FileName);
+					projet.lstAnim[selAnim] = (Animation)new XmlSerializer(typeof(Animation)).Deserialize(fileSeq);
 					InitBoutons();
 				}
 				catch (Exception ex) {
@@ -249,24 +228,23 @@ namespace TriangulArt {
 				}
 				fileSeq.Close();
 			}
-			int nbImage = anim.lstSeq.Count;
-			if (!err)
-				AddInfo("Animation chargée, " + nbImage + " images.");
-
-			txbNbImages.Text = nbImage.ToString();
-			txbExprX.Text = anim.exprPosX;
-			txbExprY.Text = anim.exprPosY;
-			txbExprZx.Text = anim.exprZoomX;
-			txbExprZy.Text = anim.exprZoomY;
-			txbExprAx.Text = anim.exprAngX;
-			txbExprAy.Text = anim.exprAngY;
-			txbExprAz.Text = anim.exprAngZ;
-			txbNbImages.Text = anim.lstSeq.Count > 0 ? anim.lstSeq.Count.ToString() : txbNbImages.Text;
-			trkIndex.Maximum = Utils.ToInt(txbNbImages.Text) - 1;
-			rbSeqExpression.Checked = anim.withExpression;
-			GenereSeq();
-			DisplayFrame(0);
-			InitBoutons();
+			if (!err) {
+				AddInfo("Animation chargée, " + projet.lstAnim[selAnim].nbImages + " images.");
+				txbNbImages.Text = projet.lstAnim[selAnim].nbImages.ToString();
+				txbExprX.Text = projet.lstAnim[selAnim].exprPosX;
+				txbExprY.Text = projet.lstAnim[selAnim].exprPosY;
+				txbExprZx.Text = projet.lstAnim[selAnim].exprZoomX;
+				txbExprZy.Text = projet.lstAnim[selAnim].exprZoomY;
+				txbExprAx.Text = projet.lstAnim[selAnim].exprAngX;
+				txbExprAy.Text = projet.lstAnim[selAnim].exprAngY;
+				txbExprAz.Text = projet.lstAnim[selAnim].exprAngZ;
+				txbNbImages.Text = lstSeq.Count > 0 ? lstSeq.Count.ToString() : txbNbImages.Text;
+				txbNom.Text = projet.lstAnim[selAnim].nom;
+				trkIndex.Maximum = Utils.ToInt(txbNbImages.Text) - 1;
+				GenereSeq();
+				DisplayFrame(0);
+				InitBoutons();
+			}
 		}
 
 		private void BpSaveAnim_Click(object sender, EventArgs e) {
@@ -276,8 +254,7 @@ namespace TriangulArt {
 				GenereSeq();
 				FileStream file = File.Open(dlg.FileName, FileMode.Create);
 				try {
-					new XmlSerializer(typeof(Animation)).Serialize(file, anim);
-					anim.Nom = Path.GetFileName(dlg.FileName);
+					new XmlSerializer(typeof(Animation)).Serialize(file, projet.lstAnim[selAnim]);
 					InitBoutons();
 				}
 				catch (Exception ex) {
@@ -290,16 +267,52 @@ namespace TriangulArt {
 			}
 		}
 
-		private void RbSeqIncrement_CheckedChanged(object sender, EventArgs e) {
-			anim.withExpression = false;
-			InitBoutons();
-			GenereSeq();
+		private void TxbNom_TextChanged(object sender, EventArgs e) {
+			projet.lstAnim[selAnim].nom = txbNom.Text;
 		}
 
-		private void RbSeqExpression_CheckedChanged(object sender, EventArgs e) {
-			anim.withExpression = true;
-			InitBoutons();
-			GenereSeq();
+		private void BpAnimPrec_Click(object sender, EventArgs e) {
+			selAnim--;
+			InitInfoAnim();
+		}
+
+		private void BpAnimSuiv_Click(object sender, EventArgs e) {
+			selAnim++;
+			InitInfoAnim();
+		}
+
+		private void BpAddAnimCopie_Click(object sender, EventArgs e) {
+			Animation copie = new Animation {
+				objet = projet.lstAnim[selAnim].objet,
+				exprPosX = projet.lstAnim[selAnim].exprPosX,
+				exprPosY = projet.lstAnim[selAnim].exprPosY,
+				exprZoomX = projet.lstAnim[selAnim].exprZoomX,
+				exprZoomY = projet.lstAnim[selAnim].exprZoomY,
+				exprAngX = projet.lstAnim[selAnim].exprAngX,
+				exprAngY = projet.lstAnim[selAnim].exprAngY,
+				exprAngZ = projet.lstAnim[selAnim].exprAngZ,
+				nbImages = projet.lstAnim[selAnim].nbImages,
+				nom = projet.lstAnim[selAnim].nom
+			};
+			projet.lstAnim.Add(copie);
+			selAnim++;
+			InitInfoAnim();
+		}
+
+		private void BpAddAnim_Click(object sender, EventArgs e) {
+			projet.lstAnim.Add(new Animation());
+			selAnim++;
+			InitInfoAnim();
+		}
+
+		private void BpDeleteAnim_Click(object sender, EventArgs e) {
+			if (MessageBox.Show("Confirmer la supperssion de cette animation", "", MessageBoxButtons.YesNo) == DialogResult.Yes) {
+				projet.lstAnim.RemoveAt(selAnim);
+				if (selAnim >= projet.lstAnim.Count)
+					selAnim--;
+
+				InitInfoAnim();
+			}
 		}
 	}
 }

@@ -9,12 +9,28 @@ namespace TriangulArt {
 		public int selData = 0;
 		public int mode = 1;
 		public bool cpcPlus = false;
+		public List<Animation> lstAnim = new List<Animation>();
+		public byte tailleColonnes = 0;
+
+		public Projet() {
+		}
+
+		public void Init() {
+			AddData();
+			lstAnim.Add(new Animation());
+		}
 
 		public Datas AddData() {
 			selData = lstData.Count;
 			Datas d = new Datas();
 			lstData.Add(d);
 			return d;
+		}
+
+		public void Clear() {
+			lstData.Clear();
+			lstAnim.Clear();
+			Init();
 		}
 
 		public Datas SelectImage(int index) {
@@ -37,12 +53,6 @@ namespace TriangulArt {
 			lstData.RemoveAt(selData);
 			if (selData >= lstData.Count)
 				selData--;
-		}
-
-		public void Clear() {
-			lstData.Clear();
-			lstData.Add(new Datas());
-			selData = 0;
 		}
 
 		public void Clean(int width, ref int nbAvant, ref int nbApres) {

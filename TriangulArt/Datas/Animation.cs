@@ -6,24 +6,13 @@ namespace TriangulArt {
 	public class Animation {
 		public Objet objet = new Objet();
 		public string exprPosX = "", exprPosY = "", exprZoomX = "", exprZoomY = "", exprAngX = "", exprAngY = "", exprAngZ = "";
-		public List<Sequence> lstSeq = new List<Sequence>();
-		public bool withExpression = false;
-		private string nom;
+		public int nbImages;
+		public string nom;
 
-		public string Nom {
-			get { return nom; }
-			set { nom = value; }
-		}
-		
-		public void Clear() {
-			lstSeq.Clear();
+		public Animation() {
 		}
 
-		public void Add(double posx, double posy, double zoomx, double zoomy, double angx, double angy, double angz) {
-			lstSeq.Add(new Sequence(posx, posy, zoomx, zoomy, angx, angy, angz));
-		}
-
-		public string AddEval() {
+		public string AddEval(List<Sequence> lstSeq) {
 			MathParser p = new MathParser('.');
 			string champ = "", err = "";
 			int pos = lstSeq.Count;

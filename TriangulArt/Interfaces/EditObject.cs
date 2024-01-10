@@ -349,13 +349,14 @@ namespace TriangulArt {
 		}
 
 		private void ClickColor(object sender, MouseEventArgs e) {
-			Label colorClick = sender as Label;
-			selColor = (byte)(colorClick.Tag != null ? (int)colorClick.Tag : 0);
-			if (numFace != -1)
+			if (numFace != -1) {
+				Label colorClick = sender as Label;
+				selColor = (byte)(colorClick.Tag != null ? (int)colorClick.Tag : 0);
 				objet.lstFace[numFace].pen = selColor;
 
-			UpdatePalette();
-			RedrawAll();
+				UpdatePalette();
+				RedrawAll();
+			}
 		}
 
 		private void ClickLock(object sender, EventArgs e) {
