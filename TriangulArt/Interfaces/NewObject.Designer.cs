@@ -61,6 +61,8 @@
 			this.label14 = new System.Windows.Forms.Label();
 			this.label15 = new System.Windows.Forms.Label();
 			this.txbPyra3Hauteur = new System.Windows.Forms.TextBox();
+			this.txbDisqueHauteur = new System.Windows.Forms.TextBox();
+			this.label16 = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// rbVide
@@ -424,11 +426,31 @@
 			this.txbPyra3Hauteur.TabIndex = 10;
 			this.txbPyra3Hauteur.Text = "200";
 			// 
+			// txbDisqueHauteur
+			// 
+			this.txbDisqueHauteur.Enabled = false;
+			this.txbDisqueHauteur.Location = new System.Drawing.Point(374, 127);
+			this.txbDisqueHauteur.Name = "txbDisqueHauteur";
+			this.txbDisqueHauteur.Size = new System.Drawing.Size(45, 20);
+			this.txbDisqueHauteur.TabIndex = 21;
+			this.txbDisqueHauteur.Text = "0";
+			// 
+			// label16
+			// 
+			this.label16.AutoSize = true;
+			this.label16.Location = new System.Drawing.Point(425, 131);
+			this.label16.Name = "label16";
+			this.label16.Size = new System.Drawing.Size(78, 13);
+			this.label16.TabIndex = 20;
+			this.label16.Text = "Hauteur centre";
+			// 
 			// NewObject
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(622, 371);
+			this.Controls.Add(this.txbDisqueHauteur);
+			this.Controls.Add(this.label16);
 			this.Controls.Add(this.chkYorient);
 			this.Controls.Add(this.chkClearObj);
 			this.Controls.Add(this.label13);
@@ -517,5 +539,7 @@
 		private System.Windows.Forms.Label label14;
 		private System.Windows.Forms.Label label15;
 		private System.Windows.Forms.TextBox txbPyra3Hauteur;
+		private System.Windows.Forms.TextBox txbDisqueHauteur;
+		private System.Windows.Forms.Label label16;
 	}
 }

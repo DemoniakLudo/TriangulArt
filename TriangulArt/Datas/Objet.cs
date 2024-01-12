@@ -255,10 +255,14 @@ namespace TriangulArt {
 			lstFace.Add(new Face(5, nv + 3, nv + 1, nv + 4, 3));
 		}
 
-		public void CreeDisque(double px, double py, double pz, double rayon, int division, bool yOrient) {
+		public void CreeDisque(double px, double py, double pz, double rayon, int division, double hauteur, bool yOrient) {
 			int numVertex = 0;
 			int nv = lstVertex.Count;
-			lstVertex.Add(new Vertex(px, py, pz));
+			if (yOrient)
+				lstVertex.Add(new Vertex(px, py, pz + hauteur));
+			else
+				lstVertex.Add(new Vertex(px, py + hauteur, pz)); 
+			
 			for (int ang = 0; ang < 360; ang += 360 / division) {
 				double x = rayon * Math.Cos(ang * CONV);
 				double z = rayon * Math.Sin(ang * CONV);
