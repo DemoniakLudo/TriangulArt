@@ -113,17 +113,20 @@ namespace TriangulArt {
 				data.nomImage = "Frame_" + i.ToString();
 
 			for (int t = 0; t < lstTriangle.Count; t++) {
+				bool triangleOk = false;
 				for (int y = 0; y < bmpCalc.Height; y++) {
 					for (int x = 0; x < bmpCalc.Width; x++)
 						if (bmpCalc.GetPixel(x, y) == t) {
-							if (setProjet) {
-								Triangle tr = lstTriangle[t];
-								data.lstTriangle.Add(new Triangle(tr.x1, tr.y1, tr.x2, tr.y2, tr.x3, tr.y3, tr.color));
-							}
+							triangleOk = true;
 							y = bmpCalc.Height;
 							nbTri++;
 							break;
 						}
+				}
+				if (setProjet) {
+					Triangle tr = lstTriangle[t];
+					Triangle tData = new Triangle(tr.x1, tr.y1, tr.x2, tr.y2, tr.x3, tr.y3, tr.color) { enabled = triangleOk };
+					data.lstTriangle.Add(tData);
 				}
 			}
 			if (setProjet && !fusion)
@@ -322,48 +325,43 @@ namespace TriangulArt {
 			InitInfoAnim();
 		}
 
-		private void WriteGifImg(byte[] tabByte, BinaryWriter bWr) {
-			tabByte[785] = 5; // Temps d'affichage
-			tabByte[786] = 0;
-			tabByte[798] = (byte)(tabByte[798] | 0x87);
-			bWr.Write(tabByte, 781, 18);
-			bWr.Write(tabByte, 13, 768);
-			bWr.Write(tabByte, 799, tabByte.Length - 800);
-		}
-
-		private Bitmap GetScrBitmap() {
-			DirectBitmap tmp = new DirectBitmap(384, 272);
-			Graphics g = Graphics.FromImage(tmp.Bitmap);
-			g.DrawImage(bmpLock.Bitmap, 0, 0, 384, 272);
-			return tmp.Bitmap;
-		}
-
 		private void BpSaveGif_Click(object sender, EventArgs e) {
-			SaveFileDialog dlg = new SaveFileDialog();
-			dlg.Filter = "Gif anim (*.gif)|*.gif";
+			SaveFileDialog dlg = new SaveFileDialog { Filter = "Gif anim (*.gif)|*.gif" };
 			if (dlg.ShowDialog() == DialogResult.OK) {
-				byte[] GifAnimation = { 33, 255, 11, 78, 69, 84, 83, 67, 65, 80, 69, 50, 46, 48, 3, 1, 0, 0, 0 };
-				MemoryStream ms = new MemoryStream();
-				BinaryWriter bWr = new BinaryWriter(new FileStream(dlg.FileName, FileMode.Create));
 				GenereSeq();
 				InitBoutons();
-				DisplayFrame(0);
-				GetScrBitmap().Save(ms, ImageFormat.Gif);
-				byte[] tabByte = ms.ToArray();
-				tabByte[10] = (byte)(tabByte[10] & 0X78); //No global color table
-				bWr.Write(tabByte, 0, 13);
-				bWr.Write(GifAnimation);
-				WriteGifImg(tabByte, bWr);
-				for (int i = 1; i < lstSeq.Count; i++) {
-					DisplayFrame(i);
-					ms.SetLength(0);
-					GetScrBitmap().Save(ms, ImageFormat.Gif);
-					tabByte = ms.ToArray();
-					WriteGifImg(tabByte, bWr);
+				try {
+					DirectBitmap tmp = new DirectBitmap(384, 272);
+					byte[] GifAnimation = { 33, 255, 11, 78, 69, 84, 83, 67, 65, 80, 69, 50, 46, 48, 3, 1, 0, 0, 0 };
+					byte[] tabByte = null;
+					MemoryStream ms = new MemoryStream();
+					BinaryWriter bWr = new BinaryWriter(new FileStream(dlg.FileName, FileMode.Create));
+					for (int i = 0; i < lstSeq.Count; i++) {
+						DisplayFrame(i);
+						Graphics.FromImage(tmp.Bitmap).DrawImage(bmpLock.Bitmap, 0, 0, tmp.Width, tmp.Height);
+						ms.SetLength(0);
+						tmp.Bitmap.Save(ms, ImageFormat.Gif);
+						tabByte = ms.ToArray();
+						if (i == 0) {
+							tabByte[10] = (byte)(tabByte[10] & 0X78); //No global color table
+							bWr.Write(tabByte, 0, 13);
+							bWr.Write(GifAnimation);
+						}
+						tabByte[785] = 5; // Temps d'affichage
+						tabByte[786] = 0;
+						tabByte[798] = (byte)(tabByte[798] | 0x87);
+						bWr.Write(tabByte, 781, 18);
+						bWr.Write(tabByte, 13, 768);
+						bWr.Write(tabByte, 799, tabByte.Length - 800);
+					}
+					tmp.Dispose();
+					bWr.Write(tabByte[tabByte.Length - 1]);
+					bWr.Close();
+					ms.Dispose();
 				}
-				bWr.Write(tabByte[tabByte.Length - 1]);
-				bWr.Close();
-				ms.Dispose();
+				catch (Exception ex) {
+					AddInfo("Erreur sauvegarde GIF : " + ex.Message);
+				}
 			}
 		}
 

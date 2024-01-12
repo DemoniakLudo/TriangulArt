@@ -105,8 +105,8 @@ namespace TriangulArt {
 				lstDraw.Add(lstFace[i]);
 
 			lstDraw.Sort(delegate (Face p1, Face p2) {
-				double cmp = p1.GetZFace(lstVertex) - p2.GetZFace(lstVertex);
-				return cmp != 0 ? (int)cmp : p1.num - p2.num;
+				int cmp = p1.GetZFace(lstVertex) - p2.GetZFace(lstVertex);
+				return cmp != 0 ? cmp : p1.num - p2.num;
 			});
 
 			// Affiche les triangles

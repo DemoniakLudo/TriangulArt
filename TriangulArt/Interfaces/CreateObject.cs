@@ -19,23 +19,25 @@ namespace TriangulArt {
 			int nVertex = 0;
 			int adjX = projet.mode == 0 ? 2 : 1;
 			foreach (Triangle t in projet.SelImage().lstTriangle) {
-				Vertex v1 = new Vertex(adjX * (t.x1 - width / 2), height / 2 - t.y1, 0);
-				Vertex v2 = new Vertex(adjX * (t.x2 - width / 2), height / 2 - t.y2, 0);
-				Vertex v3 = new Vertex(adjX * (t.x3 - width / 2), height / 2 - t.y3, 0);
-				o.lstVertex.Add(v1);
-				o.lstVertex.Add(v2);
-				o.lstVertex.Add(v3);
-				o.lstFace.Add(new Face(nFace++, nVertex, nVertex + 1, nVertex + 2, t.color));
-				nVertex += 3;
-				if (projet.SelImage().modeRendu == 1) {
-					v1 = new Vertex(adjX * (width - t.x1 - width / 2), height / 2 - t.y1, 0);
-					v2 = new Vertex(adjX * (width - t.x2 - width / 2), height / 2 - t.y2, 0);
-					v3 = new Vertex(adjX * (width - t.x3 - width / 2), height / 2 - t.y3, 0);
+				if (t.enabled) {
+					Vertex v1 = new Vertex(adjX * (t.x1 - width / 2), height / 2 - t.y1, 0);
+					Vertex v2 = new Vertex(adjX * (t.x2 - width / 2), height / 2 - t.y2, 0);
+					Vertex v3 = new Vertex(adjX * (t.x3 - width / 2), height / 2 - t.y3, 0);
 					o.lstVertex.Add(v1);
 					o.lstVertex.Add(v2);
 					o.lstVertex.Add(v3);
 					o.lstFace.Add(new Face(nFace++, nVertex, nVertex + 1, nVertex + 2, t.color));
 					nVertex += 3;
+					if (projet.SelImage().modeRendu == 1) {
+						v1 = new Vertex(adjX * (width - t.x1 - width / 2), height / 2 - t.y1, 0);
+						v2 = new Vertex(adjX * (width - t.x2 - width / 2), height / 2 - t.y2, 0);
+						v3 = new Vertex(adjX * (width - t.x3 - width / 2), height / 2 - t.y3, 0);
+						o.lstVertex.Add(v1);
+						o.lstVertex.Add(v2);
+						o.lstVertex.Add(v3);
+						o.lstFace.Add(new Face(nFace++, nVertex, nVertex + 1, nVertex + 2, t.color));
+						nVertex += 3;
+					}
 				}
 			}
 			return true;
@@ -49,27 +51,29 @@ namespace TriangulArt {
 				int nVertex = 0;
 				int adjX = projet.mode == 0 ? 2 : 1;
 				foreach (Triangle t in projet.SelImage().lstTriangle) {
-					Vertex v1 = new Vertex(adjX * (t.x1 - width / 2), height / 2 - t.y1, 0);
-					Vertex v2 = new Vertex(adjX * (t.x2 - width / 2), height / 2 - t.y2, 0);
-					Vertex v3 = new Vertex(adjX * (t.x3 - width / 2), height / 2 - t.y3, 0);
-					o.lstVertex.Add(v1);
-					o.lstVertex.Add(v2);
-					o.lstVertex.Add(v3);
-					o.lstFace.Add(new Face(nFace++, nVertex, nVertex + 1, nVertex + 2, t.color));
-					Vertex v4 = new Vertex(adjX * (t.x1 - width / 2), height / 2 - t.y1, epais);
-					Vertex v5 = new Vertex(adjX * (t.x2 - width / 2), height / 2 - t.y2, epais);
-					Vertex v6 = new Vertex(adjX * (t.x3 - width / 2), height / 2 - t.y3, epais);
-					o.lstVertex.Add(v4);
-					o.lstVertex.Add(v5);
-					o.lstVertex.Add(v6);
-					o.lstFace.Add(new Face(nFace++, nVertex + 3, nVertex + 4, nVertex + 5, t.color));
-					o.lstFace.Add(new Face(nFace++, nVertex + 3, nVertex + 0, nVertex + 1, t.color));
-					o.lstFace.Add(new Face(nFace++, nVertex + 3, nVertex + 4, nVertex + 1, t.color));
-					o.lstFace.Add(new Face(nFace++, nVertex + 4, nVertex + 1, nVertex + 5, t.color));
-					o.lstFace.Add(new Face(nFace++, nVertex + 1, nVertex + 5, nVertex + 2, t.color));
-					o.lstFace.Add(new Face(nFace++, nVertex + 3, nVertex + 0, nVertex + 4, t.color));
-					o.lstFace.Add(new Face(nFace++, nVertex + 3, nVertex + 4, nVertex + 5, t.color));
-					nVertex += 6;
+					if (t.enabled) {
+						Vertex v1 = new Vertex(adjX * (t.x1 - width / 2), height / 2 - t.y1, 0);
+						Vertex v2 = new Vertex(adjX * (t.x2 - width / 2), height / 2 - t.y2, 0);
+						Vertex v3 = new Vertex(adjX * (t.x3 - width / 2), height / 2 - t.y3, 0);
+						o.lstVertex.Add(v1);
+						o.lstVertex.Add(v2);
+						o.lstVertex.Add(v3);
+						o.lstFace.Add(new Face(nFace++, nVertex, nVertex + 1, nVertex + 2, t.color));
+						Vertex v4 = new Vertex(adjX * (t.x1 - width / 2), height / 2 - t.y1, epais);
+						Vertex v5 = new Vertex(adjX * (t.x2 - width / 2), height / 2 - t.y2, epais);
+						Vertex v6 = new Vertex(adjX * (t.x3 - width / 2), height / 2 - t.y3, epais);
+						o.lstVertex.Add(v4);
+						o.lstVertex.Add(v5);
+						o.lstVertex.Add(v6);
+						o.lstFace.Add(new Face(nFace++, nVertex + 3, nVertex + 4, nVertex + 5, t.color));
+						o.lstFace.Add(new Face(nFace++, nVertex + 3, nVertex + 0, nVertex + 1, t.color));
+						o.lstFace.Add(new Face(nFace++, nVertex + 3, nVertex + 4, nVertex + 1, t.color));
+						o.lstFace.Add(new Face(nFace++, nVertex + 4, nVertex + 1, nVertex + 5, t.color));
+						o.lstFace.Add(new Face(nFace++, nVertex + 1, nVertex + 5, nVertex + 2, t.color));
+						o.lstFace.Add(new Face(nFace++, nVertex + 3, nVertex + 0, nVertex + 4, t.color));
+						o.lstFace.Add(new Face(nFace++, nVertex + 3, nVertex + 4, nVertex + 5, t.color));
+						nVertex += 6;
+					}
 				}
 				return true;
 			}
@@ -87,11 +91,13 @@ namespace TriangulArt {
 				for (int r = 0; r < rayon; r++) {
 					double ay = r * 360 / rayon;
 					foreach (Triangle t in projet.SelImage().lstTriangle) {
-						o.AddRotateVertex(adjX * (t.x1 - width / 2), height / 2 - t.y1, ay);
-						o.AddRotateVertex(adjX * (t.x2 - width / 2), height / 2 - t.y2, ay);
-						o.AddRotateVertex(adjX * (t.x3 - width / 2), height / 2 - t.y3, ay);
-						o.lstFace.Add(new Face(nFace++, nVertex, nVertex + 1, nVertex + 2, t.color));
-						nVertex += 3;
+						if (t.enabled) {
+							o.AddRotateVertex(adjX * (t.x1 - width / 2), height / 2 - t.y1, ay);
+							o.AddRotateVertex(adjX * (t.x2 - width / 2), height / 2 - t.y2, ay);
+							o.AddRotateVertex(adjX * (t.x3 - width / 2), height / 2 - t.y3, ay);
+							o.lstFace.Add(new Face(nFace++, nVertex, nVertex + 1, nVertex + 2, t.color));
+							nVertex += 3;
+						}
 					}
 				}
 				return true;

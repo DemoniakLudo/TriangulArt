@@ -58,9 +58,9 @@ namespace TriangulArt {
 		public void Clean(int width, ref int nbAvant, ref int nbApres) {
 			nbAvant = nbApres = 0;
 			foreach (Datas d in lstData) {
-				nbAvant += d.lstTriangle.Count;
+				nbAvant += d.GetTriangleActif();
 				d.CleanUp(width);
-				nbApres += d.lstTriangle.Count;
+				nbApres += d.GetTriangleActif();
 			}
 		}
 
