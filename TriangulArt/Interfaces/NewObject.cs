@@ -12,32 +12,38 @@ namespace TriangulArt {
 		private void RbVide_CheckedChanged(object sender, EventArgs e) {
 			txbCubeArete.Enabled = txbDisqueDivision.Enabled = txbDisqueRayon.Enabled =
 			txbSoucoupeDivision.Enabled = txbSoucoupeHauteur1.Enabled = txbSoucoupeHauteur2.Enabled = txbSoucoupeRayon.Enabled =
-			txbPyraBase.Enabled = txbPyraHauteur.Enabled = false;
+			 txbPyra3Base.Enabled = txbPyra3Hauteur.Enabled = txbPyra4Base.Enabled = txbPyra4Hauteur.Enabled = false;
 		}
 
 		private void RbCube_CheckedChanged(object sender, EventArgs e) {
 			txbCubeArete.Enabled = true;
 			txbDisqueDivision.Enabled = txbDisqueRayon.Enabled =
 			txbSoucoupeDivision.Enabled = txbSoucoupeHauteur1.Enabled = txbSoucoupeHauteur2.Enabled = txbSoucoupeRayon.Enabled =
-			txbPyraBase.Enabled = txbPyraHauteur.Enabled = false;
+			txbPyra3Base.Enabled = txbPyra3Hauteur.Enabled = txbPyra4Base.Enabled = txbPyra4Hauteur.Enabled = false;
 		}
 
 		private void RbDisque_CheckedChanged(object sender, EventArgs e) {
 			txbDisqueDivision.Enabled = txbDisqueRayon.Enabled = true;
 			txbCubeArete.Enabled = txbSoucoupeDivision.Enabled = txbSoucoupeHauteur1.Enabled = txbSoucoupeHauteur2.Enabled = txbSoucoupeRayon.Enabled =
-			txbPyraBase.Enabled = txbPyraHauteur.Enabled = false;
+			txbPyra3Base.Enabled = txbPyra3Hauteur.Enabled = txbPyra4Base.Enabled = txbPyra4Hauteur.Enabled = false;
 		}
 
 		private void RbSoucoupe_CheckedChanged(object sender, EventArgs e) {
 			txbSoucoupeDivision.Enabled = txbSoucoupeHauteur1.Enabled = txbSoucoupeHauteur2.Enabled = txbSoucoupeRayon.Enabled = true;
 			txbCubeArete.Enabled = txbDisqueDivision.Enabled = txbDisqueRayon.Enabled =
-			txbPyraBase.Enabled = txbPyraHauteur.Enabled = false;
+			txbPyra3Base.Enabled = txbPyra3Hauteur.Enabled = txbPyra4Base.Enabled = txbPyra4Hauteur.Enabled = false;
 		}
 
-		private void rbPyramide_CheckedChanged(object sender, EventArgs e) {
-			txbCubeArete.Enabled = txbDisqueDivision.Enabled = txbDisqueRayon.Enabled =
-		txbSoucoupeDivision.Enabled = txbSoucoupeHauteur1.Enabled = txbSoucoupeHauteur2.Enabled = txbSoucoupeRayon.Enabled = false;
-			txbPyraBase.Enabled = txbPyraHauteur.Enabled = true;
+		private void RbPyramide3Faces_CheckedChanged(object sender, EventArgs e) {
+			txbPyra3Base.Enabled = txbPyra3Hauteur.Enabled = true;
+			txbCubeArete.Enabled = txbDisqueDivision.Enabled = txbDisqueRayon.Enabled = txbPyra4Base.Enabled = txbPyra4Hauteur.Enabled =
+			txbSoucoupeDivision.Enabled = txbSoucoupeHauteur1.Enabled = txbSoucoupeHauteur2.Enabled = txbSoucoupeRayon.Enabled = false;
+		}
+
+		private void RbPyramide4Faces_CheckedChanged(object sender, EventArgs e) {
+			txbPyra4Base.Enabled = txbPyra4Hauteur.Enabled = true;
+			txbCubeArete.Enabled = txbDisqueDivision.Enabled = txbDisqueRayon.Enabled = txbPyra3Base.Enabled = txbPyra3Hauteur.Enabled =
+			txbSoucoupeDivision.Enabled = txbSoucoupeHauteur1.Enabled = txbSoucoupeHauteur2.Enabled = txbSoucoupeRayon.Enabled = false;
 		}
 
 		private void BpCreate_Click(object sender, EventArgs e) {
@@ -51,12 +57,22 @@ namespace TriangulArt {
 			if (chkClearObj.Checked)
 				obj.Clear();
 
-			if (rbPyramide.Checked) {
-				if (double.TryParse(txbPyraBase.Text, out arete) && double.TryParse(txbPyraHauteur.Text, out hauteur1) && arete > 0 && hauteur1 != 0)
-					obj.CreePyramide(posx, posy, posz, arete, hauteur1, chkYorient.Checked);
+			if (rbPyramide3Faces.Checked) {
+				if (double.TryParse(txbPyra3Base.Text, out arete) && double.TryParse(txbPyra3Hauteur.Text, out hauteur1) && arete > 0 && hauteur1 != 0)
+//					obj.CreePyramide3Faces(posx, posy, posz, arete, hauteur1, chkYorient.Checked);
+					obj.CreeObjTest(posx, posy, posz, arete, hauteur1, chkYorient.Checked);
 				else {
 					err = true;
-					MessageBox.Show("Les données pour la création d'une pyramide sont invalide", "Erreur");
+					MessageBox.Show("Les données pour la création d'une pyramide à 3 faces sont invalide", "Erreur");
+				}
+
+			}
+			if (rbPyramide4Faces.Checked) {
+				if (double.TryParse(txbPyra4Base.Text, out arete) && double.TryParse(txbPyra4Hauteur.Text, out hauteur1) && arete > 0 && hauteur1 != 0)
+					obj.CreePyramide4Faces(posx, posy, posz, arete, hauteur1, chkYorient.Checked);
+				else {
+					err = true;
+					MessageBox.Show("Les données pour la création d'une pyramide à 4 faces sont invalide", "Erreur");
 				}
 			}
 			if (rbCube.Checked) {
@@ -89,5 +105,6 @@ namespace TriangulArt {
 				Close();
 			}
 		}
+
 	}
 }

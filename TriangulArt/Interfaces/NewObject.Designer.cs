@@ -42,10 +42,10 @@
 			this.txbSoucoupeHauteur1 = new System.Windows.Forms.TextBox();
 			this.label7 = new System.Windows.Forms.Label();
 			this.txbSoucoupeHauteur2 = new System.Windows.Forms.TextBox();
-			this.rbPyramide = new System.Windows.Forms.RadioButton();
+			this.rbPyramide4Faces = new System.Windows.Forms.RadioButton();
 			this.label8 = new System.Windows.Forms.Label();
-			this.txbPyraBase = new System.Windows.Forms.TextBox();
-			this.txbPyraHauteur = new System.Windows.Forms.TextBox();
+			this.txbPyra4Base = new System.Windows.Forms.TextBox();
+			this.txbPyra4Hauteur = new System.Windows.Forms.TextBox();
 			this.label9 = new System.Windows.Forms.Label();
 			this.txbPosX = new System.Windows.Forms.TextBox();
 			this.label10 = new System.Windows.Forms.Label();
@@ -56,6 +56,11 @@
 			this.txbPosZ = new System.Windows.Forms.TextBox();
 			this.chkClearObj = new System.Windows.Forms.CheckBox();
 			this.chkYorient = new System.Windows.Forms.CheckBox();
+			this.rbPyramide3Faces = new System.Windows.Forms.RadioButton();
+			this.txbPyra3Base = new System.Windows.Forms.TextBox();
+			this.label14 = new System.Windows.Forms.Label();
+			this.label15 = new System.Windows.Forms.Label();
+			this.txbPyra3Hauteur = new System.Windows.Forms.TextBox();
 			this.SuspendLayout();
 			// 
 			// rbVide
@@ -74,7 +79,7 @@
 			// rbCube
 			// 
 			this.rbCube.AutoSize = true;
-			this.rbCube.Location = new System.Drawing.Point(13, 77);
+			this.rbCube.Location = new System.Drawing.Point(13, 100);
 			this.rbCube.Name = "rbCube";
 			this.rbCube.Size = new System.Drawing.Size(50, 17);
 			this.rbCube.TabIndex = 1;
@@ -96,7 +101,7 @@
 			// txbCubeArete
 			// 
 			this.txbCubeArete.Enabled = false;
-			this.txbCubeArete.Location = new System.Drawing.Point(112, 73);
+			this.txbCubeArete.Location = new System.Drawing.Point(125, 96);
 			this.txbCubeArete.Name = "txbCubeArete";
 			this.txbCubeArete.Size = new System.Drawing.Size(45, 20);
 			this.txbCubeArete.TabIndex = 3;
@@ -105,7 +110,7 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(163, 77);
+			this.label1.Location = new System.Drawing.Point(176, 100);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(59, 13);
 			this.label1.TabIndex = 4;
@@ -114,7 +119,7 @@
 			// txbDisqueRayon
 			// 
 			this.txbDisqueRayon.Enabled = false;
-			this.txbDisqueRayon.Location = new System.Drawing.Point(112, 99);
+			this.txbDisqueRayon.Location = new System.Drawing.Point(125, 122);
 			this.txbDisqueRayon.Name = "txbDisqueRayon";
 			this.txbDisqueRayon.Size = new System.Drawing.Size(45, 20);
 			this.txbDisqueRayon.TabIndex = 5;
@@ -123,7 +128,7 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(163, 103);
+			this.label2.Location = new System.Drawing.Point(176, 126);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(38, 13);
 			this.label2.TabIndex = 4;
@@ -132,7 +137,7 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(271, 107);
+			this.label3.Location = new System.Drawing.Point(284, 130);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(75, 13);
 			this.label3.TabIndex = 4;
@@ -141,7 +146,7 @@
 			// txbDisqueDivision
 			// 
 			this.txbDisqueDivision.Enabled = false;
-			this.txbDisqueDivision.Location = new System.Drawing.Point(220, 103);
+			this.txbDisqueDivision.Location = new System.Drawing.Point(233, 126);
 			this.txbDisqueDivision.Name = "txbDisqueDivision";
 			this.txbDisqueDivision.Size = new System.Drawing.Size(45, 20);
 			this.txbDisqueDivision.TabIndex = 5;
@@ -150,7 +155,7 @@
 			// rbDisque
 			// 
 			this.rbDisque.AutoSize = true;
-			this.rbDisque.Location = new System.Drawing.Point(13, 102);
+			this.rbDisque.Location = new System.Drawing.Point(13, 125);
 			this.rbDisque.Name = "rbDisque";
 			this.rbDisque.Size = new System.Drawing.Size(58, 17);
 			this.rbDisque.TabIndex = 1;
@@ -162,7 +167,7 @@
 			// rbSoucoupe
 			// 
 			this.rbSoucoupe.AutoSize = true;
-			this.rbSoucoupe.Location = new System.Drawing.Point(13, 127);
+			this.rbSoucoupe.Location = new System.Drawing.Point(13, 150);
 			this.rbSoucoupe.Name = "rbSoucoupe";
 			this.rbSoucoupe.Size = new System.Drawing.Size(74, 17);
 			this.rbSoucoupe.TabIndex = 1;
@@ -174,7 +179,7 @@
 			// label4
 			// 
 			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(163, 129);
+			this.label4.Location = new System.Drawing.Point(176, 152);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(38, 13);
 			this.label4.TabIndex = 4;
@@ -183,7 +188,7 @@
 			// txbSoucoupeRayon
 			// 
 			this.txbSoucoupeRayon.Enabled = false;
-			this.txbSoucoupeRayon.Location = new System.Drawing.Point(112, 125);
+			this.txbSoucoupeRayon.Location = new System.Drawing.Point(125, 148);
 			this.txbSoucoupeRayon.Name = "txbSoucoupeRayon";
 			this.txbSoucoupeRayon.Size = new System.Drawing.Size(45, 20);
 			this.txbSoucoupeRayon.TabIndex = 5;
@@ -192,7 +197,7 @@
 			// label5
 			// 
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(271, 131);
+			this.label5.Location = new System.Drawing.Point(284, 154);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(75, 13);
 			this.label5.TabIndex = 4;
@@ -201,7 +206,7 @@
 			// txbSoucoupeDivision
 			// 
 			this.txbSoucoupeDivision.Enabled = false;
-			this.txbSoucoupeDivision.Location = new System.Drawing.Point(220, 127);
+			this.txbSoucoupeDivision.Location = new System.Drawing.Point(233, 150);
 			this.txbSoucoupeDivision.Name = "txbSoucoupeDivision";
 			this.txbSoucoupeDivision.Size = new System.Drawing.Size(45, 20);
 			this.txbSoucoupeDivision.TabIndex = 5;
@@ -210,7 +215,7 @@
 			// label6
 			// 
 			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(412, 131);
+			this.label6.Location = new System.Drawing.Point(425, 154);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(54, 13);
 			this.label6.TabIndex = 4;
@@ -219,7 +224,7 @@
 			// txbSoucoupeHauteur1
 			// 
 			this.txbSoucoupeHauteur1.Enabled = false;
-			this.txbSoucoupeHauteur1.Location = new System.Drawing.Point(361, 127);
+			this.txbSoucoupeHauteur1.Location = new System.Drawing.Point(374, 150);
 			this.txbSoucoupeHauteur1.Name = "txbSoucoupeHauteur1";
 			this.txbSoucoupeHauteur1.Size = new System.Drawing.Size(45, 20);
 			this.txbSoucoupeHauteur1.TabIndex = 5;
@@ -228,7 +233,7 @@
 			// label7
 			// 
 			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(556, 131);
+			this.label7.Location = new System.Drawing.Point(556, 154);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(54, 13);
 			this.label7.TabIndex = 4;
@@ -237,55 +242,55 @@
 			// txbSoucoupeHauteur2
 			// 
 			this.txbSoucoupeHauteur2.Enabled = false;
-			this.txbSoucoupeHauteur2.Location = new System.Drawing.Point(505, 127);
+			this.txbSoucoupeHauteur2.Location = new System.Drawing.Point(505, 150);
 			this.txbSoucoupeHauteur2.Name = "txbSoucoupeHauteur2";
 			this.txbSoucoupeHauteur2.Size = new System.Drawing.Size(45, 20);
 			this.txbSoucoupeHauteur2.TabIndex = 5;
 			this.txbSoucoupeHauteur2.Text = "-100";
 			// 
-			// rbPyramide
+			// rbPyramide4Faces
 			// 
-			this.rbPyramide.AutoSize = true;
-			this.rbPyramide.Location = new System.Drawing.Point(13, 52);
-			this.rbPyramide.Name = "rbPyramide";
-			this.rbPyramide.Size = new System.Drawing.Size(68, 17);
-			this.rbPyramide.TabIndex = 6;
-			this.rbPyramide.TabStop = true;
-			this.rbPyramide.Text = "Pyramide";
-			this.rbPyramide.UseVisualStyleBackColor = true;
-			this.rbPyramide.CheckedChanged += new System.EventHandler(this.rbPyramide_CheckedChanged);
+			this.rbPyramide4Faces.AutoSize = true;
+			this.rbPyramide4Faces.Location = new System.Drawing.Point(13, 52);
+			this.rbPyramide4Faces.Name = "rbPyramide4Faces";
+			this.rbPyramide4Faces.Size = new System.Drawing.Size(106, 17);
+			this.rbPyramide4Faces.TabIndex = 6;
+			this.rbPyramide4Faces.TabStop = true;
+			this.rbPyramide4Faces.Text = "Pyramide 4 faces";
+			this.rbPyramide4Faces.UseVisualStyleBackColor = true;
+			this.rbPyramide4Faces.CheckedChanged += new System.EventHandler(this.RbPyramide4Faces_CheckedChanged);
 			// 
 			// label8
 			// 
 			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point(162, 51);
+			this.label8.Location = new System.Drawing.Point(175, 51);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(58, 13);
 			this.label8.TabIndex = 8;
 			this.label8.Text = "Taille base";
 			// 
-			// txbPyraBase
+			// txbPyra4Base
 			// 
-			this.txbPyraBase.Enabled = false;
-			this.txbPyraBase.Location = new System.Drawing.Point(111, 47);
-			this.txbPyraBase.Name = "txbPyraBase";
-			this.txbPyraBase.Size = new System.Drawing.Size(45, 20);
-			this.txbPyraBase.TabIndex = 7;
-			this.txbPyraBase.Text = "300";
+			this.txbPyra4Base.Enabled = false;
+			this.txbPyra4Base.Location = new System.Drawing.Point(124, 47);
+			this.txbPyra4Base.Name = "txbPyra4Base";
+			this.txbPyra4Base.Size = new System.Drawing.Size(45, 20);
+			this.txbPyra4Base.TabIndex = 7;
+			this.txbPyra4Base.Text = "300";
 			// 
-			// txbPyraHauteur
+			// txbPyra4Hauteur
 			// 
-			this.txbPyraHauteur.Enabled = false;
-			this.txbPyraHauteur.Location = new System.Drawing.Point(244, 49);
-			this.txbPyraHauteur.Name = "txbPyraHauteur";
-			this.txbPyraHauteur.Size = new System.Drawing.Size(45, 20);
-			this.txbPyraHauteur.TabIndex = 10;
-			this.txbPyraHauteur.Text = "300";
+			this.txbPyra4Hauteur.Enabled = false;
+			this.txbPyra4Hauteur.Location = new System.Drawing.Point(257, 49);
+			this.txbPyra4Hauteur.Name = "txbPyra4Hauteur";
+			this.txbPyra4Hauteur.Size = new System.Drawing.Size(45, 20);
+			this.txbPyra4Hauteur.TabIndex = 10;
+			this.txbPyra4Hauteur.Text = "300";
 			// 
 			// label9
 			// 
 			this.label9.AutoSize = true;
-			this.label9.Location = new System.Drawing.Point(295, 53);
+			this.label9.Location = new System.Drawing.Point(308, 53);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(45, 13);
 			this.label9.TabIndex = 9;
@@ -354,7 +359,7 @@
 			// chkClearObj
 			// 
 			this.chkClearObj.AutoSize = true;
-			this.chkClearObj.Location = new System.Drawing.Point(13, 179);
+			this.chkClearObj.Location = new System.Drawing.Point(13, 213);
 			this.chkClearObj.Name = "chkClearObj";
 			this.chkClearObj.Size = new System.Drawing.Size(137, 17);
 			this.chkClearObj.TabIndex = 18;
@@ -371,6 +376,54 @@
 			this.chkYorient.Text = "Orientation vers Y";
 			this.chkYorient.UseVisualStyleBackColor = true;
 			// 
+			// rbPyramide3Faces
+			// 
+			this.rbPyramide3Faces.AutoSize = true;
+			this.rbPyramide3Faces.Location = new System.Drawing.Point(13, 77);
+			this.rbPyramide3Faces.Name = "rbPyramide3Faces";
+			this.rbPyramide3Faces.Size = new System.Drawing.Size(106, 17);
+			this.rbPyramide3Faces.TabIndex = 6;
+			this.rbPyramide3Faces.TabStop = true;
+			this.rbPyramide3Faces.Text = "Pyramide 3 faces";
+			this.rbPyramide3Faces.UseVisualStyleBackColor = true;
+			this.rbPyramide3Faces.CheckedChanged += new System.EventHandler(this.RbPyramide3Faces_CheckedChanged);
+			// 
+			// txbPyra3Base
+			// 
+			this.txbPyra3Base.Enabled = false;
+			this.txbPyra3Base.Location = new System.Drawing.Point(124, 72);
+			this.txbPyra3Base.Name = "txbPyra3Base";
+			this.txbPyra3Base.Size = new System.Drawing.Size(45, 20);
+			this.txbPyra3Base.TabIndex = 7;
+			this.txbPyra3Base.Text = "300";
+			// 
+			// label14
+			// 
+			this.label14.AutoSize = true;
+			this.label14.Location = new System.Drawing.Point(175, 76);
+			this.label14.Name = "label14";
+			this.label14.Size = new System.Drawing.Size(58, 13);
+			this.label14.TabIndex = 8;
+			this.label14.Text = "Taille base";
+			// 
+			// label15
+			// 
+			this.label15.AutoSize = true;
+			this.label15.Location = new System.Drawing.Point(308, 78);
+			this.label15.Name = "label15";
+			this.label15.Size = new System.Drawing.Size(45, 13);
+			this.label15.TabIndex = 9;
+			this.label15.Text = "Hauteur";
+			// 
+			// txbPyra3Hauteur
+			// 
+			this.txbPyra3Hauteur.Enabled = false;
+			this.txbPyra3Hauteur.Location = new System.Drawing.Point(257, 74);
+			this.txbPyra3Hauteur.Name = "txbPyra3Hauteur";
+			this.txbPyra3Hauteur.Size = new System.Drawing.Size(45, 20);
+			this.txbPyra3Hauteur.TabIndex = 10;
+			this.txbPyra3Hauteur.Text = "200";
+			// 
 			// NewObject
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -385,11 +438,16 @@
 			this.Controls.Add(this.label11);
 			this.Controls.Add(this.label10);
 			this.Controls.Add(this.txbPosX);
-			this.Controls.Add(this.txbPyraHauteur);
+			this.Controls.Add(this.txbPyra3Hauteur);
+			this.Controls.Add(this.txbPyra4Hauteur);
+			this.Controls.Add(this.label15);
 			this.Controls.Add(this.label9);
+			this.Controls.Add(this.label14);
 			this.Controls.Add(this.label8);
-			this.Controls.Add(this.txbPyraBase);
-			this.Controls.Add(this.rbPyramide);
+			this.Controls.Add(this.txbPyra3Base);
+			this.Controls.Add(this.txbPyra4Base);
+			this.Controls.Add(this.rbPyramide3Faces);
+			this.Controls.Add(this.rbPyramide4Faces);
 			this.Controls.Add(this.txbSoucoupeHauteur2);
 			this.Controls.Add(this.txbSoucoupeHauteur1);
 			this.Controls.Add(this.label7);
@@ -440,10 +498,10 @@
         private System.Windows.Forms.TextBox txbSoucoupeHauteur1;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txbSoucoupeHauteur2;
-		private System.Windows.Forms.RadioButton rbPyramide;
+		private System.Windows.Forms.RadioButton rbPyramide4Faces;
 		private System.Windows.Forms.Label label8;
-		private System.Windows.Forms.TextBox txbPyraBase;
-		private System.Windows.Forms.TextBox txbPyraHauteur;
+		private System.Windows.Forms.TextBox txbPyra4Base;
+		private System.Windows.Forms.TextBox txbPyra4Hauteur;
 		private System.Windows.Forms.Label label9;
 		private System.Windows.Forms.TextBox txbPosX;
 		private System.Windows.Forms.Label label10;
@@ -454,5 +512,10 @@
 		private System.Windows.Forms.TextBox txbPosZ;
 		private System.Windows.Forms.CheckBox chkClearObj;
 		private System.Windows.Forms.CheckBox chkYorient;
+		private System.Windows.Forms.RadioButton rbPyramide3Faces;
+		private System.Windows.Forms.TextBox txbPyra3Base;
+		private System.Windows.Forms.Label label14;
+		private System.Windows.Forms.Label label15;
+		private System.Windows.Forms.TextBox txbPyra3Hauteur;
 	}
 }
