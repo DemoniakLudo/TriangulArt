@@ -61,6 +61,7 @@
 			this.bpAddAnim = new System.Windows.Forms.Button();
 			this.bpDeleteAnim = new System.Windows.Forms.Button();
 			this.bpSaveGif = new System.Windows.Forms.Button();
+			this.chkImportPalette = new System.Windows.Forms.CheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxScr)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.trkIndex)).BeginInit();
 			this.SuspendLayout();
@@ -139,7 +140,7 @@
 			// 
 			// bpReadObject
 			// 
-			this.bpReadObject.Location = new System.Drawing.Point(0, 672);
+			this.bpReadObject.Location = new System.Drawing.Point(0, 663);
 			this.bpReadObject.Name = "bpReadObject";
 			this.bpReadObject.Size = new System.Drawing.Size(115, 25);
 			this.bpReadObject.TabIndex = 4;
@@ -159,7 +160,7 @@
 			// 
 			// bpAnimate
 			// 
-			this.bpAnimate.Location = new System.Drawing.Point(0, 702);
+			this.bpAnimate.Location = new System.Drawing.Point(0, 717);
 			this.bpAnimate.Name = "bpAnimate";
 			this.bpAnimate.Size = new System.Drawing.Size(115, 23);
 			this.bpAnimate.TabIndex = 6;
@@ -169,7 +170,7 @@
 			// 
 			// bpWriteTriangle
 			// 
-			this.bpWriteTriangle.Location = new System.Drawing.Point(0, 730);
+			this.bpWriteTriangle.Location = new System.Drawing.Point(0, 742);
 			this.bpWriteTriangle.Name = "bpWriteTriangle";
 			this.bpWriteTriangle.Size = new System.Drawing.Size(115, 38);
 			this.bpWriteTriangle.TabIndex = 7;
@@ -197,7 +198,7 @@
 			// 
 			// bpEditObject
 			// 
-			this.bpEditObject.Location = new System.Drawing.Point(121, 672);
+			this.bpEditObject.Location = new System.Drawing.Point(121, 663);
 			this.bpEditObject.Name = "bpEditObject";
 			this.bpEditObject.Size = new System.Drawing.Size(115, 25);
 			this.bpEditObject.TabIndex = 11;
@@ -263,7 +264,7 @@
 			// 
 			// bpReadAnim
 			// 
-			this.bpReadAnim.Location = new System.Drawing.Point(0, 629);
+			this.bpReadAnim.Location = new System.Drawing.Point(0, 622);
 			this.bpReadAnim.Name = "bpReadAnim";
 			this.bpReadAnim.Size = new System.Drawing.Size(115, 38);
 			this.bpReadAnim.TabIndex = 20;
@@ -273,7 +274,7 @@
 			// 
 			// bpSaveAnim
 			// 
-			this.bpSaveAnim.Location = new System.Drawing.Point(121, 629);
+			this.bpSaveAnim.Location = new System.Drawing.Point(121, 622);
 			this.bpSaveAnim.Name = "bpSaveAnim";
 			this.bpSaveAnim.Size = new System.Drawing.Size(115, 38);
 			this.bpSaveAnim.TabIndex = 20;
@@ -283,7 +284,7 @@
 			// 
 			// trkIndex
 			// 
-			this.trkIndex.Location = new System.Drawing.Point(58, 582);
+			this.trkIndex.Location = new System.Drawing.Point(58, 578);
 			this.trkIndex.Maximum = 29;
 			this.trkIndex.Name = "trkIndex";
 			this.trkIndex.Size = new System.Drawing.Size(712, 45);
@@ -301,7 +302,7 @@
 			// 
 			// bpFusion
 			// 
-			this.bpFusion.Location = new System.Drawing.Point(121, 730);
+			this.bpFusion.Location = new System.Drawing.Point(121, 742);
 			this.bpFusion.Name = "bpFusion";
 			this.bpFusion.Size = new System.Drawing.Size(115, 38);
 			this.bpFusion.TabIndex = 23;
@@ -312,15 +313,15 @@
 			// lstInfo
 			// 
 			this.lstInfo.FormattingEnabled = true;
-			this.lstInfo.Location = new System.Drawing.Point(242, 629);
+			this.lstInfo.Location = new System.Drawing.Point(242, 619);
 			this.lstInfo.Name = "lstInfo";
-			this.lstInfo.Size = new System.Drawing.Size(1112, 173);
+			this.lstInfo.Size = new System.Drawing.Size(1112, 186);
 			this.lstInfo.TabIndex = 25;
 			// 
 			// bpStopAnim
 			// 
 			this.bpStopAnim.Enabled = false;
-			this.bpStopAnim.Location = new System.Drawing.Point(121, 702);
+			this.bpStopAnim.Location = new System.Drawing.Point(121, 717);
 			this.bpStopAnim.Name = "bpStopAnim";
 			this.bpStopAnim.Size = new System.Drawing.Size(115, 23);
 			this.bpStopAnim.TabIndex = 26;
@@ -406,7 +407,7 @@
 			// 
 			// bpSaveGif
 			// 
-			this.bpSaveGif.Location = new System.Drawing.Point(0, 771);
+			this.bpSaveGif.Location = new System.Drawing.Point(0, 782);
 			this.bpSaveGif.Name = "bpSaveGif";
 			this.bpSaveGif.Size = new System.Drawing.Size(115, 23);
 			this.bpSaveGif.TabIndex = 33;
@@ -414,11 +415,22 @@
 			this.bpSaveGif.UseVisualStyleBackColor = true;
 			this.bpSaveGif.Click += new System.EventHandler(this.BpSaveGif_Click);
 			// 
+			// chkImportPalette
+			// 
+			this.chkImportPalette.AutoSize = true;
+			this.chkImportPalette.Location = new System.Drawing.Point(2, 692);
+			this.chkImportPalette.Name = "chkImportPalette";
+			this.chkImportPalette.Size = new System.Drawing.Size(159, 17);
+			this.chkImportPalette.TabIndex = 34;
+			this.chkImportPalette.Text = "Importer palette depuis objet";
+			this.chkImportPalette.UseVisualStyleBackColor = true;
+			// 
 			// MakeAnim
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1360, 806);
+			this.ClientSize = new System.Drawing.Size(1360, 808);
+			this.Controls.Add(this.chkImportPalette);
 			this.Controls.Add(this.bpSaveGif);
 			this.Controls.Add(this.bpDeleteAnim);
 			this.Controls.Add(this.bpAddAnim);
@@ -509,5 +521,6 @@
 		private System.Windows.Forms.Button bpAddAnim;
 		private System.Windows.Forms.Button bpDeleteAnim;
 		private System.Windows.Forms.Button bpSaveGif;
+		private System.Windows.Forms.CheckBox chkImportPalette;
 	}
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Runtime.Remoting;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 
@@ -15,6 +16,7 @@ namespace TriangulArt {
 		private bool inAnim = false, endAnim = false;
 		private int selAnim = 0;
 		private List<Sequence> lstSeq = new List<Sequence>();
+		private int maxPen = 15;
 
 		public MakeAnim(Projet prj, ImageFond bf) {
 			InitializeComponent();
@@ -23,6 +25,7 @@ namespace TriangulArt {
 			bmpCalc = new DirectBitmap(width, 272);
 			projet = prj;
 			bmpFond = bf.NbImg > 0 ? bf.GetImage : null;
+			chkImportPalette.Visible = prj.cpcPlus;
 			InitInfoAnim();
 		}
 
@@ -179,8 +182,11 @@ namespace TriangulArt {
 		private void BpReadObject_Click(object sender, EventArgs e) {
 			OpenFileDialog of = new OpenFileDialog { Filter = "Fichiers objets ascii (*.asc)|*.asc|Tous les fichiers (*.*)|*.*\"'" };
 			if (of.ShowDialog() == DialogResult.OK) {
-				int numPen = 0;
+				int numPen = chkImportPalette.Checked ? maxPen : 0;
 				projet.lstAnim[selAnim].objet.ReadObject(projet, of.FileName, ref numPen);
+				if (chkImportPalette.Checked) {
+					maxPen = numPen;
+				}
 				AddInfo("Objet " + Path.GetFileName(of.FileName) + " chargé. " + projet.lstAnim[selAnim].objet.lstFace.Count + " Faces.");
 			}
 			DisplayFrame(trkIndex.Value);
