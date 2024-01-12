@@ -159,7 +159,77 @@ namespace TriangulArt {
 			lstFace.Add(new Face(11, nv + 6, nv + 4, nv + 7, 6));
 		}
 
-		public void CreePyramide(double px, double py, double pz, double arete, double hauteur, bool yOrient) {
+		public void CreePyramide3Faces(double px, double py, double pz, double arete, double hauteur, bool yOrient) {
+			double lg = arete / 2.0;
+			double h2 = hauteur / 2.0;
+			int nv = lstVertex.Count;
+			if (yOrient) {
+				lstVertex.Add(new Vertex(px, py - h2, pz));
+				for (int r = 0; r < 360; r += 120) {
+					double x = Math.Cos(r * CONV) * lg;
+					double y = Math.Sin(r * CONV) * lg;
+					lstVertex.Add(new Vertex(px + x, py + h2, pz + y));
+				}
+			}
+			else {
+				lstVertex.Add(new Vertex(px, py, pz - h2));
+				for (int r = 0; r < 360; r += 120) {
+					double x = Math.Cos(r * CONV) * lg;
+					double y = Math.Sin(r * CONV) * lg;
+					lstVertex.Add(new Vertex(px + x, py + y, pz + h2));
+				}
+			}
+			lstFace.Add(new Face(0, nv + 0, nv + 1, nv + 2, 1));
+			lstFace.Add(new Face(1, nv + 0, nv + 2, nv + 3, 2));
+			lstFace.Add(new Face(2, nv + 0, nv + 3, nv + 1, 3));
+			lstFace.Add(new Face(3, nv + 1, nv + 2, nv + 3, 4));
+		}
+
+		public void CreeObjTest(double px, double py, double pz, double arete, double hauteur, bool yOrient) {
+			double lg = arete / 2.0;
+			double h2 = hauteur / 2.0;
+			int nv = lstVertex.Count;
+			if (yOrient) {
+				lstVertex.Add(new Vertex(px, py - h2, pz));
+				for (int r = 0; r < 360; r += 120) {
+					double x = Math.Cos(r * CONV) * lg;
+					double y = Math.Sin(r * CONV) * lg;
+					lstVertex.Add(new Vertex(px + x, py + h2, pz + y));
+				}
+			}
+			else {
+				lstVertex.Add(new Vertex(px, py, pz - h2));
+				for (int r = 0; r < 360; r += 120) {
+					double x = Math.Cos(r * CONV) * lg;
+					double y = Math.Sin(r * CONV) * lg;
+					lstVertex.Add(new Vertex(px + x, py + y, pz + h2));
+				}
+				for (int r = 0; r < 360; r += 60) {
+					double x = Math.Cos(r * CONV) * lg * 1.6665;
+					double y = Math.Sin(r * CONV) * lg * 1.6665;
+					lstVertex.Add(new Vertex(px + x, py + y, pz + h2 * 3));
+				}
+			}
+			lstFace.Add(new Face(0, nv + 0, nv + 1, nv + 2, 1));
+			lstFace.Add(new Face(1, nv + 0, nv + 2, nv + 3, 2));
+			lstFace.Add(new Face(2, nv + 0, nv + 3, nv + 1, 3));
+
+			lstFace.Add(new Face(3, nv + 1, nv + 4, nv + 5, 1));
+			lstFace.Add(new Face(4, nv + 2, nv + 5, nv + 6, 1));
+
+			lstFace.Add(new Face(5, nv + 2, nv + 6, nv + 7, 2));
+			lstFace.Add(new Face(6, nv + 3, nv + 7, nv + 8, 2));
+
+			lstFace.Add(new Face(7, nv + 3, nv + 8, nv + 9, 3));
+			lstFace.Add(new Face(8, nv + 1, nv + 9, nv + 4, 3));
+
+			lstFace.Add(new Face(9, nv + 4, nv + 5, nv + 9, 4));
+			lstFace.Add(new Face(10, nv + 5, nv + 6, nv + 7, 4));
+			lstFace.Add(new Face(11, nv + 7, nv + 8, nv + 9, 4));
+
+		}
+
+		public void CreePyramide4Faces(double px, double py, double pz, double arete, double hauteur, bool yOrient) {
 			double lg = arete / 2.0;
 			double h2 = hauteur / 2.0;
 			int nv = lstVertex.Count;
@@ -182,7 +252,7 @@ namespace TriangulArt {
 			lstFace.Add(new Face(2, nv + 0, nv + 3, nv + 4, 1));
 			lstFace.Add(new Face(3, nv + 0, nv + 4, nv + 1, 2));
 			lstFace.Add(new Face(4, nv + 1, nv + 2, nv + 3, 3));
-			lstFace.Add(new Face(4, nv + 3, nv + 1, nv + 4, 3));
+			lstFace.Add(new Face(5, nv + 3, nv + 1, nv + 4, 3));
 		}
 
 		public void CreeDisque(double px, double py, double pz, double rayon, int division, bool yOrient) {
