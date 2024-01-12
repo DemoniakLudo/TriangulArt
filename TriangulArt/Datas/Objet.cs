@@ -84,7 +84,7 @@ namespace TriangulArt {
 		// à l'écran, en fonction des paramètres de position, angle, zoom
 		// Affichage de l'objet complêt en fonction des paramètres choisis
 		//
-		public void DrawObj(DirectBitmap bm, double posx, double posy, double zoomx, double zoomy, double ax, double ay, double az, int numFace, int numPoint, List<Triangle> lstTri = null, DirectBitmap bmCalc = null) {
+		public int DrawObj(DirectBitmap bm, double posx, double posy, double zoomx, double zoomy, double ax, double ay, double az, int numFace, int numPoint, List<Triangle> lstTri = null, DirectBitmap bmCalc = null) {
 			double xSin = Math.Sin(ax * CONV);
 			double xCos = Math.Cos(ax * CONV);
 			double ySin = Math.Sin(ay * CONV);
@@ -126,6 +126,8 @@ namespace TriangulArt {
 				for (int x = -2; x < 3; x++)
 					for (int y = -2; y < 3; y++)
 						bm.SetPixel(x + (int)lstVertex[numPoint].px, y + (int)lstVertex[numPoint].py, new RvbColor((byte)(64 - x * 63), (byte)(64 + y * 63), (byte)((x + y) * 63)));
+
+			return lstDraw.Count;
 		}
 
 		#region Creation objets de base

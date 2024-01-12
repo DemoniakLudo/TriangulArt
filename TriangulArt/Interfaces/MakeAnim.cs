@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
@@ -56,7 +57,8 @@ namespace TriangulArt {
 			lstInfo.SelectedIndex = lstInfo.Items.Count - 1;
 		}
 
-		private void DisplayFrame(int index, List<Triangle> lstTriangle = null) {
+		private int DisplayFrame(int index, List<Triangle> lstTriangle = null) {
+			int ret = 0;
 			lblNumImage.Text = "Image " + String.Format("{0,3}", index);
 			if (bmpFond != null) {
 				for (int y = 0; y < bmpFond.Height; y++)
@@ -71,10 +73,11 @@ namespace TriangulArt {
 
 			if (index < lstSeq.Count) {
 				Sequence s = lstSeq[index];
-				projet.lstAnim[selAnim].objet.DrawObj(bmpLock, s.posx, s.posy, s.zoomx, s.zoomy, s.angx, s.angy, s.angz, -1, -1, lstTriangle, bmpCalc);
+				ret = projet.lstAnim[selAnim].objet.DrawObj(bmpLock, s.posx, s.posy, s.zoomx, s.zoomy, s.angx, s.angy, s.angz, -1, -1, lstTriangle, bmpCalc);
 			}
 			pictureBoxScr.Image = bmpLock.Bitmap;
 			pictureBoxScr.Refresh();
+			return ret;
 		}
 
 		private void GenereSeq() {
@@ -99,38 +102,48 @@ namespace TriangulArt {
 			trkIndex.Value = 0;
 		}
 
+		private int CreateFrame(int i, bool setProjet, bool fusion) {
+			int nbTri = 0;
+			trkIndex.Value = i;
+			List<Triangle> lstTriangle = new List<Triangle>();
+			DisplayFrame(i, lstTriangle);
+			Application.DoEvents();
+			Datas data = fusion ? projet.lstData[i] : new Datas();
+			if (setProjet)
+				data.nomImage = "Frame_" + i.ToString();
+
+			for (int t = 0; t < lstTriangle.Count; t++) {
+				for (int y = 0; y < bmpCalc.Height; y++) {
+					for (int x = 0; x < bmpCalc.Width; x++)
+						if (bmpCalc.GetPixel(x, y) == t) {
+							if (setProjet) {
+								Triangle tr = lstTriangle[t];
+								data.lstTriangle.Add(new Triangle(tr.x1, tr.y1, tr.x2, tr.y2, tr.x3, tr.y3, tr.color));
+							}
+							y = bmpCalc.Height;
+							nbTri++;
+							break;
+						}
+				}
+			}
+			if (setProjet && !fusion)
+				projet.lstData.Add(data);
+
+			return nbTri;
+		}
+
 		private void Animate(bool setProjet = false, bool fusion = false) {
 			GenereSeq();
 			if (setProjet && !fusion)
 				projet.lstData.Clear();
 
 			InitBoutons();
+			int nbTri = 0;
 			for (int i = 0; i < lstSeq.Count && !endAnim; i++) {
-				trkIndex.Value = i;
-				List<Triangle> lstTriangle = new List<Triangle>();
-				DisplayFrame(i, lstTriangle);
-				Application.DoEvents();
-				if (setProjet) {
-					Datas data = fusion ? projet.lstData[i] : new Datas();
-					data.nomImage = "Frame_" + i.ToString();
-					for (int t = 0; t < lstTriangle.Count; t++) {
-						for (int y = 0; y < bmpCalc.Height; y++) {
-							for (int x = 0; x < bmpCalc.Width; x++)
-								if (bmpCalc.GetPixel(x, y) == t) {
-									Triangle tr = lstTriangle[t];
-									data.lstTriangle.Add(new Triangle(tr.x1, tr.y1, tr.x2, tr.y2, tr.x3, tr.y3, tr.color));
-									y = bmpCalc.Height;
-									break;
-								}
-						}
-					}
-					if (!fusion)
-						projet.lstData.Add(data);
-				}
-				else
-					System.Threading.Thread.Sleep(20);
+				nbTri += CreateFrame(i, setProjet, fusion);
 			}
 			InitBoutons();
+			AddInfo("Nbre de triangles de l'animation:" + nbTri.ToString());
 			if (setProjet) {
 				int nbAvant = 0;
 				int nbApres = 0;
@@ -185,6 +198,7 @@ namespace TriangulArt {
 		}
 
 		private void BpAnimate_Click(object sender, EventArgs e) {
+			lstInfo.Items.Clear();
 			endAnim = false;
 			inAnim = true;
 			while (!endAnim) {
@@ -199,6 +213,7 @@ namespace TriangulArt {
 		}
 
 		private void BpWriteTriangle_Click(object sender, EventArgs e) {
+			lstInfo.Items.Clear();
 			Enabled = false;
 			endAnim = false;
 			inAnim = false;
@@ -207,6 +222,7 @@ namespace TriangulArt {
 		}
 
 		private void BpFusion_Click(object sender, EventArgs e) {
+			lstInfo.Items.Clear();
 			Enabled = false;
 			endAnim = false;
 			Animate(true, true);
@@ -215,6 +231,7 @@ namespace TriangulArt {
 
 		private void BpReadAnim_Click(object sender, EventArgs e) {
 			bool err = false;
+			lstInfo.Items.Clear();
 			OpenFileDialog of = new OpenFileDialog { Filter = "Fichiers XML (*.XML)|*.xml" };
 			if (of.ShowDialog() == DialogResult.OK) {
 				FileStream fileSeq = File.Open(of.FileName, FileMode.Open);
@@ -303,6 +320,51 @@ namespace TriangulArt {
 			projet.lstAnim.Add(new Animation());
 			selAnim++;
 			InitInfoAnim();
+		}
+
+		private void WriteGifImg(byte[] tabByte, BinaryWriter bWr) {
+			tabByte[785] = 5; // Temps d'affichage
+			tabByte[786] = 0;
+			tabByte[798] = (byte)(tabByte[798] | 0x87);
+			bWr.Write(tabByte, 781, 18);
+			bWr.Write(tabByte, 13, 768);
+			bWr.Write(tabByte, 799, tabByte.Length - 800);
+		}
+
+		private Bitmap GetScrBitmap() {
+			DirectBitmap tmp = new DirectBitmap(384, 272);
+			Graphics g = Graphics.FromImage(tmp.Bitmap);
+			g.DrawImage(bmpLock.Bitmap, 0, 0, 384, 272);
+			return tmp.Bitmap;
+		}
+
+		private void BpSaveGif_Click(object sender, EventArgs e) {
+			SaveFileDialog dlg = new SaveFileDialog();
+			dlg.Filter = "Gif anim (*.gif)|*.gif";
+			if (dlg.ShowDialog() == DialogResult.OK) {
+				byte[] GifAnimation = { 33, 255, 11, 78, 69, 84, 83, 67, 65, 80, 69, 50, 46, 48, 3, 1, 0, 0, 0 };
+				MemoryStream ms = new MemoryStream();
+				BinaryWriter bWr = new BinaryWriter(new FileStream(dlg.FileName, FileMode.Create));
+				GenereSeq();
+				InitBoutons();
+				DisplayFrame(0);
+				GetScrBitmap().Save(ms, ImageFormat.Gif);
+				byte[] tabByte = ms.ToArray();
+				tabByte[10] = (byte)(tabByte[10] & 0X78); //No global color table
+				bWr.Write(tabByte, 0, 13);
+				bWr.Write(GifAnimation);
+				WriteGifImg(tabByte, bWr);
+				for (int i = 1; i < lstSeq.Count; i++) {
+					DisplayFrame(i);
+					ms.SetLength(0);
+					GetScrBitmap().Save(ms, ImageFormat.Gif);
+					tabByte = ms.ToArray();
+					WriteGifImg(tabByte, bWr);
+				}
+				bWr.Write(tabByte[tabByte.Length - 1]);
+				bWr.Close();
+				ms.Dispose();
+			}
 		}
 
 		private void BpDeleteAnim_Click(object sender, EventArgs e) {

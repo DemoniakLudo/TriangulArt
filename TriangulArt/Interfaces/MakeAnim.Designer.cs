@@ -60,6 +60,7 @@
 			this.bpAddAnimCopie = new System.Windows.Forms.Button();
 			this.bpAddAnim = new System.Windows.Forms.Button();
 			this.bpDeleteAnim = new System.Windows.Forms.Button();
+			this.bpSaveGif = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxScr)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.trkIndex)).BeginInit();
 			this.SuspendLayout();
@@ -138,9 +139,9 @@
 			// 
 			// bpReadObject
 			// 
-			this.bpReadObject.Location = new System.Drawing.Point(0, 673);
+			this.bpReadObject.Location = new System.Drawing.Point(0, 672);
 			this.bpReadObject.Name = "bpReadObject";
-			this.bpReadObject.Size = new System.Drawing.Size(115, 38);
+			this.bpReadObject.Size = new System.Drawing.Size(115, 25);
 			this.bpReadObject.TabIndex = 4;
 			this.bpReadObject.Text = "Lire objet";
 			this.bpReadObject.UseVisualStyleBackColor = true;
@@ -158,9 +159,9 @@
 			// 
 			// bpAnimate
 			// 
-			this.bpAnimate.Location = new System.Drawing.Point(0, 719);
+			this.bpAnimate.Location = new System.Drawing.Point(0, 702);
 			this.bpAnimate.Name = "bpAnimate";
-			this.bpAnimate.Size = new System.Drawing.Size(115, 38);
+			this.bpAnimate.Size = new System.Drawing.Size(115, 23);
 			this.bpAnimate.TabIndex = 6;
 			this.bpAnimate.Text = "Animer";
 			this.bpAnimate.UseVisualStyleBackColor = true;
@@ -168,7 +169,7 @@
 			// 
 			// bpWriteTriangle
 			// 
-			this.bpWriteTriangle.Location = new System.Drawing.Point(0, 764);
+			this.bpWriteTriangle.Location = new System.Drawing.Point(0, 730);
 			this.bpWriteTriangle.Name = "bpWriteTriangle";
 			this.bpWriteTriangle.Size = new System.Drawing.Size(115, 38);
 			this.bpWriteTriangle.TabIndex = 7;
@@ -196,9 +197,9 @@
 			// 
 			// bpEditObject
 			// 
-			this.bpEditObject.Location = new System.Drawing.Point(121, 673);
+			this.bpEditObject.Location = new System.Drawing.Point(121, 672);
 			this.bpEditObject.Name = "bpEditObject";
-			this.bpEditObject.Size = new System.Drawing.Size(115, 38);
+			this.bpEditObject.Size = new System.Drawing.Size(115, 25);
 			this.bpEditObject.TabIndex = 11;
 			this.bpEditObject.Text = "Editeur d\'objet";
 			this.bpEditObject.UseVisualStyleBackColor = true;
@@ -300,7 +301,7 @@
 			// 
 			// bpFusion
 			// 
-			this.bpFusion.Location = new System.Drawing.Point(121, 764);
+			this.bpFusion.Location = new System.Drawing.Point(121, 730);
 			this.bpFusion.Name = "bpFusion";
 			this.bpFusion.Size = new System.Drawing.Size(115, 38);
 			this.bpFusion.TabIndex = 23;
@@ -319,9 +320,9 @@
 			// bpStopAnim
 			// 
 			this.bpStopAnim.Enabled = false;
-			this.bpStopAnim.Location = new System.Drawing.Point(121, 719);
+			this.bpStopAnim.Location = new System.Drawing.Point(121, 702);
 			this.bpStopAnim.Name = "bpStopAnim";
-			this.bpStopAnim.Size = new System.Drawing.Size(115, 38);
+			this.bpStopAnim.Size = new System.Drawing.Size(115, 23);
 			this.bpStopAnim.TabIndex = 26;
 			this.bpStopAnim.Text = "Stop Anim.";
 			this.bpStopAnim.UseVisualStyleBackColor = true;
@@ -403,11 +404,22 @@
 			this.bpDeleteAnim.UseVisualStyleBackColor = true;
 			this.bpDeleteAnim.Click += new System.EventHandler(this.BpDeleteAnim_Click);
 			// 
+			// bpSaveGif
+			// 
+			this.bpSaveGif.Location = new System.Drawing.Point(0, 771);
+			this.bpSaveGif.Name = "bpSaveGif";
+			this.bpSaveGif.Size = new System.Drawing.Size(115, 23);
+			this.bpSaveGif.TabIndex = 33;
+			this.bpSaveGif.Text = "Sauvegarder GiF";
+			this.bpSaveGif.UseVisualStyleBackColor = true;
+			this.bpSaveGif.Click += new System.EventHandler(this.BpSaveGif_Click);
+			// 
 			// MakeAnim
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1360, 806);
+			this.Controls.Add(this.bpSaveGif);
 			this.Controls.Add(this.bpDeleteAnim);
 			this.Controls.Add(this.bpAddAnim);
 			this.Controls.Add(this.bpAddAnimCopie);
@@ -496,5 +508,6 @@
 		private System.Windows.Forms.Button bpAddAnimCopie;
 		private System.Windows.Forms.Button bpAddAnim;
 		private System.Windows.Forms.Button bpDeleteAnim;
+		private System.Windows.Forms.Button bpSaveGif;
 	}
 }

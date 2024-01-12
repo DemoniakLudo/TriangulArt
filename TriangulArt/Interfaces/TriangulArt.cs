@@ -614,7 +614,7 @@ namespace TriangulArt {
 					projet.SelImage().Import(dlg.FileName, chkClearData.Checked);
 					SetInfo("Import triangles ok");
 					FillTriangles();
-					DisplayList();
+					DisplayList(true);
 				}
 				catch {
 					MessageBox.Show("Erreur lors de l'importation des données...");
@@ -676,7 +676,7 @@ namespace TriangulArt {
 
 		private void BpRedraw_Click(object sender, EventArgs e) {
 			projet.SelImage().CleanUp(bmpLock.Width, true);
-			DisplayList();
+			DisplayList(true);
 			FillTriangles();
 		}
 
@@ -1093,7 +1093,7 @@ namespace TriangulArt {
 				foreach (Datas d in projet.lstData)
 					d.ChangeMode(projet.mode);
 
-			DisplayList();
+			DisplayList(true);
 			FillTriangles();
 		}
 
