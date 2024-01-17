@@ -115,6 +115,9 @@
 			this.bpFirst = new System.Windows.Forms.Button();
 			this.bpLast = new System.Windows.Forms.Button();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.bpZ80 = new System.Windows.Forms.Button();
+			this.bpSaveGif = new System.Windows.Forms.Button();
+			this.bpSuprInactif = new System.Windows.Forms.Button();
 			this.bpGen3D = new System.Windows.Forms.Button();
 			this.bpGenPal = new System.Windows.Forms.Button();
 			this.bpSavePal = new System.Windows.Forms.Button();
@@ -298,7 +301,7 @@
 			this.listTriangles.Size = new System.Drawing.Size(504, 238);
 			this.listTriangles.TabIndex = 20;
 			this.listTriangles.SelectedIndexChanged += new System.EventHandler(this.ListTriangles_SelectedIndexChanged);
-			this.listTriangles.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listTriangles_MouseDoubleClick);
+			this.listTriangles.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ListTriangles_MouseDoubleClick);
 			// 
 			// bpEdit
 			// 
@@ -1047,6 +1050,9 @@
 			// 
 			// panel1
 			// 
+			this.panel1.Controls.Add(this.bpZ80);
+			this.panel1.Controls.Add(this.bpSaveGif);
+			this.panel1.Controls.Add(this.bpSuprInactif);
 			this.panel1.Controls.Add(this.bpGen3D);
 			this.panel1.Controls.Add(this.bpGenPal);
 			this.panel1.Controls.Add(this.bpSavePal);
@@ -1114,6 +1120,36 @@
 			this.panel1.Size = new System.Drawing.Size(549, 767);
 			this.panel1.TabIndex = 60;
 			// 
+			// bpZ80
+			// 
+			this.bpZ80.Location = new System.Drawing.Point(348, 740);
+			this.bpZ80.Name = "bpZ80";
+			this.bpZ80.Size = new System.Drawing.Size(73, 23);
+			this.bpZ80.TabIndex = 65;
+			this.bpZ80.Text = "CpcEmul";
+			this.bpZ80.UseVisualStyleBackColor = true;
+			this.bpZ80.Click += new System.EventHandler(this.bpZ80_Click);
+			// 
+			// bpSaveGif
+			// 
+			this.bpSaveGif.Location = new System.Drawing.Point(236, 740);
+			this.bpSaveGif.Name = "bpSaveGif";
+			this.bpSaveGif.Size = new System.Drawing.Size(106, 23);
+			this.bpSaveGif.TabIndex = 64;
+			this.bpSaveGif.Text = "Sauver GIF animé";
+			this.bpSaveGif.UseVisualStyleBackColor = true;
+			this.bpSaveGif.Click += new System.EventHandler(this.bpSaveGif_Click);
+			// 
+			// bpSuprInactif
+			// 
+			this.bpSuprInactif.Location = new System.Drawing.Point(508, 364);
+			this.bpSuprInactif.Name = "bpSuprInactif";
+			this.bpSuprInactif.Size = new System.Drawing.Size(41, 23);
+			this.bpSuprInactif.TabIndex = 63;
+			this.bpSuprInactif.Text = "Supr";
+			this.bpSuprInactif.UseVisualStyleBackColor = true;
+			this.bpSuprInactif.Click += new System.EventHandler(this.BpSuprInactif_Click);
+			// 
 			// bpGen3D
 			// 
 			this.bpGen3D.Location = new System.Drawing.Point(336, 615);
@@ -1122,7 +1158,7 @@
 			this.bpGen3D.TabIndex = 62;
 			this.bpGen3D.Text = "Générer objet 3D";
 			this.bpGen3D.UseVisualStyleBackColor = true;
-			this.bpGen3D.Click += new System.EventHandler(this.bpGen3D_Click);
+			this.bpGen3D.Click += new System.EventHandler(this.BpGen3D_Click);
 			// 
 			// bpGenPal
 			// 
@@ -1295,6 +1331,9 @@
 		private System.Windows.Forms.ComboBox comboNbColonnes;
 		private System.Windows.Forms.Button bpRazAll;
 		private System.Windows.Forms.Button bpGen3D;
+		private System.Windows.Forms.Button bpSuprInactif;
+		private System.Windows.Forms.Button bpSaveGif;
+		private System.Windows.Forms.Button bpZ80;
 	}
 }
 

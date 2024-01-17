@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
@@ -22,6 +23,7 @@ namespace TriangulArt {
 		private const int MAX_RAYONS = 32;
 		private int coefX;
 		private Label[] colors = new Label[16];
+		private CpcEmul cpc = new CpcEmul();
 
 		public TriangulArt() {
 			InitializeComponent();
@@ -520,7 +522,7 @@ namespace TriangulArt {
 		}
 
 		private void DisplayMemory() {
-			int nbTri = projet.SelImage().lstTriangle.Count;
+			int nbTri = projet.SelImage().GetTriangleActif();
 			int mem = chkModePolice.Checked ? (nbTri * 6) + 2 : (nbTri * 7) + 6;
 			SetInfo("Nbre de triangles:" + nbTri.ToString() + " - Mémoire utilisée:" + mem + " octets");
 		}
@@ -528,7 +530,7 @@ namespace TriangulArt {
 		private void DisplayMemoryProjet() {
 			int nbTri = 0, nbImg = projet.lstData.Count;
 			foreach (Datas d in projet.lstData) {
-				nbTri += d.lstTriangle.Count;
+				nbTri += d.GetTriangleActif();
 			}
 			int mem = chkModePolice.Checked ? (nbTri * 6) + (nbImg * 2) : (nbTri * 7) + (nbImg * 6);
 			SetInfo("Nbre de triangles du projet:" + nbTri.ToString() + " - Mémoire utilisée:" + mem.ToString() + " octets");
@@ -614,7 +616,7 @@ namespace TriangulArt {
 					projet.SelImage().Import(dlg.FileName, chkClearData.Checked);
 					SetInfo("Import triangles ok");
 					FillTriangles();
-					DisplayList();
+					DisplayList(true);
 				}
 				catch {
 					MessageBox.Show("Erreur lors de l'importation des données...");
@@ -676,15 +678,14 @@ namespace TriangulArt {
 
 		private void BpRedraw_Click(object sender, EventArgs e) {
 			projet.SelImage().CleanUp(bmpLock.Width, true);
-			DisplayList();
+			DisplayList(true);
 			FillTriangles();
 		}
 
 		private void DeleteSelTriangle() {
 			if (triSel != null && MessageBox.Show("Etes vous sur(e) de vouloir supprimer ce triangle ?", "Confirmation suppression", MessageBoxButtons.YesNo) == DialogResult.Yes) {
 				projet.SelImage().DeleteSelTriangle();
-				DisplayList();
-				FillTriangles();
+				InitImage();
 			}
 		}
 
@@ -928,9 +929,9 @@ namespace TriangulArt {
 		}
 
 		private void BpClean_Click(object sender, EventArgs e) {
-			int nbAvant = projet.SelImage().lstTriangle.Count;
+			int nbAvant = projet.SelImage().GetTriangleActif();
 			projet.SelImage().CleanUp(bmpLock.Width);
-			int nbApres = projet.SelImage().lstTriangle.Count;
+			int nbApres = projet.SelImage().GetTriangleActif();
 			if (nbApres != nbAvant)
 				SetInfo("Nbre de triangles optimisés : " + (nbAvant - nbApres).ToString());
 			else
@@ -1093,7 +1094,7 @@ namespace TriangulArt {
 				foreach (Datas d in projet.lstData)
 					d.ChangeMode(projet.mode);
 
-			DisplayList();
+			DisplayList(true);
 			FillTriangles();
 		}
 
@@ -1240,7 +1241,67 @@ namespace TriangulArt {
 			SetNewMode(false);
 		}
 
-		private void listTriangles_MouseDoubleClick(object sender, MouseEventArgs e) {
+		private void BpSuprInactif_Click(object sender, EventArgs e) {
+			if (MessageBox.Show("Confirmez la suppression des triangles inactif ?", "Confirmation suppression", MessageBoxButtons.YesNo) == DialogResult.Yes) {
+				for (int i = projet.SelImage().lstTriangle.Count - 1; i >= 0; i--)
+					if (!projet.SelImage().lstTriangle[i].enabled)
+						projet.SelImage().lstTriangle.RemoveAt(i);
+
+				InitImage();
+			}
+		}
+
+		private void bpSaveGif_Click(object sender, EventArgs e) {
+			SaveFileDialog dlg = new SaveFileDialog { Filter = "Gif anim (*.gif)|*.gif" };
+			if (dlg.ShowDialog() == DialogResult.OK) {
+				try {
+					DirectBitmap tmp = new DirectBitmap(pictureBox.Width / 3, 256);
+					byte[] GifAnimation = { 33, 255, 11, 78, 69, 84, 83, 67, 65, 80, 69, 50, 46, 48, 3, 1, 0, 0, 0 };
+					byte[] tabByte = null;
+					MemoryStream ms = new MemoryStream();
+					BinaryWriter bWr = new BinaryWriter(new FileStream(dlg.FileName, FileMode.Create));
+					for (int i = 0; i < projet.lstData.Count; i++) {
+						MemImage();
+						projet.SelectImage(i);
+						if (bmpFond.NbImg > projet.selData)
+							bmpFond.SelectBitmap(projet.selData);
+
+						SetImageProjet();
+						Graphics.FromImage(tmp.Bitmap).DrawImage(bmpLock.Bitmap, 0, 0, tmp.Width, tmp.Height);
+						ms.SetLength(0);
+						tmp.Bitmap.Save(ms, ImageFormat.Gif);
+						tabByte = ms.ToArray();
+						if (i == 0) {
+							tabByte[10] = (byte)(tabByte[10] & 0X78); //No global color table
+							bWr.Write(tabByte, 0, 13);
+							bWr.Write(GifAnimation);
+						}
+						tabByte[785] = 5; // Temps d'affichage
+						tabByte[786] = 0;
+						tabByte[798] = (byte)(tabByte[798] | 0x87);
+						bWr.Write(tabByte, 781, 18);
+						bWr.Write(tabByte, 13, 768);
+						bWr.Write(tabByte, 799, tabByte.Length - 800);
+					}
+					tmp.Dispose();
+					bWr.Write(tabByte[tabByte.Length - 1]);
+					bWr.Close();
+					ms.Dispose();
+				}
+				catch (Exception ex) {
+					SetInfo("Erreur sauvegarde GIF : " + ex.Message);
+				}
+			}
+
+		}
+
+		private void bpZ80_Click(object sender, EventArgs e) {
+			Enabled = false;
+			projet.SendDataToCpc(cpc);
+			Enabled = true;
+		}
+
+		private void ListTriangles_MouseDoubleClick(object sender, MouseEventArgs e) {
 			triSel = projet.SelImage().SelectTriangle(listTriangles.SelectedIndex);
 			if (triSel != null) {
 				triSel.enabled = !triSel.enabled;
@@ -1250,8 +1311,8 @@ namespace TriangulArt {
 			}
 		}
 
-		private void bpGen3D_Click(object sender, EventArgs e) {
-			if (projet.SelImage().lstTriangle.Count > 0)
+		private void BpGen3D_Click(object sender, EventArgs e) {
+			if (projet.SelImage().GetTriangleActif() > 0)
 				new CreateObject(projet, bmpLock.Width, bmpLock.Height).ShowDialog();
 		}
 	}

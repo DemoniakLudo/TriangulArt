@@ -18,6 +18,15 @@ namespace TriangulArt {
 				palette[i] = PaletteCpc.Palette[i];
 		}
 
+		public int GetTriangleActif() {
+			int nbActif = 0;
+			foreach (Triangle t in lstTriangle)
+				if (t.enabled)
+					nbActif++;
+
+			return nbActif;
+		}
+
 		private void FillTriangle(DirectBitmap bmpLock, int x1, int y1, int x2, int y2, int x3, int y3, int c, bool selected = false) {
 			int dx1 = x3 - x1;
 			int dy1 = y3 - y1;
@@ -140,7 +149,7 @@ namespace TriangulArt {
 		public void FillTriangles(DirectBitmap bmpLock, int maxWidth, bool modeLines) {
 			for (int i = 0; i < lstTriangle.Count; i++) {
 				Triangle t = lstTriangle[i];
-				if ( t.enabled)
+				if (t.enabled)
 					FillTriangle(bmpLock, t, maxWidth, modeLines, i == selLigne);
 			}
 		}
@@ -271,7 +280,7 @@ namespace TriangulArt {
 								break;
 							}
 					if (!found)
-						lstTriangle[i].x1 = lstTriangle[i].y1 = lstTriangle[i].x2 = lstTriangle[i].y2 = 0;
+						lstTriangle[i].enabled = false;
 				}
 
 				// Seconde passe : supprimer les triangles ayant des coordonnées identiques
@@ -280,9 +289,7 @@ namespace TriangulArt {
 					if ((t.x1 == t.x2 && t.y1 == t.y2)
 						|| (t.x1 == t.x3 && t.y1 == t.y3)
 						|| (t.x2 == t.x3 && t.y2 == t.y3)) {
-						lstTriangle.RemoveAt(i);
-						i--;
-						nbTri--;
+						lstTriangle[i].enabled = false;
 					}
 				}
 			}
@@ -371,13 +378,13 @@ namespace TriangulArt {
 		}
 
 		public void Rapproche(int distMin) {
-            for (int i = 0; i < lstTriangle.Count - 1; i++)
+			for (int i = 0; i < lstTriangle.Count - 1; i++)
 				for (int j = i + 1; j < lstTriangle.Count; j++) {
 					Triangle tFirst = lstTriangle[i];
 					Triangle tSecond = lstTriangle[j];
-                    int deltax = tFirst.x1 - tSecond.x1;
-                    int deltay = tFirst.y1 - tSecond.y1;
-                    double d = Math.Sqrt(deltax * deltax + deltay * deltay);
+					int deltax = tFirst.x1 - tSecond.x1;
+					int deltay = tFirst.y1 - tSecond.y1;
+					double d = Math.Sqrt(deltax * deltax + deltay * deltay);
 					if (d > 0 && d <= distMin) {
 						tFirst.x1 -= (deltax + 1) / 2;
 						tSecond.x1 += (deltax + 1) / 2;

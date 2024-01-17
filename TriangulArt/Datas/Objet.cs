@@ -84,7 +84,7 @@ namespace TriangulArt {
 		// à l'écran, en fonction des paramètres de position, angle, zoom
 		// Affichage de l'objet complêt en fonction des paramètres choisis
 		//
-		public void DrawObj(DirectBitmap bm, double posx, double posy, double zoomx, double zoomy, double ax, double ay, double az, int numFace, int numPoint, List<Triangle> lstTri = null, DirectBitmap bmCalc = null) {
+		public int DrawObj(DirectBitmap bm, double posx, double posy, double zoomx, double zoomy, double ax, double ay, double az, int numFace, int numPoint, List<Triangle> lstTri = null, DirectBitmap bmCalc = null) {
 			double xSin = Math.Sin(ax * CONV);
 			double xCos = Math.Cos(ax * CONV);
 			double ySin = Math.Sin(ay * CONV);
@@ -105,8 +105,8 @@ namespace TriangulArt {
 				lstDraw.Add(lstFace[i]);
 
 			lstDraw.Sort(delegate (Face p1, Face p2) {
-				double cmp = p1.GetZFace(lstVertex) - p2.GetZFace(lstVertex);
-				return cmp != 0 ? (int)cmp : p1.num - p2.num;
+				int cmp = p1.GetZFace(lstVertex) - p2.GetZFace(lstVertex);
+				return cmp != 0 ? cmp : p1.num - p2.num;
 			});
 
 			// Affiche les triangles
@@ -126,6 +126,8 @@ namespace TriangulArt {
 				for (int x = -2; x < 3; x++)
 					for (int y = -2; y < 3; y++)
 						bm.SetPixel(x + (int)lstVertex[numPoint].px, y + (int)lstVertex[numPoint].py, new RvbColor((byte)(64 - x * 63), (byte)(64 + y * 63), (byte)((x + y) * 63)));
+
+			return lstDraw.Count;
 		}
 
 		#region Creation objets de base
@@ -253,10 +255,14 @@ namespace TriangulArt {
 			lstFace.Add(new Face(5, nv + 3, nv + 1, nv + 4, 3));
 		}
 
-		public void CreeDisque(double px, double py, double pz, double rayon, int division, bool yOrient) {
+		public void CreeDisque(double px, double py, double pz, double rayon, int division, double hauteur, bool yOrient) {
 			int numVertex = 0;
 			int nv = lstVertex.Count;
-			lstVertex.Add(new Vertex(px, py, pz));
+			if (yOrient)
+				lstVertex.Add(new Vertex(px, py, pz + hauteur));
+			else
+				lstVertex.Add(new Vertex(px, py + hauteur, pz));
+
 			for (int ang = 0; ang < 360; ang += 360 / division) {
 				double x = rayon * Math.Cos(ang * CONV);
 				double z = rayon * Math.Sin(ang * CONV);
