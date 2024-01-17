@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -10,7 +9,6 @@ using System.Xml.Serialization;
 
 namespace TriangulArt {
 	public partial class TriangulArt : Form {
-		private List<Bitmap> tabImage = new List<Bitmap>();
 		private DirectBitmap bmpLock;
 		private enum DrawMd { NONE = 0, MOVETRIANGLE, ADDTRIANGLE, ADDQUADRI, ADDRECTANGLE, ADDCERCLE, ADDLINE };
 		private DrawMd mouseOpt = DrawMd.NONE;
