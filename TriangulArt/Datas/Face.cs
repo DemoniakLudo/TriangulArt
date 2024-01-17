@@ -28,7 +28,7 @@ namespace TriangulArt {
 		}
 
 		public int GetZFace(List<Vertex> lstVertex) {
-			return (int)((lstVertex[a].pz + lstVertex[b].pz + lstVertex[c].pz)/3);
+			return (int)((lstVertex[a].pz + lstVertex[b].pz + lstVertex[c].pz) / 3);
 		}
 	}
 }

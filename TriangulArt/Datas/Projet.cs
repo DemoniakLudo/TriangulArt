@@ -64,6 +64,42 @@ namespace TriangulArt {
 			}
 		}
 
+		public void SendDataToRam(Z80Emul z80) {
+			int nbOctets = 0;
+			byte[] tabDatas = new byte[0x8000];
+			foreach (Datas data in lstData) {
+				for (int i = 0; i < data.lstTriangle.Count; i++) {
+					Triangle t = data.lstTriangle[i];
+					if (t.enabled) {
+						int color = i < data.lstTriangle.Count - 1 ? t.color : t.color + 0x80;
+						tabDatas[nbOctets++] = (byte)t.x1;
+						tabDatas[nbOctets++] = (byte)t.y1;
+						tabDatas[nbOctets++] = (byte)t.x2;
+						tabDatas[nbOctets++] = (byte)t.y2;
+						tabDatas[nbOctets++] = (byte)t.x3;
+						tabDatas[nbOctets++] = (byte)t.y3;
+						tabDatas[nbOctets++] = (byte)color;
+					}
+				}
+			}
+			tabDatas[nbOctets++] = 0xFF;
+			//try {
+			z80.SendCrtc(0xBC00, 1);
+			z80.SendCrtc(0xBD00, 0x30);
+			z80.SendCrtc(0xBC00, 2);
+			z80.SendCrtc(0xBD00, 0x32);
+			z80.SendCrtc(0xBC00, 6);
+			z80.SendCrtc(0xBD00, 0x15);
+			z80.SendCrtc(0xBC00, 7);
+			z80.SendCrtc(0xBD00, 0x1C);
+			z80.InitColors(lstData[0].palette);
+			z80.Run(tabDatas, 0x760);
+			//}
+			//catch(Exception ex) {
+
+			//}
+		}
+
 		public void GenereSourceAsm(string fileName, bool modePolice, bool mode3D, bool zx0) {
 			StreamWriter sw = GenereAsm.OpenAsm(fileName);
 			if (zx0) {

@@ -23,6 +23,7 @@ namespace TriangulArt {
 		private const int MAX_RAYONS = 32;
 		private int coefX;
 		private Label[] colors = new Label[16];
+		private Z80Emul z80 = new Z80Emul();
 
 		public TriangulArt() {
 			InitializeComponent();
@@ -1292,6 +1293,12 @@ namespace TriangulArt {
 				}
 			}
 
+		}
+
+		private void bpZ80_Click(object sender, EventArgs e) {
+			Enabled = false;
+			projet.SendDataToRam(z80);
+			Enabled = true;
 		}
 
 		private void ListTriangles_MouseDoubleClick(object sender, MouseEventArgs e) {

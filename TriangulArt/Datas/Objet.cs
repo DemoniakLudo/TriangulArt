@@ -261,8 +261,8 @@ namespace TriangulArt {
 			if (yOrient)
 				lstVertex.Add(new Vertex(px, py, pz + hauteur));
 			else
-				lstVertex.Add(new Vertex(px, py + hauteur, pz)); 
-			
+				lstVertex.Add(new Vertex(px, py + hauteur, pz));
+
 			for (int ang = 0; ang < 360; ang += 360 / division) {
 				double x = rayon * Math.Cos(ang * CONV);
 				double z = rayon * Math.Sin(ang * CONV);

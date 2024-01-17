@@ -43,6 +43,12 @@ public class DirectBitmap : IDisposable {
 		SetPixel(x, y, color.GetColorArgb);
 	}
 
+	public void SetPixelDoubleHeight(int pixelX, int pixelY, int c) {
+		uint color = (uint)c | 0xFF000000;
+		int index = pixelX + (pixelY * Width);
+		tabBits[index] = tabBits[index + Width] = color;
+	}
+
 	public int GetPixel(int x, int y) {
 		return (int)(tabBits[y < Height ? (x + (y * Width)) : 0] & 0xFFFFFF);
 	}
