@@ -123,6 +123,7 @@
 			this.bpSavePal = new System.Windows.Forms.Button();
 			this.bpReadPal = new System.Windows.Forms.Button();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
+			this.bpSaveGif = new System.Windows.Forms.Button();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.grpProjet.SuspendLayout();
@@ -1204,6 +1205,16 @@
 			this.pictureBox.MouseLeave += new System.EventHandler(this.PictureBox_MouseLeave);
 			this.pictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TrtMouseMove);
 			this.pictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PictureBox_MouseUp);
+			// 
+			// bpSaveGif
+			// 
+			this.bpSaveGif.Location = new System.Drawing.Point(257, 740);
+			this.bpSaveGif.Name = "bpSaveGif";
+			this.bpSaveGif.Size = new System.Drawing.Size(106, 23);
+			this.bpSaveGif.TabIndex = 64;
+			this.bpSaveGif.Text = "Sauver GIF animé";
+			this.bpSaveGif.UseVisualStyleBackColor = true;
+			this.bpSaveGif.Click += new System.EventHandler(this.bpSaveGif_Click);
 			// 
 			// TriangulArt
 			// 
