@@ -115,6 +115,7 @@
 			this.bpFirst = new System.Windows.Forms.Button();
 			this.bpLast = new System.Windows.Forms.Button();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.bpZ80 = new System.Windows.Forms.Button();
 			this.bpSaveGif = new System.Windows.Forms.Button();
 			this.bpSuprInactif = new System.Windows.Forms.Button();
 			this.bpGen3D = new System.Windows.Forms.Button();
@@ -1120,9 +1121,19 @@
 			this.panel1.Size = new System.Drawing.Size(549, 767);
 			this.panel1.TabIndex = 60;
 			// 
+			// bpZ80
+			// 
+			this.bpZ80.Location = new System.Drawing.Point(348, 740);
+			this.bpZ80.Name = "bpZ80";
+			this.bpZ80.Size = new System.Drawing.Size(73, 23);
+			this.bpZ80.TabIndex = 65;
+			this.bpZ80.Text = "CpcEmul";
+			this.bpZ80.UseVisualStyleBackColor = true;
+			this.bpZ80.Click += new System.EventHandler(this.bpZ80_Click);
+			// 
 			// bpSaveGif
 			// 
-			this.bpSaveGif.Location = new System.Drawing.Point(257, 740);
+			this.bpSaveGif.Location = new System.Drawing.Point(236, 740);
 			this.bpSaveGif.Name = "bpSaveGif";
 			this.bpSaveGif.Size = new System.Drawing.Size(106, 23);
 			this.bpSaveGif.TabIndex = 64;

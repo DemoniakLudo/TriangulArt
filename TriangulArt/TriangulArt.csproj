@@ -53,7 +53,7 @@
     <Compile Include="Datas\Sequence.cs" />
     <Compile Include="Datas\Triangle.cs" />
     <Compile Include="Datas\Vertex.cs" />
-    <Compile Include="Desasm.cs" />
+    <Compile Include="Z80Emul\Desasm.cs" />
     <Compile Include="ImageFond.cs" />
     <Compile Include="Interfaces\CreateObject.cs">
       <SubType>Form</SubType>
@@ -79,11 +79,11 @@
     <Compile Include="Interfaces\ParamObjet.Designer.cs">
       <DependentUpon>ParamObjet.cs</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\Z80Emul.cs">
+    <Compile Include="Interfaces\CpcEmul.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Interfaces\Z80Emul.Designer.cs">
-      <DependentUpon>Z80Emul.cs</DependentUpon>
+    <Compile Include="Interfaces\CpcEmul.Designer.cs">
+      <DependentUpon>CpcEmul.cs</DependentUpon>
     </Compile>
     <Compile Include="PaletteCpc.cs" />
     <Compile Include="Datas\Datas.cs" />
@@ -153,8 +153,8 @@
     <EmbeddedResource Include="Interfaces\TriangulArt.resx">
       <DependentUpon>TriangulArt.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Interfaces\Z80Emul.resx">
-      <DependentUpon>Z80Emul.cs</DependentUpon>
+    <EmbeddedResource Include="Interfaces\CpcEmul.resx">
+      <DependentUpon>CpcEmul.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

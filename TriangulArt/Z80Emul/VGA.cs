@@ -8,8 +8,6 @@ static class VGA {
 	public const int LOWER_ROM_INDEX = 255;
 	public const int BASIC_ROM_INDEX = 0;
 	private const int LOWER_ROM_OFFSET = 0x1FF * BANK_SIZE;
-	private const int BASIC_ROM_OFFSET = 0x100 * BANK_SIZE;
-	private const int DISK_ROM_OFFSET = 0x107 * BANK_SIZE;
 	static public byte[] ram = new byte[512 * BANK_SIZE];
 	static public byte NumRomExt = 0;
 	static private readonly int[][] TabPeek = new int[8][];
@@ -159,11 +157,8 @@ static class VGA {
 			POKE8(i + startAdr, code[i]);
 	}
 
-	static public void InitColors(int []tabCol) {
-		for (int i = 0; i < 16; i++)
-			tabCoul[i] = tabCol[i];
-
-		tabCoul[16] = tabCol[0];
+	static public void SetColor(int pen, int color) {
+		tabCoul[pen] = color;
 	}
 	
 	static public Bitmap Init(int width, int height, byte[] code = null, int startAdr = 0) {

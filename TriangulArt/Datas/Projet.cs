@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 
 namespace TriangulArt {
@@ -64,40 +65,67 @@ namespace TriangulArt {
 			}
 		}
 
-		public void SendDataToRam(Z80Emul z80) {
-			int nbOctets = 0;
-			byte[] tabDatas = new byte[0x8000];
+		private void CalcAdrEcr(CpcEmul cpc, int width) {
+			int nbLignes = 16384 / width;
+			int adrEcr = 0x8000;
+			int adr = 0x600;
+			for (int l = 0; l < nbLignes; l++) {
+				cpc.POKE16(adr, adrEcr);
+				adr += 2;
+				adrEcr += 0x800;
+				if ((adrEcr & 0x4000) != 0)
+					adrEcr = adrEcr - 0x4000 + width;
+			}
+			cpc.POKE8(0x311, (byte)((nbLignes - 1) & 0xF8));
+		}
+
+		public void SendDataToCpc(CpcEmul cpc) {
+			int adr = 0x800;
 			foreach (Datas data in lstData) {
 				for (int i = 0; i < data.lstTriangle.Count; i++) {
 					Triangle t = data.lstTriangle[i];
 					if (t.enabled) {
-						int color = i < data.lstTriangle.Count - 1 ? t.color : t.color + 0x80;
-						tabDatas[nbOctets++] = (byte)t.x1;
-						tabDatas[nbOctets++] = (byte)t.y1;
-						tabDatas[nbOctets++] = (byte)t.x2;
-						tabDatas[nbOctets++] = (byte)t.y2;
-						tabDatas[nbOctets++] = (byte)t.x3;
-						tabDatas[nbOctets++] = (byte)t.y3;
-						tabDatas[nbOctets++] = (byte)color;
+						cpc.POKE8(adr++, (byte)t.x1);
+						cpc.POKE8(adr++, (byte)t.y1);
+						cpc.POKE8(adr++, (byte)t.x2);
+						cpc.POKE8(adr++, (byte)t.y2);
+						cpc.POKE8(adr++, (byte)t.x3);
+						cpc.POKE8(adr++, (byte)t.y3);
+						cpc.POKE8(adr++, (byte)(i < data.lstTriangle.Count - 1 ? t.color : t.color + 0x80));
 					}
 				}
 			}
-			tabDatas[nbOctets++] = 0xFF;
-			//try {
-			z80.SendCrtc(0xBC00, 1);
-			z80.SendCrtc(0xBD00, 0x30);
-			z80.SendCrtc(0xBC00, 2);
-			z80.SendCrtc(0xBD00, 0x32);
-			z80.SendCrtc(0xBC00, 6);
-			z80.SendCrtc(0xBD00, 0x15);
-			z80.SendCrtc(0xBC00, 7);
-			z80.SendCrtc(0xBD00, 0x1C);
-			z80.InitColors(lstData[0].palette);
-			z80.Run(tabDatas, 0x760);
-			//}
-			//catch(Exception ex) {
+			cpc.POKE8(adr++, 0xFF);
+			switch (tailleColonnes) {
+				case 0:
+					cpc.SetCrtcRegister(1, 0x20);
+					cpc.SetCrtcRegister(2, 0x2A);
+					cpc.SetCrtcRegister(6, 0x20);
+					cpc.SetCrtcRegister(7, 0x22);
+					CalcAdrEcr(cpc, 64);
+					break;
 
-			//}
+				case 1:
+					cpc.SetCrtcRegister(1, 0x28);
+					cpc.SetCrtcRegister(2, 0x2E);
+					cpc.SetCrtcRegister(6, 0x19);
+					cpc.SetCrtcRegister(7, 0x1E);
+					CalcAdrEcr(cpc, 80);
+					break;
+
+				case 2:
+					cpc.SetCrtcRegister(1, 0x30);
+					cpc.SetCrtcRegister(2, 0x32);
+					cpc.SetCrtcRegister(6, 0x15);
+					cpc.SetCrtcRegister(7, 0x1C);
+					CalcAdrEcr(cpc, 96);
+					break;
+			}
+			for (int i = 0; i < 17; i++) {
+				RvbColor col = PaletteCpc.GetColorPal(i < 16 ? i : 0);
+				cpc.SetColor(i, (col.GetColorArgb));
+			}
+			cpc.Run();
 		}
 
 		public void GenereSourceAsm(string fileName, bool modePolice, bool mode3D, bool zx0) {

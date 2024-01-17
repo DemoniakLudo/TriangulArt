@@ -2,16 +2,7 @@
 using System.Runtime.InteropServices;
 
 public class Z80 {
-	const byte BIT0 = 0x01;
-	const byte BIT1 = 0x02;
-	const byte BIT2 = 0x04;
-	const byte BIT3 = 0x08;
-	const byte BIT4 = 0x10;
-	const byte BIT5 = 0x20;
-	const byte BIT6 = 0x40;
-	const byte BIT7 = 0x80;
 
-	const byte FLAG_0 = 0x00;
 	const byte FLAG_C = 0x01;
 	const byte FLAG_N = 0x02;
 	const byte FLAG_V = 0x04;
@@ -20,22 +11,10 @@ public class Z80 {
 	const byte FLAG_5 = 0x20;
 	const byte FLAG_Z = 0x40;
 	const byte FLAG_S = 0x80;
-	const byte FLAGS_HC = 0x17;
 	const byte FLAGS_53 = 0x28;
-	const byte FLAGS_SZ = 0xC0;
-	const byte FLAGS_ZV = 0x44;
 	const byte FLAGS_S53 = 0xA8;
 	const byte FLAGS_SZC = 0xC1;
-	const byte FLAGS_SZN = 0xC2;
 	const byte FLAGS_SZV = 0xC4;
-
-	const byte N_FLAG_N = 0xFD;
-	const byte N_FLAG_V = 0xFB;
-	const byte N_FLAG_3 = 0xF7;
-	const byte N_FLAG_H = 0xEF;
-	const byte N_FLAG_5 = 0xDF;
-	const byte N_FLAG_Z = 0xBF;
-	const byte N_FLAG_53 = 0xD7;
 
 	private delegate int pFct();
 

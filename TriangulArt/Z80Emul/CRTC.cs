@@ -17,7 +17,7 @@ static class CRTC {
 	static public byte TailleVBL;
 	static public byte TailleHBL;
 	static public byte SyncCount;
-	static int[] RegsCRTC = new int[32];
+	static public int[] RegsCRTC = new int[32];
 	static int RegCRTCSel;
 	static public byte CntHSync = 0;
 	static public int VSync;
@@ -191,17 +191,11 @@ static class CRTC {
 
 	static public void Reset() {
 		RegsCRTC[0] = 0x3F;
-		RegsCRTC[1] = 0x28;
-		RegsCRTC[2] = 0x2E;
 		RegsCRTC[3] = 0x8E;
 		RegsCRTC[4] = 0x26;
 		RegsCRTC[5] = 0x00;
-		RegsCRTC[6] = 0x19;
-		RegsCRTC[7] = 0x1E;
 		RegsCRTC[8] = 0x00;
 		RegsCRTC[9] = 0x07;
-		RegsCRTC[12] = 0x30;
-		RegsCRTC[13] = 0x00;
 		x = y = LigneCRTC = 0;
 		MaCRTC = MaHi = 0;
 		SyncCount = VCC = VLC = 0;

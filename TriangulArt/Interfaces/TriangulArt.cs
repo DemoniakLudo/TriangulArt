@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -10,7 +9,6 @@ using System.Xml.Serialization;
 
 namespace TriangulArt {
 	public partial class TriangulArt : Form {
-		private List<Bitmap> tabImage = new List<Bitmap>();
 		private DirectBitmap bmpLock;
 		private enum DrawMd { NONE = 0, MOVETRIANGLE, ADDTRIANGLE, ADDQUADRI, ADDRECTANGLE, ADDCERCLE, ADDLINE };
 		private DrawMd mouseOpt = DrawMd.NONE;
@@ -23,7 +21,7 @@ namespace TriangulArt {
 		private const int MAX_RAYONS = 32;
 		private int coefX;
 		private Label[] colors = new Label[16];
-		private Z80Emul z80 = new Z80Emul();
+		private CpcEmul cpc = new CpcEmul();
 
 		public TriangulArt() {
 			InitializeComponent();
@@ -1297,7 +1295,7 @@ namespace TriangulArt {
 
 		private void bpZ80_Click(object sender, EventArgs e) {
 			Enabled = false;
-			projet.SendDataToRam(z80);
+			projet.SendDataToCpc(cpc);
 			Enabled = true;
 		}
 
