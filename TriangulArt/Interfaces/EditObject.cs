@@ -21,7 +21,7 @@ namespace TriangulArt {
 		public EditObjet(Projet p, Objet o) {
 			InitializeComponent();
 			projet = p;
-			chkImportPalette.Visible = p.cpcPlus;
+			chkImportPalette.Checked = chkImportPalette.Visible = p.cpcPlus;
 			objet = o != null ? o : new Objet();
 			for (int i = 0; i < 16; i++) {
 				colors[i] = new Label {

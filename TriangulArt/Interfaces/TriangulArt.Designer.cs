@@ -115,7 +115,7 @@
 			this.bpFirst = new System.Windows.Forms.Button();
 			this.bpLast = new System.Windows.Forms.Button();
 			this.panel1 = new System.Windows.Forms.Panel();
-			this.bpZ80 = new System.Windows.Forms.Button();
+			this.bpCpcEmul = new System.Windows.Forms.Button();
 			this.bpSaveGif = new System.Windows.Forms.Button();
 			this.bpSuprInactif = new System.Windows.Forms.Button();
 			this.bpGen3D = new System.Windows.Forms.Button();
@@ -123,7 +123,6 @@
 			this.bpSavePal = new System.Windows.Forms.Button();
 			this.bpReadPal = new System.Windows.Forms.Button();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
-			this.bpZ80 = new System.Windows.Forms.Button();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.grpProjet.SuspendLayout();
@@ -1051,7 +1050,7 @@
 			// 
 			// panel1
 			// 
-			this.panel1.Controls.Add(this.bpZ80);
+			this.panel1.Controls.Add(this.bpCpcEmul);
 			this.panel1.Controls.Add(this.bpSaveGif);
 			this.panel1.Controls.Add(this.bpSuprInactif);
 			this.panel1.Controls.Add(this.bpGen3D);
@@ -1121,15 +1120,15 @@
 			this.panel1.Size = new System.Drawing.Size(549, 767);
 			this.panel1.TabIndex = 60;
 			// 
-			// bpZ80
+			// bpCpcEmul
 			// 
-			this.bpZ80.Location = new System.Drawing.Point(348, 740);
-			this.bpZ80.Name = "bpZ80";
-			this.bpZ80.Size = new System.Drawing.Size(73, 23);
-			this.bpZ80.TabIndex = 65;
-			this.bpZ80.Text = "CpcEmul";
-			this.bpZ80.UseVisualStyleBackColor = true;
-			this.bpZ80.Click += new System.EventHandler(this.bpZ80_Click);
+			this.bpCpcEmul.Location = new System.Drawing.Point(349, 740);
+			this.bpCpcEmul.Name = "bpCpcEmul";
+			this.bpCpcEmul.Size = new System.Drawing.Size(72, 23);
+			this.bpCpcEmul.TabIndex = 65;
+			this.bpCpcEmul.Text = "CpcEmul";
+			this.bpCpcEmul.UseVisualStyleBackColor = true;
+			this.bpCpcEmul.Click += new System.EventHandler(this.BpCpcEmul_Click);
 			// 
 			// bpSaveGif
 			// 
@@ -1205,16 +1204,6 @@
 			this.pictureBox.MouseLeave += new System.EventHandler(this.PictureBox_MouseLeave);
 			this.pictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TrtMouseMove);
 			this.pictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PictureBox_MouseUp);
-			// 
-			// bpZ80
-			// 
-			this.bpZ80.Location = new System.Drawing.Point(368, 740);
-			this.bpZ80.Name = "bpZ80";
-			this.bpZ80.Size = new System.Drawing.Size(53, 23);
-			this.bpZ80.TabIndex = 65;
-			this.bpZ80.Text = "Z80";
-			this.bpZ80.UseVisualStyleBackColor = true;
-			this.bpZ80.Click += new System.EventHandler(this.bpZ80_Click);
 			// 
 			// TriangulArt
 			// 
@@ -1344,7 +1333,7 @@
 		private System.Windows.Forms.Button bpGen3D;
 		private System.Windows.Forms.Button bpSuprInactif;
 		private System.Windows.Forms.Button bpSaveGif;
-		private System.Windows.Forms.Button bpZ80;
+		private System.Windows.Forms.Button bpCpcEmul;
 	}
 }
 

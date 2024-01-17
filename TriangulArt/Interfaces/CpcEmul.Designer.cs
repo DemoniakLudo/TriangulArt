@@ -361,7 +361,6 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(976, 593);
-			this.ControlBox = false;
 			this.Controls.Add(this.bpStop);
 			this.Controls.Add(this.pictureBox1);
 			this.Controls.Add(this.Instr);
@@ -395,7 +394,7 @@
 			this.Controls.Add(this.HL);
 			this.Controls.Add(this.AF_);
 			this.Controls.Add(this.AF);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "CpcEmul";

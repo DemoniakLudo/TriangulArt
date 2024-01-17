@@ -24,7 +24,7 @@ namespace TriangulArt {
 			bmpCalc = new DirectBitmap(width, 272);
 			projet = prj;
 			bmpFond = bf.NbImg > 0 ? bf.GetImage : null;
-			chkImportPalette.Visible = prj.cpcPlus;
+			chkImportPalette.Checked = chkImportPalette.Visible = prj.cpcPlus;
 			InitInfoAnim();
 		}
 
@@ -227,6 +227,7 @@ namespace TriangulArt {
 			inAnim = false;
 			Animate(true);
 			Enabled = true;
+			Close();
 		}
 
 		private void BpFusion_Click(object sender, EventArgs e) {

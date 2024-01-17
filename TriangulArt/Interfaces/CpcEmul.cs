@@ -113,9 +113,9 @@ namespace TriangulArt {
 
 		public void Run() {
 			Z80.PC.Word = 0x200;
-			Show();
 			int nbCycles = 0;
 			finMain = false;
+			Show();
 			while (!finMain) {
 				int cycle = Z80.ExecInstr();
 				nbCycles += cycle;

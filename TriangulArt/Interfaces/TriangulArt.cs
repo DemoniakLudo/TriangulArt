@@ -1293,10 +1293,11 @@ namespace TriangulArt {
 
 		}
 
-		private void bpZ80_Click(object sender, EventArgs e) {
+		private void BpCpcEmul_Click(object sender, EventArgs e) {
 			Enabled = false;
 			projet.SendDataToCpc(cpc);
 			Enabled = true;
+			Focus();
 		}
 
 		private void ListTriangles_MouseDoubleClick(object sender, MouseEventArgs e) {
