@@ -62,6 +62,7 @@
 			this.bpDeleteAnim = new System.Windows.Forms.Button();
 			this.bpSaveGif = new System.Windows.Forms.Button();
 			this.chkImportPalette = new System.Windows.Forms.CheckBox();
+			this.bpCpcEmul = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxScr)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.trkIndex)).BeginInit();
 			this.SuspendLayout();
@@ -425,11 +426,22 @@
 			this.chkImportPalette.Text = "Importer palette depuis objet";
 			this.chkImportPalette.UseVisualStyleBackColor = true;
 			// 
+			// bpCpcEmul
+			// 
+			this.bpCpcEmul.Location = new System.Drawing.Point(121, 782);
+			this.bpCpcEmul.Name = "bpCpcEmul";
+			this.bpCpcEmul.Size = new System.Drawing.Size(115, 23);
+			this.bpCpcEmul.TabIndex = 35;
+			this.bpCpcEmul.Text = "CpcEmul";
+			this.bpCpcEmul.UseVisualStyleBackColor = true;
+			this.bpCpcEmul.Click += new System.EventHandler(this.BpCpcEmul_Click);
+			// 
 			// MakeAnim
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1360, 808);
+			this.Controls.Add(this.bpCpcEmul);
 			this.Controls.Add(this.chkImportPalette);
 			this.Controls.Add(this.bpSaveGif);
 			this.Controls.Add(this.bpDeleteAnim);
@@ -522,5 +534,6 @@
 		private System.Windows.Forms.Button bpDeleteAnim;
 		private System.Windows.Forms.Button bpSaveGif;
 		private System.Windows.Forms.CheckBox chkImportPalette;
+		private System.Windows.Forms.Button bpCpcEmul;
 	}
 }

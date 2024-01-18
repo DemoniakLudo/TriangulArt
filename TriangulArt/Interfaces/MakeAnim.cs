@@ -16,13 +16,15 @@ namespace TriangulArt {
 		private int selAnim = 0;
 		private List<Sequence> lstSeq = new List<Sequence>();
 		private int maxPen = 15;
+		private CpcEmul cpc;
 
-		public MakeAnim(Projet prj, ImageFond bf) {
+		public MakeAnim(Projet prj, CpcEmul cpc, ImageFond bf) {
 			InitializeComponent();
 			int width = prj.mode == 0 ? 192 : 384;
 			bmpLock = new DirectBitmap(width, 272);
 			bmpCalc = new DirectBitmap(width, 272);
 			projet = prj;
+			this.cpc = cpc;
 			bmpFond = bf.NbImg > 0 ? bf.GetImage : null;
 			chkImportPalette.Checked = chkImportPalette.Visible = prj.cpcPlus;
 			InitInfoAnim();
@@ -58,30 +60,6 @@ namespace TriangulArt {
 			lstInfo.Items.Add(msg);
 			lstInfo.SelectedIndex = lstInfo.Items.Count - 1;
 		}
-
-		private int DisplayFrame(int index, List<Triangle> lstTriangle = null) {
-			int ret = 0;
-			lblNumImage.Text = "Image " + String.Format("{0,3}", index);
-			if (bmpFond != null) {
-				for (int y = 0; y < bmpFond.Height; y++)
-					for (int x = 0; x < bmpFond.Width; x++)
-						bmpLock.SetPixel(x, y, bmpFond.GetPixel(x, y).ToArgb());
-			}
-			else
-				bmpLock.Fill(PaletteCpc.GetColorPal(0).GetColorArgb);
-
-			if (lstTriangle != null)
-				bmpCalc.Fill(0xFFFFFF);
-
-			if (index < lstSeq.Count) {
-				Sequence s = lstSeq[index];
-				ret = projet.lstAnim[selAnim].objet.DrawObj(bmpLock, s.posx, s.posy, s.zoomx, s.zoomy, s.angx, s.angy, s.angz, -1, -1, lstTriangle, bmpCalc);
-			}
-			pictureBoxScr.Image = bmpLock.Bitmap;
-			pictureBoxScr.Refresh();
-			return ret;
-		}
-
 		private void GenereSeq() {
 			// Génération séquence depuis expressions
 			lstSeq.Clear();
@@ -104,36 +82,63 @@ namespace TriangulArt {
 			trkIndex.Value = 0;
 		}
 
-		private int CreateFrame(int i, bool setProjet, bool fusion) {
-			int nbTri = 0;
-			trkIndex.Value = i;
-			List<Triangle> lstTriangle = new List<Triangle>();
-			DisplayFrame(i, lstTriangle);
-			Application.DoEvents();
-			Datas data = fusion ? projet.lstData[i] : new Datas();
-			if (setProjet)
-				data.nomImage = "Frame_" + i.ToString();
-
-			for (int t = 0; t < lstTriangle.Count; t++) {
-				bool triangleOk = false;
-				for (int y = 0; y < bmpCalc.Height; y++) {
-					for (int x = 0; x < bmpCalc.Width; x++)
-						if (bmpCalc.GetPixel(x, y) == t) {
-							triangleOk = true;
-							y = bmpCalc.Height;
-							nbTri++;
-							break;
-						}
-				}
-				if (setProjet) {
-					Triangle tr = lstTriangle[t];
-					Triangle tData = new Triangle(tr.x1, tr.y1, tr.x2, tr.y2, tr.x3, tr.y3, tr.color) { enabled = triangleOk };
-					data.lstTriangle.Add(tData);
+		private int DisplayFrame(int index, List<Triangle> lstTriangle = null, bool noDraw = false) {
+			int ret = 0;
+			lblNumImage.Text = "Image " + String.Format("{0,3}", index);
+			if (!noDraw) {
+				bmpLock.Fill(PaletteCpc.GetColorPal(0).GetColorArgb);
+				if (bmpFond != null) {
+					for (int y = 0; y < bmpFond.Height; y++)
+						for (int x = 0; x < bmpFond.Width; x++)
+							bmpLock.SetPixel(x, y, bmpFond.GetPixel(x, y).ToArgb());
 				}
 			}
-			if (setProjet && !fusion)
-				projet.lstData.Add(data);
 
+			if (lstTriangle != null)
+				bmpCalc.Fill(0xFFFFFF);
+
+			if (index < lstSeq.Count) {
+				Sequence s = lstSeq[index];
+				ret = projet.lstAnim[selAnim].objet.DrawObj(noDraw ? null : bmpLock, s.posx, s.posy, s.zoomx, s.zoomy, s.angx, s.angy, s.angz, -1, -1, lstTriangle, bmpCalc);
+			}
+			pictureBoxScr.Image = bmpLock.Bitmap;
+			pictureBoxScr.Refresh();
+			return ret;
+		}
+
+		private int CreateFrame(int i, bool setProjet, bool fusion, List<Triangle> lstTriangle = null, bool noDraw = false) {
+			int nbTri = 0;
+			if (lstTriangle == null)
+				lstTriangle = new List<Triangle>();
+
+			DisplayFrame(i, lstTriangle, noDraw);
+			if (!noDraw) {
+				Datas data = fusion ? projet.lstData[i] : new Datas();
+				if (setProjet)
+					data.nomImage = "Frame_" + i.ToString();
+
+				trkIndex.Value = i;
+				Application.DoEvents();
+				for (int t = 0; t < lstTriangle.Count; t++) {
+					bool triangleOk = false;
+					for (int y = 0; y < bmpCalc.Height; y++) {
+						for (int x = 0; x < bmpCalc.Width; x++)
+							if (bmpCalc.GetPixel(x, y) == t) {
+								triangleOk = true;
+								y = bmpCalc.Height;
+								nbTri++;
+								break;
+							}
+					}
+					if (setProjet) {
+						Triangle tr = lstTriangle[t];
+						Triangle tData = new Triangle(tr.x1, tr.y1, tr.x2, tr.y2, tr.x3, tr.y3, tr.color) { enabled = triangleOk };
+						data.lstTriangle.Add(tData);
+					}
+				}
+				if (setProjet && !fusion)
+					projet.lstData.Add(data);
+			}
 			return nbTri;
 		}
 
@@ -142,12 +147,10 @@ namespace TriangulArt {
 			if (setProjet && !fusion)
 				projet.lstData.Clear();
 
-			InitBoutons();
 			int nbTri = 0;
-			for (int i = 0; i < lstSeq.Count && !endAnim; i++) {
+			for (int i = 0; i < lstSeq.Count && !endAnim; i++)
 				nbTri += CreateFrame(i, setProjet, fusion);
-			}
-			InitBoutons();
+
 			AddInfo("Nbre de triangles de l'animation:" + nbTri.ToString());
 			if (setProjet) {
 				int nbAvant = 0;
@@ -160,6 +163,7 @@ namespace TriangulArt {
 				else
 					AddInfo("Création projet avec " + lstSeq.Count.ToString() + " images.");
 			}
+			InitBoutons();
 		}
 
 		private void TxbNbImages_TextChanged(object sender, EventArgs e) {
@@ -209,6 +213,7 @@ namespace TriangulArt {
 			lstInfo.Items.Clear();
 			endAnim = false;
 			inAnim = true;
+			InitBoutons();
 			while (!endAnim) {
 				Animate();
 			}
@@ -369,6 +374,40 @@ namespace TriangulArt {
 					AddInfo("Erreur sauvegarde GIF : " + ex.Message);
 				}
 			}
+		}
+
+		private void SendDataToCpc() {
+			int adr = 0x800;
+			AddInfo("Préparation données pour émulation...");
+			Application.DoEvents();
+			GenereSeq();
+			for (int f = 0; f < lstSeq.Count; f++) {
+				List<Triangle> lstTriangle = new List<Triangle>();
+				CreateFrame(f, false, false, lstTriangle, true);
+				for (int i = 0; i < lstTriangle.Count; i++) {
+					Triangle t = lstTriangle[i];
+					if (t.enabled) {
+						cpc.POKE8(adr++, (byte)t.x1);
+						cpc.POKE8(adr++, (byte)t.y1);
+						cpc.POKE8(adr++, (byte)t.x2);
+						cpc.POKE8(adr++, (byte)t.y2);
+						cpc.POKE8(adr++, (byte)t.x3);
+						cpc.POKE8(adr++, (byte)t.y3);
+						cpc.POKE8(adr++, (byte)(i < lstTriangle.Count - 1 ? t.color : t.color + 0x80));
+					}
+				}
+			}
+			cpc.POKE8(adr++, 0xFF);
+			AddInfo("Démarrage émulation...");
+			Application.DoEvents();
+			cpc.Run(projet.tailleColonnes);
+		}
+
+		private void BpCpcEmul_Click(object sender, EventArgs e) {
+			Enabled = false;
+			SendDataToCpc();
+			Enabled = true;
+			Focus();
 		}
 
 		private void BpDeleteAnim_Click(object sender, EventArgs e) {

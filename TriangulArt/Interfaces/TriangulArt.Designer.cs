@@ -142,7 +142,7 @@
 			// 
 			// bpAjoutTriangle
 			// 
-			this.bpAjoutTriangle.Location = new System.Drawing.Point(3, 204);
+			this.bpAjoutTriangle.Location = new System.Drawing.Point(3, 210);
 			this.bpAjoutTriangle.Name = "bpAjoutTriangle";
 			this.bpAjoutTriangle.Size = new System.Drawing.Size(113, 23);
 			this.bpAjoutTriangle.TabIndex = 2;
@@ -422,7 +422,7 @@
 			this.groupBox1.Controls.Add(this.rbVertical);
 			this.groupBox1.Controls.Add(this.rbHorizontal);
 			this.groupBox1.Controls.Add(this.rbStandard);
-			this.groupBox1.Location = new System.Drawing.Point(276, 163);
+			this.groupBox1.Location = new System.Drawing.Point(276, 167);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Size = new System.Drawing.Size(268, 42);
 			this.groupBox1.TabIndex = 33;
@@ -478,7 +478,7 @@
 			this.groupBox2.Controls.Add(this.label8);
 			this.groupBox2.Controls.Add(this.rbDepImage);
 			this.groupBox2.Controls.Add(this.rbDepTriangle);
-			this.groupBox2.Location = new System.Drawing.Point(142, 194);
+			this.groupBox2.Location = new System.Drawing.Point(142, 203);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Size = new System.Drawing.Size(405, 73);
 			this.groupBox2.TabIndex = 34;
@@ -620,7 +620,7 @@
 			// 
 			// bpAjoutQuadri
 			// 
-			this.bpAjoutQuadri.Location = new System.Drawing.Point(3, 226);
+			this.bpAjoutQuadri.Location = new System.Drawing.Point(3, 232);
 			this.bpAjoutQuadri.Name = "bpAjoutQuadri";
 			this.bpAjoutQuadri.Size = new System.Drawing.Size(113, 23);
 			this.bpAjoutQuadri.TabIndex = 41;
@@ -773,6 +773,7 @@
 			this.bpMakeAnim3D.TabIndex = 32;
 			this.bpMakeAnim3D.Text = "Editeur d\'animations 3D";
 			this.bpMakeAnim3D.UseVisualStyleBackColor = true;
+			this.bpMakeAnim3D.Visible = false;
 			this.bpMakeAnim3D.Click += new System.EventHandler(this.BpMakeAnim3D_Click);
 			// 
 			// bpFusion
@@ -983,7 +984,7 @@
 			// 
 			// bpAjoutRect
 			// 
-			this.bpAjoutRect.Location = new System.Drawing.Point(3, 248);
+			this.bpAjoutRect.Location = new System.Drawing.Point(3, 254);
 			this.bpAjoutRect.Name = "bpAjoutRect";
 			this.bpAjoutRect.Size = new System.Drawing.Size(113, 23);
 			this.bpAjoutRect.TabIndex = 54;
@@ -993,7 +994,7 @@
 			// 
 			// bpAjoutCercle
 			// 
-			this.bpAjoutCercle.Location = new System.Drawing.Point(3, 270);
+			this.bpAjoutCercle.Location = new System.Drawing.Point(3, 276);
 			this.bpAjoutCercle.Name = "bpAjoutCercle";
 			this.bpAjoutCercle.Size = new System.Drawing.Size(113, 23);
 			this.bpAjoutCercle.TabIndex = 54;
@@ -1003,7 +1004,7 @@
 			// 
 			// txbNbRayons
 			// 
-			this.txbNbRayons.Location = new System.Drawing.Point(119, 272);
+			this.txbNbRayons.Location = new System.Drawing.Point(119, 278);
 			this.txbNbRayons.Name = "txbNbRayons";
 			this.txbNbRayons.Size = new System.Drawing.Size(43, 20);
 			this.txbNbRayons.TabIndex = 55;
@@ -1012,7 +1013,7 @@
 			// label15
 			// 
 			this.label15.AutoSize = true;
-			this.label15.Location = new System.Drawing.Point(166, 275);
+			this.label15.Location = new System.Drawing.Point(166, 281);
 			this.label15.Name = "label15";
 			this.label15.Size = new System.Drawing.Size(38, 13);
 			this.label15.TabIndex = 56;
@@ -1020,7 +1021,7 @@
 			// 
 			// bpAjoutLigne
 			// 
-			this.bpAjoutLigne.Location = new System.Drawing.Point(3, 182);
+			this.bpAjoutLigne.Location = new System.Drawing.Point(3, 188);
 			this.bpAjoutLigne.Name = "bpAjoutLigne";
 			this.bpAjoutLigne.Size = new System.Drawing.Size(113, 23);
 			this.bpAjoutLigne.TabIndex = 57;
@@ -1128,6 +1129,7 @@
 			this.bpCpcEmul.TabIndex = 65;
 			this.bpCpcEmul.Text = "CpcEmul";
 			this.bpCpcEmul.UseVisualStyleBackColor = true;
+			this.bpCpcEmul.Visible = false;
 			this.bpCpcEmul.Click += new System.EventHandler(this.BpCpcEmul_Click);
 			// 
 			// bpSaveGif
@@ -1138,6 +1140,7 @@
 			this.bpSaveGif.TabIndex = 64;
 			this.bpSaveGif.Text = "Sauver GIF animé";
 			this.bpSaveGif.UseVisualStyleBackColor = true;
+			this.bpSaveGif.Visible = false;
 			this.bpSaveGif.Click += new System.EventHandler(this.bpSaveGif_Click);
 			// 
 			// bpSuprInactif

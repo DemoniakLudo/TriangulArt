@@ -95,51 +95,53 @@ namespace TriangulArt {
 		}
 
 		public void FillTriangle(DirectBitmap bmpLock, bool selected = false, DirectBitmap bmCalc = null, int indice = 0) {
-			TriSommets();
-			TriSommets3();
-			int dx1 = x3 - x1;
-			int dy1 = y3 - y1;
-			int sgn1 = dx1 > 0 ? 1 : -1;
-			dx1 = Math.Abs(dx1);
-			int err1 = 0;
-			int dx2 = x2 - x1;
-			int dy2 = y2 - y1;
-			int sgn2 = dx2 > 0 ? 1 : -1;
-			dx2 = Math.Abs(dx2);
-			int err2 = 0;
-			int xl = x1;
-			int xr = x1;
-			if (y1 == y2)
-				xr = x2;
+			if (bmpLock != null) {
+				TriSommets();
+				TriSommets3();
+				int dx1 = x3 - x1;
+				int dy1 = y3 - y1;
+				int sgn1 = dx1 > 0 ? 1 : -1;
+				dx1 = Math.Abs(dx1);
+				int err1 = 0;
+				int dx2 = x2 - x1;
+				int dy2 = y2 - y1;
+				int sgn2 = dx2 > 0 ? 1 : -1;
+				dx2 = Math.Abs(dx2);
+				int err2 = 0;
+				int xl = x1;
+				int xr = x1;
+				if (y1 == y2)
+					xr = x2;
 
-			for (int y = y1; y < y3; y++) {
-				int color = selected ? (y << 13) + (y << 4) + (y << 22) : PaletteCpc.GetColorPal(this.color).GetColorArgb;
-				if (xr > xl) {
-					bmpLock.SetHorLine(xl, y, (xr - xl), color, selected);
-					if (bmCalc != null)
-						bmCalc.SetHorLine(xl, y, (xr - xl), indice);
-				}
-				else {
-					bmpLock.SetHorLine(xr, y, (xl - xr), color, selected);
-					if (bmCalc != null)
-						bmCalc.SetHorLine(xr, y, (xl - xr), indice);
-				}
-				err1 += dx1;
-				while (err1 >= dy1) {
-					xl += sgn1;
-					err1 -= dy1;
-				}
-				if (y == y2) { // On passe au tracé du second "demi-triangle"
-					dx2 = x3 - x2;
-					dy2 = y3 - y2;
-					sgn2 = dx2 > 0 ? 1 : -1;
-					dx2 = Math.Abs(dx2);
-					err2 = 0;
-				}
-				err2 += dx2;
-				while (err2 >= dy2) {
-					xr += sgn2;
-					err2 -= dy2;
+				for (int y = y1; y < y3; y++) {
+					int color = selected ? (y << 13) + (y << 4) + (y << 22) : PaletteCpc.GetColorPal(this.color).GetColorArgb;
+					if (xr > xl) {
+						bmpLock.SetHorLine(xl, y, (xr - xl), color, selected);
+						if (bmCalc != null)
+							bmCalc.SetHorLine(xl, y, (xr - xl), indice);
+					}
+					else {
+						bmpLock.SetHorLine(xr, y, (xl - xr), color, selected);
+						if (bmCalc != null)
+							bmCalc.SetHorLine(xr, y, (xl - xr), indice);
+					}
+					err1 += dx1;
+					while (err1 >= dy1) {
+						xl += sgn1;
+						err1 -= dy1;
+					}
+					if (y == y2) { // On passe au tracé du second "demi-triangle"
+						dx2 = x3 - x2;
+						dy2 = y3 - y2;
+						sgn2 = dx2 > 0 ? 1 : -1;
+						dx2 = Math.Abs(dx2);
+						err2 = 0;
+					}
+					err2 += dx2;
+					while (err2 >= dy2) {
+						xr += sgn2;
+						err2 -= dy2;
+					}
 				}
 			}
 		}

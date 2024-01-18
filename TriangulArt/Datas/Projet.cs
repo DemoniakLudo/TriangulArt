@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 
 namespace TriangulArt {
@@ -65,20 +64,6 @@ namespace TriangulArt {
 			}
 		}
 
-		private void CalcAdrEcr(CpcEmul cpc, int width) {
-			int nbLignes = 16384 / width;
-			int adrEcr = 0x8000;
-			int adr = 0x600;
-			for (int l = 0; l < nbLignes; l++) {
-				cpc.POKE16(adr, adrEcr);
-				adr += 2;
-				adrEcr += 0x800;
-				if ((adrEcr & 0x4000) != 0)
-					adrEcr = adrEcr - 0x4000 + width;
-			}
-			cpc.POKE8(0x311, (byte)((nbLignes - 1) & 0xF8));
-		}
-
 		public void SendDataToCpc(CpcEmul cpc) {
 			int adr = 0x800;
 			foreach (Datas data in lstData) {
@@ -96,36 +81,7 @@ namespace TriangulArt {
 				}
 			}
 			cpc.POKE8(adr++, 0xFF);
-			switch (tailleColonnes) {
-				case 0:
-					cpc.SetCrtcRegister(1, 0x20);
-					cpc.SetCrtcRegister(2, 0x2A);
-					cpc.SetCrtcRegister(6, 0x20);
-					cpc.SetCrtcRegister(7, 0x22);
-					CalcAdrEcr(cpc, 64);
-					break;
-
-				case 1:
-					cpc.SetCrtcRegister(1, 0x28);
-					cpc.SetCrtcRegister(2, 0x2E);
-					cpc.SetCrtcRegister(6, 0x19);
-					cpc.SetCrtcRegister(7, 0x1E);
-					CalcAdrEcr(cpc, 80);
-					break;
-
-				case 2:
-					cpc.SetCrtcRegister(1, 0x30);
-					cpc.SetCrtcRegister(2, 0x32);
-					cpc.SetCrtcRegister(6, 0x15);
-					cpc.SetCrtcRegister(7, 0x1C);
-					CalcAdrEcr(cpc, 96);
-					break;
-			}
-			for (int i = 0; i < 17; i++) {
-				RvbColor col = PaletteCpc.GetColorPal(i < 16 ? i : 0);
-				cpc.SetColor(i, (col.GetColorArgb));
-			}
-			cpc.Run();
+			cpc.Run(tailleColonnes);
 		}
 
 		public void GenereSourceAsm(string fileName, bool modePolice, bool mode3D, bool zx0) {

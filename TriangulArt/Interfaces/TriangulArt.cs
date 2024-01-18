@@ -1164,12 +1164,12 @@ namespace TriangulArt {
 		}
 
 		private void ChkAnim3D_CheckedChanged(object sender, EventArgs e) {
-
+			bpMakeAnim3D.Visible = bpCpcEmul.Visible = bpSaveGif.Visible = chkAnim3D.Checked;
 		}
 
 		private void BpMakeAnim3D_Click(object sender, EventArgs e) {
 			Enabled = false;
-			new MakeAnim(projet, bmpFond).ShowDialog();
+			new MakeAnim(projet, cpc, bmpFond).ShowDialog();
 			projet.SelectImage(0);
 			SetImageProjet();
 			Enabled = true;
