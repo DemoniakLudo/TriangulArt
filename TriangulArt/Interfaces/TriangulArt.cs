@@ -1169,7 +1169,7 @@ namespace TriangulArt {
 
 		private void BpMakeAnim3D_Click(object sender, EventArgs e) {
 			Enabled = false;
-			new MakeAnim(projet, bmpFond).ShowDialog();
+			new MakeAnim(projet, cpc, bmpFond).ShowDialog();
 			projet.SelectImage(0);
 			SetImageProjet();
 			Enabled = true;

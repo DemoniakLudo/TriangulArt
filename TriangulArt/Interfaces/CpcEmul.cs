@@ -62,29 +62,6 @@ namespace TriangulArt {
 		private bool finMain = false;
 		private Desasm desasm = new Desasm();
 
-		private void DoRefresh() {
-			string str = "";
-			desasm.SetLigne(Z80.PC.Word, ref str);
-			Instr.Text = str;
-			AF.Text = Z80.AF.Word.ToString("X4");
-			BC.Text = Z80.BC.Word.ToString("X4");
-			DE.Text = Z80.DE.Word.ToString("X4");
-			HL.Text = Z80.HL.Word.ToString("X4");
-			AF_.Text = Z80._AF.Word.ToString("X4");
-			BC_.Text = Z80._BC.Word.ToString("X4");
-			DE_.Text = Z80._DE.Word.ToString("X4");
-			HL_.Text = Z80._HL.Word.ToString("X4");
-			PC.Text = Z80.PC.Word.ToString("X4");
-			SP.Text = Z80.SP.Word.ToString("X4");
-			IX.Text = Z80.IX.Word.ToString("X4");
-			IY.Text = Z80.IY.Word.ToString("X4");
-			I.Text = Z80.IR.High.ToString("X2");
-			R.Text = Z80.IR.Low.ToString("X2");
-			IM.Text = Z80.InterruptMode.ToString();
-			pictureBox1.Refresh();
-			Application.DoEvents();
-		}
-
 		public CpcEmul() {
 			InitializeComponent();
 			desasm.Init();
@@ -95,23 +72,31 @@ namespace TriangulArt {
 			VGA.CopyMemory(Code3D, 0x200);
 		}
 
-		public void SetCrtcRegister(int numReg, int val) {
-			CRTC.RegsCRTC[numReg] = val;
-		}
-
-		public void SetColor(int pen, int col) {
-			VGA.SetColor(pen, col);
-		}
-
 		public void POKE8(int adr, byte value) {
 			VGA.POKE8(adr, value);
 		}
 
-		public void POKE16(int adr, int value) {
-			VGA.POKE16((ushort)adr, (ushort)value);
-		}
-
-		public void Run() {
+		public void Run(int tailleColonnes) {
+			int width = tailleColonnes == 0 ? 0x40 : tailleColonnes == 1 ? 0x50 : 0x60;
+			int nbLignes = 16384 / width;
+			int adrEcr = 0x8000;
+			int adr = 0x600;
+			for (int l = 0; l < nbLignes; l++) {
+				VGA.POKE16((ushort)adr, (ushort)adrEcr);
+				adr += 2;
+				adrEcr += 0x800;
+				if ((adrEcr & 0x4000) != 0)
+					adrEcr = adrEcr - 0x4000 + width;
+			}
+			VGA.POKE8(0x311, (byte)((nbLignes - 1) & 0xF8));
+			for (int i = 0; i < 17; i++) {
+				RvbColor col = PaletteCpc.GetColorPal(i < 16 ? i : 0);
+				VGA.SetColor(i, (col.GetColorArgb));
+			}
+			CRTC.RegsCRTC[1] = width >> 1;
+			CRTC.RegsCRTC[2] = 0x1A + (width >> 2);
+			CRTC.RegsCRTC[6] = width == 0x40 ? 0x20 : width == 0x50 ? 0x19 : 0x15;
+			CRTC.RegsCRTC[7] = 0x12 + (CRTC.RegsCRTC[6] >> 1);
 			Z80.PC.Word = 0x200;
 			int nbCycles = 0;
 			finMain = false;
@@ -121,7 +106,26 @@ namespace TriangulArt {
 				nbCycles += cycle;
 				bool DoResync = CRTC.CycleCRTC(cycle);
 				if ((DoResync && nbCycles > 1000) || nbCycles > 100000) {
-					DoRefresh();
+					string str = "";
+					desasm.SetLigne(Z80.PC.Word, ref str);
+					Instr.Text = str;
+					AF.Text = Z80.AF.Word.ToString("X4");
+					BC.Text = Z80.BC.Word.ToString("X4");
+					DE.Text = Z80.DE.Word.ToString("X4");
+					HL.Text = Z80.HL.Word.ToString("X4");
+					AF_.Text = Z80._AF.Word.ToString("X4");
+					BC_.Text = Z80._BC.Word.ToString("X4");
+					DE_.Text = Z80._DE.Word.ToString("X4");
+					HL_.Text = Z80._HL.Word.ToString("X4");
+					PC.Text = Z80.PC.Word.ToString("X4");
+					SP.Text = Z80.SP.Word.ToString("X4");
+					IX.Text = Z80.IX.Word.ToString("X4");
+					IY.Text = Z80.IY.Word.ToString("X4");
+					I.Text = Z80.IR.High.ToString("X2");
+					R.Text = Z80.IR.Low.ToString("X2");
+					IM.Text = Z80.InterruptMode.ToString();
+					pictureBox1.Refresh();
+					Application.DoEvents();
 					nbCycles = 0;
 				}
 			}
