@@ -407,7 +407,6 @@ namespace TriangulArt {
 			Enabled = false;
 			SendDataToCpc();
 			Enabled = true;
-			Focus();
 		}
 
 		private void BpDeleteAnim_Click(object sender, EventArgs e) {

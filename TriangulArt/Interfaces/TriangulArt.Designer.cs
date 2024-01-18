@@ -1141,7 +1141,7 @@
 			this.bpSaveGif.Text = "Sauver GIF animé";
 			this.bpSaveGif.UseVisualStyleBackColor = true;
 			this.bpSaveGif.Visible = false;
-			this.bpSaveGif.Click += new System.EventHandler(this.bpSaveGif_Click);
+			this.bpSaveGif.Click += new System.EventHandler(this.BpSaveGif_Click);
 			// 
 			// bpSuprInactif
 			// 

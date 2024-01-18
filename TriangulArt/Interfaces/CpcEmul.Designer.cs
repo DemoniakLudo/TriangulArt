@@ -55,7 +55,12 @@
 			this.label15 = new System.Windows.Forms.Label();
 			this.Instr = new System.Windows.Forms.Label();
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
+			this.bpExit = new System.Windows.Forms.Button();
+			this.bpStart = new System.Windows.Forms.Button();
 			this.bpStop = new System.Windows.Forms.Button();
+			this.bpReadData = new System.Windows.Forms.Button();
+			this.txtDataAdr = new System.Windows.Forms.TextBox();
+			this.label16 = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -346,22 +351,76 @@
 			this.pictureBox1.TabIndex = 6;
 			this.pictureBox1.TabStop = false;
 			// 
+			// bpExit
+			// 
+			this.bpExit.Location = new System.Drawing.Point(897, 2);
+			this.bpExit.Name = "bpExit";
+			this.bpExit.Size = new System.Drawing.Size(75, 23);
+			this.bpExit.TabIndex = 7;
+			this.bpExit.Text = "EXIT";
+			this.bpExit.UseVisualStyleBackColor = true;
+			this.bpExit.Click += new System.EventHandler(this.BpExit_Click);
+			// 
+			// bpStart
+			// 
+			this.bpStart.Location = new System.Drawing.Point(789, 285);
+			this.bpStart.Name = "bpStart";
+			this.bpStart.Size = new System.Drawing.Size(75, 23);
+			this.bpStart.TabIndex = 8;
+			this.bpStart.Text = "Start";
+			this.bpStart.UseVisualStyleBackColor = true;
+			this.bpStart.Click += new System.EventHandler(this.BpStart_Click);
+			// 
 			// bpStop
 			// 
-			this.bpStop.Location = new System.Drawing.Point(897, 2);
+			this.bpStop.Location = new System.Drawing.Point(892, 285);
 			this.bpStop.Name = "bpStop";
 			this.bpStop.Size = new System.Drawing.Size(75, 23);
-			this.bpStop.TabIndex = 7;
-			this.bpStop.Text = "STOP";
+			this.bpStop.TabIndex = 8;
+			this.bpStop.Text = "Stop";
 			this.bpStop.UseVisualStyleBackColor = true;
 			this.bpStop.Click += new System.EventHandler(this.BpStop_Click);
+			// 
+			// bpReadData
+			// 
+			this.bpReadData.Enabled = false;
+			this.bpReadData.Location = new System.Drawing.Point(789, 344);
+			this.bpReadData.Name = "bpReadData";
+			this.bpReadData.Size = new System.Drawing.Size(75, 23);
+			this.bpReadData.TabIndex = 9;
+			this.bpReadData.Text = "Read data";
+			this.bpReadData.UseVisualStyleBackColor = true;
+			this.bpReadData.Click += new System.EventHandler(this.BpReadData_Click);
+			// 
+			// txtDataAdr
+			// 
+			this.txtDataAdr.Enabled = false;
+			this.txtDataAdr.Location = new System.Drawing.Point(897, 347);
+			this.txtDataAdr.Name = "txtDataAdr";
+			this.txtDataAdr.Size = new System.Drawing.Size(44, 20);
+			this.txtDataAdr.TabIndex = 10;
+			this.txtDataAdr.Text = "4000";
+			// 
+			// label16
+			// 
+			this.label16.AutoSize = true;
+			this.label16.Location = new System.Drawing.Point(883, 350);
+			this.label16.Name = "label16";
+			this.label16.Size = new System.Drawing.Size(14, 13);
+			this.label16.TabIndex = 11;
+			this.label16.Text = "#";
 			// 
 			// CpcEmul
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(976, 593);
+			this.Controls.Add(this.label16);
+			this.Controls.Add(this.txtDataAdr);
+			this.Controls.Add(this.bpReadData);
 			this.Controls.Add(this.bpStop);
+			this.Controls.Add(this.bpStart);
+			this.Controls.Add(this.bpExit);
 			this.Controls.Add(this.pictureBox1);
 			this.Controls.Add(this.Instr);
 			this.Controls.Add(this.label8);
@@ -439,7 +498,12 @@
 		private System.Windows.Forms.Label label15;
 		private System.Windows.Forms.Label Instr;
 		private System.Windows.Forms.PictureBox pictureBox1;
+		private System.Windows.Forms.Button bpExit;
+		private System.Windows.Forms.Button bpStart;
 		private System.Windows.Forms.Button bpStop;
+		private System.Windows.Forms.Button bpReadData;
+		private System.Windows.Forms.TextBox txtDataAdr;
+		private System.Windows.Forms.Label label16;
 	}
 }
 

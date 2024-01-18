@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Forms;
 
 namespace TriangulArt {
@@ -98,9 +99,18 @@ namespace TriangulArt {
 			CRTC.RegsCRTC[6] = width == 0x40 ? 0x20 : width == 0x50 ? 0x19 : 0x15;
 			CRTC.RegsCRTC[7] = 0x12 + (CRTC.RegsCRTC[6] >> 1);
 			Z80.PC.Word = 0x200;
-			int nbCycles = 0;
-			finMain = false;
 			Show();
+			bpStart.Enabled = bpReadData.Enabled = txtDataAdr.Enabled = true;
+			bpStop.Enabled = false;
+			pictureBox1.Refresh();
+			Application.DoEvents();
+		}
+
+		private void BpStart_Click(object sender, EventArgs e) {
+			bpStart.Enabled = bpReadData.Enabled = txtDataAdr.Enabled = false;
+			bpStop.Enabled = true;
+			finMain = false;
+			int nbCycles = 0;
 			while (!finMain) {
 				int cycle = Z80.ExecInstr();
 				nbCycles += cycle;
@@ -132,8 +142,33 @@ namespace TriangulArt {
 		}
 
 		private void BpStop_Click(object sender, EventArgs e) {
+			bpStart.Enabled = bpReadData.Enabled = txtDataAdr.Enabled = true;
+			bpStop.Enabled = false;
+			finMain = true;
+		}
+
+		private void BpExit_Click(object sender, EventArgs e) {
 			finMain = true;
 			Hide();
+		}
+
+		private void BpReadData_Click(object sender, EventArgs e) {
+			int adr = int.Parse(txtDataAdr.Text, System.Globalization.NumberStyles.HexNumber);
+			if (adr >= 0x4000 && adr < 0x8000) {
+				OpenFileDialog dlg = new OpenFileDialog { Filter = "Fichiers binaire (*.bin)|*.bin|Fichiers écrans CPC (*.scr)|*.scr" };
+				if (dlg.ShowDialog() == DialogResult.OK) {
+					FileStream fileScr = new FileStream(dlg.FileName, FileMode.Open, FileAccess.Read);
+					byte[] tabBytes = new byte[fileScr.Length];
+					fileScr.Read(tabBytes, 0, tabBytes.Length);
+					fileScr.Close();
+					if (Cpc.CheckAmsdos(tabBytes))
+						Array.Copy(tabBytes, 0x80, tabBytes, 0, tabBytes.Length - 0x80);
+
+					VGA.CopyMemory(tabBytes, adr);
+				}
+			}
+			else
+				MessageBox.Show("L'adresse de chargement doit être comprise entre #4000 et #7FFF", "Erreur");
 		}
 	}
 }

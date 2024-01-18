@@ -246,7 +246,7 @@
 			this.txbFrom.Name = "txbFrom";
 			this.txbFrom.Size = new System.Drawing.Size(30, 20);
 			this.txbFrom.TabIndex = 8;
-			this.txbFrom.Text = "0";
+			this.txbFrom.Text = "1";
 			this.txbFrom.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// label1

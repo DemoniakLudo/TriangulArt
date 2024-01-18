@@ -96,6 +96,9 @@ namespace TriangulArt {
 			int pen = colorClick.Tag != null ? (int)colorClick.Tag : 0;
 			if (e.Button == MouseButtons.Left) {
 				selColor = (byte)pen;
+				if (triSel != null)
+					triSel.color = selColor;
+
 				UpdatePalette();
 			}
 			else
@@ -1131,7 +1134,7 @@ namespace TriangulArt {
 
 		private void BpReadPal_Click(object sender, EventArgs e) {
 			Enabled = false;
-			OpenFileDialog of = new OpenFileDialog { Filter = "Fichiers palette (*.pal)|*.pal|Tous les fichiers (*.*)|*.*\"'" };
+			OpenFileDialog of = new OpenFileDialog { Filter = "Fichiers palette (*.pal)|*.pal|Fichiers palette (*.kit)|*.kit|Tous les fichiers (*.*)|*.*\"'" };
 			if (of.ShowDialog() == DialogResult.OK) {
 				PaletteCpc.LirePalette(of.FileName);
 				if (chkAnim3D.Checked) {
@@ -1156,10 +1159,10 @@ namespace TriangulArt {
 
 		private void BpSavePal_Click(object sender, EventArgs e) {
 			Enabled = false;
-			SaveFileDialog sf = new SaveFileDialog { Filter = "Fichiers palette (*.pal)|*.pal|Tous les fichiers (*.*)|*.*\"'" };
-			if (sf.ShowDialog() == DialogResult.OK) {
+			SaveFileDialog sf = new SaveFileDialog { Filter = "Fichiers palette (*.pal)|*.pal|Fichiers palette (*.kit)|*.kit|Tous les fichiers (*.*)|*.*\"'" };
+			if (sf.ShowDialog() == DialogResult.OK)
 				PaletteCpc.SauvePalette(sf.FileName, projet.mode);
-			}
+
 			Enabled = true;
 		}
 
@@ -1249,7 +1252,7 @@ namespace TriangulArt {
 			}
 		}
 
-		private void bpSaveGif_Click(object sender, EventArgs e) {
+		private void BpSaveGif_Click(object sender, EventArgs e) {
 			SaveFileDialog dlg = new SaveFileDialog { Filter = "Gif anim (*.gif)|*.gif" };
 			if (dlg.ShowDialog() == DialogResult.OK) {
 				try {
@@ -1297,7 +1300,6 @@ namespace TriangulArt {
 			Enabled = false;
 			projet.SendDataToCpc(cpc);
 			Enabled = true;
-			Focus();
 		}
 
 		private void ListTriangles_MouseDoubleClick(object sender, MouseEventArgs e) {
