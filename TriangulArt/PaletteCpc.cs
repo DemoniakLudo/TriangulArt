@@ -74,74 +74,123 @@ public class PaletteCpc {
 	}
 
 	static public void SauvePalette(string NomFic, int mode) {
-		int i;
-		byte[] pal = new byte[239];
-
-		pal[0] = (byte)mode;
-		int indexPal = 3;
-		if (cpcPlus) {
-			for (i = 0; i < 16; i++)
-				for (int j = 0; j < 4; j++) {
-					pal[indexPal++] = (byte)CpcVGA[26 - ((Palette[i] >> 4) & 0x0F)];
-					pal[indexPal++] = (byte)CpcVGA[26 - (Palette[i] & 0x0F)];
-					pal[indexPal++] = (byte)CpcVGA[26 - ((Palette[i] >> 8) & 0x0F)];
-				}
-			pal[195] = pal[3];
-			pal[196] = pal[4];
-			pal[197] = pal[5];
+		if (Path.GetExtension(NomFic).ToUpper() == ".KIT") {
+			CpcAmsdos entete = Cpc.CreeEntete(Path.GetFileName(NomFic), -32768, 30, 0);
+			BinaryWriter fp = new BinaryWriter(new FileStream(NomFic, FileMode.Create));
+			fp.Write(Cpc.AmsdosToByte(entete));
+			for (int i = 0; i < 16; i++) {
+				int kit = Palette[i];
+				byte c1 = (byte)(((kit & 0x0F) << 4) + ((kit & 0xF0) >> 4));
+				byte c2 = (byte)(kit >> 8);
+				fp.Write(c1);
+				fp.Write(c2);
+				fp.Close();
+			}
 		}
 		else {
-			for (i = 0; i < 16; i++)
-				for (int j = 0; j < 12; j++)
-					pal[indexPal++] = (byte)CpcVGA[Palette[i]];
+			int i;
+			byte[] pal = new byte[239];
 
-			for (i = 0; i < 12; i++)
-				pal[indexPal++] = pal[i + 3];
+			pal[0] = (byte)mode;
+			int indexPal = 3;
+			if (cpcPlus) {
+				for (i = 0; i < 16; i++)
+					for (int j = 0; j < 4; j++) {
+						pal[indexPal++] = (byte)CpcVGA[26 - ((Palette[i] >> 4) & 0x0F)];
+						pal[indexPal++] = (byte)CpcVGA[26 - (Palette[i] & 0x0F)];
+						pal[indexPal++] = (byte)CpcVGA[26 - ((Palette[i] >> 8) & 0x0F)];
+					}
+				pal[195] = pal[3];
+				pal[196] = pal[4];
+				pal[197] = pal[5];
+			}
+			else {
+				for (i = 0; i < 16; i++)
+					for (int j = 0; j < 12; j++)
+						pal[indexPal++] = (byte)CpcVGA[Palette[i]];
+
+				for (i = 0; i < 12; i++)
+					pal[indexPal++] = pal[i + 3];
+			}
+			CpcAmsdos entete = Cpc.CreeEntete(NomFic, (short)-30711, (short)pal.Length, (short)-30711);
+			BinaryWriter fp = new BinaryWriter(new FileStream(NomFic, FileMode.Create));
+			fp.Write(Cpc.AmsdosToByte(entete));
+			fp.Write(pal, 0, pal.Length);
+			fp.Close();
 		}
-		CpcAmsdos entete = Cpc.CreeEntete(NomFic, (short)-30711, (short)pal.Length, (short)-30711);
-		BinaryWriter fp = new BinaryWriter(new FileStream(NomFic, FileMode.Create));
-		fp.Write(Cpc.AmsdosToByte(entete));
-		fp.Write(pal, 0, pal.Length);
-		fp.Close();
 	}
 
 	static public bool LirePalette(string NomFic) {
-		byte[] entete = new byte[0x80];
-		byte[] pal = new byte[239];
-
-		BinaryReader fp = new BinaryReader(new FileStream(NomFic, FileMode.Open));
-		if (fp != null) {
-			fp.Read(entete, 0, entete.Length);
-			fp.Read(pal, 0, pal.Length);
-			fp.Close();
-			if (Cpc.CheckAmsdos(entete) && pal[0] < 11) {
-				if (cpcPlus) {
-					for (int i = 0; i < 16; i++) {
-						int r = 0, v = 0, b = 0;
-						for (int k = 26; k-- > 0; ) {
-							if (pal[3 + i * 12] == (byte)CpcVGA[k])
-								r = (26 - k) << 4;
-
-							if (pal[4 + i * 12] == (byte)CpcVGA[k])
-								b = 26 - k;
-
-							if (pal[5 + i * 12] == (byte)CpcVGA[k])
-								v = (26 - k) << 8;
+		if (File.Exists(NomFic)) {
+			FileStream fileScr = new FileStream(NomFic, FileMode.Open, FileAccess.Read);
+			byte[] entete = new byte[0x80];
+			byte[] tabBytes = new byte[fileScr.Length - 0x80];
+			fileScr.Read(entete, 0, entete.Length);
+			fileScr.Read(tabBytes, 0, tabBytes.Length);
+			fileScr.Close();
+			if (Cpc.CheckAmsdos(entete)) {
+				if (Path.GetExtension(NomFic).ToUpper() == ".KIT") {
+					if ((tabBytes.Length == 30 || tabBytes.Length == 32)) {
+						int start = 0;
+						for (int i = tabBytes.Length == 32 ? 0 : 1; i < 16; i++) {
+							int kit = tabBytes[start] + (tabBytes[start + 1] << 8);
+							int col = (kit & 0xF00) + ((kit & 0x0F) << 4) + ((kit & 0xF0) >> 4);
+							Palette[i] = col;
+							start += 2;
 						}
-						Palette[i] = r + v + b;
+						return true;
 					}
 				}
 				else {
-					for (int i = 0; i < 16; i++)
-						for (int j = 0; j < 27; j++)
-							if (pal[3 + i * 12] == (byte)CpcVGA[j])
-								Palette[i] = j;
+					if (cpcPlus) {
+						for (int i = 0; i < 16; i++) {
+							int r = 0, v = 0, b = 0;
+							for (int k = 26; k-- > 0;) {
+								if (tabBytes[3 + i * 12] == (byte)CpcVGA[k])
+									r = (26 - k) << 4;
+
+								if (tabBytes[4 + i * 12] == (byte)CpcVGA[k])
+									b = 26 - k;
+
+								if (tabBytes[5 + i * 12] == (byte)CpcVGA[k])
+									v = (26 - k) << 8;
+							}
+							Palette[i] = r + v + b;
+						}
+					}
+					else {
+						for (int i = 0; i < 16; i++)
+							for (int j = 0; j < 27; j++)
+								if (tabBytes[3 + i * 12] == (byte)CpcVGA[j])
+									Palette[i] = j;
+					}
+					return true;
 				}
-				return (true);
 			}
 		}
-		return (false);
+		return false;
 	}
+
+	static public bool LirePaletteKit(string NomFic) {
+		if (File.Exists(NomFic)) {
+			FileStream fileScr = new FileStream(NomFic, FileMode.Open, FileAccess.Read);
+			byte[] tabBytes = new byte[fileScr.Length];
+			fileScr.Read(tabBytes, 0, tabBytes.Length);
+			fileScr.Close();
+			if (Cpc.CheckAmsdos(tabBytes) && (tabBytes.Length == 158 || tabBytes.Length == 160)) {
+				int start = 128;
+				for (int i = tabBytes.Length == 160 ? 0 : 1; i < 16; i++) {
+					int kit = tabBytes[start] + (tabBytes[start + 1] << 8);
+					int col = (kit & 0xF00) + ((kit & 0x0F) << 4) + ((kit & 0xF0) >> 4);
+					Palette[i] = col;
+					start += 2;
+				}
+				return true;
+			}
+		}
+		return false;
+	}
+
 }
 
 public class RvbColor {
