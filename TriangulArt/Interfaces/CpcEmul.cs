@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 
@@ -111,11 +112,20 @@ namespace TriangulArt {
 			bpStop.Enabled = true;
 			finMain = false;
 			int nbCycles = 0;
+			long curTime = 0, oldTime = 0;
 			while (!finMain) {
 				int cycle = Z80.ExecInstr();
 				nbCycles += cycle;
 				bool DoResync = CRTC.CycleCRTC(cycle);
 				if ((DoResync && nbCycles > 1000) || nbCycles > 100000) {
+					do {
+						curTime = Stopwatch.GetTimestamp() / 10;
+						pictureBox1.Refresh();
+						Application.DoEvents();
+					}
+					while (curTime - oldTime < nbCycles);
+					oldTime = curTime;
+					nbCycles = 0;
 					string str = "";
 					desasm.SetLigne(Z80.PC.Word, ref str);
 					Instr.Text = str;
@@ -134,9 +144,6 @@ namespace TriangulArt {
 					I.Text = Z80.IR.High.ToString("X2");
 					R.Text = Z80.IR.Low.ToString("X2");
 					IM.Text = Z80.InterruptMode.ToString();
-					pictureBox1.Refresh();
-					Application.DoEvents();
-					nbCycles = 0;
 				}
 			}
 		}
