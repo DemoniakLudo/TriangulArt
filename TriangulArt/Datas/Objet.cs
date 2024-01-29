@@ -130,6 +130,26 @@ namespace TriangulArt {
 			return lstDraw.Count;
 		}
 
+		public Face GetSelFace(int posx, int posy, DirectBitmap bm) {
+			// Tri des faces par ordre des Z
+			List<Face> lstDraw = new List<Face>();
+			for (int i = 0; i < lstFace.Count; i++)
+				lstDraw.Add(lstFace[i]);
+
+			lstDraw.Sort(delegate (Face p1, Face p2) {
+				int cmp = p1.GetZFace(lstVertex) - p2.GetZFace(lstVertex);
+				return cmp != 0 ? cmp : p1.num - p2.num;
+			});
+
+			// Affiche les triangles
+			for (int i = lstDraw.Count - 1; i >= 0; i--) {
+				Triangle t = lstDraw[i].GetTriangleCalc(lstVertex, lstDraw[i].pen, bm);
+				if (t.IsInTriancle(posx, posy))
+					return lstDraw[i];
+			}
+			return null;
+		}
+
 		#region Creation objets de base
 		public void CreeCube(double px, double py, double pz, double arete) {
 			double lg = arete / 2.0;

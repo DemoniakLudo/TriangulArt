@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.IO;
 using System.Windows.Forms;
 
 namespace TriangulArt {
@@ -394,6 +393,27 @@ namespace TriangulArt {
 					}
 				}
 				BpRedraw_Click(sender, e);
+			}
+		}
+
+		private void pictureBoxObj_MouseDown(object sender, MouseEventArgs e) {
+			int yReel = e.Y;
+			int xReel = e.X;
+			if (e.Button == MouseButtons.Right) {
+				Face f = objet.GetSelFace(xReel, yReel, bmpLock);
+				if (f != null) {
+					for (int i = 0; i < objet.lstFace.Count; i++)
+						if (objet.lstFace[i] == f) {
+							numFace = i;
+							break;
+						}
+					if (numFace != -1) {
+						lstViewFace.Items[numFace].Selected = true;
+						lstViewFace.TopItem = lstViewFace.Items[numFace];
+						lstViewFace.Select();
+					}
+
+				}
 			}
 		}
 

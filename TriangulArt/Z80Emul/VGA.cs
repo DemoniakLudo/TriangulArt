@@ -160,7 +160,12 @@ static class VGA {
 	static public void SetColor(int pen, int color) {
 		tabCoul[pen] = color;
 	}
-	
+
+	static public void FillMemory(byte value) {
+		for (int i = 0; i < ram.Length; i++)
+			ram[i] = value;
+	}
+
 	static public Bitmap Init(int width, int height, byte[] code = null, int startAdr = 0) {
 		TabPeek[0] = new int[4] { 0x00000, 0x04000, 0x08000, 0x0C000 };
 		TabPeek[1] = new int[4] { 0x00000, 0x04000, 0x08000, 0x1C000 };

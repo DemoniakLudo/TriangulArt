@@ -65,23 +65,7 @@ namespace TriangulArt {
 		}
 
 		public void SendDataToCpc(CpcEmul cpc) {
-			int adr = 0x800;
-			foreach (Datas data in lstData) {
-				for (int i = 0; i < data.lstTriangle.Count; i++) {
-					Triangle t = data.lstTriangle[i];
-					if (t.enabled) {
-						cpc.POKE8(adr++, (byte)t.x1);
-						cpc.POKE8(adr++, (byte)t.y1);
-						cpc.POKE8(adr++, (byte)t.x2);
-						cpc.POKE8(adr++, (byte)t.y2);
-						cpc.POKE8(adr++, (byte)t.x3);
-						cpc.POKE8(adr++, (byte)t.y3);
-						cpc.POKE8(adr++, (byte)(i < data.lstTriangle.Count - 1 ? t.color : t.color + 0x80));
-					}
-				}
-			}
-			cpc.POKE8(adr++, 0xFF);
-			cpc.Run(tailleColonnes);
+			cpc.Run(tailleColonnes, lstData);
 		}
 
 		public void GenereSourceAsm(string fileName, bool modePolice, bool mode3D, bool zx0) {

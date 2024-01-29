@@ -540,6 +540,7 @@
 			this.pictureBoxObj.Size = new System.Drawing.Size(768, 512);
 			this.pictureBoxObj.TabIndex = 0;
 			this.pictureBoxObj.TabStop = false;
+			this.pictureBoxObj.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBoxObj_MouseDown);
 			// 
 			// bpParamObjet
 			// 

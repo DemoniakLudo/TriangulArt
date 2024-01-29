@@ -381,26 +381,15 @@ namespace TriangulArt {
 			AddInfo("Préparation données pour émulation...");
 			Application.DoEvents();
 			GenereSeq();
+			List<Datas> lstData = new List<Datas>();
 			for (int f = 0; f < lstSeq.Count; f++) {
-				List<Triangle> lstTriangle = new List<Triangle>();
-				CreateFrame(f, false, false, lstTriangle, true);
-				for (int i = 0; i < lstTriangle.Count; i++) {
-					Triangle t = lstTriangle[i];
-					if (t.enabled) {
-						cpc.POKE8(adr++, (byte)t.x1);
-						cpc.POKE8(adr++, (byte)t.y1);
-						cpc.POKE8(adr++, (byte)t.x2);
-						cpc.POKE8(adr++, (byte)t.y2);
-						cpc.POKE8(adr++, (byte)t.x3);
-						cpc.POKE8(adr++, (byte)t.y3);
-						cpc.POKE8(adr++, (byte)(i < lstTriangle.Count - 1 ? t.color : t.color + 0x80));
-					}
-				}
+				lstData.Add(new Datas());
+				CreateFrame(f, false, false, lstData[f].lstTriangle, true);
 			}
 			cpc.POKE8(adr++, 0xFF);
 			AddInfo("Démarrage émulation...");
 			Application.DoEvents();
-			cpc.Run(projet.tailleColonnes);
+			cpc.Run(projet.tailleColonnes, lstData);
 		}
 
 		private void BpCpcEmul_Click(object sender, EventArgs e) {

@@ -127,7 +127,7 @@ public partial class GenPalette : Form {
 				}
 			}
 		}
-		if (FctToDo!=null)
+		if (FctToDo != null)
 			FctToDo();
 	}
 

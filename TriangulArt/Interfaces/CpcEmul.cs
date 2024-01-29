@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
@@ -63,22 +64,36 @@ namespace TriangulArt {
 
 		private bool finMain = false;
 		private Desasm desasm = new Desasm();
+		private int tailleColonnes;
+		private List<Datas> lstData;
 
 		public CpcEmul() {
 			InitializeComponent();
-			desasm.Init();
-			Z80.Init();
-			PPI.Init();
-			CRTC.Init();
 			pictureBox1.Image = VGA.Init(pictureBox1.Width, pictureBox1.Height);
-			VGA.CopyMemory(Code3D, 0x200);
 		}
 
 		public void POKE8(int adr, byte value) {
 			VGA.POKE8(adr, value);
 		}
 
-		public void Run(int tailleColonnes) {
+		public void Run(int tc, List<Datas> l) {
+			tailleColonnes = tc;
+			lstData = l;
+			bpStart.Enabled = bpReadData.Enabled = bpFillMemory.Enabled = txtDataAdr.Enabled = txbFillValue.Enabled = true;
+			bpStop.Enabled = false;
+			pictureBox1.Refresh();
+			Application.DoEvents();
+			Show();
+		}
+
+		private void InitCpc() {
+			desasm.Init();
+			Z80.Init();
+			PPI.Init();
+			CRTC.Init();
+			VGA.CopyMemory(Code3D, 0x200);
+
+			// Init table des adresses écran
 			int width = tailleColonnes == 0 ? 0x40 : tailleColonnes == 1 ? 0x50 : 0x60;
 			int nbLignes = 16384 / width;
 			int adrEcr = 0x8000;
@@ -91,28 +106,47 @@ namespace TriangulArt {
 					adrEcr = adrEcr - 0x4000 + width;
 			}
 			VGA.POKE8(0x311, (byte)((nbLignes - 1) & 0xF8));
+
+			// Init couleurs
 			for (int i = 0; i < 17; i++) {
 				RvbColor col = PaletteCpc.GetColorPal(i < 16 ? i : 0);
 				VGA.SetColor(i, (col.GetColorArgb));
 			}
+
+			// Init registres CRTC
 			CRTC.RegsCRTC[1] = width >> 1;
 			CRTC.RegsCRTC[2] = 0x1A + (width >> 2);
 			CRTC.RegsCRTC[6] = width == 0x40 ? 0x20 : width == 0x50 ? 0x19 : 0x15;
 			CRTC.RegsCRTC[7] = 0x12 + (CRTC.RegsCRTC[6] >> 1);
+
+			// Copie des données de l'animation
+			adr = 0x800;
+			foreach (Datas data in lstData) {
+				for (int i = 0; i < data.lstTriangle.Count; i++) {
+					Triangle t = data.lstTriangle[i];
+					if (t.enabled) {
+						POKE8(adr++, (byte)t.x1);
+						POKE8(adr++, (byte)t.y1);
+						POKE8(adr++, (byte)t.x2);
+						POKE8(adr++, (byte)t.y2);
+						POKE8(adr++, (byte)t.x3);
+						POKE8(adr++, (byte)t.y3);
+						POKE8(adr++, (byte)(i < data.lstTriangle.Count - 1 ? t.color : t.color + 0x80));
+					}
+				}
+			}
+			POKE8(adr++, 0xFF);
+
 			Z80.PC.Word = 0x200;
-			Show();
-			bpStart.Enabled = bpReadData.Enabled = txtDataAdr.Enabled = true;
-			bpStop.Enabled = false;
-			pictureBox1.Refresh();
-			Application.DoEvents();
 		}
 
 		private void BpStart_Click(object sender, EventArgs e) {
-			bpStart.Enabled = bpReadData.Enabled = txtDataAdr.Enabled = false;
+			bpStart.Enabled = bpReadData.Enabled = bpFillMemory.Enabled = txtDataAdr.Enabled = txbFillValue.Enabled = false;
 			bpStop.Enabled = true;
 			finMain = false;
 			int nbCycles = 0;
 			long curTime = 0, oldTime = 0;
+			InitCpc();
 			while (!finMain) {
 				int cycle = Z80.ExecInstr();
 				nbCycles += cycle;
@@ -149,7 +183,7 @@ namespace TriangulArt {
 		}
 
 		private void BpStop_Click(object sender, EventArgs e) {
-			bpStart.Enabled = bpReadData.Enabled = txtDataAdr.Enabled = true;
+			bpStart.Enabled = bpReadData.Enabled = bpFillMemory.Enabled = txtDataAdr.Enabled = txbFillValue.Enabled = true;
 			bpStop.Enabled = false;
 			finMain = true;
 		}
@@ -176,6 +210,12 @@ namespace TriangulArt {
 			}
 			else
 				MessageBox.Show("L'adresse de chargement doit être comprise entre #4000 et #7FFF", "Erreur");
+		}
+
+		private void BpFillMemory_Click(object sender, EventArgs e) {
+			int value = int.Parse(txbFillValue.Text, System.Globalization.NumberStyles.HexNumber);
+			if (value >= 0 && value <= 255)
+				VGA.FillMemory((byte)value);
 		}
 	}
 }

@@ -94,6 +94,14 @@ namespace TriangulArt {
 			}
 		}
 
+		private double IsLeft(double x1, double y1, double x2, double y2, double x3, double y3) {
+			return (x2 - x1) * (y3 - y1) - (x3 - x1) * (y2 - y1);
+		}
+
+		public bool IsInTriancle( int posx, int posy) {
+			return IsLeft(x3, y3, x1, y1, posx, posy) * IsLeft(x3, y3, x1, y1, x2, y2) > 0 && IsLeft(x1, y1, x2, y2, posx, posy) * IsLeft(x1, y1, x2, y2, x3, y3) > 0 && IsLeft(x3, y3, x2, y2, posx, posy) * IsLeft(x3, y3, x2, y2, x1, y1) > 0;
+		}
+
 		public void FillTriangle(DirectBitmap bmpLock, bool selected = false, DirectBitmap bmCalc = null, int indice = 0) {
 			if (bmpLock != null) {
 				TriSommets();

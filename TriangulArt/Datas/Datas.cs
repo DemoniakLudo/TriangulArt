@@ -165,7 +165,7 @@ namespace TriangulArt {
 		public int SelTriangle(int xReel, int yReel) {
 			for (int i = lstTriangle.Count; i-- > 0;) {
 				Triangle t = lstTriangle[i];
-				if (IsInTriancle(t, xReel, yReel)) {
+				if (t.IsInTriancle(xReel, yReel)) {
 					return i;
 				}
 			}
@@ -174,14 +174,6 @@ namespace TriangulArt {
 
 		public int GetSelTriangle() {
 			return selLigne;
-		}
-
-		private int IsLeft(int x1, int y1, int x2, int y2, int x3, int y3) {
-			return (x2 - x1) * (y3 - y1) - (x3 - x1) * (y2 - y1);
-		}
-
-		private bool IsInTriancle(Triangle t, int posx, int posy) {
-			return IsLeft(t.x3, t.y3, t.x1, t.y1, posx, posy) * IsLeft(t.x3, t.y3, t.x1, t.y1, t.x2, t.y2) > 0 && IsLeft(t.x1, t.y1, t.x2, t.y2, posx, posy) * IsLeft(t.x1, t.y1, t.x2, t.y2, t.x3, t.y3) > 0 && IsLeft(t.x3, t.y3, t.x2, t.y2, posx, posy) * IsLeft(t.x3, t.y3, t.x2, t.y2, t.x1, t.y1) > 0;
 		}
 
 		public void EditSelTriangle(Triangle t, byte c, int newIndex) {

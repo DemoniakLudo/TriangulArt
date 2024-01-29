@@ -1115,16 +1115,27 @@ namespace TriangulArt {
 
 		private void BpCleanProj_Click(object sender, EventArgs e) {
 			Enabled = false;
-			int nbAvant = 0, nbApres = 0;
-			projet.Clean(bmpLock.Width, ref nbAvant, ref nbApres);
-			if (nbApres != nbAvant)
-				SetInfo("Nbre de triangles optimisés : " + (nbAvant - nbApres).ToString());
-			else
-				SetInfo("Pas d'optimisation possible.");
+			if (MessageBox.Show("Confirmez l'optimsation globale et la suppression des triangles inactif ?", "Confirmation suppression", MessageBoxButtons.YesNo) == DialogResult.Yes) {
+				int nbAvant = 0, nbApres = 0;
+				projet.Clean(bmpLock.Width, ref nbAvant, ref nbApres);
+				for (int k = 0; k < projet.lstData.Count; k++)
+					for (int i = projet.lstData[k].lstTriangle.Count - 1; i >= 0; i--)
+						if (!projet.lstData[k].lstTriangle[i].enabled)
+							projet.lstData[k].lstTriangle.RemoveAt(i);
 
-			DisplayList();
-			FillTriangles();
-			SetImageProjet();
+
+				int oldAvant = 0;
+				projet.Clean(bmpLock.Width, ref oldAvant, ref nbApres);
+				if (nbApres != nbAvant)
+					SetInfo("Nbre de triangles optimisés : " + (nbAvant - nbApres).ToString());
+				else
+					SetInfo("Pas d'optimisation possible.");
+
+				InitImage();
+				DisplayList();
+				FillTriangles();
+				SetImageProjet();
+			}
 			Enabled = true;
 		}
 
