@@ -72,15 +72,6 @@ namespace TriangulArt {
         private readonly char decimalSeparator;
         private bool isRadians;
 
-        public MathParser() {
-            try {
-                decimalSeparator = char.Parse(System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
-            }
-            catch (FormatException ex) {
-                throw new FormatException("Error: can't read char decimal separator from system, check your regional settings.", ex);
-            }
-        }
-
         public MathParser(char decimalSeparator) {
             this.decimalSeparator = decimalSeparator;
         }
@@ -248,11 +239,7 @@ namespace TriangulArt {
         }
 
         private bool Priority(string token, string p) {
-            return IsRightAssociated(token) ? GetPriority(token) < GetPriority(p) : GetPriority(token) <= GetPriority(p);
-        }
-
-        private bool IsRightAssociated(string token) {
-            return token == Degree;
+			return token == Degree ? GetPriority(token) < GetPriority(p) : GetPriority(token) <= GetPriority(p);
         }
 
         private int GetPriority(string token) {
@@ -293,22 +280,17 @@ namespace TriangulArt {
             int p = 0;
             var stack = new Stack<double>(); // Contains operands
             while (p < expression.Length) {
-                string token = LexicalAnalysisRPN(expression, ref p);
-                stack = SyntaxAnalysisRPN(stack, token);
+				StringBuilder token = new StringBuilder();
+				token.Append(expression[p++]);
+				while (p < expression.Length && expression[p] != NumberMaker[0] && expression[p] != OperatorMarker[0] && expression[p] != FunctionMarker[0]) {
+					token.Append(expression[p++]);
+				}
+				stack = SyntaxAnalysisRPN(stack, token.ToString());
             }
             if (stack.Count > 1)
                 throw new ArgumentException("Excess operand");
 
             return stack.Pop();
-        }
-
-        private string LexicalAnalysisRPN(string expr, ref int p) {
-            StringBuilder token = new StringBuilder();
-            token.Append(expr[p++]);
-            while (p < expr.Length && expr[p] != NumberMaker[0] && expr[p] != OperatorMarker[0] && expr[p] != FunctionMarker[0]) {
-                token.Append(expr[p++]);
-            }
-            return token.ToString();
         }
 
         private Stack<double> SyntaxAnalysisRPN(Stack<double> stack, string token) {

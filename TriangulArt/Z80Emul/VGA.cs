@@ -20,9 +20,9 @@ static class VGA {
 	static public int DelayGa = 0;
 	static public int CntHSync = 0;
 	static private DirectBitmap source = null;
-	static private int[][][] TabPoints = new int[4][][];
+	private static readonly int[][][] TabPoints = new int[4][][];
 	static private int[] tabCoul = new int[32];
-	static private int[] RgbCPCColor =
+	static private readonly int[] RgbCPCColor =
 			{
 				//RRVVBB
 				0x6E7D6B,                   // Blanc            (13) -> #40
@@ -183,7 +183,8 @@ static class VGA {
 		TabPoke[5] = new int[4] { 0x00000, 0x14000, 0x08000, 0x0C000 };
 		TabPoke[6] = new int[4] { 0x00000, 0x18000, 0x08000, 0x0C000 };
 		TabPoke[7] = new int[4] { 0x00000, 0x1C000, 0x08000, 0x0C000 };
-		Reset();
+		DecodeurAdresse = 0;
+		SetPeekMode();
 		for (int i = 0; i < 16; i++) {
 			char c = PaletteCpc.CpcVGA[PaletteCpc.Palette[i]];
 			Write(i);
@@ -237,10 +238,5 @@ static class VGA {
 			TabPoints[3][i][4] = TabPoints[3][i][5] = TabPoints[3][i][6] = TabPoints[3][i][7] = b6 + b2;
 		}
 		return source.Bitmap;
-	}
-
-	static public void Reset() {
-		DecodeurAdresse = 0;
-		SetPeekMode();
 	}
 }

@@ -73,10 +73,6 @@
 	}
 
 	static public void Init() {
-		Reset();
-	}
-
-	static public void Reset() {
 		modePSG = 0;
 		RegPSGSel = 0;
 		MaskPortC = 0;

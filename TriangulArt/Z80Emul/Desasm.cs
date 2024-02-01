@@ -1,6 +1,6 @@
 ﻿namespace TriangulArt {
 	public class Desasm {
-		static string[] TabInstrCB = new string[256]    {
+		static readonly string[] TabInstrCB = new string[256]    {
 	"RLC B",        "RLC C",        "RLC D",        "RLC E",
 	"RLC H",        "RLC L",        "RLC (HL)",     "RLC A",
 	"RRC B",        "RRC C",        "RRC D",        "RRC E",
@@ -67,7 +67,7 @@
 	"SET 7,H",      "SET 7,L",      "SET 7,(HL)",   "SET 7,A"
 	};
 
-		static string[] TabInstrED = new string[256]     {
+		static readonly string[] TabInstrED = new string[256]     {
 	null,           null,           null,           null,
 	null,           null,           null,           null,
 	null,           null,           null,           null,
@@ -134,7 +134,7 @@
 	null,           null,           null,           null
 	};
 
-		static string[] TabInstrXX = new string[256]     {
+		static readonly string[] TabInstrXX = new string[256]     {
 	null,           null,           null,           null,
 	null,           null,           null,           null,
 	null,           "ADD IX,BC",    null,           null,
@@ -201,7 +201,7 @@
 	null,           null,           null,           null
 	};
 
-		static string[] TabInstrXXCB = new string[256]     {
+		static readonly string[] TabInstrXXCB = new string[256]     {
 	null, null, null, null, null, null, "RLC (IX+#nn)", "LD A,RLC (IX+#nn)",
 	null, null, null, null, null, null, "RRC (IX+#nn)", "LD A,RRC (IX+#nn)",
 	null, null, null, null, null, null, "RL (IX+#nn)", "LD A,RL (IX+#nn)",
@@ -236,7 +236,7 @@
 	null, null, null, null, null, null, "SET 7,(IX+#nn)", null
 	};
 
-		static string[] TabInstr = new string[256]     {
+		static readonly string[] TabInstr = new string[256]     {
 	"NOP",          "LD BC,#nnnn",  "LD (BC),A",    "INC BC",
 	"INC B",        "DEC B",        "LD B,#nn",     "RLCA",
 	"EX AF, AF",    "ADD HL,BC",     "LD A,(BC)",   "DEC BC",

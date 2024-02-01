@@ -96,7 +96,7 @@ namespace TriangulArt {
 				double zt = (v.y * xSin + v.z * xCos);
 				double xt = (v.x * yCos - zt * ySin);
 				double z = CONST_Z + (v.x * ySin + zt * yCos);
-				v.SetPoint(posx + (((xt * zCos - yt * zSin) * zoomx) / z), posy - (((xt * zSin + yt * zCos) * zoomy) / z), z);
+				v.SetPoint(posx + (xt * zCos - yt * zSin) * zoomx / z, posy - (xt * zSin + yt * zCos) * zoomy / z, z);
 			}
 
 			// Tri des faces par ordre des Z
@@ -112,7 +112,7 @@ namespace TriangulArt {
 			// Affiche les triangles
 			for (int i = 0; i < lstDraw.Count; i++) {
 				Triangle t = lstDraw[i].GetTriangleCalc(lstVertex, lstDraw[i].pen, bm);
-				t.FillTriangle(bm, false, bmCalc, i);
+				t.FillTriangle(bm == null ? bmCalc : bm, false, bmCalc, i);
 				if (lstTri != null)
 					lstTri.Add(t);      // Ajoute dans la liste des triangles si passée en paramètre
 			}

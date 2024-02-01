@@ -4,14 +4,12 @@ using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 
 public class DirectBitmap : IDisposable {
+	private uint[] tabBits;
+	private GCHandle bitsHandle;
+	private bool disposed;
 	public Bitmap Bitmap { get; private set; }
-	public uint[] tabBits { get; private set; }
-	public bool Disposed { get; private set; }
 	public int Height { get; private set; }
 	public int Width { get; private set; }
-	public int Length { get { return Width * Height; } }
-
-	protected GCHandle BitsHandle { get; private set; }
 
 	public DirectBitmap(int width, int height) {
 		CreateBitmap(width, height);
@@ -25,8 +23,8 @@ public class DirectBitmap : IDisposable {
 		Width = width;
 		Height = height;
 		tabBits = new uint[width * height];
-		BitsHandle = GCHandle.Alloc(tabBits, GCHandleType.Pinned);
-		Bitmap = new Bitmap(width, height, width * 4, PixelFormat.Format32bppRgb, BitsHandle.AddrOfPinnedObject());
+		bitsHandle = GCHandle.Alloc(tabBits, GCHandleType.Pinned);
+		Bitmap = new Bitmap(width, height, width * 4, PixelFormat.Format32bppRgb, bitsHandle.AddrOfPinnedObject());
 	}
 
 	public void Fill(int c) {
@@ -57,7 +55,7 @@ public class DirectBitmap : IDisposable {
 		uint color = (uint)c | 0xFF000000;
 		int index = pixelX + (pixelY * Width);
 		for (; lineLength-- > 0;) {
-			if (index < Length)
+			if (index < Width * Height)
 				tabBits[index] = color;
 
 			index++;
@@ -165,10 +163,10 @@ public class DirectBitmap : IDisposable {
 	}
 
 	public void Dispose() {
-		if (!Disposed) {
-			Disposed = true;
+		if (!disposed) {
+			disposed = true;
 			Bitmap.Dispose();
-			BitsHandle.Free();
+			bitsHandle.Free();
 		}
 	}
 }

@@ -47,9 +47,9 @@ namespace TriangulArt {
 		}
 
 		private void InitBoutons() {
-			bpAnimate.Enabled = bpWriteTriangle.Enabled = bpRedraw.Enabled = !inAnim && projet.lstAnim[selAnim].objet.lstFace.Count > 0 && projet.lstAnim[selAnim].nbImages > 0;
+			bpAnimate.Enabled = bpCreateProjet.Enabled = bpRedraw.Enabled = !inAnim && projet.lstAnim[selAnim].objet.lstFace.Count > 0 && projet.lstAnim[selAnim].nbImages > 0;
 			bpStopAnim.Enabled = inAnim;
-			bpFusion.Enabled = !inAnim && projet.lstData.Count == Utils.ToInt(txbNbImages.Text);
+			bpFusionProjet.Enabled = !inAnim && projet.lstData.Count == Utils.ToInt(txbNbImages.Text);
 			bpReadObject.Enabled = bpEditObject.Enabled = bpReadAnim.Enabled = bpSaveAnim.Enabled = !inAnim;
 			bpAnimPrec.Enabled = selAnim > 0;
 			bpAnimSuiv.Enabled = selAnim < projet.lstAnim.Count - 1;
@@ -106,39 +106,36 @@ namespace TriangulArt {
 			return ret;
 		}
 
-		private int CreateFrame(int i, bool setProjet, bool fusion, List<Triangle> lstTriangle = null, bool noDraw = false) {
+		private int CreateFrame(int i, bool setProjet, bool fusion, List<Datas> lstData = null, bool noDraw = false) {
 			int nbTri = 0;
-			if (lstTriangle == null)
-				lstTriangle = new List<Triangle>();
-
+			List<Triangle> lstTriangle = new List<Triangle>();
 			DisplayFrame(i, lstTriangle, noDraw);
+			Datas data = lstData != null ? lstData[i] : fusion ? projet.lstData[i] : new Datas();
 			if (!noDraw) {
-				Datas data = fusion ? projet.lstData[i] : new Datas();
-				if (setProjet)
-					data.nomImage = "Frame_" + i.ToString();
-
 				trkIndex.Value = i;
 				Application.DoEvents();
-				for (int t = 0; t < lstTriangle.Count; t++) {
-					bool triangleOk = false;
-					for (int y = 0; y < bmpCalc.Height; y++) {
-						for (int x = 0; x < bmpCalc.Width; x++)
-							if (bmpCalc.GetPixel(x, y) == t) {
-								triangleOk = true;
-								y = bmpCalc.Height;
-								nbTri++;
-								break;
-							}
-					}
-					if (setProjet) {
-						Triangle tr = lstTriangle[t];
-						Triangle tData = new Triangle(tr.x1, tr.y1, tr.x2, tr.y2, tr.x3, tr.y3, tr.color) { enabled = triangleOk };
-						data.lstTriangle.Add(tData);
-					}
-				}
-				if (setProjet && !fusion)
-					projet.lstData.Add(data);
+				if (setProjet)
+					data.nomImage = "Frame_" + i.ToString();
 			}
+			for (int t = 0; t < lstTriangle.Count; t++) {
+				bool triangleOk = false;
+				for (int y = 0; y < bmpCalc.Height; y++) {
+					for (int x = 0; x < bmpCalc.Width; x++)
+						if (bmpCalc.GetPixel(x, y) == t) {
+							triangleOk = true;
+							y = bmpCalc.Height;
+							nbTri++;
+							break;
+						}
+				}
+				Triangle tr = lstTriangle[t];
+				tr.enabled = triangleOk;
+				if (setProjet)
+					data.lstTriangle.Add(new Triangle(tr.x1, tr.y1, tr.x2, tr.y2, tr.x3, tr.y3, tr.color, null, tr.enabled));
+			}
+			if (setProjet && !fusion)
+				projet.lstData.Add(data);
+
 			return nbTri;
 		}
 
@@ -152,17 +149,6 @@ namespace TriangulArt {
 				nbTri += CreateFrame(i, setProjet, fusion);
 
 			AddInfo("Nbre de triangles de l'animation:" + nbTri.ToString());
-			if (setProjet) {
-				int nbAvant = 0;
-				int nbApres = 0;
-				AddInfo("Nettoyage triangles non visibles...");
-				projet.Clean(bmpLock.Width, ref nbAvant, ref nbApres);
-				AddInfo("Nombre de triangles nettoyés : " + (nbAvant - nbApres).ToString());
-				if (fusion)
-					AddInfo("Fusion de " + lstSeq.Count.ToString() + " images avec le projet en cours.");
-				else
-					AddInfo("Création projet avec " + lstSeq.Count.ToString() + " images.");
-			}
 			InitBoutons();
 		}
 
@@ -187,9 +173,9 @@ namespace TriangulArt {
 			if (of.ShowDialog() == DialogResult.OK) {
 				int numPen = chkImportPalette.Checked ? maxPen : 0;
 				projet.lstAnim[selAnim].objet.ReadObject(projet, of.FileName, ref numPen);
-				if (chkImportPalette.Checked) {
+				if (chkImportPalette.Checked)
 					maxPen = numPen;
-				}
+
 				AddInfo("Objet " + Path.GetFileName(of.FileName) + " chargé. " + projet.lstAnim[selAnim].objet.lstFace.Count + " Faces.");
 			}
 			DisplayFrame(trkIndex.Value);
@@ -210,10 +196,10 @@ namespace TriangulArt {
 		}
 
 		private void BpAnimate_Click(object sender, EventArgs e) {
-			lstInfo.Items.Clear();
 			endAnim = false;
 			inAnim = true;
 			InitBoutons();
+			lstInfo.Items.Clear();
 			while (!endAnim) {
 				Animate();
 			}
@@ -225,20 +211,19 @@ namespace TriangulArt {
 			InitBoutons();
 		}
 
-		private void BpWriteTriangle_Click(object sender, EventArgs e) {
-			lstInfo.Items.Clear();
+		private void BpCreateProjet_Click(object sender, EventArgs e) {
 			Enabled = false;
 			endAnim = false;
 			inAnim = false;
+			lstInfo.Items.Clear();
 			Animate(true);
 			Enabled = true;
-			Close();
 		}
 
-		private void BpFusion_Click(object sender, EventArgs e) {
-			lstInfo.Items.Clear();
+		private void BpFusionProjet_Click(object sender, EventArgs e) {
 			Enabled = false;
 			endAnim = false;
+			lstInfo.Items.Clear();
 			Animate(true, true);
 			Enabled = true;
 		}
@@ -376,25 +361,19 @@ namespace TriangulArt {
 			}
 		}
 
-		private void SendDataToCpc() {
-			int adr = 0x800;
+		private void BpCpcEmul_Click(object sender, EventArgs e) {
+			Enabled = false;
 			AddInfo("Préparation données pour émulation...");
 			Application.DoEvents();
 			GenereSeq();
 			List<Datas> lstData = new List<Datas>();
 			for (int f = 0; f < lstSeq.Count; f++) {
 				lstData.Add(new Datas());
-				CreateFrame(f, false, false, lstData[f].lstTriangle, true);
+				CreateFrame(f, true, false, lstData, true);
 			}
-			cpc.POKE8(adr++, 0xFF);
 			AddInfo("Démarrage émulation...");
 			Application.DoEvents();
 			cpc.Run(projet.tailleColonnes, lstData);
-		}
-
-		private void BpCpcEmul_Click(object sender, EventArgs e) {
-			Enabled = false;
-			SendDataToCpc();
 			Enabled = true;
 		}
 

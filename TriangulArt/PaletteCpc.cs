@@ -170,27 +170,6 @@ public class PaletteCpc {
 		}
 		return false;
 	}
-
-	static public bool LirePaletteKit(string NomFic) {
-		if (File.Exists(NomFic)) {
-			FileStream fileScr = new FileStream(NomFic, FileMode.Open, FileAccess.Read);
-			byte[] tabBytes = new byte[fileScr.Length];
-			fileScr.Read(tabBytes, 0, tabBytes.Length);
-			fileScr.Close();
-			if (Cpc.CheckAmsdos(tabBytes) && (tabBytes.Length == 158 || tabBytes.Length == 160)) {
-				int start = 128;
-				for (int i = tabBytes.Length == 160 ? 0 : 1; i < 16; i++) {
-					int kit = tabBytes[start] + (tabBytes[start + 1] << 8);
-					int col = (kit & 0xF00) + ((kit & 0x0F) << 4) + ((kit & 0xF0) >> 4);
-					Palette[i] = col;
-					start += 2;
-				}
-				return true;
-			}
-		}
-		return false;
-	}
-
 }
 
 public class RvbColor {

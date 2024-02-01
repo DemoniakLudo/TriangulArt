@@ -45,7 +45,7 @@ public class Z80 {
 	static byte[] TabDec = new byte[256];
 	static byte[] TabSR = new byte[256];
 
-	static pFct[] TabInstr = new pFct[256] {
+	static readonly pFct[] TabInstr = new pFct[256] {
 	___00, ___01, ___02, ___03, ___04, ___05, ___06, ___07,
 	___08, ___09, ___0A, ___0B, ___0C, ___0D, ___0E, ___0F,
 	___10, ___11, ___12, ___13, ___14, ___15, ___16, ___17,
@@ -80,7 +80,7 @@ public class Z80 {
 	___F8, ___F9, ___FA, ___FB, ___FC, ___FD, ___FE, ___C7
 };
 
-	static pFct[] TabInstrCB = new pFct[256] {
+	static readonly pFct[] TabInstrCB = new pFct[256] {
 	CB_00, CB_01, CB_02, CB_03, CB_04, CB_05, CB_06, CB_07,
 	CB_08, CB_09, CB_0A, CB_0B, CB_0C, CB_0D, CB_0E, CB_0F,
 	CB_10, CB_11, CB_12, CB_13, CB_14, CB_15, CB_16, CB_17,
@@ -115,7 +115,7 @@ public class Z80 {
 	CB_C0, CB_C1, CB_C2, CB_C3, CB_C4, CB_C5, CB_C6, CB_C7,
 };
 
-	static pFct[] TabInstrED = new pFct[256] {
+	static readonly pFct[] TabInstrED = new pFct[256] {
 	___00, ___00, ___00, ___00, ___00, ___00, ___00, ___00,
 	___00, ___00, ___00, ___00, ___00, ___00, ___00, ___00,
 	___00, ___00, ___00, ___00, ___00, ___00, ___00, ___00,
@@ -150,7 +150,7 @@ public class Z80 {
 	___00, ___00, ___00, ___00, ___00, ___00, ___00, ___00
 };
 
-	static pFct[] TabInstrDD = new pFct[256] {
+	static readonly pFct[] TabInstrDD = new pFct[256] {
 	___00, ___01, ___02, ___03, ___04, ___05, ___06, ___07,
 	___08, DD_09, ___0A, ___0B, ___0C, ___0D, ___0E, ___0F,
 	___10, ___11, ___12, ___13, ___14, ___15, ___16, ___17,
@@ -185,7 +185,7 @@ public class Z80 {
 	___F8, DD_F9, ___FA, ___FB, ___FC, ___FD, ___FE, ___C7
 };
 
-	static pFct[] TabInstrFD = new pFct[256] {
+	static readonly pFct[] TabInstrFD = new pFct[256] {
 	___00, ___01, ___02, ___03, ___04, ___05, ___06, ___07,
 	___08, FD_09, ___0A, ___0B, ___0C, ___0D, ___0E, ___0F,
 	___10, ___11, ___12, ___13, ___14, ___15, ___16, ___17,
@@ -220,7 +220,7 @@ public class Z80 {
 	___F8, FD_F9, ___FA, ___FB, ___FC, ___FD, ___FE, ___C7
 };
 
-	static pFct[] TabInstrCBDD = new pFct[256] {
+	static readonly pFct[] TabInstrCBDD = new pFct[256] {
 	CB_00, CB_01, CB_02, CB_03, DC_04, DC_05, DC_06, CB_07,
 	CB_08, CB_09, CB_0A, CB_0B, DC_0C, DC_0D, DC_0E, CB_0F,
 	CB_10, CB_11, CB_12, CB_13, DC_14, DC_15, DC_16, CB_17,
@@ -255,7 +255,7 @@ public class Z80 {
 	CB_C0, CB_C1, CB_C2, CB_C3, DC_C4, DC_C5, DC_C6, CB_C7,
 };
 
-	static pFct[] TabInstrCBFD = new pFct[256] {
+	static readonly pFct[] TabInstrCBFD = new pFct[256] {
 	CB_00, CB_01, CB_02, CB_03, FC_04, FC_05, DC_06, CB_07,
 	CB_08, CB_09, CB_0A, CB_0B, FC_0C, FC_0D, DC_0E, CB_0F,
 	CB_10, CB_11, CB_12, CB_13, FC_14, FC_15, DC_16, CB_17,
@@ -3954,10 +3954,6 @@ public class Z80 {
 			TabDec[i] = (byte)(FLAG_N | ((i & 0x0F) == 0x0F ? FLAG_H : 0) | TabSZYX[i] | (i == 0x7F ? FLAG_V : 0));
 			TabSR[i] = (byte)(FLAG_H | (i > 0 ? i & FLAG_S : FLAG_Z | FLAG_V));
 		}
-		Reset();
-	}
-
-	public static void Reset() {
 		IRQ = IFF1 = IFF2 = 0;
 		SupIrqWaitState = 0;
 		AF.Word = BC.Word = DE.Word = HL.Word = IR.Word = IX.Word = IY.Word = SP.Word = PC.Word = _AF.Word = _BC.Word = _DE.Word = _HL.Word = 0;

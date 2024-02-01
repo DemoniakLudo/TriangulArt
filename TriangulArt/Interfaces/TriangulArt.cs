@@ -121,6 +121,18 @@ namespace TriangulArt {
 
 		private void Render() {
 			UpdatePalette();
+			int endLigne = 256;
+			switch (projet.tailleColonnes) {
+				case 1:
+					endLigne = 200;
+					break;
+				case 2:
+					endLigne = 168;
+					break;
+			}
+			for (int y = endLigne; y < 256; y++)
+				bmpLock.DrawLine(0, y, bmpLock.Width, y, (y & 1) == 0 ? 0xFF0000 - ((y - 168) << 16) : 0, false);
+
 			pictureBox.Image = bmpLock.Bitmap;
 			pictureBox.Refresh();
 		}
@@ -538,10 +550,10 @@ namespace TriangulArt {
 		}
 
 		private void InitImage() {
+			PaletteCpc.cpcPlus = chkPlus.Checked = projet.cpcPlus;
 			for (int i = 0; i < projet.SelImage().palette.Length; i++)
 				PaletteCpc.Palette[i] = projet.SelImage().palette[i];
 
-			PaletteCpc.cpcPlus = chkPlus.Checked = projet.cpcPlus;
 			txbNomImage.Text = projet.SelImage().nomImage;
 			txbTpsAttente.Text = projet.SelImage().tpsAttente.ToString();
 			UpdatePalette();
@@ -733,8 +745,43 @@ namespace TriangulArt {
 		}
 
 		private void ChkPlus_CheckedChanged(object sender, EventArgs e) {
-			bpGenPal.Visible = projet.cpcPlus = PaletteCpc.cpcPlus = chkPlus.Checked;
-			FillTriangles();
+			if (Enabled) {
+				bpGenPal.Visible = projet.cpcPlus = PaletteCpc.cpcPlus = chkPlus.Checked;
+				if (!PaletteCpc.cpcPlus) {
+					for (int i = 0; i < 16; i++) {
+						int rvb = PaletteCpc.Palette[i];
+						RvbColor col = new RvbColor((byte)((rvb & 0x0F) * 17), (byte)((rvb >> 8) * 17), (byte)(((rvb >> 4) & 0x0F) * 17));
+						int maxDelta = 0x7FFFFFF, penSel = 0;
+						for (int p = 0; p < 27; p++) {
+							int delta = Math.Abs(col.r - PaletteCpc.RgbCPC[p].r) + Math.Abs(col.v - PaletteCpc.RgbCPC[p].v) + Math.Abs(col.b - PaletteCpc.RgbCPC[p].b);
+							if (delta < maxDelta) {
+								maxDelta = delta;
+								penSel = p;
+							}
+						}
+						PaletteCpc.Palette[i] = penSel;
+					}
+				}
+				else {
+					for (int i = 0; i < 16; i++) {
+						if (PaletteCpc.Palette[i] < 27) {
+							RvbColor col = PaletteCpc.RgbCPC[PaletteCpc.Palette[i]];
+							PaletteCpc.Palette[i] = ((col.b >> 4) << 4) + ((col.v >> 4) << 8) + (col.r >> 4);
+						}
+						else
+							PaletteCpc.Palette[i] = 0;
+					}
+				}
+				for (int pen = 0; pen < 16; pen++) {
+					if (chkAnim3D.Checked) {
+						foreach (Datas d in projet.lstData)
+							d.palette[pen] = PaletteCpc.Palette[pen];
+					}
+					else
+						projet.SelImage().palette[pen] = PaletteCpc.Palette[pen];
+				}
+				FillTriangles();
+			}
 		}
 
 		private void BpImportImage_Click(object sender, EventArgs e) {
@@ -746,8 +793,7 @@ namespace TriangulArt {
 						byte[] tabBytes = new byte[fileScr.Length];
 						fileScr.Read(tabBytes, 0, tabBytes.Length);
 						fileScr.Close();
-						MemoryStream imageStream = new MemoryStream(tabBytes);
-						imageStream.Position = 0;
+						MemoryStream imageStream = new MemoryStream(tabBytes) { Position = 0 };
 						bmpFond.InitBitmap(imageStream);
 						Reset();
 						SetInfo("Lecture image de fond ok.");
@@ -953,6 +999,7 @@ namespace TriangulArt {
 		}
 
 		private void BpReadProj_Click(object sender, EventArgs e) {
+			Enabled = false;
 			OpenFileDialog dlg = new OpenFileDialog { Filter = "Fichiers xml (*.xml)|*.xml" };
 			if (dlg.ShowDialog() == DialogResult.OK) {
 				FileStream fileParam = File.Open(dlg.FileName, FileMode.Open);
@@ -979,6 +1026,7 @@ namespace TriangulArt {
 				}
 				fileParam.Close();
 			}
+			Enabled = true;
 		}
 
 		private void BpSaveProj_Click(object sender, EventArgs e) {
