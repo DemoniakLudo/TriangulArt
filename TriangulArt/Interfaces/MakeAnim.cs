@@ -47,9 +47,9 @@ namespace TriangulArt {
 		}
 
 		private void InitBoutons() {
-			bpAnimate.Enabled = bpWriteTriangle.Enabled = bpRedraw.Enabled = !inAnim && projet.lstAnim[selAnim].objet.lstFace.Count > 0 && projet.lstAnim[selAnim].nbImages > 0;
+			bpAnimate.Enabled = bpCreateProjet.Enabled = bpRedraw.Enabled = !inAnim && projet.lstAnim[selAnim].objet.lstFace.Count > 0 && projet.lstAnim[selAnim].nbImages > 0;
 			bpStopAnim.Enabled = inAnim;
-			bpFusion.Enabled = !inAnim && projet.lstData.Count == Utils.ToInt(txbNbImages.Text);
+			bpFusionProjet.Enabled = !inAnim && projet.lstData.Count == Utils.ToInt(txbNbImages.Text);
 			bpReadObject.Enabled = bpEditObject.Enabled = bpReadAnim.Enabled = bpSaveAnim.Enabled = !inAnim;
 			bpAnimPrec.Enabled = selAnim > 0;
 			bpAnimSuiv.Enabled = selAnim < projet.lstAnim.Count - 1;
@@ -153,11 +153,6 @@ namespace TriangulArt {
 
 			AddInfo("Nbre de triangles de l'animation:" + nbTri.ToString());
 			if (setProjet) {
-				int nbAvant = 0;
-				int nbApres = 0;
-				AddInfo("Nettoyage triangles non visibles...");
-				projet.Clean(bmpLock.Width, ref nbAvant, ref nbApres);
-				AddInfo("Nombre de triangles nettoyés : " + (nbAvant - nbApres).ToString());
 				if (fusion)
 					AddInfo("Fusion de " + lstSeq.Count.ToString() + " images avec le projet en cours.");
 				else
@@ -225,17 +220,16 @@ namespace TriangulArt {
 			InitBoutons();
 		}
 
-		private void BpWriteTriangle_Click(object sender, EventArgs e) {
+		private void BpCreateProjet_Click(object sender, EventArgs e) {
 			lstInfo.Items.Clear();
 			Enabled = false;
 			endAnim = false;
 			inAnim = false;
 			Animate(true);
 			Enabled = true;
-			Close();
 		}
 
-		private void BpFusion_Click(object sender, EventArgs e) {
+		private void BpFusionProjet_Click(object sender, EventArgs e) {
 			lstInfo.Items.Clear();
 			Enabled = false;
 			endAnim = false;

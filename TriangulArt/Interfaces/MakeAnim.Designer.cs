@@ -34,7 +34,7 @@
 			this.bpReadObject = new System.Windows.Forms.Button();
 			this.bpRedraw = new System.Windows.Forms.Button();
 			this.bpAnimate = new System.Windows.Forms.Button();
-			this.bpWriteTriangle = new System.Windows.Forms.Button();
+			this.bpCreateProjet = new System.Windows.Forms.Button();
 			this.txbNbImages = new System.Windows.Forms.TextBox();
 			this.label15 = new System.Windows.Forms.Label();
 			this.bpEditObject = new System.Windows.Forms.Button();
@@ -49,7 +49,7 @@
 			this.bpSaveAnim = new System.Windows.Forms.Button();
 			this.trkIndex = new System.Windows.Forms.TrackBar();
 			this.lblNumImage = new System.Windows.Forms.Label();
-			this.bpFusion = new System.Windows.Forms.Button();
+			this.bpFusionProjet = new System.Windows.Forms.Button();
 			this.lstInfo = new System.Windows.Forms.ListBox();
 			this.bpStopAnim = new System.Windows.Forms.Button();
 			this.label3 = new System.Windows.Forms.Label();
@@ -171,13 +171,13 @@
 			// 
 			// bpWriteTriangle
 			// 
-			this.bpWriteTriangle.Location = new System.Drawing.Point(0, 742);
-			this.bpWriteTriangle.Name = "bpWriteTriangle";
-			this.bpWriteTriangle.Size = new System.Drawing.Size(115, 38);
-			this.bpWriteTriangle.TabIndex = 7;
-			this.bpWriteTriangle.Text = "Générer nouveau  projet";
-			this.bpWriteTriangle.UseVisualStyleBackColor = true;
-			this.bpWriteTriangle.Click += new System.EventHandler(this.BpWriteTriangle_Click);
+			this.bpCreateProjet.Location = new System.Drawing.Point(0, 742);
+			this.bpCreateProjet.Name = "bpWriteTriangle";
+			this.bpCreateProjet.Size = new System.Drawing.Size(115, 38);
+			this.bpCreateProjet.TabIndex = 7;
+			this.bpCreateProjet.Text = "Générer nouveau  projet";
+			this.bpCreateProjet.UseVisualStyleBackColor = true;
+			this.bpCreateProjet.Click += new System.EventHandler(this.BpCreateProjet_Click);
 			// 
 			// txbNbImages
 			// 
@@ -303,13 +303,13 @@
 			// 
 			// bpFusion
 			// 
-			this.bpFusion.Location = new System.Drawing.Point(121, 742);
-			this.bpFusion.Name = "bpFusion";
-			this.bpFusion.Size = new System.Drawing.Size(115, 38);
-			this.bpFusion.TabIndex = 23;
-			this.bpFusion.Text = "Fusion avec projet existant";
-			this.bpFusion.UseVisualStyleBackColor = true;
-			this.bpFusion.Click += new System.EventHandler(this.BpFusion_Click);
+			this.bpFusionProjet.Location = new System.Drawing.Point(121, 742);
+			this.bpFusionProjet.Name = "bpFusion";
+			this.bpFusionProjet.Size = new System.Drawing.Size(115, 38);
+			this.bpFusionProjet.TabIndex = 23;
+			this.bpFusionProjet.Text = "Fusion avec projet existant";
+			this.bpFusionProjet.UseVisualStyleBackColor = true;
+			this.bpFusionProjet.Click += new System.EventHandler(this.BpFusionProjet_Click);
 			// 
 			// lstInfo
 			// 
@@ -454,7 +454,7 @@
 			this.Controls.Add(this.label3);
 			this.Controls.Add(this.bpStopAnim);
 			this.Controls.Add(this.lstInfo);
-			this.Controls.Add(this.bpFusion);
+			this.Controls.Add(this.bpFusionProjet);
 			this.Controls.Add(this.lblNumImage);
 			this.Controls.Add(this.trkIndex);
 			this.Controls.Add(this.bpSaveAnim);
@@ -469,7 +469,7 @@
 			this.Controls.Add(this.bpEditObject);
 			this.Controls.Add(this.label15);
 			this.Controls.Add(this.txbNbImages);
-			this.Controls.Add(this.bpWriteTriangle);
+			this.Controls.Add(this.bpCreateProjet);
 			this.Controls.Add(this.bpAnimate);
 			this.Controls.Add(this.bpRedraw);
 			this.Controls.Add(this.bpReadObject);
@@ -506,7 +506,7 @@
 		private System.Windows.Forms.Button bpReadObject;
 		private System.Windows.Forms.Button bpRedraw;
 		private System.Windows.Forms.Button bpAnimate;
-		private System.Windows.Forms.Button bpWriteTriangle;
+		private System.Windows.Forms.Button bpCreateProjet;
 		private System.Windows.Forms.TextBox txbNbImages;
 		private System.Windows.Forms.Label label15;
 		private System.Windows.Forms.Button bpEditObject;
@@ -521,7 +521,7 @@
 		private System.Windows.Forms.Button bpSaveAnim;
 		private System.Windows.Forms.TrackBar trkIndex;
 		private System.Windows.Forms.Label lblNumImage;
-		private System.Windows.Forms.Button bpFusion;
+		private System.Windows.Forms.Button bpFusionProjet;
 		private System.Windows.Forms.ListBox lstInfo;
 		private System.Windows.Forms.Button bpStopAnim;
 		private System.Windows.Forms.Label label3;

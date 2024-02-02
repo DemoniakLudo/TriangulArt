@@ -96,7 +96,7 @@ namespace TriangulArt {
 				double zt = (v.y * xSin + v.z * xCos);
 				double xt = (v.x * yCos - zt * ySin);
 				double z = CONST_Z + (v.x * ySin + zt * yCos);
-				v.SetPoint(posx + (((xt * zCos - yt * zSin) * zoomx) / z), posy - (((xt * zSin + yt * zCos) * zoomy) / z), z);
+				v.SetPoint(posx + (xt * zCos - yt * zSin) * zoomx / z, posy - (xt * zSin + yt * zCos) * zoomy / z, z);
 			}
 
 			// Tri des faces par ordre des Z

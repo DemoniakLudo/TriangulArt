@@ -186,10 +186,6 @@ static class CRTC {
 	}
 
 	static public void Init() {
-		Reset();
-	}
-
-	static public void Reset() {
 		RegsCRTC[0] = 0x3F;
 		RegsCRTC[3] = 0x8E;
 		RegsCRTC[4] = 0x26;

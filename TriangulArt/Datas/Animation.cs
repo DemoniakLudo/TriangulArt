@@ -13,38 +13,38 @@ namespace TriangulArt {
 		}
 
 		public string AddEval(List<Sequence> lstSeq) {
-			MathParser p = new MathParser('.');
+			MathParser parser = new MathParser('.');
 			string champ = "", err = "";
 			int pos = lstSeq.Count;
 			lstSeq.Add(new Sequence());
 			try {
 				if (exprPosX != "") {
 					champ = "PosX";
-					lstSeq[pos].posx = (int)p.Parse(exprPosX, pos, false);
+					lstSeq[pos].posx = (int)parser.Parse(exprPosX, pos, false);
 				}
 				if (exprPosY != "") {
 					champ = "PosY";
-					lstSeq[pos].posy = (int)p.Parse(exprPosY, pos, false);
+					lstSeq[pos].posy = (int)parser.Parse(exprPosY, pos, false);
 				}
 				if (exprZoomX != "") {
 					champ = "ZoomX";
-					lstSeq[pos].zoomx = (int)p.Parse(exprZoomX, pos, false);
+					lstSeq[pos].zoomx = (int)parser.Parse(exprZoomX, pos, false);
 				}
 				if (exprZoomY != "") {
 					champ = "ZoomY";
-					lstSeq[pos].zoomy = (int)p.Parse(exprZoomY, pos, false);
+					lstSeq[pos].zoomy = (int)parser.Parse(exprZoomY, pos, false);
 				}
 				if (exprAngX != "") {
 					champ = "AngX";
-					lstSeq[pos].angx = (int)p.Parse(exprAngX, pos, false);
+					lstSeq[pos].angx = (int)parser.Parse(exprAngX, pos, false);
 				}
 				if (exprAngY != "") {
 					champ = "AngY";
-					lstSeq[pos].angy = (int)p.Parse(exprAngY, pos, false);
+					lstSeq[pos].angy = (int)parser.Parse(exprAngY, pos, false);
 				}
 				if (exprAngZ != "") {
 					champ = "AngZ";
-					lstSeq[pos].angz = (int)p.Parse(exprAngZ, pos, false);
+					lstSeq[pos].angz = (int)parser.Parse(exprAngZ, pos, false);
 				}
 			}
 			catch (Exception ex) {

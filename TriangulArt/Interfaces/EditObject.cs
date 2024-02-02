@@ -384,9 +384,20 @@ namespace TriangulArt {
 				DisplayObj();
 				for (int j = objet.lstFace.Count - 1; j >= 0; j--) {
 					for (int i = j - 1; i >= 0; i--) {
-						Triangle t1 = objet.lstFace[i].GetTriangleCalc(objet.lstVertex, 1);
-						Triangle t2 = objet.lstFace[j].GetTriangleCalc(objet.lstVertex, 1);
-						if (t1.x1 == t2.x1 && t1.x2 == t2.x2 && t1.x3 == t2.x3 && t1.y1 == t2.y1 && t1.y2 == t2.y2 && t1.y3 == t2.y3) {
+						Face f1 = objet.lstFace[i];
+						Face f2 = objet.lstFace[j];
+
+						Vertex vf1a = objet.lstVertex[f1.a];
+						Vertex vf1b = objet.lstVertex[f1.b];
+						Vertex vf1c = objet.lstVertex[f1.c];
+
+						Vertex vf2a = objet.lstVertex[f2.a];
+						Vertex vf2b = objet.lstVertex[f2.b];
+						Vertex vf2c = objet.lstVertex[f2.c];
+
+						if (vf1a.x == vf2a.x && vf1a.y == vf2a.y && vf1a.z == vf2a.z &&
+							vf1b.x == vf2b.x && vf1b.y == vf2b.y && vf1b.z == vf2b.z &&
+							vf1c.x == vf2c.x && vf1c.y == vf2c.y && vf1c.z == vf2c.z ) {
 							objet.lstFace.RemoveAt(j);
 							break;
 						}
@@ -412,7 +423,6 @@ namespace TriangulArt {
 						lstViewFace.TopItem = lstViewFace.Items[numFace];
 						lstViewFace.Select();
 					}
-
 				}
 			}
 		}
