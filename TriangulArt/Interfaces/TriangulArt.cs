@@ -121,14 +121,18 @@ namespace TriangulArt {
 
 		private void Render() {
 			UpdatePalette();
+			int endLigne = 256;
 			switch (projet.tailleColonnes) {
 				case 1:
-					bmpLock.DrawLine(0, 200, bmpLock.Width, 200, 0xFF0000, false);
+					endLigne = 200;
 					break;
 				case 2:
-					bmpLock.DrawLine(0, 168, bmpLock.Width, 168, 0xFF0000, false);
+					endLigne = 168;
 					break;
 			}
+			for (int y = endLigne; y < 256; y++)
+				bmpLock.DrawLine(0, y, bmpLock.Width, y, (y & 1) == 0 ? 0xFF0000 - ((y - 168) << 16) : 0, false);
+
 			pictureBox.Image = bmpLock.Bitmap;
 			pictureBox.Refresh();
 		}

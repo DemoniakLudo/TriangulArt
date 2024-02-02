@@ -112,7 +112,7 @@ namespace TriangulArt {
 			// Affiche les triangles
 			for (int i = 0; i < lstDraw.Count; i++) {
 				Triangle t = lstDraw[i].GetTriangleCalc(lstVertex, lstDraw[i].pen, bm);
-				t.FillTriangle(bm, false, bmCalc, i);
+				t.FillTriangle(bm == null ? bmCalc : bm, false, bmCalc, i);
 				if (lstTri != null)
 					lstTri.Add(t);      // Ajoute dans la liste des triangles si passée en paramètre
 			}
