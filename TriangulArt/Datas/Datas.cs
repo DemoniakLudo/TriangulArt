@@ -70,59 +70,6 @@ namespace TriangulArt {
 			}
 		}
 
-		private int CountPctFillTriangle(DirectBitmap bmpLock, int x1, int y1, int x2, int y2, int x3, int y3, int c) {
-			int dx1 = x3 - x1;
-			int dy1 = y3 - y1;
-			int sgn1 = dx1 > 0 ? 1 : -1;
-			dx1 = Math.Abs(dx1);
-			int err1 = 0;
-			int dx2 = x2 - x1;
-			int dy2 = y2 - y1;
-			int sgn2 = dx2 > 0 ? 1 : -1;
-			dx2 = Math.Abs(dx2);
-			int err2 = 0;
-			int xl = x1;
-			int xr = x1;
-			if (y1 == y2)
-				xr = x2;
-
-			int nbFound = 0, nbPt = 0;
-			for (int y = y1; y < y3; y++) {
-				if (xr > xl) {
-					for (int x = 0; x <= xr - xl; x++) {
-						nbPt++;
-						if (bmpLock.GetPixel(xl + x, y) == c)
-							nbFound++;
-					}
-				}
-				else {
-					for (int x = 0; x <= xl - xr; x++) {
-						nbPt++;
-						if (bmpLock.GetPixel(xr + x, y) == c)
-							nbFound++;
-					}
-				}
-				err1 += dx1;
-				while (err1 >= dy1) {
-					xl += sgn1;
-					err1 -= dy1;
-				}
-				if (y == y2) { // On passe au tracé du second "demi-triangle"
-					dx2 = x3 - x2;
-					dy2 = y3 - y2;
-					sgn2 = dx2 > 0 ? 1 : -1;
-					dx2 = Math.Abs(dx2);
-					err2 = 0;
-				}
-				err2 += dx2;
-				while (err2 >= dy2) {
-					xr += sgn2;
-					err2 -= dy2;
-				}
-			}
-			return nbPt > 0 ? nbFound * 100 / nbPt : -1;
-		}
-
 		public void FillTriangle(DirectBitmap bmpLock, Triangle t, int maxWidth, bool modeLines, bool selected = false, int trueCol = 0) {
 			int x1 = t.x1;
 			int y1 = t.y1;
@@ -287,10 +234,9 @@ namespace TriangulArt {
 			}
 
 			// Troisième passe: calcule le pourcentage de visibilité de chaque triangle
-			for (int i = 0; i < lstTriangle.Count; i++) {
-				Triangle t = lstTriangle[i];
-				lstTriangle[i].SetPctFill(CountPctFillTriangle(bmpLock, t.x1, t.y1, t.x2, t.y2, t.x3, t.y3, i + 1));
-			}
+			for (int i = 0; i < nbTri; i++)
+				lstTriangle[i].CountPctFillTriangle(bmpLock, i + 1);
+
 			bmpLock.Dispose();
 		}
 

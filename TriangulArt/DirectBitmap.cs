@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
+using TriangulArt;
 
 public class DirectBitmap : IDisposable {
 	private uint[] tabBits;
@@ -30,6 +31,12 @@ public class DirectBitmap : IDisposable {
 	public void Fill(int c) {
 		for (int i = 0; i < tabBits.Length; i++)
 			tabBits[i] = (uint)c;
+	}
+
+	public void Copy(Bitmap src) {
+		for (int y = 0; y < Math.Min(Height, src.Height); y++)
+			for (int x = 0; x < Math.Min(Width, src.Width); x++)
+				SetPixel(x, y, src.GetPixel(x, y).ToArgb());
 	}
 
 	public void SetPixel(int x, int y, int c) {

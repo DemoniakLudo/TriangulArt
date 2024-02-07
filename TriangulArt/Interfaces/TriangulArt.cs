@@ -69,23 +69,13 @@ namespace TriangulArt {
 		}
 
 		public void Reset() {
-			if (bmpFond.NbImg > 0) {
-				for (int y = 0; y < bmpFond.GetImage.Height; y++)
-					for (int x = 0; x < bmpFond.GetImage.Width; x++)
-						bmpLock.SetPixel(x, y, bmpFond.GetImage.GetPixel(x, y).ToArgb());
-			}
-			else
-				bmpLock.Fill(PaletteCpc.GetColorPal(0).GetColorArgb);
-
+			ResetNoRender();
 			Render();
 		}
 
 		public void ResetNoRender() {
-			if (bmpFond.NbImg > 0) {
-				for (int y = 0; y < bmpFond.GetImage.Height; y++)
-					for (int x = 0; x < bmpFond.GetImage.Width; x++)
-						bmpLock.SetPixel(x, y, bmpFond.GetImage.GetPixel(x, y).ToArgb());
-			}
+			if (bmpFond.NbImg > 0)
+				bmpLock.Copy(bmpFond.GetImage);
 			else
 				bmpLock.Fill(PaletteCpc.GetColorPal(0).GetColorArgb);
 		}
@@ -169,8 +159,8 @@ namespace TriangulArt {
 			for (int i = 0; i < projet.SelImage().lstTriangle.Count; i++) {
 				Triangle t = projet.SelImage().lstTriangle[i];
 				string inf = (t.enabled ? "" : "*") + i.ToString("000") + "\t(" + t.x1 + "," + t.y1 + ")\t\t(" + t.x2 + "," + t.y2 + ")\t\t(" + t.x3 + "," + t.y3 + ")\t\tcouleur:" + t.color.ToString("00");
-				if (t.GetPctFill() != -1) {
-					int f = t.GetPctFill();
+				int f = t.pctFill;
+				if (f != -1) {
 					inf += "\t" + f + "%";
 					if (f < 10)
 						inf += "====";
