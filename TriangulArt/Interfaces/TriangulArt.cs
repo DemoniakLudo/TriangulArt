@@ -142,6 +142,7 @@ namespace TriangulArt {
 			}
 			else
 				MessageBox.Show("Les coordonnées sont invalides");
+
 			return null;
 		}
 
@@ -525,18 +526,19 @@ namespace TriangulArt {
 		}
 
 		private void DisplayMemory() {
-			int nbTri = projet.SelImage().GetTriangleActif();
-			int mem = chkModePolice.Checked ? (nbTri * 6) + 2 : (nbTri * 7) + 6;
-			SetInfo("Nbre de triangles:" + nbTri.ToString() + " - Mémoire utilisée:" + mem + " octets");
-		}
+			if (chkAnim3D.Checked) {
+				int nbTri = 0, nbImg = projet.lstData.Count;
+				foreach (Datas d in projet.lstData)
+					nbTri += d.GetTriangleActif();
 
-		private void DisplayMemoryProjet() {
-			int nbTri = 0, nbImg = projet.lstData.Count;
-			foreach (Datas d in projet.lstData) {
-				nbTri += d.GetTriangleActif();
+				int mem = chkModePolice.Checked ? (nbTri * 6) + (nbImg * 2) : (nbTri * 7) + (nbImg * 6);
+				SetInfo("Nbre de triangles du projet:" + nbTri.ToString() + " - Mémoire utilisée:" + mem.ToString() + " octets");
 			}
-			int mem = chkModePolice.Checked ? (nbTri * 6) + (nbImg * 2) : (nbTri * 7) + (nbImg * 6);
-			SetInfo("Nbre de triangles du projet:" + nbTri.ToString() + " - Mémoire utilisée:" + mem.ToString() + " octets");
+			else {
+				int nbTri = projet.SelImage().GetTriangleActif();
+				int mem = chkModePolice.Checked ? (nbTri * 6) + 2 : (nbTri * 7) + 6;
+				SetInfo("Nbre de triangles:" + nbTri.ToString() + " - Mémoire utilisée:" + mem + " octets");
+			}
 		}
 
 		private void InitImage() {
@@ -549,7 +551,6 @@ namespace TriangulArt {
 			UpdatePalette();
 			FillTriangles();
 			DisplayList();
-			//Text = "TriangulArt - " + dlg.FileName;
 			switch (projet.SelImage().modeRendu) {
 				case 0:
 					rbStandard.Checked = true;
@@ -563,10 +564,7 @@ namespace TriangulArt {
 					rbVertical.Checked = true;
 					break;
 			}
-			if (chkAnim3D.Checked)
-				DisplayMemoryProjet();
-			else
-				DisplayMemory();
+			DisplayMemory();
 		}
 
 		private void MemImage() {
@@ -646,14 +644,13 @@ namespace TriangulArt {
 						PaletteCpc.Palette[pen] = d.palette[pen] = ed.ValColor;
 
 					DisplayList();
-					FillTriangles();
 					DisplayMemory();
 				}
 				else {
 					PaletteCpc.Palette[pen] = projet.SelImage().palette[pen] = ed.ValColor;
 					UpdatePalette();
-					FillTriangles();
 				}
+				FillTriangles();
 			}
 		}
 
@@ -996,6 +993,9 @@ namespace TriangulArt {
 				try {
 					projet = (Projet)new XmlSerializer(typeof(Projet)).Deserialize(fileParam);
 					SetInfo("Lecture projet ok");
+					if (projet.lstAnim[0].nbImages > 0)
+						chkAnim3D.Checked = true;
+
 					if (projet.mode == 0)
 						rbMode0.Checked = true;
 					else
@@ -1005,7 +1005,7 @@ namespace TriangulArt {
 					bmpFond.ClearAll();
 					projet.SelectImage(0);
 					SetImageProjet();
-					this.Text = Path.GetFileName(dlg.FileName);
+					Text = Path.GetFileName(dlg.FileName);
 					bpGenPal.Visible = projet.cpcPlus;
 					comboNbColonnes.SelectedIndex = projet.tailleColonnes;
 					if (projet.lstAnim.Count == 0)
@@ -1027,7 +1027,7 @@ namespace TriangulArt {
 				try {
 					new XmlSerializer(typeof(Projet)).Serialize(file, projet);
 					SetInfo("Sauvegarde projet ok");
-					DisplayMemoryProjet();
+					DisplayMemory();
 				}
 				catch {
 					MessageBox.Show("Erreur sauvegarde projet...");
@@ -1252,41 +1252,20 @@ namespace TriangulArt {
 				else
 					projet.SelImage().palette[c] = col;
 
-				int r = ((col & 0x0F) * 17);
-				int v = (((col & 0xF00) >> 8) * 17);
-				int b = (((col & 0xF0) >> 4) * 17);
-				colors[c].BackColor = Color.FromArgb(r, v, b);
+				colors[c].BackColor = Color.FromArgb((col & 0x0F) * 17, ((col & 0xF00) >> 8) * 17, ((col & 0xF0) >> 4) * 17);
 				colors[c].Refresh();
 			}
 			UpdatePalette();
 		}
 
 		private void ComboNbColonnes_SelectedIndexChanged(object sender, EventArgs e) {
-			switch (comboNbColonnes.SelectedIndex) {
-				case 0:
-					pictureBox.Width = 768;
-					panel1.Left = 818;
-					Width = 1386;
-					for (int i = 0; i < 16; i++)
-						colors[i].Left = 774;
-					break;
+			int w = 192 * comboNbColonnes.SelectedIndex;
+			pictureBox.Width = 768 + w;
+			panel1.Left = 818 + w;
+			Width = 1386 + w;
+			for (int i = 0; i < 16; i++)
+				colors[i].Left = 774 + w;
 
-				case 1:
-					pictureBox.Width = 960;
-					panel1.Left = 1010;
-					Width = 1578;
-					for (int i = 0; i < 16; i++)
-						colors[i].Left = 966;
-					break;
-
-				case 2:
-					pictureBox.Width = 1152;
-					panel1.Left = 1202;
-					Width = 1770;
-					for (int i = 0; i < 16; i++)
-						colors[i].Left = 1158;
-					break;
-			}
 			projet.tailleColonnes = (byte)comboNbColonnes.SelectedIndex;
 			SetNewMode(false);
 		}
