@@ -135,11 +135,7 @@ namespace TriangulArt {
 				RvbColor faceColor = PaletteCpc.GetColorPal(f.pen);
 				item.SubItems[4].BackColor = Color.FromArgb(faceColor.GetColorArgb);
 				int val = faceColor.r * 9798 + faceColor.v * 19235 + faceColor.b * 3735;
-				if (val > 4194304)
-					item.SubItems[4].ForeColor = Color.Black;
-				else
-					item.SubItems[4].ForeColor = Color.White;
-
+				item.SubItems[4].ForeColor = val > 4194304 ? Color.Black : Color.White;
 				lstViewFace.Items.Add(item);
 			}
 			numFace = selFace;
@@ -297,19 +293,12 @@ namespace TriangulArt {
 		}
 
 		private void BpAddVertex_Click(object sender, EventArgs e) {
-			double x = Utils.ToDouble(txbVertexX.Text);
-			double y = Utils.ToDouble(txbVertexY.Text);
-			double z = Utils.ToDouble(txbVertexZ.Text);
-			objet.lstVertex.Add(new Vertex(x, y, z));
+			objet.lstVertex.Add(new Vertex(Utils.ToDouble(txbVertexX.Text), Utils.ToDouble(txbVertexY.Text), Utils.ToDouble(txbVertexZ.Text)));
 			DisplayVertex(objet.lstVertex.Count - 1);
 		}
 
 		private void BpEditVertex_Click(object sender, EventArgs e) {
-			Vertex v = objet.lstVertex[numVertex];
-			double x = Utils.ToDouble(txbVertexX.Text);
-			double y = Utils.ToDouble(txbVertexY.Text);
-			double z = Utils.ToDouble(txbVertexZ.Text);
-			v.SetNewCoord(x, y, z);
+			objet.lstVertex[numVertex].SetNewCoord(Utils.ToDouble(txbVertexX.Text), Utils.ToDouble(txbVertexY.Text), Utils.ToDouble(txbVertexZ.Text));
 			RedrawAll();
 		}
 
@@ -360,8 +349,7 @@ namespace TriangulArt {
 
 		private void ClickLock(object sender, EventArgs e) {
 			CheckBox colorLock = sender as CheckBox;
-			int numLock = colorLock.Tag != null ? (int)colorLock.Tag : 0;
-			lockState[numLock] = colorLock.Checked ? 1 : 0;
+			lockState[colorLock.Tag != null ? (int)colorLock.Tag : 0] = colorLock.Checked ? 1 : 0;
 		}
 
 		private void BpModif_Click(object sender, EventArgs e) {
@@ -379,7 +367,7 @@ namespace TriangulArt {
 			BpRedraw_Click(sender, e);
 		}
 
-		private void bpSupFaceDouble_Click(object sender, EventArgs e) {
+		private void BpSupFaceDouble_Click(object sender, EventArgs e) {
 			if (MessageBox.Show("Confirmer la supperssion des faces redondantes", "", MessageBoxButtons.YesNo) == DialogResult.Yes) {
 				DisplayObj();
 				for (int j = objet.lstFace.Count - 1; j >= 0; j--) {
@@ -397,7 +385,7 @@ namespace TriangulArt {
 
 						if (vf1a.x == vf2a.x && vf1a.y == vf2a.y && vf1a.z == vf2a.z &&
 							vf1b.x == vf2b.x && vf1b.y == vf2b.y && vf1b.z == vf2b.z &&
-							vf1c.x == vf2c.x && vf1c.y == vf2c.y && vf1c.z == vf2c.z ) {
+							vf1c.x == vf2c.x && vf1c.y == vf2c.y && vf1c.z == vf2c.z) {
 							objet.lstFace.RemoveAt(j);
 							break;
 						}
@@ -407,7 +395,7 @@ namespace TriangulArt {
 			}
 		}
 
-		private void pictureBoxObj_MouseDown(object sender, MouseEventArgs e) {
+		private void PictureBoxObj_MouseDown(object sender, MouseEventArgs e) {
 			int yReel = e.Y;
 			int xReel = e.X;
 			if (e.Button == MouseButtons.Right) {

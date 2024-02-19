@@ -63,6 +63,7 @@
 			this.bpSaveGif = new System.Windows.Forms.Button();
 			this.chkImportPalette = new System.Windows.Forms.CheckBox();
 			this.bpCpcEmul = new System.Windows.Forms.Button();
+			this.bpAddProjet = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxScr)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.trkIndex)).BeginInit();
 			this.SuspendLayout();
@@ -143,7 +144,7 @@
 			// 
 			this.bpReadObject.Location = new System.Drawing.Point(0, 663);
 			this.bpReadObject.Name = "bpReadObject";
-			this.bpReadObject.Size = new System.Drawing.Size(115, 25);
+			this.bpReadObject.Size = new System.Drawing.Size(115, 23);
 			this.bpReadObject.TabIndex = 4;
 			this.bpReadObject.Text = "Lire objet";
 			this.bpReadObject.UseVisualStyleBackColor = true;
@@ -169,10 +170,10 @@
 			this.bpAnimate.UseVisualStyleBackColor = true;
 			this.bpAnimate.Click += new System.EventHandler(this.BpAnimate_Click);
 			// 
-			// bpWriteTriangle
+			// bpCreateProjet
 			// 
 			this.bpCreateProjet.Location = new System.Drawing.Point(0, 742);
-			this.bpCreateProjet.Name = "bpWriteTriangle";
+			this.bpCreateProjet.Name = "bpCreateProjet";
 			this.bpCreateProjet.Size = new System.Drawing.Size(115, 38);
 			this.bpCreateProjet.TabIndex = 7;
 			this.bpCreateProjet.Text = "Générer nouveau  projet";
@@ -301,10 +302,10 @@
 			this.lblNumImage.TabIndex = 22;
 			this.lblNumImage.Text = "Image   0";
 			// 
-			// bpFusion
+			// bpFusionProjet
 			// 
 			this.bpFusionProjet.Location = new System.Drawing.Point(121, 742);
-			this.bpFusionProjet.Name = "bpFusion";
+			this.bpFusionProjet.Name = "bpFusionProjet";
 			this.bpFusionProjet.Size = new System.Drawing.Size(115, 38);
 			this.bpFusionProjet.TabIndex = 23;
 			this.bpFusionProjet.Text = "Fusion avec projet existant";
@@ -316,7 +317,7 @@
 			this.lstInfo.FormattingEnabled = true;
 			this.lstInfo.Location = new System.Drawing.Point(242, 619);
 			this.lstInfo.Name = "lstInfo";
-			this.lstInfo.Size = new System.Drawing.Size(1112, 186);
+			this.lstInfo.Size = new System.Drawing.Size(1112, 212);
 			this.lstInfo.TabIndex = 25;
 			// 
 			// bpStopAnim
@@ -408,7 +409,7 @@
 			// 
 			// bpSaveGif
 			// 
-			this.bpSaveGif.Location = new System.Drawing.Point(0, 782);
+			this.bpSaveGif.Location = new System.Drawing.Point(0, 810);
 			this.bpSaveGif.Name = "bpSaveGif";
 			this.bpSaveGif.Size = new System.Drawing.Size(115, 23);
 			this.bpSaveGif.TabIndex = 33;
@@ -428,7 +429,7 @@
 			// 
 			// bpCpcEmul
 			// 
-			this.bpCpcEmul.Location = new System.Drawing.Point(121, 782);
+			this.bpCpcEmul.Location = new System.Drawing.Point(121, 810);
 			this.bpCpcEmul.Name = "bpCpcEmul";
 			this.bpCpcEmul.Size = new System.Drawing.Size(115, 23);
 			this.bpCpcEmul.TabIndex = 35;
@@ -436,11 +437,21 @@
 			this.bpCpcEmul.UseVisualStyleBackColor = true;
 			this.bpCpcEmul.Click += new System.EventHandler(this.BpCpcEmul_Click);
 			// 
+			// bpAddProjet
+			// 
+			this.bpAddProjet.Location = new System.Drawing.Point(0, 781);
+			this.bpAddProjet.Name = "bpAddProjet";
+			this.bpAddProjet.Size = new System.Drawing.Size(115, 23);
+			this.bpAddProjet.TabIndex = 7;
+			this.bpAddProjet.Text = "Ajouter au projet";
+			this.bpAddProjet.UseVisualStyleBackColor = true;
+			this.bpAddProjet.Click += new System.EventHandler(this.bpAddProjet_Click);
+			// 
 			// MakeAnim
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1360, 808);
+			this.ClientSize = new System.Drawing.Size(1360, 836);
 			this.Controls.Add(this.bpCpcEmul);
 			this.Controls.Add(this.chkImportPalette);
 			this.Controls.Add(this.bpSaveGif);
@@ -469,6 +480,7 @@
 			this.Controls.Add(this.bpEditObject);
 			this.Controls.Add(this.label15);
 			this.Controls.Add(this.txbNbImages);
+			this.Controls.Add(this.bpAddProjet);
 			this.Controls.Add(this.bpCreateProjet);
 			this.Controls.Add(this.bpAnimate);
 			this.Controls.Add(this.bpRedraw);
@@ -535,5 +547,6 @@
 		private System.Windows.Forms.Button bpSaveGif;
 		private System.Windows.Forms.CheckBox chkImportPalette;
 		private System.Windows.Forms.Button bpCpcEmul;
+		private System.Windows.Forms.Button bpAddProjet;
 	}
 }

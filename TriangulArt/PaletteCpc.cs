@@ -84,8 +84,8 @@ public class PaletteCpc {
 				byte c2 = (byte)(kit >> 8);
 				fp.Write(c1);
 				fp.Write(c2);
-				fp.Close();
 			}
+			fp.Close();
 		}
 		else {
 			int i;

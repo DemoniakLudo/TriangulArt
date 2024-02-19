@@ -540,7 +540,7 @@
 			this.pictureBoxObj.Size = new System.Drawing.Size(768, 512);
 			this.pictureBoxObj.TabIndex = 0;
 			this.pictureBoxObj.TabStop = false;
-			this.pictureBoxObj.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBoxObj_MouseDown);
+			this.pictureBoxObj.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureBoxObj_MouseDown);
 			// 
 			// bpParamObjet
 			// 
@@ -590,7 +590,7 @@
 			this.bpSupFaceDouble.TabIndex = 22;
 			this.bpSupFaceDouble.Text = "Supprimer faces redondantes";
 			this.bpSupFaceDouble.UseVisualStyleBackColor = true;
-			this.bpSupFaceDouble.Click += new System.EventHandler(this.bpSupFaceDouble_Click);
+			this.bpSupFaceDouble.Click += new System.EventHandler(this.BpSupFaceDouble_Click);
 			// 
 			// EditObjet
 			// 

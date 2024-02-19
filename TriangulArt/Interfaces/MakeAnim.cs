@@ -50,6 +50,7 @@ namespace TriangulArt {
 			bpAnimate.Enabled = bpCreateProjet.Enabled = bpRedraw.Enabled = !inAnim && projet.lstAnim[selAnim].objet.lstFace.Count > 0 && projet.lstAnim[selAnim].nbImages > 0;
 			bpStopAnim.Enabled = inAnim;
 			bpFusionProjet.Enabled = !inAnim && projet.lstData.Count == Utils.ToInt(txbNbImages.Text);
+			bpAddProjet.Enabled = !inAnim && projet.lstData.Count > 0;
 			bpReadObject.Enabled = bpEditObject.Enabled = bpReadAnim.Enabled = bpSaveAnim.Enabled = !inAnim;
 			bpAnimPrec.Enabled = selAnim > 0;
 			bpAnimSuiv.Enabled = selAnim < projet.lstAnim.Count - 1;
@@ -106,7 +107,7 @@ namespace TriangulArt {
 			return ret;
 		}
 
-		private int CreateFrame(int i, bool setProjet, bool fusion, List<Datas> lstData = null, bool noDraw = false) {
+		private int CreateFrame(int i, bool setProjet, bool fusion, List<Datas> lstData = null, bool noDraw = false, bool addProjet = false) {
 			int nbTri = 0;
 			List<Triangle> lstTriangle = new List<Triangle>();
 			DisplayFrame(i, lstTriangle, noDraw);
@@ -139,19 +140,22 @@ namespace TriangulArt {
 			return nbTri;
 		}
 
-		private void Animate(bool setProjet = false, bool fusion = false) {
+		private void Animate(bool setProjet = false, bool fusion = false, bool add = false) {
 			GenereSeq();
-			if (setProjet && !fusion)
+			if (setProjet && !fusion && !add)
 				projet.lstData.Clear();
 
 			int nbTri = 0;
 			for (int i = 0; i < lstSeq.Count && !endAnim; i++)
-				nbTri += CreateFrame(i, setProjet, fusion);
+				nbTri += CreateFrame(i, setProjet, fusion, null, false, add);
 
 			AddInfo("Nbre de triangles de l'animation:" + nbTri.ToString());
 			if (setProjet) {
 				if (fusion)
 					AddInfo("Fusion de " + lstSeq.Count.ToString() + " images avec le projet en cours.");
+				else
+					if (add)
+					AddInfo("Ajout de " + lstSeq.Count.ToString() + " images au projet.");
 				else
 					AddInfo("Création projet avec " + lstSeq.Count.ToString() + " images.");
 			}
@@ -234,6 +238,17 @@ namespace TriangulArt {
 			lstInfo.Items.Clear();
 			Animate(true, true);
 			Enabled = true;
+		}
+
+
+		private void bpAddProjet_Click(object sender, EventArgs e) {
+			lstInfo.Items.Clear();
+			Enabled = false;
+			endAnim = false;
+			lstInfo.Items.Clear();
+			Animate(true, false, true);
+			Enabled = true;
+
 		}
 
 		private void BpReadAnim_Click(object sender, EventArgs e) {

@@ -4,7 +4,7 @@ namespace TriangulArt {
 	public partial class Triangle {
 		public int x1, y1, x2, y2, x3, y3;
 		public byte color;
-		private int pctFill = -1;
+		public int pctFill = -1;
 		public bool enabled = true;
 
 		public Triangle() {
@@ -19,7 +19,7 @@ namespace TriangulArt {
 			this.y3 = y3;
 			this.color = color;
 			this.enabled = enabled;
-			if ( bm == null)
+			if (bm == null)
 				Normalise();
 			else
 				Normalise(bm.Width, bm.Height);
@@ -47,14 +47,6 @@ namespace TriangulArt {
 									|| (x1 == t.x1 && y1 == t.y1 && x3 == t.x3 && y3 == t.y3)
 									|| (x1 == t.x2 && y1 == t.y2 && x2 == t.x3 && y2 == t.y3)
 									);
-		}
-
-		public int GetPctFill() {
-			return pctFill;
-		}
-
-		public void SetPctFill(int pct) {
-			pctFill = pct;
 		}
 
 		public void TriSommets() {
@@ -99,7 +91,7 @@ namespace TriangulArt {
 			return (x2 - x1) * (y3 - y1) - (x3 - x1) * (y2 - y1);
 		}
 
-		public bool IsInTriancle( int posx, int posy) {
+		public bool IsInTriancle(int posx, int posy) {
 			return IsLeft(x3, y3, x1, y1, posx, posy) * IsLeft(x3, y3, x1, y1, x2, y2) > 0 && IsLeft(x1, y1, x2, y2, posx, posy) * IsLeft(x1, y1, x2, y2, x3, y3) > 0 && IsLeft(x3, y3, x2, y2, posx, posy) * IsLeft(x3, y3, x2, y2, x1, y1) > 0;
 		}
 
@@ -152,7 +144,70 @@ namespace TriangulArt {
 						err2 -= dy2;
 					}
 				}
+				// Dessine les lignes de délimitation du triangle
+				if (bmCalc == null) {
+					RvbColor cFill = PaletteCpc.GetColorPal(this.color);
+					cFill.r = (byte)(255 - cFill.r);
+					cFill.b = (byte)(255 - cFill.b);
+					cFill.v = (byte)(255 - cFill.v);
+					bmpLock.DrawLine(x1, y1, x2, y2, cFill.GetColorArgb, false);
+					bmpLock.DrawLine(x2, y2, x3, y3, cFill.GetColorArgb, false);
+					bmpLock.DrawLine(x3, y3, x1, y1, cFill.GetColorArgb, false);
+				}
 			}
+		}
+
+		public void CountPctFillTriangle(DirectBitmap bmpLock, int c) {
+			int dx1 = x3 - x1;
+			int dy1 = y3 - y1;
+			int sgn1 = dx1 > 0 ? 1 : -1;
+			dx1 = Math.Abs(dx1);
+			int err1 = 0;
+			int dx2 = x2 - x1;
+			int dy2 = y2 - y1;
+			int sgn2 = dx2 > 0 ? 1 : -1;
+			dx2 = Math.Abs(dx2);
+			int err2 = 0;
+			int xl = x1;
+			int xr = x1;
+			if (y1 == y2)
+				xr = x2;
+
+			int nbFound = 0, nbPt = 0;
+			for (int y = y1; y < y3; y++) {
+				if (xr > xl) {
+					for (int x = 0; x <= xr - xl; x++) {
+						nbPt++;
+						if (bmpLock.GetPixel(xl + x, y) == c)
+							nbFound++;
+					}
+				}
+				else {
+					for (int x = 0; x <= xl - xr; x++) {
+						nbPt++;
+						if (bmpLock.GetPixel(xr + x, y) == c)
+							nbFound++;
+					}
+				}
+				err1 += dx1;
+				while (err1 >= dy1) {
+					xl += sgn1;
+					err1 -= dy1;
+				}
+				if (y == y2) { // On passe au tracé du second "demi-triangle"
+					dx2 = x3 - x2;
+					dy2 = y3 - y2;
+					sgn2 = dx2 > 0 ? 1 : -1;
+					dx2 = Math.Abs(dx2);
+					err2 = 0;
+				}
+				err2 += dx2;
+				while (err2 >= dy2) {
+					xr += sgn2;
+					err2 -= dy2;
+				}
+			}
+			pctFill = nbPt > 0 ? nbFound * 100 / nbPt : -1;
 		}
 	}
 }

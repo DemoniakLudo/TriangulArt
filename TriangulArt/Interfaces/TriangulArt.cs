@@ -69,23 +69,13 @@ namespace TriangulArt {
 		}
 
 		public void Reset() {
-			if (bmpFond.NbImg > 0) {
-				for (int y = 0; y < bmpFond.GetImage.Height; y++)
-					for (int x = 0; x < bmpFond.GetImage.Width; x++)
-						bmpLock.SetPixel(x, y, bmpFond.GetImage.GetPixel(x, y).ToArgb());
-			}
-			else
-				bmpLock.Fill(PaletteCpc.GetColorPal(0).GetColorArgb);
-
+			ResetNoRender();
 			Render();
 		}
 
 		public void ResetNoRender() {
-			if (bmpFond.NbImg > 0) {
-				for (int y = 0; y < bmpFond.GetImage.Height; y++)
-					for (int x = 0; x < bmpFond.GetImage.Width; x++)
-						bmpLock.SetPixel(x, y, bmpFond.GetImage.GetPixel(x, y).ToArgb());
-			}
+			if (bmpFond.NbImg > 0)
+				bmpLock.Copy(bmpFond.GetImage);
 			else
 				bmpLock.Fill(PaletteCpc.GetColorPal(0).GetColorArgb);
 		}
@@ -169,8 +159,8 @@ namespace TriangulArt {
 			for (int i = 0; i < projet.SelImage().lstTriangle.Count; i++) {
 				Triangle t = projet.SelImage().lstTriangle[i];
 				string inf = (t.enabled ? "" : "*") + i.ToString("000") + "\t(" + t.x1 + "," + t.y1 + ")\t\t(" + t.x2 + "," + t.y2 + ")\t\t(" + t.x3 + "," + t.y3 + ")\t\tcouleur:" + t.color.ToString("00");
-				if (t.GetPctFill() != -1) {
-					int f = t.GetPctFill();
+				int f = t.pctFill;
+				if (f != -1) {
 					inf += "\t" + f + "%";
 					if (f < 10)
 						inf += "====";
@@ -535,18 +525,19 @@ namespace TriangulArt {
 		}
 
 		private void DisplayMemory() {
+			if (chkAnim3D.Checked) {
+				int nbTri = 0, nbImg = projet.lstData.Count;
+				foreach (Datas d in projet.lstData)
+					nbTri += d.GetTriangleActif();
+
+				int mem = chkModePolice.Checked ? (nbTri * 6) + (nbImg * 2) : (nbTri * 7) + (nbImg * 6);
+				SetInfo("Nbre de triangles du projet:" + nbTri.ToString() + " - Mémoire utilisée:" + mem.ToString() + " octets");
+			}
+			else {
 			int nbTri = projet.SelImage().GetTriangleActif();
 			int mem = chkModePolice.Checked ? (nbTri * 6) + 2 : (nbTri * 7) + 6;
 			SetInfo("Nbre de triangles:" + nbTri.ToString() + " - Mémoire utilisée:" + mem + " octets");
 		}
-
-		private void DisplayMemoryProjet() {
-			int nbTri = 0, nbImg = projet.lstData.Count;
-			foreach (Datas d in projet.lstData) {
-				nbTri += d.GetTriangleActif();
-			}
-			int mem = chkModePolice.Checked ? (nbTri * 6) + (nbImg * 2) : (nbTri * 7) + (nbImg * 6);
-			SetInfo("Nbre de triangles du projet:" + nbTri.ToString() + " - Mémoire utilisée:" + mem.ToString() + " octets");
 		}
 
 		private void InitImage() {
@@ -559,7 +550,6 @@ namespace TriangulArt {
 			UpdatePalette();
 			FillTriangles();
 			DisplayList();
-			//Text = "TriangulArt - " + dlg.FileName;
 			switch (projet.SelImage().modeRendu) {
 				case 0:
 					rbStandard.Checked = true;
@@ -573,9 +563,6 @@ namespace TriangulArt {
 					rbVertical.Checked = true;
 					break;
 			}
-			if (chkAnim3D.Checked)
-				DisplayMemoryProjet();
-			else
 				DisplayMemory();
 		}
 
@@ -656,16 +643,15 @@ namespace TriangulArt {
 						PaletteCpc.Palette[pen] = d.palette[pen] = ed.ValColor;
 
 					DisplayList();
-					FillTriangles();
 					DisplayMemory();
 				}
 				else {
 					PaletteCpc.Palette[pen] = projet.SelImage().palette[pen] = ed.ValColor;
 					UpdatePalette();
+				}
 					FillTriangles();
 				}
 			}
-		}
 
 		private void ListTriangles_SelectedIndexChanged(object sender, EventArgs e) {
 			triSel = projet.SelImage().SelectTriangle(listTriangles.SelectedIndex);
@@ -1006,6 +992,9 @@ namespace TriangulArt {
 				try {
 					projet = (Projet)new XmlSerializer(typeof(Projet)).Deserialize(fileParam);
 					SetInfo("Lecture projet ok");
+					if (projet.lstAnim[0].nbImages > 0)
+						chkAnim3D.Checked = true;
+
 					if (projet.mode == 0)
 						rbMode0.Checked = true;
 					else
@@ -1015,7 +1004,7 @@ namespace TriangulArt {
 					bmpFond.ClearAll();
 					projet.SelectImage(0);
 					SetImageProjet();
-					this.Text = Path.GetFileName(dlg.FileName);
+					Text = Path.GetFileName(dlg.FileName);
 					bpGenPal.Visible = projet.cpcPlus;
 					comboNbColonnes.SelectedIndex = projet.tailleColonnes;
 					if (projet.lstAnim.Count == 0)
@@ -1037,7 +1026,7 @@ namespace TriangulArt {
 				try {
 					new XmlSerializer(typeof(Projet)).Serialize(file, projet);
 					SetInfo("Sauvegarde projet ok");
-					DisplayMemoryProjet();
+					DisplayMemory();
 				}
 				catch {
 					MessageBox.Show("Erreur sauvegarde projet...");
@@ -1262,41 +1251,20 @@ namespace TriangulArt {
 				else
 					projet.SelImage().palette[c] = col;
 
-				int r = ((col & 0x0F) * 17);
-				int v = (((col & 0xF00) >> 8) * 17);
-				int b = (((col & 0xF0) >> 4) * 17);
-				colors[c].BackColor = Color.FromArgb(r, v, b);
+				colors[c].BackColor = Color.FromArgb((col & 0x0F) * 17, ((col & 0xF00) >> 8) * 17, ((col & 0xF0) >> 4) * 17);
 				colors[c].Refresh();
 			}
 			UpdatePalette();
 		}
 
 		private void ComboNbColonnes_SelectedIndexChanged(object sender, EventArgs e) {
-			switch (comboNbColonnes.SelectedIndex) {
-				case 0:
-					pictureBox.Width = 768;
-					panel1.Left = 818;
-					Width = 1386;
+			int w = 192 * comboNbColonnes.SelectedIndex;
+			pictureBox.Width = 768 + w;
+			panel1.Left = 818 + w;
+			Width = 1386 + w;
 					for (int i = 0; i < 16; i++)
-						colors[i].Left = 774;
-					break;
+				colors[i].Left = 774 + w;
 
-				case 1:
-					pictureBox.Width = 960;
-					panel1.Left = 1010;
-					Width = 1578;
-					for (int i = 0; i < 16; i++)
-						colors[i].Left = 966;
-					break;
-
-				case 2:
-					pictureBox.Width = 1152;
-					panel1.Left = 1202;
-					Width = 1770;
-					for (int i = 0; i < 16; i++)
-						colors[i].Left = 1158;
-					break;
-			}
 			projet.tailleColonnes = (byte)comboNbColonnes.SelectedIndex;
 			SetNewMode(false);
 		}
