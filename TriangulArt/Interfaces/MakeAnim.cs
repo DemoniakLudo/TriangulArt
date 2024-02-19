@@ -8,8 +8,7 @@ using System.Xml.Serialization;
 
 namespace TriangulArt {
 	public partial class MakeAnim : Form {
-		private DirectBitmap bmpLock;
-		private DirectBitmap bmpCalc;
+		private DirectBitmap bmpLock, bmpCalc;
 		private Bitmap bmpFond;
 		private Projet projet;
 		private bool inAnim = false, endAnim = false;
@@ -61,6 +60,7 @@ namespace TriangulArt {
 			lstInfo.Items.Add(msg);
 			lstInfo.SelectedIndex = lstInfo.Items.Count - 1;
 		}
+
 		private void GenereSeq() {
 			// Génération séquence depuis expressions
 			lstSeq.Clear();
@@ -88,11 +88,8 @@ namespace TriangulArt {
 			lblNumImage.Text = "Image " + String.Format("{0,3}", index);
 			if (!noDraw) {
 				bmpLock.Fill(PaletteCpc.GetColorPal(0).GetColorArgb);
-				if (bmpFond != null) {
-					for (int y = 0; y < bmpFond.Height; y++)
-						for (int x = 0; x < bmpFond.Width; x++)
-							bmpLock.SetPixel(x, y, bmpFond.GetPixel(x, y).ToArgb());
-				}
+				if (bmpFond != null)
+					bmpLock.Copy(bmpFond);
 			}
 
 			if (lstTriangle != null)
@@ -224,8 +221,7 @@ namespace TriangulArt {
 		private void BpCreateProjet_Click(object sender, EventArgs e) {
 			lstInfo.Items.Clear();
 			Enabled = false;
-			endAnim = false;
-			inAnim = false;
+			endAnim = inAnim = false;
 			lstInfo.Items.Clear();
 			Animate(true);
 			Enabled = true;

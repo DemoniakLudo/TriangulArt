@@ -142,6 +142,7 @@ namespace TriangulArt {
 			}
 			else
 				MessageBox.Show("Les coordonnées sont invalides");
+
 			return null;
 		}
 
@@ -534,10 +535,10 @@ namespace TriangulArt {
 				SetInfo("Nbre de triangles du projet:" + nbTri.ToString() + " - Mémoire utilisée:" + mem.ToString() + " octets");
 			}
 			else {
-			int nbTri = projet.SelImage().GetTriangleActif();
-			int mem = chkModePolice.Checked ? (nbTri * 6) + 2 : (nbTri * 7) + 6;
-			SetInfo("Nbre de triangles:" + nbTri.ToString() + " - Mémoire utilisée:" + mem + " octets");
-		}
+				int nbTri = projet.SelImage().GetTriangleActif();
+				int mem = chkModePolice.Checked ? (nbTri * 6) + 2 : (nbTri * 7) + 6;
+				SetInfo("Nbre de triangles:" + nbTri.ToString() + " - Mémoire utilisée:" + mem + " octets");
+			}
 		}
 
 		private void InitImage() {
@@ -563,7 +564,7 @@ namespace TriangulArt {
 					rbVertical.Checked = true;
 					break;
 			}
-				DisplayMemory();
+			DisplayMemory();
 		}
 
 		private void MemImage() {
@@ -649,9 +650,10 @@ namespace TriangulArt {
 					PaletteCpc.Palette[pen] = projet.SelImage().palette[pen] = ed.ValColor;
 					UpdatePalette();
 				}
-					FillTriangles();
-				}
+				FillTriangles();
 			}
+			FillTriangles();
+		}
 
 		private void ListTriangles_SelectedIndexChanged(object sender, EventArgs e) {
 			triSel = projet.SelImage().SelectTriangle(listTriangles.SelectedIndex);
@@ -1262,7 +1264,7 @@ namespace TriangulArt {
 			pictureBox.Width = 768 + w;
 			panel1.Left = 818 + w;
 			Width = 1386 + w;
-					for (int i = 0; i < 16; i++)
+			for (int i = 0; i < 16; i++)
 				colors[i].Left = 774 + w;
 
 			projet.tailleColonnes = (byte)comboNbColonnes.SelectedIndex;
