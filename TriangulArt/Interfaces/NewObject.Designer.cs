@@ -72,6 +72,7 @@
 			this.label20 = new System.Windows.Forms.Label();
 			this.txbAltCoulHoriz = new System.Windows.Forms.TextBox();
 			this.txbAltCoulVert = new System.Windows.Forms.TextBox();
+			this.chkSphere12 = new System.Windows.Forms.CheckBox();
 			this.SuspendLayout();
 			// 
 			// rbVide
@@ -101,7 +102,7 @@
 			// 
 			// bpCreate
 			// 
-			this.bpCreate.Location = new System.Drawing.Point(274, 336);
+			this.bpCreate.Location = new System.Drawing.Point(315, 336);
 			this.bpCreate.Name = "bpCreate";
 			this.bpCreate.Size = new System.Drawing.Size(75, 23);
 			this.bpCreate.TabIndex = 2;
@@ -121,7 +122,7 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(176, 100);
+			this.label1.Location = new System.Drawing.Point(172, 100);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(59, 13);
 			this.label1.TabIndex = 4;
@@ -139,7 +140,7 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(176, 126);
+			this.label2.Location = new System.Drawing.Point(172, 126);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(38, 13);
 			this.label2.TabIndex = 4;
@@ -148,7 +149,7 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(284, 130);
+			this.label3.Location = new System.Drawing.Point(276, 130);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(75, 13);
 			this.label3.TabIndex = 4;
@@ -157,7 +158,7 @@
 			// txbDisqueDivision
 			// 
 			this.txbDisqueDivision.Enabled = false;
-			this.txbDisqueDivision.Location = new System.Drawing.Point(233, 126);
+			this.txbDisqueDivision.Location = new System.Drawing.Point(229, 126);
 			this.txbDisqueDivision.Name = "txbDisqueDivision";
 			this.txbDisqueDivision.Size = new System.Drawing.Size(45, 20);
 			this.txbDisqueDivision.TabIndex = 5;
@@ -190,7 +191,7 @@
 			// label4
 			// 
 			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(176, 152);
+			this.label4.Location = new System.Drawing.Point(172, 152);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(38, 13);
 			this.label4.TabIndex = 4;
@@ -208,7 +209,7 @@
 			// label5
 			// 
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(284, 154);
+			this.label5.Location = new System.Drawing.Point(276, 154);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(75, 13);
 			this.label5.TabIndex = 4;
@@ -217,7 +218,7 @@
 			// txbSoucoupeDivision
 			// 
 			this.txbSoucoupeDivision.Enabled = false;
-			this.txbSoucoupeDivision.Location = new System.Drawing.Point(233, 150);
+			this.txbSoucoupeDivision.Location = new System.Drawing.Point(229, 150);
 			this.txbSoucoupeDivision.Name = "txbSoucoupeDivision";
 			this.txbSoucoupeDivision.Size = new System.Drawing.Size(45, 20);
 			this.txbSoucoupeDivision.TabIndex = 5;
@@ -226,7 +227,7 @@
 			// label6
 			// 
 			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(425, 154);
+			this.label6.Location = new System.Drawing.Point(413, 154);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(54, 13);
 			this.label6.TabIndex = 4;
@@ -235,7 +236,7 @@
 			// txbSoucoupeHauteur1
 			// 
 			this.txbSoucoupeHauteur1.Enabled = false;
-			this.txbSoucoupeHauteur1.Location = new System.Drawing.Point(374, 150);
+			this.txbSoucoupeHauteur1.Location = new System.Drawing.Point(366, 150);
 			this.txbSoucoupeHauteur1.Name = "txbSoucoupeHauteur1";
 			this.txbSoucoupeHauteur1.Size = new System.Drawing.Size(45, 20);
 			this.txbSoucoupeHauteur1.TabIndex = 5;
@@ -244,7 +245,7 @@
 			// label7
 			// 
 			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(556, 154);
+			this.label7.Location = new System.Drawing.Point(540, 154);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(54, 13);
 			this.label7.TabIndex = 4;
@@ -253,7 +254,7 @@
 			// txbSoucoupeHauteur2
 			// 
 			this.txbSoucoupeHauteur2.Enabled = false;
-			this.txbSoucoupeHauteur2.Location = new System.Drawing.Point(505, 150);
+			this.txbSoucoupeHauteur2.Location = new System.Drawing.Point(493, 150);
 			this.txbSoucoupeHauteur2.Name = "txbSoucoupeHauteur2";
 			this.txbSoucoupeHauteur2.Size = new System.Drawing.Size(45, 20);
 			this.txbSoucoupeHauteur2.TabIndex = 5;
@@ -274,7 +275,7 @@
 			// label8
 			// 
 			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point(175, 51);
+			this.label8.Location = new System.Drawing.Point(171, 51);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(58, 13);
 			this.label8.TabIndex = 8;
@@ -292,7 +293,7 @@
 			// txbPyra4Hauteur
 			// 
 			this.txbPyra4Hauteur.Enabled = false;
-			this.txbPyra4Hauteur.Location = new System.Drawing.Point(257, 49);
+			this.txbPyra4Hauteur.Location = new System.Drawing.Point(253, 49);
 			this.txbPyra4Hauteur.Name = "txbPyra4Hauteur";
 			this.txbPyra4Hauteur.Size = new System.Drawing.Size(45, 20);
 			this.txbPyra4Hauteur.TabIndex = 10;
@@ -301,7 +302,7 @@
 			// label9
 			// 
 			this.label9.AutoSize = true;
-			this.label9.Location = new System.Drawing.Point(308, 53);
+			this.label9.Location = new System.Drawing.Point(300, 53);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(45, 13);
 			this.label9.TabIndex = 9;
@@ -411,7 +412,7 @@
 			// label14
 			// 
 			this.label14.AutoSize = true;
-			this.label14.Location = new System.Drawing.Point(175, 76);
+			this.label14.Location = new System.Drawing.Point(171, 76);
 			this.label14.Name = "label14";
 			this.label14.Size = new System.Drawing.Size(58, 13);
 			this.label14.TabIndex = 8;
@@ -420,7 +421,7 @@
 			// label15
 			// 
 			this.label15.AutoSize = true;
-			this.label15.Location = new System.Drawing.Point(308, 78);
+			this.label15.Location = new System.Drawing.Point(300, 78);
 			this.label15.Name = "label15";
 			this.label15.Size = new System.Drawing.Size(45, 13);
 			this.label15.TabIndex = 9;
@@ -429,7 +430,7 @@
 			// txbPyra3Hauteur
 			// 
 			this.txbPyra3Hauteur.Enabled = false;
-			this.txbPyra3Hauteur.Location = new System.Drawing.Point(257, 74);
+			this.txbPyra3Hauteur.Location = new System.Drawing.Point(253, 74);
 			this.txbPyra3Hauteur.Name = "txbPyra3Hauteur";
 			this.txbPyra3Hauteur.Size = new System.Drawing.Size(45, 20);
 			this.txbPyra3Hauteur.TabIndex = 10;
@@ -438,7 +439,7 @@
 			// txbDisqueHauteur
 			// 
 			this.txbDisqueHauteur.Enabled = false;
-			this.txbDisqueHauteur.Location = new System.Drawing.Point(374, 127);
+			this.txbDisqueHauteur.Location = new System.Drawing.Point(366, 127);
 			this.txbDisqueHauteur.Name = "txbDisqueHauteur";
 			this.txbDisqueHauteur.Size = new System.Drawing.Size(45, 20);
 			this.txbDisqueHauteur.TabIndex = 21;
@@ -447,7 +448,7 @@
 			// label16
 			// 
 			this.label16.AutoSize = true;
-			this.label16.Location = new System.Drawing.Point(425, 131);
+			this.label16.Location = new System.Drawing.Point(413, 131);
 			this.label16.Name = "label16";
 			this.label16.Size = new System.Drawing.Size(78, 13);
 			this.label16.TabIndex = 20;
@@ -468,7 +469,7 @@
 			// label17
 			// 
 			this.label17.AutoSize = true;
-			this.label17.Location = new System.Drawing.Point(176, 178);
+			this.label17.Location = new System.Drawing.Point(172, 178);
 			this.label17.Name = "label17";
 			this.label17.Size = new System.Drawing.Size(38, 13);
 			this.label17.TabIndex = 4;
@@ -486,7 +487,7 @@
 			// label18
 			// 
 			this.label18.AutoSize = true;
-			this.label18.Location = new System.Drawing.Point(284, 180);
+			this.label18.Location = new System.Drawing.Point(276, 180);
 			this.label18.Name = "label18";
 			this.label18.Size = new System.Drawing.Size(75, 13);
 			this.label18.TabIndex = 4;
@@ -495,7 +496,7 @@
 			// txbSphereDivision
 			// 
 			this.txbSphereDivision.Enabled = false;
-			this.txbSphereDivision.Location = new System.Drawing.Point(233, 176);
+			this.txbSphereDivision.Location = new System.Drawing.Point(229, 176);
 			this.txbSphereDivision.Name = "txbSphereDivision";
 			this.txbSphereDivision.Size = new System.Drawing.Size(45, 20);
 			this.txbSphereDivision.TabIndex = 5;
@@ -504,7 +505,7 @@
 			// label19
 			// 
 			this.label19.AutoSize = true;
-			this.label19.Location = new System.Drawing.Point(425, 179);
+			this.label19.Location = new System.Drawing.Point(413, 179);
 			this.label19.Name = "label19";
 			this.label19.Size = new System.Drawing.Size(78, 13);
 			this.label19.TabIndex = 4;
@@ -513,7 +514,7 @@
 			// label20
 			// 
 			this.label20.AutoSize = true;
-			this.label20.Location = new System.Drawing.Point(556, 179);
+			this.label20.Location = new System.Drawing.Point(540, 179);
 			this.label20.Name = "label20";
 			this.label20.Size = new System.Drawing.Size(73, 13);
 			this.label20.TabIndex = 4;
@@ -522,7 +523,7 @@
 			// txbAltCoulHoriz
 			// 
 			this.txbAltCoulHoriz.Enabled = false;
-			this.txbAltCoulHoriz.Location = new System.Drawing.Point(374, 175);
+			this.txbAltCoulHoriz.Location = new System.Drawing.Point(366, 175);
 			this.txbAltCoulHoriz.Name = "txbAltCoulHoriz";
 			this.txbAltCoulHoriz.Size = new System.Drawing.Size(45, 20);
 			this.txbAltCoulHoriz.TabIndex = 5;
@@ -531,17 +532,29 @@
 			// txbAltCoulVert
 			// 
 			this.txbAltCoulVert.Enabled = false;
-			this.txbAltCoulVert.Location = new System.Drawing.Point(505, 175);
+			this.txbAltCoulVert.Location = new System.Drawing.Point(493, 175);
 			this.txbAltCoulVert.Name = "txbAltCoulVert";
 			this.txbAltCoulVert.Size = new System.Drawing.Size(45, 20);
 			this.txbAltCoulVert.TabIndex = 5;
 			this.txbAltCoulVert.Text = "2";
 			// 
+			// chkSphere12
+			// 
+			this.chkSphere12.AutoSize = true;
+			this.chkSphere12.Enabled = false;
+			this.chkSphere12.Location = new System.Drawing.Point(632, 176);
+			this.chkSphere12.Name = "chkSphere12";
+			this.chkSphere12.Size = new System.Drawing.Size(43, 17);
+			this.chkSphere12.TabIndex = 23;
+			this.chkSphere12.Text = "1/2";
+			this.chkSphere12.UseVisualStyleBackColor = true;
+			// 
 			// NewObject
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(629, 371);
+			this.ClientSize = new System.Drawing.Size(678, 371);
+			this.Controls.Add(this.chkSphere12);
 			this.Controls.Add(this.rbSphere);
 			this.Controls.Add(this.txbDisqueHauteur);
 			this.Controls.Add(this.label16);
@@ -652,5 +665,6 @@
 		private System.Windows.Forms.Label label20;
 		private System.Windows.Forms.TextBox txbAltCoulHoriz;
 		private System.Windows.Forms.TextBox txbAltCoulVert;
+		private System.Windows.Forms.CheckBox chkSphere12;
 	}
 }

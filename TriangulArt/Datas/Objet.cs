@@ -337,14 +337,16 @@ namespace TriangulArt {
 			}
 		}
 
-		public void CreeSphere(double px, double py, double pz, double rayon, int division, int altHor, int altVer) {
+		public void CreeSphere(double px, double py, double pz, double rayon, int division, int altHor, int altVer, bool mask) {
 			int inc = 360 / division;
 			int nv = lstVertex.Count;
 			int numVertex = 0;
 			int numFace = 0;
 			byte col = 1;
 			double minDist = 1e-10;
+			int cnt = 0;
 			for (int t = -90; t < 90; t += inc) {
+				cnt++;
 				for (int p = 0; p < 360; p += inc) {
 					double x0 = Math.Cos(t * CONV) * Math.Cos(p * CONV) * rayon;
 					double y0 = Math.Cos(t * CONV) * Math.Sin(p * CONV) * rayon;
@@ -362,18 +364,21 @@ namespace TriangulArt {
 					lstVertex.Add(new Vertex(px + x1, py + y1, pz + z1));
 					lstVertex.Add(new Vertex(px + x2, py + y2, pz + z2));
 					lstVertex.Add(new Vertex(px + x3, py + y3, pz + z3));
-					if (Math.Abs(x1 - x2) > minDist || Math.Abs(y1 - y2) > minDist || Math.Abs(z1 - z2) > minDist)
-						lstFace.Add(new Face(numFace++, nv + numVertex, nv + numVertex + 1, nv + numVertex + 2, col));
+					if (!mask || ((cnt++) & 1) == 1) {
+						if (Math.Abs(x1 - x2) > minDist || Math.Abs(y1 - y2) > minDist || Math.Abs(z1 - z2) > minDist)
+							lstFace.Add(new Face(numFace++, nv + numVertex, nv + numVertex + 1, nv + numVertex + 2, col));
 
-					if (Math.Abs(x0 - x3) > minDist || Math.Abs(y0 - y3) > minDist || Math.Abs(z0 - z3) > minDist)
-						lstFace.Add(new Face(numFace++, nv + numVertex, nv + numVertex + 2, nv + numVertex + 3, col));
+						if (Math.Abs(x0 - x3) > minDist || Math.Abs(y0 - y3) > minDist || Math.Abs(z0 - z3) > minDist)
+							lstFace.Add(new Face(numFace++, nv + numVertex, nv + numVertex + 2, nv + numVertex + 3, col));
 
+						if (altHor != 1)
+							col = (byte)((col % altHor) + 1);
+					}
 					numVertex += 4;
-					if (altHor != 1)
-						col = (byte)((col % altHor) + 1);
 				}
-				if (altVer != 1)
-					col = (byte)((col % altVer) + 1);
+				if (!mask || (cnt & 1) == 1)
+					if (altVer != 1)
+						col = (byte)((col % altVer) + 1);
 			}
 		}
 		#endregion

@@ -13,7 +13,7 @@ namespace TriangulArt {
 			txbCubeArete.Enabled = txbDisqueDivision.Enabled = txbDisqueRayon.Enabled = txbDisqueHauteur.Enabled =
 			txbSoucoupeDivision.Enabled = txbSoucoupeHauteur1.Enabled = txbSoucoupeHauteur2.Enabled = txbSoucoupeRayon.Enabled =
 			 txbPyra3Base.Enabled = txbPyra3Hauteur.Enabled = txbPyra4Base.Enabled = txbPyra4Hauteur.Enabled =
-			 txbSphereDivision.Enabled = txbSphereRayon.Enabled = txbAltCoulHoriz.Enabled = txbAltCoulVert.Enabled = false;
+			 txbSphereDivision.Enabled = txbSphereRayon.Enabled = txbAltCoulHoriz.Enabled = txbAltCoulVert.Enabled = chkSphere12.Enabled = false;
 		}
 
 		private void RbCube_CheckedChanged(object sender, EventArgs e) {
@@ -21,38 +21,38 @@ namespace TriangulArt {
 			txbDisqueDivision.Enabled = txbDisqueRayon.Enabled = txbDisqueHauteur.Enabled =
 			txbSoucoupeDivision.Enabled = txbSoucoupeHauteur1.Enabled = txbSoucoupeHauteur2.Enabled = txbSoucoupeRayon.Enabled =
 			txbPyra3Base.Enabled = txbPyra3Hauteur.Enabled = txbPyra4Base.Enabled = txbPyra4Hauteur.Enabled =
-			txbSphereDivision.Enabled = txbSphereRayon.Enabled = txbAltCoulHoriz.Enabled = txbAltCoulVert.Enabled = false;
+			txbSphereDivision.Enabled = txbSphereRayon.Enabled = txbAltCoulHoriz.Enabled = txbAltCoulVert.Enabled = chkSphere12.Enabled = false;
 		}
 
 		private void RbDisque_CheckedChanged(object sender, EventArgs e) {
 			txbDisqueDivision.Enabled = txbDisqueRayon.Enabled = txbDisqueHauteur.Enabled = true;
 			txbCubeArete.Enabled = txbSoucoupeDivision.Enabled = txbSoucoupeHauteur1.Enabled = txbSoucoupeHauteur2.Enabled = txbSoucoupeRayon.Enabled =
 			txbPyra3Base.Enabled = txbPyra3Hauteur.Enabled = txbPyra4Base.Enabled = txbPyra4Hauteur.Enabled =
-			txbSphereDivision.Enabled = txbSphereRayon.Enabled = txbAltCoulHoriz.Enabled = txbAltCoulVert.Enabled = false;
+			txbSphereDivision.Enabled = txbSphereRayon.Enabled = txbAltCoulHoriz.Enabled = txbAltCoulVert.Enabled = chkSphere12.Enabled = false;
 		}
 
 		private void RbSoucoupe_CheckedChanged(object sender, EventArgs e) {
 			txbSoucoupeDivision.Enabled = txbSoucoupeHauteur1.Enabled = txbSoucoupeHauteur2.Enabled = txbSoucoupeRayon.Enabled = true;
 			txbCubeArete.Enabled = txbDisqueDivision.Enabled = txbDisqueRayon.Enabled = txbDisqueHauteur.Enabled =
 			txbPyra3Base.Enabled = txbPyra3Hauteur.Enabled = txbPyra4Base.Enabled = txbPyra4Hauteur.Enabled =
-			txbSphereDivision.Enabled = txbSphereRayon.Enabled = txbAltCoulHoriz.Enabled = txbAltCoulVert.Enabled = false;
+			txbSphereDivision.Enabled = txbSphereRayon.Enabled = txbAltCoulHoriz.Enabled = txbAltCoulVert.Enabled = chkSphere12.Enabled = false;
 		}
 
 		private void RbPyramide3Faces_CheckedChanged(object sender, EventArgs e) {
 			txbPyra3Base.Enabled = txbPyra3Hauteur.Enabled = true;
 			txbCubeArete.Enabled = txbDisqueDivision.Enabled = txbDisqueRayon.Enabled = txbPyra4Base.Enabled = txbPyra4Hauteur.Enabled =
 			txbSoucoupeDivision.Enabled = txbSoucoupeHauteur1.Enabled = txbSoucoupeHauteur2.Enabled = txbSoucoupeRayon.Enabled =
-			txbSphereDivision.Enabled = txbSphereRayon.Enabled = txbAltCoulHoriz.Enabled = txbAltCoulVert.Enabled = false;
+			txbSphereDivision.Enabled = txbSphereRayon.Enabled = txbAltCoulHoriz.Enabled = txbAltCoulVert.Enabled = chkSphere12.Enabled = false;
 		}
 
 		private void RbPyramide4Faces_CheckedChanged(object sender, EventArgs e) {
 			txbPyra4Base.Enabled = txbPyra4Hauteur.Enabled = true;
 			txbCubeArete.Enabled = txbDisqueDivision.Enabled = txbDisqueRayon.Enabled = txbDisqueHauteur.Enabled = txbPyra3Base.Enabled = txbPyra3Hauteur.Enabled =
 			txbSoucoupeDivision.Enabled = txbSoucoupeHauteur1.Enabled = txbSoucoupeHauteur2.Enabled = txbSoucoupeRayon.Enabled =
-			txbSphereDivision.Enabled = txbSphereRayon.Enabled = txbAltCoulHoriz.Enabled = txbAltCoulVert.Enabled = false;
+			txbSphereDivision.Enabled = txbSphereRayon.Enabled = txbAltCoulHoriz.Enabled = txbAltCoulVert.Enabled = chkSphere12.Enabled = false;
 		}
 		private void RbSphere_CheckedChanged(object sender, EventArgs e) {
-			txbSphereDivision.Enabled = txbSphereRayon.Enabled = txbAltCoulHoriz.Enabled = txbAltCoulVert.Enabled = true;
+			txbSphereDivision.Enabled = txbSphereRayon.Enabled = txbAltCoulHoriz.Enabled = txbAltCoulVert.Enabled = chkSphere12.Enabled = true;
 			txbCubeArete.Enabled = txbDisqueDivision.Enabled = txbDisqueRayon.Enabled = txbDisqueHauteur.Enabled = txbPyra3Base.Enabled = txbPyra3Hauteur.Enabled =
 			txbSoucoupeDivision.Enabled = txbSoucoupeHauteur1.Enabled = txbSoucoupeHauteur2.Enabled = txbSoucoupeRayon.Enabled =
 			txbPyra4Base.Enabled = txbPyra4Hauteur.Enabled = false;
@@ -115,7 +115,7 @@ namespace TriangulArt {
 				if (double.TryParse(txbSphereRayon.Text, out rayon) && int.TryParse(txbSphereDivision.Text, out division)
 					&& double.TryParse(txbAltCoulHoriz.Text, out param1) && double.TryParse(txbAltCoulVert.Text, out param2)
 					&& param1 >= 1 && param2 >= 1 && param1 <= 15 && param2 <= 15)
-					obj.CreeSphere(posx, posy, posz, rayon, division, (int)param1, (int)param2);
+					obj.CreeSphere(posx, posy, posz, rayon, division, (int)param1, (int)param2, chkSphere12.Checked);
 				else {
 					err = true;
 					MessageBox.Show("Les données pour la création d'une sphère sont invalide", "Erreur");
