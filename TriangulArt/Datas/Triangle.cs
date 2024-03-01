@@ -146,13 +146,11 @@ namespace TriangulArt {
 				}
 				// Dessine les lignes de délimitation du triangle
 				if (bmCalc == null) {
-					RvbColor cFill = PaletteCpc.GetColorPal(this.color);
-					cFill.r = (byte)(255 - cFill.r);
-					cFill.b = (byte)(255 - cFill.b);
-					cFill.v = (byte)(255 - cFill.v);
-					bmpLock.DrawLine(x1, y1, x2, y2, cFill.GetColorArgb, false);
-					bmpLock.DrawLine(x2, y2, x3, y3, cFill.GetColorArgb, false);
-					bmpLock.DrawLine(x3, y3, x1, y1, cFill.GetColorArgb, false);
+					RvbColor cFill = PaletteCpc.GetColorPal(color);
+					int lineCol = (255 - cFill.b) + ((255 - cFill.v) << 8) + ((255 - cFill.r) << 16) + (255 << 24);
+					bmpLock.DrawLine(x1, y1, x2, y2, lineCol, false);
+					bmpLock.DrawLine(x2, y2, x3, y3, lineCol, false);
+					bmpLock.DrawLine(x3, y3, x1, y1, lineCol, false);
 				}
 			}
 		}
