@@ -53,7 +53,6 @@
     <Compile Include="Datas\Sequence.cs" />
     <Compile Include="Datas\Triangle.cs" />
     <Compile Include="Datas\Vertex.cs" />
-    <Compile Include="Z80Emul\Desasm.cs" />
     <Compile Include="ImageFond.cs" />
     <Compile Include="Interfaces\CreateObject.cs">
       <SubType>Form</SubType>

@@ -63,6 +63,15 @@
 			this.txbPyra3Hauteur = new System.Windows.Forms.TextBox();
 			this.txbDisqueHauteur = new System.Windows.Forms.TextBox();
 			this.label16 = new System.Windows.Forms.Label();
+			this.rbSphere = new System.Windows.Forms.RadioButton();
+			this.label17 = new System.Windows.Forms.Label();
+			this.txbSphereRayon = new System.Windows.Forms.TextBox();
+			this.label18 = new System.Windows.Forms.Label();
+			this.txbSphereDivision = new System.Windows.Forms.TextBox();
+			this.label19 = new System.Windows.Forms.Label();
+			this.label20 = new System.Windows.Forms.Label();
+			this.txbAltCoulHoriz = new System.Windows.Forms.TextBox();
+			this.txbAltCoulVert = new System.Windows.Forms.TextBox();
 			this.SuspendLayout();
 			// 
 			// rbVide
@@ -444,11 +453,96 @@
 			this.label16.TabIndex = 20;
 			this.label16.Text = "Hauteur centre";
 			// 
+			// rbSphere
+			// 
+			this.rbSphere.AutoSize = true;
+			this.rbSphere.Location = new System.Drawing.Point(13, 173);
+			this.rbSphere.Name = "rbSphere";
+			this.rbSphere.Size = new System.Drawing.Size(59, 17);
+			this.rbSphere.TabIndex = 22;
+			this.rbSphere.TabStop = true;
+			this.rbSphere.Text = "Sphère";
+			this.rbSphere.UseVisualStyleBackColor = true;
+			this.rbSphere.CheckedChanged += new System.EventHandler(this.RbSphere_CheckedChanged);
+			// 
+			// label17
+			// 
+			this.label17.AutoSize = true;
+			this.label17.Location = new System.Drawing.Point(176, 178);
+			this.label17.Name = "label17";
+			this.label17.Size = new System.Drawing.Size(38, 13);
+			this.label17.TabIndex = 4;
+			this.label17.Text = "Rayon";
+			// 
+			// txbSphereRayon
+			// 
+			this.txbSphereRayon.Enabled = false;
+			this.txbSphereRayon.Location = new System.Drawing.Point(125, 174);
+			this.txbSphereRayon.Name = "txbSphereRayon";
+			this.txbSphereRayon.Size = new System.Drawing.Size(45, 20);
+			this.txbSphereRayon.TabIndex = 5;
+			this.txbSphereRayon.Text = "300";
+			// 
+			// label18
+			// 
+			this.label18.AutoSize = true;
+			this.label18.Location = new System.Drawing.Point(284, 180);
+			this.label18.Name = "label18";
+			this.label18.Size = new System.Drawing.Size(75, 13);
+			this.label18.TabIndex = 4;
+			this.label18.Text = "Nbre Divisions";
+			// 
+			// txbSphereDivision
+			// 
+			this.txbSphereDivision.Enabled = false;
+			this.txbSphereDivision.Location = new System.Drawing.Point(233, 176);
+			this.txbSphereDivision.Name = "txbSphereDivision";
+			this.txbSphereDivision.Size = new System.Drawing.Size(45, 20);
+			this.txbSphereDivision.TabIndex = 5;
+			this.txbSphereDivision.Text = "12";
+			// 
+			// label19
+			// 
+			this.label19.AutoSize = true;
+			this.label19.Location = new System.Drawing.Point(425, 179);
+			this.label19.Name = "label19";
+			this.label19.Size = new System.Drawing.Size(78, 13);
+			this.label19.TabIndex = 4;
+			this.label19.Text = "Alt. coul. Horiz.";
+			// 
+			// label20
+			// 
+			this.label20.AutoSize = true;
+			this.label20.Location = new System.Drawing.Point(556, 179);
+			this.label20.Name = "label20";
+			this.label20.Size = new System.Drawing.Size(73, 13);
+			this.label20.TabIndex = 4;
+			this.label20.Text = "Alt. coul. Vert.";
+			// 
+			// txbAltCoulHoriz
+			// 
+			this.txbAltCoulHoriz.Enabled = false;
+			this.txbAltCoulHoriz.Location = new System.Drawing.Point(374, 175);
+			this.txbAltCoulHoriz.Name = "txbAltCoulHoriz";
+			this.txbAltCoulHoriz.Size = new System.Drawing.Size(45, 20);
+			this.txbAltCoulHoriz.TabIndex = 5;
+			this.txbAltCoulHoriz.Text = "2";
+			// 
+			// txbAltCoulVert
+			// 
+			this.txbAltCoulVert.Enabled = false;
+			this.txbAltCoulVert.Location = new System.Drawing.Point(505, 175);
+			this.txbAltCoulVert.Name = "txbAltCoulVert";
+			this.txbAltCoulVert.Size = new System.Drawing.Size(45, 20);
+			this.txbAltCoulVert.TabIndex = 5;
+			this.txbAltCoulVert.Text = "2";
+			// 
 			// NewObject
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(622, 371);
+			this.ClientSize = new System.Drawing.Size(629, 371);
+			this.Controls.Add(this.rbSphere);
 			this.Controls.Add(this.txbDisqueHauteur);
 			this.Controls.Add(this.label16);
 			this.Controls.Add(this.chkYorient);
@@ -470,14 +564,22 @@
 			this.Controls.Add(this.txbPyra4Base);
 			this.Controls.Add(this.rbPyramide3Faces);
 			this.Controls.Add(this.rbPyramide4Faces);
+			this.Controls.Add(this.txbAltCoulVert);
 			this.Controls.Add(this.txbSoucoupeHauteur2);
+			this.Controls.Add(this.txbAltCoulHoriz);
+			this.Controls.Add(this.label20);
 			this.Controls.Add(this.txbSoucoupeHauteur1);
 			this.Controls.Add(this.label7);
+			this.Controls.Add(this.txbSphereDivision);
+			this.Controls.Add(this.label19);
 			this.Controls.Add(this.txbSoucoupeDivision);
 			this.Controls.Add(this.label6);
 			this.Controls.Add(this.txbDisqueDivision);
+			this.Controls.Add(this.label18);
 			this.Controls.Add(this.label5);
 			this.Controls.Add(this.label3);
+			this.Controls.Add(this.txbSphereRayon);
+			this.Controls.Add(this.label17);
 			this.Controls.Add(this.txbSoucoupeRayon);
 			this.Controls.Add(this.label4);
 			this.Controls.Add(this.txbDisqueRayon);
@@ -541,5 +643,14 @@
 		private System.Windows.Forms.TextBox txbPyra3Hauteur;
 		private System.Windows.Forms.TextBox txbDisqueHauteur;
 		private System.Windows.Forms.Label label16;
+		private System.Windows.Forms.RadioButton rbSphere;
+		private System.Windows.Forms.Label label17;
+		private System.Windows.Forms.TextBox txbSphereRayon;
+		private System.Windows.Forms.Label label18;
+		private System.Windows.Forms.TextBox txbSphereDivision;
+		private System.Windows.Forms.Label label19;
+		private System.Windows.Forms.Label label20;
+		private System.Windows.Forms.TextBox txbAltCoulHoriz;
+		private System.Windows.Forms.TextBox txbAltCoulVert;
 	}
 }

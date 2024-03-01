@@ -22,42 +22,6 @@ static class VGA {
 	static private DirectBitmap source = null;
 	private static readonly int[][][] TabPoints = new int[4][][];
 	static private int[] tabCoul = new int[32];
-	static private readonly int[] RgbCPCColor =
-			{
-				//RRVVBB
-				0x6E7D6B,                   // Blanc            (13) -> #40
-				0x6E7B6D,                   // Blanc            (13) -> #41
-				0x00F36B,                   // Vert Marin       (19) -> #42
-				0xF3F36D,                   // Jaune Pastel     (25) -> #43
-				0x00026B,                   // Bleu              (1) -> #44
-				0xF00268,                   // Pourpre           (7) -> #45
-				0x007868,                   // Turquoise        (10) -> #46
-				0xF37D6B,                   // Rose             (16) -> #47
-				0xF30268,                   // Pourpre           (7) -> #48
-				0xF3F36B,                   // Jaune pastel     (25) -> #49
-				0xF3F30D,                   // Jaune vif        (24) -> #4A
-				0xFFF3F9,                   // Blanc Brillant   (26) -> #4B
-				0xF30506,                   // Rouge vif         (6) -> #4C
-				0xF302F4,                   // Magenta vif       (8) -> #4D
-				0xF37D0D,                   // Orange           (15) -> #4E
-				0xFA80F9,                   // Magenta pastel   (17) -> #4F
-				0x000268,                   // Bleu              (1) -> #50
-				0x02F36B,                   // Vert Marin       (19) -> #51
-				0x02F001,                   // Vert vif         (18) -> #52
-				0x0FF3F2,                   // Turquoise vif    (20) -> #53
-				0x000201,                   // Noir              (0) -> #54
-				0x0C02F4,                   // Bleu vif          (2) -> #55
-				0x027801,                   // Vert              (9) -> #56
-				0x0C7BF4,                   // Bleu ciel        (11) -> #57
-				0x690268,                   // Magenta           (4) -> #58
-				0x71F36B,                   // Vert pastel      (22) -> #59
-				0x71F504,                   // Vert citron      (21) -> #5A
-				0x71F3F4,                   // Turquoise pastel (23) -> #5B
-				0x6C0201,                   // Rouge             (3) -> #5C
-				0x6C02F2,                   // Mauve             (5) -> #5D
-				0x6E7B01,                   // Jaune            (12) -> #5E
-				0x6E7BF6                    // Bleu pastel      (14) -> #5F
-				};
 
 	static void SetPeekMode() {
 		for (int b = 0; b < 8; b++) {
@@ -90,7 +54,7 @@ static class VGA {
 	static public void SyncColor() {
 		if (MemoColor != 0xFF) {
 			if (DelayGa == 0) {
-				tabCoul[PenSelect] = RgbCPCColor[MemoColor];
+				tabCoul[PenSelect] = PaletteCpc.RgbCPC[MemoColor].GetColorArgb;
 				MemoColor = 0xFF;
 			}
 			else

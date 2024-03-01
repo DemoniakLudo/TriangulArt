@@ -336,6 +336,46 @@ namespace TriangulArt {
 				lstFace.Add(new Face(numFace++, nv + v1, nv + v2, nv + numVertex + 1, (byte)(1 + (i + 2) % 4)));
 			}
 		}
+
+		public void CreeSphere(double px, double py, double pz, double rayon, int division, int altHor, int altVer) {
+			int inc = 360 / division;
+			int nv = lstVertex.Count;
+			int numVertex = 0;
+			int numFace = 0;
+			byte col = 1;
+			double minDist = 1e-10;
+			for (int t = -90; t < 90; t += inc) {
+				for (int p = 0; p < 360; p += inc) {
+					double x0 = Math.Cos(t * CONV) * Math.Cos(p * CONV) * rayon;
+					double y0 = Math.Cos(t * CONV) * Math.Sin(p * CONV) * rayon;
+					double z0 = Math.Sin(t * CONV) * rayon;
+					double x1 = Math.Cos((t + inc) * CONV) * Math.Cos(p * CONV) * rayon;
+					double y1 = Math.Cos((t + inc) * CONV) * Math.Sin(p * CONV) * rayon;
+					double z1 = Math.Sin((t + inc) * CONV) * rayon;
+					double x2 = Math.Cos((t + inc) * CONV) * Math.Cos((p + inc) * CONV) * rayon;
+					double y2 = Math.Cos((t + inc) * CONV) * Math.Sin((p + inc) * CONV) * rayon;
+					double z2 = Math.Sin((t + inc) * CONV) * rayon;
+					double x3 = Math.Cos(t * CONV) * Math.Cos((p + inc) * CONV) * rayon;
+					double y3 = Math.Cos(t * CONV) * Math.Sin((p + inc) * CONV) * rayon;
+					double z3 = Math.Sin(t * CONV) * rayon;
+					lstVertex.Add(new Vertex(px + x0, py + y0, pz + z0));
+					lstVertex.Add(new Vertex(px + x1, py + y1, pz + z1));
+					lstVertex.Add(new Vertex(px + x2, py + y2, pz + z2));
+					lstVertex.Add(new Vertex(px + x3, py + y3, pz + z3));
+					if (Math.Abs(x1 - x2) > minDist || Math.Abs(y1 - y2) > minDist || Math.Abs(z1 - z2) > minDist)
+						lstFace.Add(new Face(numFace++, nv + numVertex, nv + numVertex + 1, nv + numVertex + 2, col));
+
+					if (Math.Abs(x0 - x3) > minDist || Math.Abs(y0 - y3) > minDist || Math.Abs(z0 - z3) > minDist)
+						lstFace.Add(new Face(numFace++, nv + numVertex, nv + numVertex + 2, nv + numVertex + 3, col));
+
+					numVertex += 4;
+					if (altHor != 1)
+						col = (byte)((col % altHor) + 1);
+				}
+				if (altVer != 1)
+					col = (byte)((col % altVer) + 1);
+			}
+		}
 		#endregion
 
 		#region Lecture/Sauvegarde objet

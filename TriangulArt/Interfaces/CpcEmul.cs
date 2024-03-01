@@ -63,7 +63,6 @@ namespace TriangulArt {
 			0x11,0x33,0x22,0x00,0x51,0xF3,0xA2,0x00,0x15,0x3F,0x2A,0x00,0x55,0xFF,0xAA,0x00};
 
 		private bool finMain = false;
-		private Desasm desasm = new Desasm();
 		private int tailleColonnes;
 		private List<Datas> lstData;
 
@@ -87,7 +86,6 @@ namespace TriangulArt {
 		}
 
 		private void InitCpc() {
-			desasm.Init();
 			Z80.Init();
 			PPI.Init();
 			CRTC.Init();
@@ -157,24 +155,6 @@ namespace TriangulArt {
 					while (curTime - oldTime < nbCycles);
 					oldTime = curTime;
 					nbCycles = 0;
-					string str = "";
-					desasm.SetLigne(Z80.PC.Word, ref str);
-					Instr.Text = str;
-					AF.Text = Z80.AF.Word.ToString("X4");
-					BC.Text = Z80.BC.Word.ToString("X4");
-					DE.Text = Z80.DE.Word.ToString("X4");
-					HL.Text = Z80.HL.Word.ToString("X4");
-					AF_.Text = Z80._AF.Word.ToString("X4");
-					BC_.Text = Z80._BC.Word.ToString("X4");
-					DE_.Text = Z80._DE.Word.ToString("X4");
-					HL_.Text = Z80._HL.Word.ToString("X4");
-					PC.Text = Z80.PC.Word.ToString("X4");
-					SP.Text = Z80.SP.Word.ToString("X4");
-					IX.Text = Z80.IX.Word.ToString("X4");
-					IY.Text = Z80.IY.Word.ToString("X4");
-					I.Text = Z80.IR.High.ToString("X2");
-					R.Text = Z80.IR.Low.ToString("X2");
-					IM.Text = Z80.InterruptMode.ToString();
 				}
 			}
 		}

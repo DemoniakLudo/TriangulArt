@@ -6,7 +6,7 @@ public class PaletteCpc {
 	public const int Lum0 = 0x00;
 	public const int Lum1 = 0x66;
 	public const int Lum2 = 0xFF;
-	static public RvbColor[] RgbCPC = {
+	static public readonly RvbColor[] RgbCPC = {
 							new RvbColor( Lum0, Lum0, Lum0),
 							new RvbColor( Lum0, Lum0, Lum1),
 							new RvbColor( Lum0, Lum0, Lum2),
@@ -33,10 +33,15 @@ public class PaletteCpc {
 							new RvbColor( Lum1, Lum2, Lum2),
 							new RvbColor( Lum2, Lum2, Lum0),
 							new RvbColor( Lum2, Lum2, Lum1),
-							new RvbColor( Lum2, Lum2, Lum2)
+							new RvbColor( Lum2, Lum2, Lum2),
+							new RvbColor( Lum1, Lum2, Lum2),
+							new RvbColor( Lum1, Lum0, Lum1),
+							new RvbColor( Lum1, Lum0, Lum2),
+							new RvbColor( Lum1, Lum1, Lum0),
+							new RvbColor( Lum1, Lum1, Lum2)
 							};
 
-	static public string CpcVGA = "TDU\\X]LEMVFW^@_NGORBSZY[JCK";
+	static public readonly string CpcVGA = "TDU\\X]LEMVFW^@_NGORBSZY[JCK";
 
 	static public bool cpcPlus = false;
 
