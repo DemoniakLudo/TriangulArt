@@ -678,7 +678,7 @@ namespace TriangulArt {
 		}
 
 		private void BpRedraw_Click(object sender, EventArgs e) {
-			projet.SelImage().CleanUp(bmpLock.Width, true);
+			projet.SelImage().CleanUp(bmpLock.Width, projet.tailleColonnes == 64 ? 256 : projet.tailleColonnes == 80 ? 200 : 168, true);
 			DisplayList(true);
 			FillTriangles();
 		}
@@ -776,7 +776,7 @@ namespace TriangulArt {
 			OpenFileDialog dlg = new OpenFileDialog { Filter = "Fichier image (*.bmp, *.gif, *.png, *.jpg,*.jpeg)|*.bmp;*.gif;*.png;*.jpg;*.jpeg;" };
 			if (dlg.ShowDialog() == DialogResult.OK) {
 				using (Bitmap b = new Bitmap(dlg.FileName)) {
-					if (b.Width <= bmpLock.Width && b.Height <= bmpLock.Height) {
+					if ((b.Width <= bmpLock.Width || b.Width >> 1 <= bmpLock.Width) && b.Height <= bmpLock.Height) {
 						FileStream fileScr = new FileStream(dlg.FileName, FileMode.Open, FileAccess.Read);
 						byte[] tabBytes = new byte[fileScr.Length];
 						fileScr.Read(tabBytes, 0, tabBytes.Length);
@@ -917,7 +917,7 @@ namespace TriangulArt {
 		private void BpRapproche_Click(object sender, EventArgs e) {
 			projet.SelImage().Rapproche(4);
 			projet.SelImage().ToQuadri();
-			projet.SelImage().CleanUp(bmpLock.Width);
+			projet.SelImage().CleanUp(bmpLock.Width, projet.tailleColonnes == 64 ? 256 : projet.tailleColonnes == 80 ? 200 : 168);
 			DisplayList();
 			FillTriangles();
 		}
@@ -965,7 +965,7 @@ namespace TriangulArt {
 
 		private void BpClean_Click(object sender, EventArgs e) {
 			int nbAvant = projet.SelImage().GetTriangleActif();
-			projet.SelImage().CleanUp(bmpLock.Width);
+			projet.SelImage().CleanUp(bmpLock.Width, projet.tailleColonnes == 64 ? 256 : projet.tailleColonnes == 80 ? 200 : 168);
 			int nbApres = projet.SelImage().GetTriangleActif();
 			if (nbApres != nbAvant)
 				SetInfo("Nbre de triangles optimisés : " + (nbAvant - nbApres).ToString());
@@ -1156,7 +1156,7 @@ namespace TriangulArt {
 			Enabled = false;
 			if (MessageBox.Show("Confirmez l'optimsation globale et la suppression des triangles inactif ?", "Confirmation suppression", MessageBoxButtons.YesNo) == DialogResult.Yes) {
 				int nbAvant = 0, nbApres = 0;
-				projet.Clean(bmpLock.Width, ref nbAvant, ref nbApres);
+				projet.Clean(bmpLock.Width, projet.tailleColonnes == 64 ? 256 : projet.tailleColonnes == 80 ? 200 : 168, ref nbAvant, ref nbApres);
 				for (int k = 0; k < projet.lstData.Count; k++)
 					for (int i = projet.lstData[k].lstTriangle.Count - 1; i >= 0; i--)
 						if (!projet.lstData[k].lstTriangle[i].enabled)
@@ -1164,7 +1164,7 @@ namespace TriangulArt {
 
 
 				int oldAvant = 0;
-				projet.Clean(bmpLock.Width, ref oldAvant, ref nbApres);
+				projet.Clean(bmpLock.Width, projet.tailleColonnes == 64 ? 256 : projet.tailleColonnes == 80 ? 200 : 168, ref oldAvant, ref nbApres);
 				if (nbApres != nbAvant)
 					SetInfo("Nbre de triangles optimisés : " + (nbAvant - nbApres).ToString());
 				else
@@ -1335,7 +1335,7 @@ namespace TriangulArt {
 			triSel = projet.SelImage().SelectTriangle(listTriangles.SelectedIndex);
 			if (triSel != null) {
 				triSel.enabled = !triSel.enabled;
-				projet.SelImage().CleanUp(bmpLock.Width, true);
+				projet.SelImage().CleanUp(bmpLock.Width, projet.tailleColonnes == 64 ? 256 : projet.tailleColonnes == 80 ? 200 : 168, true);
 				DisplayList();
 				FillTriangles();
 			}

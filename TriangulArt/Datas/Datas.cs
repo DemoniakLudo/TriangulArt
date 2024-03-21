@@ -202,7 +202,7 @@ namespace TriangulArt {
 				MoveTriangle(t, deplX, deplY, maxWidth);
 		}
 
-		public void CleanUp(int maxWidth, bool onlyCalc = false) {
+		public void CleanUp(int maxWidth, int maxHeight, bool onlyCalc = false) {
 			int nbTri = lstTriangle.Count;
 			DirectBitmap bmpLock = new DirectBitmap(maxWidth, 256); // Bitmap temporaire pour tracé des triangles
 			for (int i = 0; i < nbTri; i++)
@@ -213,7 +213,7 @@ namespace TriangulArt {
 				for (int i = 0; i < nbTri; i++) {
 					bool found = false;
 					for (int x = 0; x < maxWidth; x++)
-						for (int y = 0; y < 256; y++)
+						for (int y = 0; y < maxHeight; y++)
 							if (bmpLock.GetPixel(x, y) == i + 1) { // Vérifier image contient au moins un pixel de la couleur i+1
 								found = true;
 								break;

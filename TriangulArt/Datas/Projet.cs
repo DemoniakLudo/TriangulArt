@@ -55,11 +55,11 @@ namespace TriangulArt {
 				selData--;
 		}
 
-		public void Clean(int width, ref int nbAvant, ref int nbApres) {
+		public void Clean(int width, int height, ref int nbAvant, ref int nbApres) {
 			nbAvant = nbApres = 0;
 			foreach (Datas d in lstData) {
 				nbAvant += d.GetTriangleActif();
-				d.CleanUp(width);
+				d.CleanUp(width, height);
 				nbApres += d.GetTriangleActif();
 			}
 		}
