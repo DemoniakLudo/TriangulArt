@@ -62,14 +62,14 @@ public class DirectBitmap : IDisposable {
 	}
 
 	public int GetPixel(int x, int y) {
-		return (int)(tabBits[y < Height ? (x + (y * Width)) : 0] & 0xFFFFFF);
+		return (int)(tabBits[x >= 0 && y >= 0 && y < Height ? (x + (y * Width)) : 0] & 0xFFFFFF);
 	}
 
 	public void SetHorLine(int pixelX, int pixelY, int lineLength, int c, bool increment = false) {
 		uint color = (uint)c | 0xFF000000;
 		int index = pixelX + (pixelY * Width);
 		for (; lineLength-- > 0;) {
-			if (index < Width * Height)
+			if (index >= 0 && index < Width * Height)
 				tabBits[index] = color;
 
 			index++;

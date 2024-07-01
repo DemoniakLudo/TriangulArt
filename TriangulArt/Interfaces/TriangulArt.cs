@@ -155,7 +155,7 @@ namespace TriangulArt {
 		}
 
 		private void DisplayList(bool withCheck = false) {
-			int maxHeight = comboNbColonnes.SelectedIndex == 0 ? 255 : comboNbColonnes.SelectedIndex == 1 ? 199 : 167;
+			int maxHeight = comboNbColonnes.SelectedIndex == 0 ? 255 : comboNbColonnes.SelectedIndex == 1 ? 200 : 168;
 			listTriangles.Items.Clear();
 			for (int i = 0; i < projet.SelImage().lstTriangle.Count; i++) {
 				Triangle t = projet.SelImage().lstTriangle[i];
@@ -855,9 +855,9 @@ namespace TriangulArt {
 			if (int.TryParse(txbTrX.Text, out deplX) && int.TryParse(txbTrY.Text, out deplY)) {
 				if (rbDepImage.Checked) {
 					if (chkAnim3D.Checked) {
-						foreach (Datas d in projet.lstData) {
-							d.DeplaceImage(deplX, deplY, bmpLock.Width);
-						}
+						for (int i = projet.selData; i < projet.lstData.Count; i++)
+							projet.lstData[i].DeplaceImage(deplX, deplY, bmpLock.Width);
+
 						DisplayList();
 						FillTriangles();
 						DisplayMemory();

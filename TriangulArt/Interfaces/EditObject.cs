@@ -417,6 +417,26 @@ namespace TriangulArt {
 
 		private void BpSupPtsNotUse_Click(object sender, EventArgs e) {
 			if (MessageBox.Show("Confirmer la supperssion des points inutilisés", "", MessageBoxButtons.YesNo) == DialogResult.Yes) {
+				// Remplacer les points identiques
+				for (int i = 0; i < objet.lstVertex.Count - 1; i++) {
+					for (int j = i + 1; j < objet.lstVertex.Count; j++) {
+						Vertex v1 = objet.lstVertex[i];
+						Vertex v2 = objet.lstVertex[j];
+						if (Math.Abs(v1.px - v2.px) < 0.01 && Math.Abs(v1.py - v2.py) < 0.01 && Math.Abs(v1.pz - v2.pz) < 0.01) {
+							for (int f = 0; f < objet.lstFace.Count; f++) {
+								if (objet.lstFace[f].a == j)
+									objet.lstFace[f].a = i;
+
+								if (objet.lstFace[f].b == j)
+									objet.lstFace[f].b = i;
+
+								if (objet.lstFace[f].c == j)
+									objet.lstFace[f].c = i;
+							}
+						}
+					}
+				}
+				// Vérifier points liés à aucune faces
 				for (int v = objet.lstVertex.Count - 1; v >= 0; v--) {
 					bool errFace = false;
 					for (int i = 0; i < objet.lstFace.Count; i++) {

@@ -237,6 +237,11 @@ namespace TriangulArt {
 			for (int i = 0; i < nbTri; i++)
 				lstTriangle[i].CountPctFillTriangle(bmpLock, i + 1);
 
+			// ### Supprime les pourcentages inférieur à 5 ###
+		//	for (int i = 0; i < nbTri; i++)
+		//		if (lstTriangle[i].pctFill <= 5)
+		//			lstTriangle[i].enabled = false;
+
 			bmpLock.Dispose();
 		}
 

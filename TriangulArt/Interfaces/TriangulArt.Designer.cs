@@ -1217,7 +1217,6 @@
 			this.Controls.Add(this.pictureBox);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.MaximizeBox = false;
-			this.MinimizeBox = false;
 			this.Name = "TriangulArt";
 			this.Text = "TriangulArt";
 			this.groupBox1.ResumeLayout(false);

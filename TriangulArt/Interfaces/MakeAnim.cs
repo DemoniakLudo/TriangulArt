@@ -127,6 +127,18 @@ namespace TriangulArt {
 						}
 				}
 				Triangle tr = lstTriangle[t];
+				if (tr.x1 < 0 && tr.x2 < 0 && tr.x3 < 0)
+					triangleOk = false;
+				else {
+					if (tr.x1 < 0)
+						tr.x1 = 0;
+
+					if (tr.x2 < 0)
+						tr.x2 = 0;
+
+					if (tr.x3 < 0)
+						tr.x3 = 0;
+				}
 				tr.enabled = triangleOk;
 				if (setProjet)
 					data.lstTriangle.Add(new Triangle(tr.x1, tr.y1, tr.x2, tr.y2, tr.x3, tr.y3, tr.color, null, tr.enabled));

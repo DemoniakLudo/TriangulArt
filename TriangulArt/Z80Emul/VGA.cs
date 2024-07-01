@@ -152,7 +152,7 @@ static class VGA {
 		for (int i = 0; i < 16; i++) {
 			char c = PaletteCpc.CpcVGA[PaletteCpc.Palette[i]];
 			Write(i);
-			Write((int)c);
+			Write(c);
 			SyncColor();
 		}
 		Write(0x8C);

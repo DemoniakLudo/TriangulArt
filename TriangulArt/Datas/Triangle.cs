@@ -33,12 +33,12 @@ namespace TriangulArt {
 		}
 
 		public void Normalise(int maxX, int maxY) {
-			x1 = Math.Max(Math.Min(x1, maxX - 1), 0);
-			y1 = Math.Max(Math.Min(y1, maxY - 1), 0);
-			x2 = Math.Max(Math.Min(x2, maxX - 1), 0);
-			y2 = Math.Max(Math.Min(y2, maxY - 1), 0);
-			x3 = Math.Max(Math.Min(x3, maxX - 1), 0);
-			y3 = Math.Max(Math.Min(y3, maxY - 1), 0);
+			x1 = Math.Max(Math.Min(x1, maxX - 1), -maxX);
+			y1 = Math.Max(Math.Min(y1, maxY - 1), -maxY);
+			x2 = Math.Max(Math.Min(x2, maxX - 1), -maxX);
+			y2 = Math.Max(Math.Min(y2, maxY - 1), -maxY);
+			x3 = Math.Max(Math.Min(x3, maxX - 1), -maxX);
+			y3 = Math.Max(Math.Min(y3, maxY - 1), -maxY);
 		}
 
 		public bool EquPoly(Triangle t) {
