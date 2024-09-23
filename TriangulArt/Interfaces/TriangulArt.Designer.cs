@@ -295,10 +295,12 @@
 			// 
 			// listTriangles
 			// 
+			this.listTriangles.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.listTriangles.FormattingEnabled = true;
+			this.listTriangles.ItemHeight = 16;
 			this.listTriangles.Location = new System.Drawing.Point(3, 302);
 			this.listTriangles.Name = "listTriangles";
-			this.listTriangles.Size = new System.Drawing.Size(504, 238);
+			this.listTriangles.Size = new System.Drawing.Size(504, 228);
 			this.listTriangles.TabIndex = 20;
 			this.listTriangles.SelectedIndexChanged += new System.EventHandler(this.ListTriangles_SelectedIndexChanged);
 			this.listTriangles.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ListTriangles_MouseDoubleClick);

@@ -100,5 +100,25 @@ namespace TriangulArt {
 
 			GenereAsm.CloseAsm(sw);
 		}
+
+
+		public void Import(string fileName, bool clearAll) {
+			if (clearAll)
+				Clear();
+
+			StreamReader rw = new StreamReader(fileName);
+			Datas d = AddData();
+			string l;
+			do {
+				l = rw.ReadLine();
+				if (l != null) {
+				bool newFrame =	d.AnalyseLigne(l);
+					if (newFrame)
+						d = AddData();
+				}
+			}
+			while (l != null);
+			rw.Close();
+		}
 	}
 }

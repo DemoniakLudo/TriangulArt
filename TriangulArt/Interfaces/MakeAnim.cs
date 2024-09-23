@@ -127,17 +127,35 @@ namespace TriangulArt {
 						}
 				}
 				Triangle tr = lstTriangle[t];
-				if (tr.x1 < 0 && tr.x2 < 0 && tr.x3 < 0)
-					triangleOk = false;
-				else {
-					if (tr.x1 < 0)
-						tr.x1 = 0;
+				double maxY = projet.tailleColonnes == 64 ? 256 : projet.tailleColonnes == 80 ? 200 : 168;
+				if (tr.y1 < maxY) {
+					if (tr.y2 > maxY) {
+						double deltax = tr.x2 - tr.x1;
+						double div = tr.y2 / maxY;
+						deltax = deltax / div;
+						tr.x2 = tr.x1 + (int)deltax;
+						tr.y2 = (int)maxY;
+					}
+					if (tr.y3 > maxY) {
+						double deltax = tr.x3 - tr.x1;
+						double div = tr.y3 / maxY;
+						deltax = deltax / div;
+						tr.x3 = tr.x1 + (int)deltax;
+						tr.y3 = (int)maxY;
+					}
 
-					if (tr.x2 < 0)
-						tr.x2 = 0;
+					if (tr.x1 < 0 && tr.x2 < 0 && tr.x3 < 0)
+						triangleOk = false;
+					else {
+						if (tr.x1 < 0)
+							tr.x1 = 0;
 
-					if (tr.x3 < 0)
-						tr.x3 = 0;
+						if (tr.x2 < 0)
+							tr.x2 = 0;
+
+						if (tr.x3 < 0)
+							tr.x3 = 0;
+					}
 				}
 				tr.enabled = triangleOk;
 				if (setProjet)
@@ -164,9 +182,9 @@ namespace TriangulArt {
 					AddInfo("Fusion de " + lstSeq.Count.ToString() + " images avec le projet en cours.");
 				else
 					if (add)
-					AddInfo("Ajout de " + lstSeq.Count.ToString() + " images au projet.");
-				else
-					AddInfo("Création projet avec " + lstSeq.Count.ToString() + " images.");
+						AddInfo("Ajout de " + lstSeq.Count.ToString() + " images au projet.");
+					else
+						AddInfo("Création projet avec " + lstSeq.Count.ToString() + " images.");
 			}
 			InitBoutons();
 		}

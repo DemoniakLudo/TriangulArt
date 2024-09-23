@@ -159,25 +159,32 @@ namespace TriangulArt {
 			listTriangles.Items.Clear();
 			for (int i = 0; i < projet.SelImage().lstTriangle.Count; i++) {
 				Triangle t = projet.SelImage().lstTriangle[i];
-				string inf = (t.enabled ? "" : "*") + i.ToString("000") + "\t(" + t.x1 + "," + t.y1 + ")\t\t(" + t.x2 + "," + t.y2 + ")\t\t(" + t.x3 + "," + t.y3 + ")\t\tcouleur:" + t.color.ToString("00");
+				string inf = (t.enabled ? " " : "*") + i.ToString("000") + "  ("
+							+ t.x1.ToString("000") + "," + t.y1.ToString("000") + ")  ("
+							+ t.x2.ToString("000") + "," + t.y2.ToString("000") + ")  ("
+							+ t.x3.ToString("000") + "," + t.y3.ToString("000") + ")  c:"
+							+ t.color.ToString("00");
 				int f = t.pctFill;
 				if (f != -1) {
 					inf += "\t" + f + "%";
-					if (f < 10)
-						inf += "====";
-
-					if (f < 25)
-						inf += "===";
-
-					if (f < 40)
-						inf += "==";
-
 					if (f < 50)
 						inf += "=";
+
+					if (f < 40)
+						inf += "=";
+
+					if (f < 25)
+						inf += "=";
+
+					if (f < 10)
+						inf += "=";
+				}
+				if (t.y1 > maxHeight || t.y2 > maxHeight || t.y3 > maxHeight) {
+					inf = (t.enabled ? "" : "*") + i.ToString("000") + "\tERREUR :TAILLE Y>TAILLE Y MAX";
+					if (withCheck)
+						SetInfo("!!! Le triangle " + i + " descend trop bas pour la résolution choisie...");
 				}
 				listTriangles.Items.Add(inf);
-				if (withCheck && (t.y1 > maxHeight || t.y2 > maxHeight || t.y3 > maxHeight))
-					SetInfo("!!! Le triangle " + i + " descend trop bas pour la résolution choisie...");
 			}
 			txbX1.Text = txbX2.Text = txbX3.Text = txbY1.Text = txbY2.Text = txbY3.Text = txbX4.Text = txbY4.Text = txbPos.Text = "";
 			bpUp.Enabled = bpDown.Enabled = bpFirst.Enabled = bpLast.Enabled = false;
@@ -614,6 +621,9 @@ namespace TriangulArt {
 			OpenFileDialog dlg = new OpenFileDialog { Filter = "Fichiers assembleur (*.asm)|*.asm" };
 			if (dlg.ShowDialog() == DialogResult.OK) {
 				try {
+					if (chkAnim3D.Checked)
+						projet.Import(dlg.FileName, chkClearData.Checked);
+					else
 					projet.SelImage().Import(dlg.FileName, chkClearData.Checked);
 					SetInfo("Import triangles ok");
 					FillTriangles();

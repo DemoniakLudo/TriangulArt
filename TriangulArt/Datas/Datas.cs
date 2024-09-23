@@ -237,6 +237,13 @@ namespace TriangulArt {
 			for (int i = 0; i < nbTri; i++)
 				lstTriangle[i].CountPctFillTriangle(bmpLock, i + 1);
 
+			// Supprime les triangles étant hors coordonnées
+			for (int i = 0; i < nbTri; i++) {
+				Triangle t = lstTriangle[i];
+				if ((t.x1 > maxWidth && t.x2 > maxWidth && t.x3 > maxWidth) || (t.y1 > maxHeight && t.y2 > maxHeight && t.y3 > maxHeight))
+					t.enabled = false;
+
+			}
 			// ### Supprime les pourcentages inférieur à 5 ###
 		//	for (int i = 0; i < nbTri; i++)
 		//		if (lstTriangle[i].pctFill <= 5)
