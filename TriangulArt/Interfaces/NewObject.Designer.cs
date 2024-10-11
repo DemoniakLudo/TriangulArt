@@ -67,12 +67,14 @@
 			this.label17 = new System.Windows.Forms.Label();
 			this.txbSphereRayon = new System.Windows.Forms.TextBox();
 			this.label18 = new System.Windows.Forms.Label();
-			this.txbSphereDivision = new System.Windows.Forms.TextBox();
+			this.txbSphereDivH = new System.Windows.Forms.TextBox();
 			this.label19 = new System.Windows.Forms.Label();
 			this.label20 = new System.Windows.Forms.Label();
 			this.txbAltCoulHoriz = new System.Windows.Forms.TextBox();
 			this.txbAltCoulVert = new System.Windows.Forms.TextBox();
 			this.chkSphere12 = new System.Windows.Forms.CheckBox();
+			this.label21 = new System.Windows.Forms.Label();
+			this.txbSphereDivV = new System.Windows.Forms.TextBox();
 			this.SuspendLayout();
 			// 
 			// rbVide
@@ -489,23 +491,23 @@
 			this.label18.AutoSize = true;
 			this.label18.Location = new System.Drawing.Point(276, 180);
 			this.label18.Name = "label18";
-			this.label18.Size = new System.Drawing.Size(75, 13);
+			this.label18.Size = new System.Drawing.Size(66, 13);
 			this.label18.TabIndex = 4;
-			this.label18.Text = "Nbre Divisions";
+			this.label18.Text = "Nbre Div. H.";
 			// 
-			// txbSphereDivision
+			// txbSphereDivH
 			// 
-			this.txbSphereDivision.Enabled = false;
-			this.txbSphereDivision.Location = new System.Drawing.Point(229, 176);
-			this.txbSphereDivision.Name = "txbSphereDivision";
-			this.txbSphereDivision.Size = new System.Drawing.Size(45, 20);
-			this.txbSphereDivision.TabIndex = 5;
-			this.txbSphereDivision.Text = "12";
+			this.txbSphereDivH.Enabled = false;
+			this.txbSphereDivH.Location = new System.Drawing.Point(229, 176);
+			this.txbSphereDivH.Name = "txbSphereDivH";
+			this.txbSphereDivH.Size = new System.Drawing.Size(45, 20);
+			this.txbSphereDivH.TabIndex = 5;
+			this.txbSphereDivH.Text = "12";
 			// 
 			// label19
 			// 
 			this.label19.AutoSize = true;
-			this.label19.Location = new System.Drawing.Point(413, 179);
+			this.label19.Location = new System.Drawing.Point(540, 178);
 			this.label19.Name = "label19";
 			this.label19.Size = new System.Drawing.Size(78, 13);
 			this.label19.TabIndex = 4;
@@ -514,7 +516,7 @@
 			// label20
 			// 
 			this.label20.AutoSize = true;
-			this.label20.Location = new System.Drawing.Point(540, 179);
+			this.label20.Location = new System.Drawing.Point(667, 178);
 			this.label20.Name = "label20";
 			this.label20.Size = new System.Drawing.Size(73, 13);
 			this.label20.TabIndex = 4;
@@ -523,7 +525,7 @@
 			// txbAltCoulHoriz
 			// 
 			this.txbAltCoulHoriz.Enabled = false;
-			this.txbAltCoulHoriz.Location = new System.Drawing.Point(366, 175);
+			this.txbAltCoulHoriz.Location = new System.Drawing.Point(493, 174);
 			this.txbAltCoulHoriz.Name = "txbAltCoulHoriz";
 			this.txbAltCoulHoriz.Size = new System.Drawing.Size(45, 20);
 			this.txbAltCoulHoriz.TabIndex = 5;
@@ -532,7 +534,7 @@
 			// txbAltCoulVert
 			// 
 			this.txbAltCoulVert.Enabled = false;
-			this.txbAltCoulVert.Location = new System.Drawing.Point(493, 175);
+			this.txbAltCoulVert.Location = new System.Drawing.Point(620, 174);
 			this.txbAltCoulVert.Name = "txbAltCoulVert";
 			this.txbAltCoulVert.Size = new System.Drawing.Size(45, 20);
 			this.txbAltCoulVert.TabIndex = 5;
@@ -542,18 +544,36 @@
 			// 
 			this.chkSphere12.AutoSize = true;
 			this.chkSphere12.Enabled = false;
-			this.chkSphere12.Location = new System.Drawing.Point(632, 176);
+			this.chkSphere12.Location = new System.Drawing.Point(759, 175);
 			this.chkSphere12.Name = "chkSphere12";
 			this.chkSphere12.Size = new System.Drawing.Size(43, 17);
 			this.chkSphere12.TabIndex = 23;
 			this.chkSphere12.Text = "1/2";
 			this.chkSphere12.UseVisualStyleBackColor = true;
 			// 
+			// label21
+			// 
+			this.label21.AutoSize = true;
+			this.label21.Location = new System.Drawing.Point(413, 181);
+			this.label21.Name = "label21";
+			this.label21.Size = new System.Drawing.Size(65, 13);
+			this.label21.TabIndex = 4;
+			this.label21.Text = "Nbre Div. V.";
+			// 
+			// txbSphereDivV
+			// 
+			this.txbSphereDivV.Enabled = false;
+			this.txbSphereDivV.Location = new System.Drawing.Point(366, 177);
+			this.txbSphereDivV.Name = "txbSphereDivV";
+			this.txbSphereDivV.Size = new System.Drawing.Size(45, 20);
+			this.txbSphereDivV.TabIndex = 5;
+			this.txbSphereDivV.Text = "12";
+			// 
 			// NewObject
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(678, 371);
+			this.ClientSize = new System.Drawing.Size(808, 371);
 			this.Controls.Add(this.chkSphere12);
 			this.Controls.Add(this.rbSphere);
 			this.Controls.Add(this.txbDisqueHauteur);
@@ -583,10 +603,12 @@
 			this.Controls.Add(this.label20);
 			this.Controls.Add(this.txbSoucoupeHauteur1);
 			this.Controls.Add(this.label7);
-			this.Controls.Add(this.txbSphereDivision);
+			this.Controls.Add(this.txbSphereDivV);
+			this.Controls.Add(this.txbSphereDivH);
 			this.Controls.Add(this.label19);
 			this.Controls.Add(this.txbSoucoupeDivision);
 			this.Controls.Add(this.label6);
+			this.Controls.Add(this.label21);
 			this.Controls.Add(this.txbDisqueDivision);
 			this.Controls.Add(this.label18);
 			this.Controls.Add(this.label5);
@@ -660,11 +682,13 @@
 		private System.Windows.Forms.Label label17;
 		private System.Windows.Forms.TextBox txbSphereRayon;
 		private System.Windows.Forms.Label label18;
-		private System.Windows.Forms.TextBox txbSphereDivision;
+		private System.Windows.Forms.TextBox txbSphereDivH;
 		private System.Windows.Forms.Label label19;
 		private System.Windows.Forms.Label label20;
 		private System.Windows.Forms.TextBox txbAltCoulHoriz;
 		private System.Windows.Forms.TextBox txbAltCoulVert;
 		private System.Windows.Forms.CheckBox chkSphere12;
+		private System.Windows.Forms.Label label21;
+		private System.Windows.Forms.TextBox txbSphereDivV;
 	}
 }

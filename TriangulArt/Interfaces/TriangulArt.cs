@@ -624,7 +624,7 @@ namespace TriangulArt {
 					if (chkAnim3D.Checked)
 						projet.Import(dlg.FileName, chkClearData.Checked);
 					else
-					projet.SelImage().Import(dlg.FileName, chkClearData.Checked);
+						projet.SelImage().Import(dlg.FileName, chkClearData.Checked);
 					SetInfo("Import triangles ok");
 					FillTriangles();
 					DisplayList(true);
@@ -1004,7 +1004,8 @@ namespace TriangulArt {
 				try {
 					projet = (Projet)new XmlSerializer(typeof(Projet)).Deserialize(fileParam);
 					SetInfo("Lecture projet ok");
-					if (projet.lstAnim[0].nbImages > 0)
+
+					if (projet.lstAnim.Count > 0 && projet.lstAnim[0].nbImages > 0)
 						chkAnim3D.Checked = true;
 
 					if (projet.mode == 0)

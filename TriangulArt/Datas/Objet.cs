@@ -337,28 +337,29 @@ namespace TriangulArt {
 			}
 		}
 
-		public void CreeSphere(double px, double py, double pz, double rayon, int division, int altHor, int altVer, bool mask) {
-			int inc = 360 / division;
+		public void CreeSphere(double px, double py, double pz, double rayon, int divh, int divv, int altHor, int altVer, bool mask) {
+			int inct = 360 / divv;	// Incrément vertical
+			int incp = 360 / divh;	// Incrément horizontal
 			int nv = lstVertex.Count;
 			int numVertex = 0;
 			int numFace = 0;
 			byte col = 1;
 			double minDist = 1e-10;
 			int cnt = 0;
-			for (int t = -90; t < 90; t += inc) {
+			for (int t = -90; t < 90; t += inct) {
 				cnt++;
-				for (int p = 0; p < 360; p += inc) {
+				for (int p = 0; p < 360; p += incp) {
 					double x0 = Math.Cos(t * CONV) * Math.Cos(p * CONV) * rayon;
 					double y0 = Math.Cos(t * CONV) * Math.Sin(p * CONV) * rayon;
 					double z0 = Math.Sin(t * CONV) * rayon;
-					double x1 = Math.Cos((t + inc) * CONV) * Math.Cos(p * CONV) * rayon;
-					double y1 = Math.Cos((t + inc) * CONV) * Math.Sin(p * CONV) * rayon;
-					double z1 = Math.Sin((t + inc) * CONV) * rayon;
-					double x2 = Math.Cos((t + inc) * CONV) * Math.Cos((p + inc) * CONV) * rayon;
-					double y2 = Math.Cos((t + inc) * CONV) * Math.Sin((p + inc) * CONV) * rayon;
-					double z2 = Math.Sin((t + inc) * CONV) * rayon;
-					double x3 = Math.Cos(t * CONV) * Math.Cos((p + inc) * CONV) * rayon;
-					double y3 = Math.Cos(t * CONV) * Math.Sin((p + inc) * CONV) * rayon;
+					double x1 = Math.Cos((t + inct) * CONV) * Math.Cos(p * CONV) * rayon;
+					double y1 = Math.Cos((t + inct) * CONV) * Math.Sin(p * CONV) * rayon;
+					double z1 = Math.Sin((t + inct) * CONV) * rayon;
+					double x2 = Math.Cos((t + inct) * CONV) * Math.Cos((p + incp) * CONV) * rayon;
+					double y2 = Math.Cos((t + inct) * CONV) * Math.Sin((p + incp) * CONV) * rayon;
+					double z2 = Math.Sin((t + inct) * CONV) * rayon;
+					double x3 = Math.Cos(t * CONV) * Math.Cos((p + incp) * CONV) * rayon;
+					double y3 = Math.Cos(t * CONV) * Math.Sin((p + incp) * CONV) * rayon;
 					double z3 = Math.Sin(t * CONV) * rayon;
 					lstVertex.Add(new Vertex(px + x0, py + y0, pz + z0));
 					lstVertex.Add(new Vertex(px + x1, py + y1, pz + z1));
