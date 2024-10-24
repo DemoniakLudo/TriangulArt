@@ -1109,8 +1109,13 @@ namespace TriangulArt {
 		private void BpGenereProjetAsm_Click(object sender, EventArgs e) {
 			SaveFileDialog dlg = new SaveFileDialog { Filter = "Fichiers assembleur (*.asm)|*.asm" };
 			if (dlg.ShowDialog() == DialogResult.OK) {
-				projet.GenereSourceAsm(dlg.FileName, chkModePolice.Checked, chkAnim3D.Checked, chkZX0.Checked);
-				SetInfo("Génération assembleur ok.");
+				SaveMedia dlgSave = new SaveMedia("Animation", Path.GetFileNameWithoutExtension(dlg.FileName));
+				dlgSave.ShowDialog();
+				if (dlgSave.saveMediaOk) {
+					string labelMedia = string.IsNullOrEmpty(dlgSave.LabelMedia) ? null : dlgSave.LabelMedia;
+					projet.GenereSourceAsm(dlg.FileName, labelMedia, chkModePolice.Checked, chkAnim3D.Checked, chkZX0.Checked);
+					SetInfo("Génération assembleur ok.");
+				}
 			}
 		}
 

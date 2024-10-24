@@ -84,6 +84,12 @@
     <Compile Include="Interfaces\CpcEmul.Designer.cs">
       <DependentUpon>CpcEmul.cs</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\SaveMedia.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interfaces\SaveMedia.Designer.cs">
+      <DependentUpon>SaveMedia.cs</DependentUpon>
+    </Compile>
     <Compile Include="PaletteCpc.cs" />
     <Compile Include="Datas\Datas.cs" />
     <Compile Include="DirectBitmap.cs" />
@@ -148,6 +154,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Interfaces\ParamObjet.resx">
       <DependentUpon>ParamObjet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Interfaces\SaveMedia.resx">
+      <DependentUpon>SaveMedia.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Interfaces\TriangulArt.resx">
       <DependentUpon>TriangulArt.cs</DependentUpon>

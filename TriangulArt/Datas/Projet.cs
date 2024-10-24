@@ -68,8 +68,11 @@ namespace TriangulArt {
 			cpc.Run(tailleColonnes, lstData);
 		}
 
-		public void GenereSourceAsm(string fileName, bool modePolice, bool mode3D, bool zx0) {
+		public void GenereSourceAsm(string fileName, string label, bool modePolice, bool mode3D, bool zx0) {
 			StreamWriter sw = GenereAsm.OpenAsm(fileName);
+			if (label != null)
+				sw.WriteLine(label);
+
 			if (zx0) {
 				byte[] datas = new byte[0x10000];
 				byte[] dataPack = new byte[0x10000];
@@ -112,7 +115,7 @@ namespace TriangulArt {
 			do {
 				l = rw.ReadLine();
 				if (l != null) {
-				bool newFrame =	d.AnalyseLigne(l);
+					bool newFrame = d.AnalyseLigne(l);
 					if (newFrame)
 						d = AddData();
 				}
