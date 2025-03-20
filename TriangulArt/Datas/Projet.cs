@@ -94,7 +94,7 @@ namespace TriangulArt {
 				}
 				datas[posData++] = 0xFF;
 				PackModule pk = new PackModule();
-				int lpack = pk.PackZX0(datas, posData, dataPack, dataPack.Length);
+				int lpack = pk.PackZX0(datas, posData, dataPack, true);
 				GenereAsm.GenereDatas(sw, dataPack, lpack, 16);
 			}
 			else
