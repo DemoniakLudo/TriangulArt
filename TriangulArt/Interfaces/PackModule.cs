@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace TriangulArt {
 	public partial class PackModule : Form {
@@ -7,8 +6,6 @@ namespace TriangulArt {
 		private const int MAX_SCALE = 50;
 
 		private Block ghostRoot;
-		private Block[] deadArray;
-		private int deadArraySize = 0;
 		private int outputIndex, bitIndex, bitMask;
 		private bool backTrack;
 
@@ -80,7 +77,7 @@ namespace TriangulArt {
 			WriteBit(1, outputData);
 		}
 
-		public int PackZX0(byte[] inputData, int inputSize, byte[] outputData, bool v2) {
+		public int PackZX0(byte[] inputData, int inputSize, byte[] outputData) {
 			Show();
 			int bits, length;
 			int maxOffset = inputSize - 1 > MAX_OFFSET_ZX0 ? MAX_OFFSET_ZX0 : inputSize - 1 < 1 ? 1 : inputSize - 1;
@@ -219,7 +216,7 @@ namespace TriangulArt {
 				}
 				else {
 					WriteBit(1, outputData);
-					WriteInterlacedEliasGammaZX0((optimal.offset - 1) / 128 + 1, outputData, v2);
+					WriteInterlacedEliasGammaZX0((optimal.offset - 1) / 128 + 1, outputData, true);
 					outputData[outputIndex++] = (byte)((127 - (optimal.offset - 1) % 128) << 1);
 					backTrack = true;
 					WriteInterlacedEliasGammaZX0(length - 1, outputData, false);
@@ -228,7 +225,7 @@ namespace TriangulArt {
 				}
 			}
 			WriteBit(1, outputData);
-			WriteInterlacedEliasGammaZX0(256, outputData, v2);
+			WriteInterlacedEliasGammaZX0(256, outputData, true);
 			Hide();
 			return outputSize;
 		}
